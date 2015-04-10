@@ -1,0 +1,20 @@
+{
+    "FileVersion": 3,
+    "FriendlyName": "Low Entry - Extended Standard Library",
+    "Version": 1,
+    "VersionName": "1.0",
+    "CreatedBy": "Low Entry",
+    "CreatedByURL": "http://lowentry.com",
+    "EngineVersion": "4.7.5",
+    "Description": "Low Entry - Extended Standard Library continues where the standard macro's stop.",
+    "Category": "Low Entry.Plugins",
+    "EnabledByDefault": true,
+    "Modules": [
+        {
+            "Name": "LowEntryExtendedStandardLibrary",
+            "Type": "Runtime"
+        }
+    ],
+
+    "CanContainContent": true
+}
