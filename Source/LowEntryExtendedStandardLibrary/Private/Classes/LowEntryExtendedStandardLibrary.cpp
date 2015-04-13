@@ -57,6 +57,133 @@ bool ULowEntryExtendedStandardLibrary::GreaterEqualStringString(const FString& A
 
 
 
+bool ULowEntryExtendedStandardLibrary::LessIntegerFloat(const int32 A, const float B)
+{
+	return (A < B);
+}
+
+bool ULowEntryExtendedStandardLibrary::GreaterIntegerFloat(const int32 A, const float B)
+{
+	return (A > B);
+}
+
+bool ULowEntryExtendedStandardLibrary::LessEqualIntegerFloat(const int32 A, const float B)
+{
+	return (A <= B);
+}
+
+bool ULowEntryExtendedStandardLibrary::GreaterEqualIntegerFloat(const int32 A, const float B)
+{
+	return (A >= B);
+}
+
+
+bool ULowEntryExtendedStandardLibrary::LessIntegerByte(const int32 A, const uint8 B)
+{
+	return (A < B);
+}
+
+bool ULowEntryExtendedStandardLibrary::GreaterIntegerByte(const int32 A, const uint8 B)
+{
+	return (A > B);
+}
+
+bool ULowEntryExtendedStandardLibrary::LessEqualIntegerByte(const int32 A, const uint8 B)
+{
+	return (A <= B);
+}
+
+bool ULowEntryExtendedStandardLibrary::GreaterEqualIntegerByte(const int32 A, const uint8 B)
+{
+	return (A >= B);
+}
+
+
+bool ULowEntryExtendedStandardLibrary::LessFloatInteger(const float A, const int32 B)
+{
+	return (A < B);
+}
+
+bool ULowEntryExtendedStandardLibrary::GreaterFloatInteger(const float A, const int32 B)
+{
+	return (A > B);
+}
+
+bool ULowEntryExtendedStandardLibrary::LessEqualFloatInteger(const float A, const int32 B)
+{
+	return (A <= B);
+}
+
+bool ULowEntryExtendedStandardLibrary::GreaterEqualFloatInteger(const float A, const int32 B)
+{
+	return (A >= B);
+}
+
+
+bool ULowEntryExtendedStandardLibrary::LessFloatByte(const float A, const uint8 B)
+{
+	return (A < B);
+}
+
+bool ULowEntryExtendedStandardLibrary::GreaterFloatByte(const float A, const uint8 B)
+{
+	return (A > B);
+}
+
+bool ULowEntryExtendedStandardLibrary::LessEqualFloatByte(const float A, const uint8 B)
+{
+	return (A <= B);
+}
+
+bool ULowEntryExtendedStandardLibrary::GreaterEqualFloatByte(const float A, const uint8 B)
+{
+	return (A >= B);
+}
+
+
+bool ULowEntryExtendedStandardLibrary::LessByteInteger(const uint8 A, const int32 B)
+{
+	return (A < B);
+}
+
+bool ULowEntryExtendedStandardLibrary::GreaterByteInteger(const uint8 A, const int32 B)
+{
+	return (A > B);
+}
+
+bool ULowEntryExtendedStandardLibrary::LessEqualByteInteger(const uint8 A, const int32 B)
+{
+	return (A <= B);
+}
+
+bool ULowEntryExtendedStandardLibrary::GreaterEqualByteInteger(const uint8 A, const int32 B)
+{
+	return (A >= B);
+}
+
+
+bool ULowEntryExtendedStandardLibrary::LessByteFloat(const uint8 A, const float B)
+{
+	return (A < B);
+}
+
+bool ULowEntryExtendedStandardLibrary::GreaterByteFloat(const uint8 A, const float B)
+{
+	return (A > B);
+}
+
+bool ULowEntryExtendedStandardLibrary::LessEqualByteFloat(const uint8 A, const float B)
+{
+	return (A <= B);
+}
+
+bool ULowEntryExtendedStandardLibrary::GreaterEqualByteFloat(const uint8 A, const float B)
+{
+	return (A >= B);
+}
+
+
+
 void ULowEntryExtendedStandardLibrary::MinAndMaxString(const FString& Value1, const FString& Value2, FString& MaxValue, FString& MinValue)
 {
 	if(Value1 >= Value2)
