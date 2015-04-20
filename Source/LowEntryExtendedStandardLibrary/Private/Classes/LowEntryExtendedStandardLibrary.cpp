@@ -8,6 +8,28 @@
 	{
 	}
 // init <<
+
+
+
+FString ULowEntryExtendedStandardLibrary::NewlineCharacter()
+{
+	return TEXT("\n");
+}
+
+FString ULowEntryExtendedStandardLibrary::WindowsNewlineCharacter()
+{
+	return TEXT("\r\n");
+}
+
+FString ULowEntryExtendedStandardLibrary::CarriageReturnCharacter()
+{
+	return TEXT("\r");
+}
+
+FString ULowEntryExtendedStandardLibrary::TabCharacter()
+{
+	return TEXT("\t");
+}
 	
 
 
@@ -302,7 +324,7 @@ void ULowEntryExtendedStandardLibrary::MinOfTimespanArray(const TArray<FTimespan
 
 
 
-void ULowEntryExtendedStandardLibrary::SortStringArray(TArray<FString>& StringArray, bool Reversed)
+void ULowEntryExtendedStandardLibrary::SortStringArray(TArray<FString>& StringArray, const bool Reversed)
 {
 	if(!Reversed)
 	{
@@ -318,7 +340,7 @@ void ULowEntryExtendedStandardLibrary::SortStringArray(TArray<FString>& StringAr
 	}
 }
 
-void ULowEntryExtendedStandardLibrary::SortIntegerArray(TArray<int32>& IntegerArray, bool Reversed)
+void ULowEntryExtendedStandardLibrary::SortIntegerArray(TArray<int32>& IntegerArray, const bool Reversed)
 {
 	if(!Reversed)
 	{
@@ -334,7 +356,7 @@ void ULowEntryExtendedStandardLibrary::SortIntegerArray(TArray<int32>& IntegerAr
 	}
 }
 
-void ULowEntryExtendedStandardLibrary::SortFloatArray(TArray<float>& FloatArray, bool Reversed)
+void ULowEntryExtendedStandardLibrary::SortFloatArray(TArray<float>& FloatArray, const bool Reversed)
 {
 	if(!Reversed)
 	{
@@ -350,7 +372,7 @@ void ULowEntryExtendedStandardLibrary::SortFloatArray(TArray<float>& FloatArray,
 	}
 }
 
-void ULowEntryExtendedStandardLibrary::SortByteArray(TArray<uint8>& ByteArray, bool Reversed)
+void ULowEntryExtendedStandardLibrary::SortByteArray(TArray<uint8>& ByteArray, const bool Reversed)
 {
 	if(!Reversed)
 	{
@@ -366,7 +388,7 @@ void ULowEntryExtendedStandardLibrary::SortByteArray(TArray<uint8>& ByteArray, b
 	}
 }
 
-void ULowEntryExtendedStandardLibrary::SortDateTimeArray(TArray<FDateTime>& DateTimeArray, bool Reversed)
+void ULowEntryExtendedStandardLibrary::SortDateTimeArray(TArray<FDateTime>& DateTimeArray, const bool Reversed)
 {
 	if(!Reversed)
 	{
@@ -382,7 +404,7 @@ void ULowEntryExtendedStandardLibrary::SortDateTimeArray(TArray<FDateTime>& Date
 	}
 }
 
-void ULowEntryExtendedStandardLibrary::SortTimespanArray(TArray<FTimespan>& TimespanArray, bool Reversed)
+void ULowEntryExtendedStandardLibrary::SortTimespanArray(TArray<FTimespan>& TimespanArray, const bool Reversed)
 {
 	if(!Reversed)
 	{

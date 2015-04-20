@@ -19,6 +19,43 @@ class ULowEntryExtendedStandardLibrary : public UBlueprintFunctionLibrary
 
 public:
 	/**
+	* Returns a newline character (\n).
+	* 
+	* This blueprint will always return a \n character, no matter what Operating System it is running on.
+	* 
+	* Note: It is actually called a line feed, the blueprint is called Newline Character for recognition purposes.
+	* On *nix systems \n is used as a newline character, on Windows \r\n is used as a newline character.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Character", Meta = (FriendlyName = "Newline Character (\\n)", CompactNodeTitle = "\\n"))
+		static FString NewlineCharacter();
+
+	/**
+	* Returns a Windows newline character (\r\n).
+	* 
+	* This blueprint will always return a \r\n character, no matter what Operating System it is running on.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Character", Meta = (FriendlyName = "Windows Newline Character (\\r\\n)", CompactNodeTitle = "\\r\\n"))
+		static FString WindowsNewlineCharacter();
+
+	/**
+	* Returns a carriage return (\r).
+	* 
+	* This blueprint will always return a \r character, no matter what Operating System it is running on.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Character", Meta = (FriendlyName = "Carriage Return Character (\\r)", CompactNodeTitle = "\\r"))
+		static FString CarriageReturnCharacter();
+
+	/**
+	* Returns a tab character (\t).
+	* 
+	* This blueprint will always return a \t character, no matter what Operating System it is running on.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Character", Meta = (FriendlyName = "Tab Character (\\t)", CompactNodeTitle = "\\t"))
+		static FString TabCharacter();
+
+
+
+	/**
 	* Returns the minimum value of the given values.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (FriendlyName = "Min (String)", CompactNodeTitle = "MIN", CommutativeAssociativeBinaryOperator = "true"))
@@ -287,37 +324,37 @@ public:
 	* Sorts the given array.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Array|Sort", Meta = (FriendlyName = "Sort (String Array)"))
-		static void SortStringArray(TArray<FString>& StringArray, bool Reversed = false);
+		static void SortStringArray(TArray<FString>& StringArray, const bool Reversed = false);
 
 	/**
 	* Sorts the given array.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Array|Sort", Meta = (FriendlyName = "Sort (Integer Array)"))
-		static void SortIntegerArray(TArray<int32>& IntegerArray, bool Reversed = false);
+		static void SortIntegerArray(TArray<int32>& IntegerArray, const bool Reversed = false);
 
 	/**
 	* Sorts the given array.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Array|Sort", Meta = (FriendlyName = "Sort (Float Array)"))
-		static void SortFloatArray(TArray<float>& FloatArray, bool Reversed = false);
+		static void SortFloatArray(TArray<float>& FloatArray, const bool Reversed = false);
 
 	/**
 	* Sorts the given array.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Array|Sort", Meta = (FriendlyName = "Sort (Byte Array)"))
-		static void SortByteArray(TArray<uint8>& ByteArray, bool Reversed = false);
+		static void SortByteArray(TArray<uint8>& ByteArray, const bool Reversed = false);
 
 	/**
 	* Sorts the given array.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Array|Sort", Meta = (FriendlyName = "Sort (DateTime Array)"))
-		static void SortDateTimeArray(TArray<FDateTime>& DateTimeArray, bool Reversed = false);
+		static void SortDateTimeArray(TArray<FDateTime>& DateTimeArray, const bool Reversed = false);
 
 	/**
 	* Sorts the given array.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Array|Sort", Meta = (FriendlyName = "Sort (Timespan Array)"))
-		static void SortTimespanArray(TArray<FTimespan>& TimespanArray, bool Reversed = false);
+		static void SortTimespanArray(TArray<FTimespan>& TimespanArray, const bool Reversed = false);
 
 
 
