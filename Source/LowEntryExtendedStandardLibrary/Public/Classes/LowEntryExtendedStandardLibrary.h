@@ -96,151 +96,159 @@ public:
 	/**
 	* Returns true if A is less than B (A < B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (FriendlyName = "Integer < Float", CompactNodeTitle = "<"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (FriendlyName = "Integer < Float", CompactNodeTitle = "<"))
 		static bool LessIntegerFloat(const int32 A, const float B);
 
 	/**
 	* Returns true if A is greater than B (A > B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (FriendlyName = "Integer > Float", CompactNodeTitle = ">"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (FriendlyName = "Integer > Float", CompactNodeTitle = ">"))
 		static bool GreaterIntegerFloat(const int32 A, const float B);
 
 	/**
 	* Returns true if A is less than or equal to B (A <= B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (FriendlyName = "Integer <= Float", CompactNodeTitle = "<="))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (FriendlyName = "Integer <= Float", CompactNodeTitle = "<="))
 		static bool LessEqualIntegerFloat(const int32 A, const float B);
 
 	/**
 	* Returns true if A is greater than or equal to B (A >= B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (FriendlyName = "Integer >= Float", CompactNodeTitle = ">="))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (FriendlyName = "Integer >= Float", CompactNodeTitle = ">="))
 		static bool GreaterEqualIntegerFloat(const int32 A, const float B);
 
 
 	/**
 	* Returns true if A is less than B (A < B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (FriendlyName = "Integer < Byte", CompactNodeTitle = "<"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (FriendlyName = "Integer < Byte", CompactNodeTitle = "<"))
 		static bool LessIntegerByte(const int32 A, const uint8 B);
 
 	/**
 	* Returns true if A is greater than B (A > B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (FriendlyName = "Integer > Byte", CompactNodeTitle = ">"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (FriendlyName = "Integer > Byte", CompactNodeTitle = ">"))
 		static bool GreaterIntegerByte(const int32 A, const uint8 B);
 
 	/**
 	* Returns true if A is less than or equal to B (A <= B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (FriendlyName = "Integer <= Byte", CompactNodeTitle = "<="))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (FriendlyName = "Integer <= Byte", CompactNodeTitle = "<="))
 		static bool LessEqualIntegerByte(const int32 A, const uint8 B);
 
 	/**
 	* Returns true if A is greater than or equal to B (A >= B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (FriendlyName = "Integer >= Byte", CompactNodeTitle = ">="))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (FriendlyName = "Integer >= Byte", CompactNodeTitle = ">="))
 		static bool GreaterEqualIntegerByte(const int32 A, const uint8 B);
 
 
 	/**
 	* Returns true if A is less than B (A < B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (FriendlyName = "Float < Integer", CompactNodeTitle = "<"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (FriendlyName = "Float < Integer", CompactNodeTitle = "<"))
 		static bool LessFloatInteger(const float A, const int32 B);
 
 	/**
 	* Returns true if A is greater than B (A > B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (FriendlyName = "Float > Integer", CompactNodeTitle = ">"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (FriendlyName = "Float > Integer", CompactNodeTitle = ">"))
 		static bool GreaterFloatInteger(const float A, const int32 B);
 
 	/**
 	* Returns true if A is less than or equal to B (A <= B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (FriendlyName = "Float <= Integer", CompactNodeTitle = "<="))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (FriendlyName = "Float <= Integer", CompactNodeTitle = "<="))
 		static bool LessEqualFloatInteger(const float A, const int32 B);
 
 	/**
 	* Returns true if A is greater than or equal to B (A >= B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (FriendlyName = "Float >= Integer", CompactNodeTitle = ">="))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (FriendlyName = "Float >= Integer", CompactNodeTitle = ">="))
 		static bool GreaterEqualFloatInteger(const float A, const int32 B);
 
 
 	/**
 	* Returns true if A is less than B (A < B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (FriendlyName = "Float < Byte", CompactNodeTitle = "<"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (FriendlyName = "Float < Byte", CompactNodeTitle = "<"))
 		static bool LessFloatByte(const float A, const uint8 B);
 
 	/**
 	* Returns true if A is greater than B (A > B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (FriendlyName = "Float > Byte", CompactNodeTitle = ">"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (FriendlyName = "Float > Byte", CompactNodeTitle = ">"))
 		static bool GreaterFloatByte(const float A, const uint8 B);
 
 	/**
 	* Returns true if A is less than or equal to B (A <= B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (FriendlyName = "Float <= Byte", CompactNodeTitle = "<="))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (FriendlyName = "Float <= Byte", CompactNodeTitle = "<="))
 		static bool LessEqualFloatByte(const float A, const uint8 B);
 
 	/**
 	* Returns true if A is greater than or equal to B (A >= B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (FriendlyName = "Float >= Byte", CompactNodeTitle = ">="))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (FriendlyName = "Float >= Byte", CompactNodeTitle = ">="))
 		static bool GreaterEqualFloatByte(const float A, const uint8 B);
 
 
 	/**
 	* Returns true if A is less than B (A < B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (FriendlyName = "Byte < Integer", CompactNodeTitle = "<"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (FriendlyName = "Byte < Integer", CompactNodeTitle = "<"))
 		static bool LessByteInteger(const uint8 A, const int32 B);
 
 	/**
 	* Returns true if A is greater than B (A > B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (FriendlyName = "Byte > Integer", CompactNodeTitle = ">"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (FriendlyName = "Byte > Integer", CompactNodeTitle = ">"))
 		static bool GreaterByteInteger(const uint8 A, const int32 B);
 
 	/**
 	* Returns true if A is less than or equal to B (A <= B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (FriendlyName = "Byte <= Integer", CompactNodeTitle = "<="))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (FriendlyName = "Byte <= Integer", CompactNodeTitle = "<="))
 		static bool LessEqualByteInteger(const uint8 A, const int32 B);
 
 	/**
 	* Returns true if A is greater than or equal to B (A >= B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (FriendlyName = "Byte >= Integer", CompactNodeTitle = ">="))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (FriendlyName = "Byte >= Integer", CompactNodeTitle = ">="))
 		static bool GreaterEqualByteInteger(const uint8 A, const int32 B);
 
 
 	/**
 	* Returns true if A is less than B (A < B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (FriendlyName = "Byte < Float", CompactNodeTitle = "<"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (FriendlyName = "Byte < Float", CompactNodeTitle = "<"))
 		static bool LessByteFloat(const uint8 A, const float B);
 
 	/**
 	* Returns true if A is greater than B (A > B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (FriendlyName = "Byte > Float", CompactNodeTitle = ">"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (FriendlyName = "Byte > Float", CompactNodeTitle = ">"))
 		static bool GreaterByteFloat(const uint8 A, const float B);
 
 	/**
 	* Returns true if A is less than or equal to B (A <= B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (FriendlyName = "Byte <= Float", CompactNodeTitle = "<="))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (FriendlyName = "Byte <= Float", CompactNodeTitle = "<="))
 		static bool LessEqualByteFloat(const uint8 A, const float B);
 
 	/**
 	* Returns true if A is greater than or equal to B (A >= B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (FriendlyName = "Byte >= Float", CompactNodeTitle = ">="))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (FriendlyName = "Byte >= Float", CompactNodeTitle = ">="))
 		static bool GreaterEqualByteFloat(const uint8 A, const float B);
+
+
+
+	/**
+	* Rounds to the given Decimals.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (FriendlyName = "Round (With Decimals)"))
+		static float RoundDecimals(float Number, int32 Decimals);
 
 
 

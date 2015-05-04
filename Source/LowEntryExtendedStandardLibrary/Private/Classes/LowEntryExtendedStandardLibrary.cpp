@@ -206,6 +206,37 @@ bool ULowEntryExtendedStandardLibrary::GreaterEqualByteFloat(const uint8 A, cons
 
 
 
+float ULowEntryExtendedStandardLibrary::RoundDecimals(float Number, int32 Decimals)
+{
+	if(Number == 0)
+	{
+		return Number;
+	}
+	if(Decimals > 0)
+	{
+		int64 Multiplier = 1;
+		for(int32 i = 1; i <= Decimals; i++)
+		{
+			Multiplier *= 10;
+		}
+		float MultiplierFloat = (float) Multiplier;
+		return FMath::RoundToFloat(Number * MultiplierFloat) / MultiplierFloat;
+	}
+	if(Decimals < 0)
+	{
+		int64 Divider = 1;
+		for(int32 i = -1; i >= Decimals; i--)
+		{
+			Divider *= 10;
+		}
+		float DividerFloat = (float) Divider;
+		return FMath::RoundToFloat(Number / DividerFloat) * DividerFloat;
+	}
+	return FMath::RoundToFloat(Number);
+}
+
+
+
 void ULowEntryExtendedStandardLibrary::MinAndMaxString(const FString& Value1, const FString& Value2, FString& MaxValue, FString& MinValue)
 {
 	if(Value1 >= Value2)
