@@ -387,4 +387,230 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Flow Control|Delay", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", MinDuration = "0.2", MaxDuration = "0.5"))
 		static void RetriggerableRandomDelay(UObject* WorldContextObject, float MinDuration, float MaxDuration, FLatentActionInfo LatentInfo);
+
+
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Float"))
+		static float LocalFloat(float Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Integer"))
+		static int32 LocalInteger(int32 Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Byte"))
+		static uint8 LocalByte(uint8 Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Boolean"))
+		static bool LocalBoolean(bool Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local String"))
+		static FString LocalString(const FString& Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Name"))
+		static FName LocalName(const FName& Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Text"))
+		static FText LocalText(const FText& Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Vector"))
+		static FVector LocalVector(const FVector& Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Rotator"))
+		static FRotator LocalRotator(const FRotator& Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Date Time"))
+		static FDateTime LocalDateTime(const FDateTime& Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Timespan"))
+		static FTimespan LocalTimespan(const FTimespan& Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Class"))
+		static UClass* LocalClass(UClass* Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Object"))
+		static UObject* LocalObject(UObject* Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Actor"))
+		static AActor* LocalActor(AActor* Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Actor Component"))
+		static UActorComponent* LocalActorComponent(UActorComponent* Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Pawn"))
+		static APawn* LocalPawn(APawn* Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Enum"))
+		static UEnum* LocalEnum(UEnum* Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Struct"))
+		static UStruct* LocalStruct(UStruct* Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Interface"))
+		static TScriptInterface<IInterface> LocalInterface(TScriptInterface<IInterface> Value);
+
+
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Float Array"))
+		static TArray<float> LocalFloatArray(const TArray<float>& Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Integer Array"))
+		static TArray<int32> LocalIntegerArray(const TArray<int32>& Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Byte Array"))
+		static TArray<uint8> LocalByteArray(const TArray<uint8>& Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Boolean Array"))
+		static TArray<bool> LocalBooleanArray(const TArray<bool>& Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local String Array"))
+		static TArray<FString> LocalStringArray(const TArray<FString>& Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Name Array"))
+		static TArray<FName> LocalNameArray(const TArray<FName>& Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Text Array"))
+		static TArray<FText> LocalTextArray(const TArray<FText>& Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Vector Array"))
+		static TArray<FVector> LocalVectorArray(const TArray<FVector>& Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Rotator Array"))
+		static TArray<FRotator> LocalRotatorArray(const TArray<FRotator>& Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Date Time Array"))
+		static TArray<FDateTime> LocalDateTimeArray(const TArray<FDateTime>& Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Timespan Array"))
+		static TArray<FTimespan> LocalTimespanArray(const TArray<FTimespan>& Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Class Array"))
+		static TArray<TSubclassOf<UObject>> LocalClassArray(const TArray<TSubclassOf<UObject>>& Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Object Array"))
+		static TArray<UObject*> LocalObjectArray(const TArray<UObject*>& Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Actor Array"))
+		static TArray<AActor*> LocalActorArray(const TArray<AActor*>& Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Actor Component Array"))
+		static TArray<UActorComponent*> LocalActorComponentArray(const TArray<UActorComponent*>& Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Pawn Array"))
+		static TArray<APawn*> LocalPawnArray(const TArray<APawn*>& Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Enum Array"))
+		static TArray<UEnum*> LocalEnumArray(const TArray<UEnum*>& Value);
+
+	/**
+	* Creates a local variable.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Struct Array"))
+		static TArray<UStruct*> LocalStructArray(const TArray<UStruct*>& Value);
 };
