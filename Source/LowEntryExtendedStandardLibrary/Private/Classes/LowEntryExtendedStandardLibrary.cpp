@@ -484,6 +484,34 @@ void ULowEntryExtendedStandardLibrary::RetriggerableRandomDelay(UObject* WorldCo
 
 
 
+FString ULowEntryExtendedStandardLibrary::ArrayToString(const TArray<FString>& Array, const FString& Delimiter)
+{
+	int32 TotalLength = 0;
+	int32 DelimiterLength = Delimiter.Len();
+	for(int32 i = 0; i < Array.Num(); i++)
+	{
+		TotalLength += Array[i].Len();
+		if(i > 0)
+		{
+			TotalLength += DelimiterLength;
+		}
+	}
+
+	FString String = TEXT("");
+	String.Reserve(TotalLength);
+	for(int32 i = 0; i < Array.Num(); i++)
+	{
+		String.Append(Array[i]);
+		if(i > 0)
+		{
+			String.Append(Delimiter);
+		}
+	}
+	return String;
+}
+
+
+
 float										ULowEntryExtendedStandardLibrary::LocalFloat(float Value)														{ return Value; }
 int32										ULowEntryExtendedStandardLibrary::LocalInteger(int32 Value)														{ return Value; }
 uint8										ULowEntryExtendedStandardLibrary::LocalByte(uint8 Value)														{ return Value; }

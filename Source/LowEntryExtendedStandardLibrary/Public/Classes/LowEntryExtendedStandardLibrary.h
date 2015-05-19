@@ -507,6 +507,14 @@ public:
 
 
 	/**
+	* Converts an Array of Strings to a String.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (FriendlyName = "Implode"))
+		static FString ArrayToString(const TArray<FString>& Array, const FString& Delimiter = TEXT(""));
+
+
+
+	/**
 	* Creates a local variable.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (FriendlyName = "Local Float Array"))
