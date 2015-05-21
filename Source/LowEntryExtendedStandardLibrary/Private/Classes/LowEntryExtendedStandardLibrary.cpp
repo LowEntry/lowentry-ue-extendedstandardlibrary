@@ -484,30 +484,38 @@ void ULowEntryExtendedStandardLibrary::RetriggerableRandomDelay(UObject* WorldCo
 
 
 
-FString ULowEntryExtendedStandardLibrary::ArrayToString(const TArray<FString>& Array, const FString& Delimiter)
+FString ULowEntryExtendedStandardLibrary::CreateString(const int32 Length, const FString& Filler)
 {
-	int32 Size = Array.Num();
-
-	int32 TotalLength = 0;
-	int32 DelimiterLength = Delimiter.Len();
-	for(int32 i = 0; i < Size; i++)
+	if(Length <= 0)
 	{
-		TotalLength += Array[i].Len();
-		if(i > 0)
-		{
-			TotalLength += DelimiterLength;
-		}
+		return TEXT("");
 	}
 
-	FString String = TEXT("");
-	String.Reserve(TotalLength);
-	for(int32 i = 0; i < Size; i++)
+	FString FillerString = Filler;
+	int32 Steps = FillerString.Len();
+	if(Steps <= 0)
 	{
-		String.Append(Array[i]);
-		if(i > 0)
+		FillerString = TEXT(" ");
+		Steps = FillerString.Len();
+	}
+	int32 Overflow = Length % Steps;
+
+	FString String = TEXT("");
+	String.Reserve(Length);
+	if(Overflow <= 0)
+	{
+		for(int32 i = 0; i < Length; i += Steps)
 		{
-			String.Append(Delimiter);
+			String.Append(FillerString);
 		}
+	}
+	else
+	{
+		for(int32 i = Steps; i < Length; i += Steps)
+		{
+			String.Append(FillerString);
+		}
+		String.Append(FillerString.Left(Steps - Overflow));
 	}
 	return String;
 }

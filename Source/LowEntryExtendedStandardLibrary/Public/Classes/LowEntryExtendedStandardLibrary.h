@@ -507,10 +507,10 @@ public:
 
 
 	/**
-	* Converts an Array of Strings to a String.
+	* Creates a String of the given length.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (DisplayName = "Implode"))
-		static FString ArrayToString(const TArray<FString>& Array, const FString& Delimiter = TEXT(""));
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (DisplayName = "Create String"))
+		static FString CreateString(const int32 Length, const FString& Filler = TEXT(" "));
 
 
 
