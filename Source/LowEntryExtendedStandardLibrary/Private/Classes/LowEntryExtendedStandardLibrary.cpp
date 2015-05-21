@@ -498,7 +498,7 @@ FString ULowEntryExtendedStandardLibrary::CreateString(const int32 Length, const
 		FillerString = TEXT(" ");
 		Steps = FillerString.Len();
 	}
-	int32 Overflow = Length % Steps;
+	int32 Overflow = (Steps - (Length % Steps)) % Steps;
 
 	FString String = TEXT("");
 	String.Reserve(Length);
