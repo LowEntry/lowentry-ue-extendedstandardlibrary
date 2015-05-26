@@ -522,6 +522,98 @@ FString ULowEntryExtendedStandardLibrary::CreateString(const int32 Length, const
 
 
 
+FString ULowEntryExtendedStandardLibrary::RemoveCharactersExcept(const FString& String, const bool KeepLowercaseAZ, const bool KeepUppercaseAZ, const bool KeepNumbers, const FString& OtherCharactersToKeep)
+{
+	if(String.Len() <= 0)
+	{
+		return String;
+	}
+
+	FString NewString;
+	NewString.Reserve(String.Len());
+
+	for(TCHAR Char : String)
+	{
+		if(KeepLowercaseAZ && (Char >= 'a') && (Char <= 'z'))
+		{
+			NewString.AppendChar(Char);
+			continue;
+		}
+		if(KeepUppercaseAZ && (Char >= 'A') && (Char <= 'Z'))
+		{
+			NewString.AppendChar(Char);
+			continue;
+		}
+		if(KeepNumbers && (Char >= '0') && (Char <= '9'))
+		{
+			NewString.AppendChar(Char);
+			continue;
+		}
+
+		for(TCHAR KeepChar : OtherCharactersToKeep)
+		{
+			if(Char == KeepChar)
+			{
+				NewString.AppendChar(Char);
+				break;
+			}
+		}
+	}
+
+	return NewString;
+}
+
+FString ULowEntryExtendedStandardLibrary::ReplaceCharactersExcept(const FString& String, const FString& ReplacementCharacter, const bool KeepLowercaseAZ, const bool KeepUppercaseAZ, const bool KeepNumbers, const FString& OtherCharactersToKeep)
+{
+	if(String.Len() <= 0)
+	{
+		return String;
+	}
+
+	FString NewString;
+	NewString.Reserve(FMath::Max(String.Len(), (ReplacementCharacter.Len() * String.Len())));
+
+	for(TCHAR Char : String)
+	{
+		if(KeepLowercaseAZ && (Char >= 'a') && (Char <= 'z'))
+		{
+			NewString.AppendChar(Char);
+			continue;
+		}
+		if(KeepUppercaseAZ && (Char >= 'A') && (Char <= 'Z'))
+		{
+			NewString.AppendChar(Char);
+			continue;
+		}
+		if(KeepNumbers && (Char >= '0') && (Char <= '9'))
+		{
+			NewString.AppendChar(Char);
+			continue;
+		}
+
+		bool Keep = false;
+		for(TCHAR KeepChar : OtherCharactersToKeep)
+		{
+			if(Char == KeepChar)
+			{
+				NewString.AppendChar(Char);
+				Keep = true;
+				break;
+			}
+		}
+		if(Keep)
+		{
+			continue;
+		}
+
+		NewString.Append(ReplacementCharacter);
+	}
+
+	return NewString;
+}
+
+
+
 float										ULowEntryExtendedStandardLibrary::LocalFloat(float Value)														{ return Value; }
 int32										ULowEntryExtendedStandardLibrary::LocalInteger(int32 Value)														{ return Value; }
 uint8										ULowEntryExtendedStandardLibrary::LocalByte(uint8 Value)														{ return Value; }
