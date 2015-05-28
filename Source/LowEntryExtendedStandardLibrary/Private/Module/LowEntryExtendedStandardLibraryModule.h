@@ -4,9 +4,8 @@
 #include "ILowEntryExtendedStandardLibraryModule.h"
 
 
-class LowEntryExtendedStandardLibraryModule : public ILowEntryExtendedStandardLibraryModule
+class FLowEntryExtendedStandardLibraryModule : public ILowEntryExtendedStandardLibraryModule
 {
-public:
-	void StartupModule();
-	void ShutdownModule();
+	virtual void StartupModule() override;
+	virtual void ShutdownModule() override;
 };
