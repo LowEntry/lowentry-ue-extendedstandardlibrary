@@ -643,4 +643,30 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (CompactNodeTitle = "- CRASH -", DisplayName = "Crash"))
 		static void Crash();
+
+
+
+	/**
+	* Hosts a game.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Game", meta = (WorldContext = "WorldContextObject", DisplayName = "Host Game"))
+		static void HostGame(UObject* WorldContextObject, const FString& Map, class APlayerController* SpecificPlayer = NULL);
+
+	/**
+	* Joins a game.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Game", meta = (WorldContext = "WorldContextObject", DisplayName = "Join Game"))
+		static void JoinGame(UObject* WorldContextObject, const FString& ServerAddress, class APlayerController* SpecificPlayer = NULL);
+
+	/**
+	* Changes the map of the server, and with that, everyone that is playing on the server. 
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Game", meta = (WorldContext = "WorldContextObject", DisplayName = "Change Map (Server)"))
+		static void ServerChangeMap(UObject* WorldContextObject, const FString& Map, class APlayerController* SpecificPlayer = NULL);
+
+	/**
+	* Changes the map.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Game", meta = (WorldContext = "WorldContextObject", DisplayName = "Change Map"))
+		static void ChangeMap(UObject* WorldContextObject, const FString& Map, class APlayerController* SpecificPlayer = NULL);
 };

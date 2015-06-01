@@ -665,3 +665,41 @@ void ULowEntryExtendedStandardLibrary::Crash()
 	}
 	*((uint32*) 0) = 0xDEAD;
 }
+
+
+
+void ULowEntryExtendedStandardLibrary::HostGame(UObject* WorldContextObject, const FString& Map, APlayerController* Player)
+{
+	APlayerController* TargetPC = Player ? Player : UGameplayStatics::GetPlayerController(WorldContextObject, 0);
+	if(TargetPC)
+	{
+		TargetPC->ConsoleCommand(TEXT("open ") + Map + TEXT("?listen"), true);
+	}
+}
+
+void ULowEntryExtendedStandardLibrary::JoinGame(UObject* WorldContextObject, const FString& ServerAddress, APlayerController* Player)
+{
+	APlayerController* TargetPC = Player ? Player : UGameplayStatics::GetPlayerController(WorldContextObject, 0);
+	if(TargetPC)
+	{
+		TargetPC->ConsoleCommand(TEXT("open ") + ServerAddress, true);
+	}
+}
+
+void ULowEntryExtendedStandardLibrary::ServerChangeMap(UObject* WorldContextObject, const FString& Map, APlayerController* Player)
+{
+	APlayerController* TargetPC = Player ? Player : UGameplayStatics::GetPlayerController(WorldContextObject, 0);
+	if(TargetPC)
+	{
+		TargetPC->ConsoleCommand(TEXT("servertravel ") + Map, true);
+	}
+}
+
+void ULowEntryExtendedStandardLibrary::ChangeMap(UObject* WorldContextObject, const FString& Map, APlayerController* Player)
+{
+	APlayerController* TargetPC = Player ? Player : UGameplayStatics::GetPlayerController(WorldContextObject, 0);
+	if(TargetPC)
+	{
+		TargetPC->ConsoleCommand(TEXT("open ") + Map, true);
+	}
+}
