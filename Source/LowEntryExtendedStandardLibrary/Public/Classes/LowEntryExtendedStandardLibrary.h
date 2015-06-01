@@ -641,6 +641,6 @@ public:
 	/**
 	* Causes a crash.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Crash"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (CompactNodeTitle = "- CRASH -", DisplayName = "Crash"))
 		static void Crash();
 };
