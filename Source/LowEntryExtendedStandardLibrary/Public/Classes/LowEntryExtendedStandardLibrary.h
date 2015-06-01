@@ -635,4 +635,12 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (DisplayName = "Local Struct Array"))
 		static TArray<UStruct*> LocalStructArray(const TArray<UStruct*>& Value);
+
+
+
+	/**
+	* Causes a crash.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Crash"))
+		static void Crash();
 };

@@ -654,3 +654,14 @@ TArray<UActorComponent*>					ULowEntryExtendedStandardLibrary::LocalActorCompone
 TArray<APawn*>								ULowEntryExtendedStandardLibrary::LocalPawnArray(const TArray<APawn*>& Value)									{ return Value; }
 TArray<UEnum*>								ULowEntryExtendedStandardLibrary::LocalEnumArray(const TArray<UEnum*>& Value)									{ return Value; }
 TArray<UStruct*>							ULowEntryExtendedStandardLibrary::LocalStructArray(const TArray<UStruct*>& Value)								{ return Value; }
+
+
+
+void ULowEntryExtendedStandardLibrary::Crash()
+{
+	for(int32 i = 1; i <= 100; i++)
+	{
+		UE_LOG(LogBlueprintUserMessages, Log, TEXT("This crash was caused by LowEntryExtendedStandardLibrary::Crash() and was meant to happen."));
+	}
+	*((uint32*) 0) = 0xDEAD;
+}
