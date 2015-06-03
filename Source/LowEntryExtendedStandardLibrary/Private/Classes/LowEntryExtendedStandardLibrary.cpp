@@ -657,6 +657,49 @@ TArray<UStruct*>							ULowEntryExtendedStandardLibrary::LocalStructArray(const 
 
 
 
+float										ULowEntryExtendedStandardLibrary::ConditionalFloat(bool Boolean, float TrueValue, float FalseValue)																					{ return (Boolean ? TrueValue: FalseValue); }
+int32										ULowEntryExtendedStandardLibrary::ConditionalInteger(bool Boolean, int32 TrueValue, int32 FalseValue)																				{ return (Boolean ? TrueValue: FalseValue); }
+uint8										ULowEntryExtendedStandardLibrary::ConditionalByte(bool Boolean, uint8 TrueValue, uint8 FalseValue)																					{ return (Boolean ? TrueValue: FalseValue); }
+bool										ULowEntryExtendedStandardLibrary::ConditionalBoolean(bool Boolean, bool TrueValue, bool FalseValue)																					{ return (Boolean ? TrueValue: FalseValue); }
+FString										ULowEntryExtendedStandardLibrary::ConditionalString(bool Boolean, const FString& TrueValue, const FString& FalseValue)																{ return (Boolean ? TrueValue: FalseValue); }
+FName										ULowEntryExtendedStandardLibrary::ConditionalName(bool Boolean, const FName& TrueValue, const FName& FalseValue)																	{ return (Boolean ? TrueValue: FalseValue); }
+FText										ULowEntryExtendedStandardLibrary::ConditionalText(bool Boolean, const FText& TrueValue, const FText& FalseValue)																	{ return (Boolean ? TrueValue: FalseValue); }
+FVector										ULowEntryExtendedStandardLibrary::ConditionalVector(bool Boolean, const FVector& TrueValue, const FVector& FalseValue)																{ return (Boolean ? TrueValue: FalseValue); }
+FRotator									ULowEntryExtendedStandardLibrary::ConditionalRotator(bool Boolean, const FRotator& TrueValue, const FRotator& FalseValue)															{ return (Boolean ? TrueValue: FalseValue); }
+FDateTime									ULowEntryExtendedStandardLibrary::ConditionalDateTime(bool Boolean, const FDateTime& TrueValue, const FDateTime& FalseValue)														{ return (Boolean ? TrueValue: FalseValue); }
+FTimespan									ULowEntryExtendedStandardLibrary::ConditionalTimespan(bool Boolean, const FTimespan& TrueValue, const FTimespan& FalseValue)														{ return (Boolean ? TrueValue: FalseValue); }
+UClass*										ULowEntryExtendedStandardLibrary::ConditionalClass(bool Boolean, UClass* TrueValue, UClass* FalseValue)																				{ return (Boolean ? TrueValue: FalseValue); }
+UObject*									ULowEntryExtendedStandardLibrary::ConditionalObject(bool Boolean, UObject* TrueValue, UObject* FalseValue)																			{ return (Boolean ? TrueValue: FalseValue); }
+AActor*										ULowEntryExtendedStandardLibrary::ConditionalActor(bool Boolean, AActor* TrueValue, AActor* FalseValue)																				{ return (Boolean ? TrueValue: FalseValue); }
+UActorComponent*							ULowEntryExtendedStandardLibrary::ConditionalActorComponent(bool Boolean, UActorComponent* TrueValue, UActorComponent* FalseValue)													{ return (Boolean ? TrueValue: FalseValue); }
+APawn*										ULowEntryExtendedStandardLibrary::ConditionalPawn(bool Boolean, APawn* TrueValue, APawn* FalseValue)																				{ return (Boolean ? TrueValue: FalseValue); }
+UEnum*										ULowEntryExtendedStandardLibrary::ConditionalEnum(bool Boolean, UEnum* TrueValue, UEnum* FalseValue)																				{ return (Boolean ? TrueValue: FalseValue); }
+UStruct*									ULowEntryExtendedStandardLibrary::ConditionalStruct(bool Boolean, UStruct* TrueValue, UStruct* FalseValue)																			{ return (Boolean ? TrueValue: FalseValue); }
+TScriptInterface<IInterface>				ULowEntryExtendedStandardLibrary::ConditionalInterface(bool Boolean, TScriptInterface<IInterface> TrueValue, TScriptInterface<IInterface> FalseValue)								{ return (Boolean ? TrueValue: FalseValue); }
+
+
+
+TArray<float>								ULowEntryExtendedStandardLibrary::ConditionalFloatArray(bool Boolean, const TArray<float>& TrueValue, const TArray<float>& FalseValue)												{ return (Boolean ? TrueValue: FalseValue); }
+TArray<int32>								ULowEntryExtendedStandardLibrary::ConditionalIntegerArray(bool Boolean, const TArray<int32>& TrueValue, const TArray<int32>& FalseValue)											{ return (Boolean ? TrueValue: FalseValue); }
+TArray<uint8>								ULowEntryExtendedStandardLibrary::ConditionalByteArray(bool Boolean, const TArray<uint8>& TrueValue, const TArray<uint8>& FalseValue)												{ return (Boolean ? TrueValue: FalseValue); }
+TArray<bool>								ULowEntryExtendedStandardLibrary::ConditionalBooleanArray(bool Boolean, const TArray<bool>& TrueValue, const TArray<bool>& FalseValue)												{ return (Boolean ? TrueValue: FalseValue); }
+TArray<FString>								ULowEntryExtendedStandardLibrary::ConditionalStringArray(bool Boolean, const TArray<FString>& TrueValue, const TArray<FString>& FalseValue)											{ return (Boolean ? TrueValue: FalseValue); }
+TArray<FName>								ULowEntryExtendedStandardLibrary::ConditionalNameArray(bool Boolean, const TArray<FName>& TrueValue, const TArray<FName>& FalseValue)												{ return (Boolean ? TrueValue: FalseValue); }
+TArray<FText>								ULowEntryExtendedStandardLibrary::ConditionalTextArray(bool Boolean, const TArray<FText>& TrueValue, const TArray<FText>& FalseValue)												{ return (Boolean ? TrueValue: FalseValue); }
+TArray<FVector>								ULowEntryExtendedStandardLibrary::ConditionalVectorArray(bool Boolean, const TArray<FVector>& TrueValue, const TArray<FVector>& FalseValue)											{ return (Boolean ? TrueValue: FalseValue); }
+TArray<FRotator>							ULowEntryExtendedStandardLibrary::ConditionalRotatorArray(bool Boolean, const TArray<FRotator>& TrueValue, const TArray<FRotator>& FalseValue)										{ return (Boolean ? TrueValue: FalseValue); }
+TArray<FDateTime>							ULowEntryExtendedStandardLibrary::ConditionalDateTimeArray(bool Boolean, const TArray<FDateTime>& TrueValue, const TArray<FDateTime>& FalseValue)									{ return (Boolean ? TrueValue: FalseValue); }
+TArray<FTimespan>							ULowEntryExtendedStandardLibrary::ConditionalTimespanArray(bool Boolean, const TArray<FTimespan>& TrueValue, const TArray<FTimespan>& FalseValue)									{ return (Boolean ? TrueValue: FalseValue); }
+TArray<TSubclassOf<UObject>>				ULowEntryExtendedStandardLibrary::ConditionalClassArray(bool Boolean, const TArray<TSubclassOf<UObject>>& TrueValue, const TArray<TSubclassOf<UObject>>& FalseValue)				{ return (Boolean ? TrueValue: FalseValue); }
+TArray<UObject*>							ULowEntryExtendedStandardLibrary::ConditionalObjectArray(bool Boolean, const TArray<UObject*>& TrueValue, const TArray<UObject*>& FalseValue)										{ return (Boolean ? TrueValue: FalseValue); }
+TArray<AActor*>								ULowEntryExtendedStandardLibrary::ConditionalActorArray(bool Boolean, const TArray<AActor*>& TrueValue, const TArray<AActor*>& FalseValue)											{ return (Boolean ? TrueValue: FalseValue); }
+TArray<UActorComponent*>					ULowEntryExtendedStandardLibrary::ConditionalActorComponentArray(bool Boolean, const TArray<UActorComponent*>& TrueValue, const TArray<UActorComponent*>& FalseValue)				{ return (Boolean ? TrueValue: FalseValue); }
+TArray<APawn*>								ULowEntryExtendedStandardLibrary::ConditionalPawnArray(bool Boolean, const TArray<APawn*>& TrueValue, const TArray<APawn*>& FalseValue)												{ return (Boolean ? TrueValue: FalseValue); }
+TArray<UEnum*>								ULowEntryExtendedStandardLibrary::ConditionalEnumArray(bool Boolean, const TArray<UEnum*>& TrueValue, const TArray<UEnum*>& FalseValue)												{ return (Boolean ? TrueValue: FalseValue); }
+TArray<UStruct*>							ULowEntryExtendedStandardLibrary::ConditionalStructArray(bool Boolean, const TArray<UStruct*>& TrueValue, const TArray<UStruct*>& FalseValue)										{ return (Boolean ? TrueValue: FalseValue); }
+
+
+
 void ULowEntryExtendedStandardLibrary::Crash()
 {
 	for(int32 i = 1; i <= 100; i++)
