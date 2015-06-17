@@ -250,6 +250,18 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (DisplayName = "Round (With Decimals)"))
 		static float RoundDecimals(float Number, int32 Decimals);
 
+	/**
+	* Ceil to the given Decimals.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (DisplayName = "Ceil (With Decimals)"))
+		static float CeilDecimals(float Number, int32 Decimals);
+
+	/**
+	* Floor to the given Decimals.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (DisplayName = "Floor (With Decimals)"))
+		static float FloorDecimals(float Number, int32 Decimals);
+
 
 
 	/**
