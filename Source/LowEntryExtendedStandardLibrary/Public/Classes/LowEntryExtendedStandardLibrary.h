@@ -4,6 +4,7 @@
 #include "Engine.h"
 #include "Core.h"
 #include "CoreUObject.h"
+#include "Base64.h"
 #include "DelayAction.h"
 #include "Engine/LatentActionManager.h"
 
@@ -18,6 +19,60 @@ class ULowEntryExtendedStandardLibrary : public UBlueprintFunctionLibrary
 
 
 public:
+	/**
+	* Converts a String into a Byte Array (using UTF-8 encoding).
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "String To Bytes (Utf 8)", Keywords = "byte array string utf-8"))
+		static TArray<uint8> StringToBytesUtf8(const FString& String);
+
+	/**
+	* Tries to convert a Byte Array into a String (using UTF-8 encoding). Will return an empty String on failure.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To String (Utf 8)", Keywords = "byte array string utf-8"))
+		static FString BytesToStringUtf8(const TArray<uint8>& ByteArray);
+
+
+	/**
+	* Tries to convert a Hexadecimal (Base16) String into a Byte Array. Will return an empty Array on failure.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Hex To Bytes", Keywords = "byte array hex hexadecimal base16"))
+		static TArray<uint8> HexToBytes(const FString& String);
+
+	/**
+	* Converts a Byte Array into a Hexadecimal (Base16) String.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Hex", Keywords = "byte array hex hexadecimal base16"))
+		static FString BytesToHex(const TArray<uint8>& ByteArray);
+
+
+	/**
+	* Tries to convert a Base64 String into a Byte Array. Will return an empty Array on failure.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Base64 To Bytes", Keywords = "byte array base64"))
+		static TArray<uint8> Base64ToBytes(const FString& Base64);
+
+	/**
+	* Converts a Byte Array into a Base64 String.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Base64", Keywords = "byte array base64"))
+		static FString BytesToBase64(const TArray<uint8>& ByteArray);
+		
+		
+		
+	/**
+	* Generates a MD5 hash, always returns 16 bytes.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Hashes|Generate", Meta = (DisplayName = "Generate Hash (Md5)"))
+		static TArray<uint8> Md5(const TArray<uint8>& ByteArray);
+	
+	/**
+	* Generates a SHA1 hash, always returns 20 bytes.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Hashes|Generate", Meta = (DisplayName = "Generate Hash (Sha1)"))
+		static TArray<uint8> Sha1(const TArray<uint8>& ByteArray);
+	
+	
+	
 	/**
 	* Returns a newline character (\n).
 	* 
@@ -70,25 +125,25 @@ public:
 	/**
 	* Returns true if A is less than B (A < B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (DisplayName = "String < String", CompactNodeTitle = "<"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "String < String", CompactNodeTitle = "<"))
 		static bool LessStringString(const FString& A, const FString& B);
 
 	/**
 	* Returns true if A is greater than B (A > B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (DisplayName = "String > String", CompactNodeTitle = ">"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "String > String", CompactNodeTitle = ">"))
 		static bool GreaterStringString(const FString& A, const FString& B);
 
 	/**
 	* Returns true if A is less than or equal to B (A <= B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (DisplayName = "String <= String", CompactNodeTitle = "<="))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "String <= String", CompactNodeTitle = "<="))
 		static bool LessEqualStringString(const FString& A, const FString& B);
 
 	/**
 	* Returns true if A is greater than or equal to B (A >= B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (DisplayName = "String >= String", CompactNodeTitle = ">="))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "String >= String", CompactNodeTitle = ">="))
 		static bool GreaterEqualStringString(const FString& A, const FString& B);
 
 
@@ -305,37 +360,37 @@ public:
 	/**
 	* Returns the maximum value of all array entries and the index at which it was found. Returns an index of -1 if the given array is empty.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Array|Max")
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array")
 		static void MaxOfStringArray(const TArray<FString>& StringArray, int32& IndexOfMaxValue, FString& MaxValue);
 
 	/**
 	* Returns the minimum value of all array entries and the index at which it was found. Returns an index of -1 if the given array is empty.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Array|Min")
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array")
 		static void MinOfStringArray(const TArray<FString>& StringArray, int32& IndexOfMinValue, FString& MinValue);
 
 	/**
 	* Returns the maximum value of all array entries and the index at which it was found. Returns an index of -1 if the given array is empty.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Array|Max")
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array")
 		static void MaxOfDateTimeArray(const TArray<FDateTime>& DateTimeArray, int32& IndexOfMaxValue, FDateTime& MaxValue);
 
 	/**
 	* Returns the minimum value of all array entries and the index at which it was found. Returns an index of -1 if the given array is empty.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Array|Min")
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array")
 		static void MinOfDateTimeArray(const TArray<FDateTime>& DateTimeArray, int32& IndexOfMinValue, FDateTime& MinValue);
 
 	/**
 	* Returns the maximum value of all array entries and the index at which it was found. Returns an index of -1 if the given array is empty.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Array|Max")
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array")
 		static void MaxOfTimespanArray(const TArray<FTimespan>& TimespanArray, int32& IndexOfMaxValue, FTimespan& MaxValue);
 
 	/**
 	* Returns the minimum value of all array entries and the index at which it was found. Returns an index of -1 if the given array is empty.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Array|Min")
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array")
 		static void MinOfTimespanArray(const TArray<FTimespan>& TimespanArray, int32& IndexOfMinValue, FTimespan& MinValue);
 
 
@@ -343,37 +398,37 @@ public:
 	/**
 	* Sorts the given array.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Array|Sort", Meta = (DisplayName = "Sort (String Array)"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (String Array)"))
 		static void SortStringArray(TArray<FString>& StringArray, const bool Reversed = false);
 
 	/**
 	* Sorts the given array.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Array|Sort", Meta = (DisplayName = "Sort (Integer Array)"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Integer Array)"))
 		static void SortIntegerArray(TArray<int32>& IntegerArray, const bool Reversed = false);
 
 	/**
 	* Sorts the given array.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Array|Sort", Meta = (DisplayName = "Sort (Float Array)"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Float Array)"))
 		static void SortFloatArray(TArray<float>& FloatArray, const bool Reversed = false);
 
 	/**
 	* Sorts the given array.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Array|Sort", Meta = (DisplayName = "Sort (Byte Array)"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Byte Array)"))
 		static void SortByteArray(TArray<uint8>& ByteArray, const bool Reversed = false);
 
 	/**
 	* Sorts the given array.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Array|Sort", Meta = (DisplayName = "Sort (DateTime Array)"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (DateTime Array)"))
 		static void SortDateTimeArray(TArray<FDateTime>& DateTimeArray, const bool Reversed = false);
 
 	/**
 	* Sorts the given array.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Array|Sort", Meta = (DisplayName = "Sort (Timespan Array)"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Timespan Array)"))
 		static void SortTimespanArray(TArray<FTimespan>& TimespanArray, const bool Reversed = false);
 
 
@@ -386,7 +441,7 @@ public:
 	* @param MaxDuration 	maximum length of delay (in seconds).
 	* @param LatentInfo 	The latent action.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Flow Control|Delay", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", MinDuration = "0.2", MaxDuration = "0.5"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Flow Control", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", MinDuration = "0.2", MaxDuration = "0.5"))
 		static void	RandomDelay(UObject* WorldContextObject, float MinDuration, float MaxDuration, struct FLatentActionInfo LatentInfo);
 
 	/**
@@ -397,7 +452,7 @@ public:
 	* @param MaxDuration 	maximum length of delay (in seconds).
 	* @param LatentInfo 	The latent action.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Flow Control|Delay", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", MinDuration = "0.2", MaxDuration = "0.5"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Flow Control", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", MinDuration = "0.2", MaxDuration = "0.5"))
 		static void RetriggerableRandomDelay(UObject* WorldContextObject, float MinDuration, float MaxDuration, FLatentActionInfo LatentInfo);
 
 

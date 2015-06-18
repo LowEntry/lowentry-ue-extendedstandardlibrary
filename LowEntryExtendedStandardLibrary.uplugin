@@ -6,7 +6,7 @@
     "CreatedBy": "Low Entry",
     "CreatedByURL": "http://lowentry.com",
     "EngineVersion": "4.8.0",
-    "Description": "Low Entry - Extended Standard Library continues where the standard macro's stop.",
+    "Description": "Low Entry - Extended Standard Library continues where the standard blueprints stop.",
     "Category": "Low Entry.Plugins",
     "EnabledByDefault": true,
     "Modules": [

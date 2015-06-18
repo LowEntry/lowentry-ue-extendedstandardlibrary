@@ -11,6 +11,125 @@
 
 
 
+TArray<uint8> ULowEntryExtendedStandardLibrary::StringToBytesUtf8(const FString& String)
+{
+	int32 Size = String.Len();
+	if(Size <= 0)
+	{
+		return TArray<uint8>();
+	}
+
+	TArray<uint8> ByteArray;
+	const TCHAR* Chars = String.GetCharArray().GetData();
+	ByteArray.Append((uint8*) TCHAR_TO_UTF8(Chars), Size);
+	return ByteArray;
+}
+
+FString ULowEntryExtendedStandardLibrary::BytesToStringUtf8(const TArray<uint8>& ByteArray)
+{
+	int32 Size = ByteArray.Num();
+	if(Size <= 0)
+	{
+		return TEXT("");
+	}
+
+	FString String = TEXT("");
+	const uint8* Bytes = ByteArray.GetData();
+	String.AppendChars(UTF8_TO_TCHAR(Bytes), Size);
+	return String;
+}
+
+
+TArray<uint8> ULowEntryExtendedStandardLibrary::HexToBytes(const FString& String)
+{
+	int32 Size = String.Len();
+	if(Size <= 0)
+	{
+		return TArray<uint8>();
+	}
+
+	for(TCHAR c : String)
+	{
+		if(!CheckTCharIsHex(c))
+		{
+			return TArray<uint8>();
+		}
+	}
+
+	uint8* Bytes = new uint8[Size];
+	int32 ByteCount = ::HexToBytes(String, Bytes);
+	TArray<uint8> ByteArray;
+	ByteArray.Append(Bytes, ByteCount + 1);
+	delete [] Bytes;
+	return ByteArray;
+}
+
+FString ULowEntryExtendedStandardLibrary::BytesToHex(const TArray<uint8>& ByteArray)
+{
+	int32 Size = ByteArray.Num();
+	if(Size <= 0)
+	{
+		return TEXT("");
+	}
+	return ::BytesToHex(ByteArray.GetData(), Size);
+}
+
+
+TArray<uint8> ULowEntryExtendedStandardLibrary::Base64ToBytes(const FString& Base64)
+{
+	TArray<uint8> ByteArray;
+	bool success = FBase64::Decode(Base64, ByteArray);
+	if(!success)
+	{
+		return TArray<uint8>();
+	}
+	return ByteArray;
+}
+
+FString ULowEntryExtendedStandardLibrary::BytesToBase64(const TArray<uint8>& ByteArray)
+{
+	return FBase64::Encode(ByteArray);
+}
+
+
+
+TArray<uint8> ULowEntryExtendedStandardLibrary::Md5(const TArray<uint8>& ByteArray)
+{
+	FMD5 Hasher;
+	int32 Size = ByteArray.Num();
+	if(Size > 0)
+	{
+		const uint8* Bytes = ByteArray.GetData();
+		Hasher.Update((uint8*) Bytes, Size);
+	}
+
+	uint8 DigestBytes[16];
+	Hasher.Final(DigestBytes);
+	TArray<uint8> DigestByteArray;
+	DigestByteArray.Append(DigestBytes, 16);
+	return DigestByteArray;
+}
+
+TArray<uint8> ULowEntryExtendedStandardLibrary::Sha1(const TArray<uint8>& ByteArray)
+{
+	FSHA1 Hasher;
+	int32 Size = ByteArray.Num();
+	if(Size > 0)
+	{
+		const uint8* Bytes = ByteArray.GetData();
+		Hasher.Update((uint8*) Bytes, Size);
+	}
+
+	uint8 DigestBytes[FSHA1::DigestSize];
+	Hasher.Final();
+	Hasher.GetHash(DigestBytes);
+	TArray<uint8> DigestByteArray;
+	DigestByteArray.Append(DigestBytes, FSHA1::DigestSize);
+	return DigestByteArray;
+}
+
+
+
 FString ULowEntryExtendedStandardLibrary::NewlineCharacter()
 {
 	return TEXT("\n");
