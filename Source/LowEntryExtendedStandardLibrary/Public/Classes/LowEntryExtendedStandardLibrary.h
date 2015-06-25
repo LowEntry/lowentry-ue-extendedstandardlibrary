@@ -399,37 +399,37 @@ public:
 	* Sorts the given array.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (String Array)"))
-		static void SortStringArray(TArray<FString>& StringArray, const bool Reversed = false);
+		static TArray<FString> SortStringArray(const TArray<FString>& StringArray, const bool Reversed = false);
 
 	/**
 	* Sorts the given array.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Integer Array)"))
-		static void SortIntegerArray(TArray<int32>& IntegerArray, const bool Reversed = false);
+		static TArray<int32> SortIntegerArray(const TArray<int32>& IntegerArray, const bool Reversed = false);
 
 	/**
 	* Sorts the given array.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Float Array)"))
-		static void SortFloatArray(TArray<float>& FloatArray, const bool Reversed = false);
+		static TArray<float> SortFloatArray(const TArray<float>& FloatArray, const bool Reversed = false);
 
 	/**
 	* Sorts the given array.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Byte Array)"))
-		static void SortByteArray(TArray<uint8>& ByteArray, const bool Reversed = false);
+		static TArray<uint8> SortByteArray(const TArray<uint8>& ByteArray, const bool Reversed = false);
 
 	/**
 	* Sorts the given array.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (DateTime Array)"))
-		static void SortDateTimeArray(TArray<FDateTime>& DateTimeArray, const bool Reversed = false);
+		static TArray<FDateTime> SortDateTimeArray(const TArray<FDateTime>& DateTimeArray, const bool Reversed = false);
 
 	/**
 	* Sorts the given array.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Timespan Array)"))
-		static void SortTimespanArray(TArray<FTimespan>& TimespanArray, const bool Reversed = false);
+		static TArray<FTimespan> SortTimespanArray(const TArray<FTimespan>& TimespanArray, const bool Reversed = false);
 
 
 
