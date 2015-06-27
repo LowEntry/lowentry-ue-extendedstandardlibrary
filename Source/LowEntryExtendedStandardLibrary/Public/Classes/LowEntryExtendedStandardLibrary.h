@@ -22,39 +22,39 @@ public:
 	/**
 	* Converts a String into a Byte Array (using UTF-8 encoding).
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "String To Bytes (Utf 8)", Keywords = "byte array string utf-8"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "String To Bytes (Utf 8)", Keywords = "byte array string utf-8"))
 		static TArray<uint8> StringToBytesUtf8(const FString& String);
 
 	/**
 	* Tries to convert a Byte Array into a String (using UTF-8 encoding). Will return an empty String on failure.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To String (Utf 8)", Keywords = "byte array string utf-8"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To String (Utf 8)", Keywords = "byte array string utf-8"))
 		static FString BytesToStringUtf8(const TArray<uint8>& ByteArray);
 
 
 	/**
 	* Tries to convert a Hexadecimal (Base16) String into a Byte Array. Will return an empty Array on failure.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Hex To Bytes", Keywords = "byte array hex hexadecimal base16"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Hex To Bytes", Keywords = "byte array hex hexadecimal base16"))
 		static TArray<uint8> HexToBytes(const FString& String);
 
 	/**
 	* Converts a Byte Array into a Hexadecimal (Base16) String.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Hex", Keywords = "byte array hex hexadecimal base16"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Hex", Keywords = "byte array hex hexadecimal base16"))
 		static FString BytesToHex(const TArray<uint8>& ByteArray);
 
 
 	/**
 	* Tries to convert a Base64 String into a Byte Array. Will return an empty Array on failure.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Base64 To Bytes", Keywords = "byte array base64"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Base64 To Bytes", Keywords = "byte array base64"))
 		static TArray<uint8> Base64ToBytes(const FString& Base64);
 
 	/**
 	* Converts a Byte Array into a Base64 String.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Base64", Keywords = "byte array base64"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Base64", Keywords = "byte array base64"))
 		static FString BytesToBase64(const TArray<uint8>& ByteArray);
 		
 		
@@ -62,13 +62,13 @@ public:
 	/**
 	* Generates a MD5 hash, always returns 16 bytes.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Hashes|Generate", Meta = (DisplayName = "Generate Hash (Md5)"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Hashes|Generate", Meta = (DisplayName = "Generate Hash (Md5)"))
 		static TArray<uint8> Md5(const TArray<uint8>& ByteArray);
 	
 	/**
 	* Generates a SHA1 hash, always returns 20 bytes.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Hashes|Generate", Meta = (DisplayName = "Generate Hash (Sha1)"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Hashes|Generate", Meta = (DisplayName = "Generate Hash (Sha1)"))
 		static TArray<uint8> Sha1(const TArray<uint8>& ByteArray);
 	
 	
@@ -302,58 +302,20 @@ public:
 	/**
 	* Rounds to the given Decimals.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (DisplayName = "Round (With Decimals)"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (DisplayName = "Round (With Decimals)"))
 		static float RoundDecimals(float Number, int32 Decimals);
 
 	/**
 	* Ceil to the given Decimals.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (DisplayName = "Ceil (With Decimals)"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (DisplayName = "Ceil (With Decimals)"))
 		static float CeilDecimals(float Number, int32 Decimals);
 
 	/**
 	* Floor to the given Decimals.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (DisplayName = "Floor (With Decimals)"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (DisplayName = "Floor (With Decimals)"))
 		static float FloorDecimals(float Number, int32 Decimals);
-
-
-
-	/**
-	* Returns the minimum and maximum value of the two given values.
-	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Min & Max", Meta = (DisplayName = "Min & Max (String)"))
-		static void MinAndMaxString(const FString& Value1, const FString& Value2, FString& MaxValue, FString& MinValue);
-
-	/**
-	* Returns the minimum and maximum value of the two given values.
-	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Min & Max", Meta = (DisplayName = "Min & Max (Integer)"))
-		static void MinAndMaxInteger(const int32 Value1, const int32 Value2, int32& MaxValue, int32& MinValue);
-
-	/**
-	* Returns the minimum and maximum value of the two given values.
-	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Min & Max", Meta = (DisplayName = "Min & Max (Float)"))
-		static void MinAndMaxFloat(const float Value1, const float Value2, float& MaxValue, float& MinValue);
-
-	/**
-	* Returns the minimum and maximum value of the two given values.
-	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Min & Max", Meta = (DisplayName = "Min & Max (Byte)"))
-		static void MinAndMaxByte(const uint8 Value1, const uint8 Value2, uint8& MaxValue, uint8& MinValue);
-
-	/**
-	* Returns the minimum and maximum value of the two given values.
-	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Min & Max", Meta = (DisplayName = "Min & Max (DateTime)"))
-		static void MinAndMaxDateTime(const FDateTime& Value1, const FDateTime& Value2, FDateTime& MaxValue, FDateTime& MinValue);
-
-	/**
-	* Returns the minimum and maximum value of the two given values.
-	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Min & Max", Meta = (DisplayName = "Min & Max (Timespan)"))
-		static void MinAndMaxTimespan(const FTimespan& Value1, const FTimespan& Value2, FTimespan& MaxValue, FTimespan& MinValue);
 
 
 
@@ -398,37 +360,37 @@ public:
 	/**
 	* Sorts the given array.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (String Array)"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (String Array)"))
 		static TArray<FString> SortStringArray(const TArray<FString>& StringArray, const bool Reversed = false);
 
 	/**
 	* Sorts the given array.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Integer Array)"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Integer Array)"))
 		static TArray<int32> SortIntegerArray(const TArray<int32>& IntegerArray, const bool Reversed = false);
 
 	/**
 	* Sorts the given array.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Float Array)"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Float Array)"))
 		static TArray<float> SortFloatArray(const TArray<float>& FloatArray, const bool Reversed = false);
 
 	/**
 	* Sorts the given array.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Byte Array)"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Byte Array)"))
 		static TArray<uint8> SortByteArray(const TArray<uint8>& ByteArray, const bool Reversed = false);
 
 	/**
 	* Sorts the given array.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (DateTime Array)"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (DateTime Array)"))
 		static TArray<FDateTime> SortDateTimeArray(const TArray<FDateTime>& DateTimeArray, const bool Reversed = false);
 
 	/**
 	* Sorts the given array.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Timespan Array)"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Timespan Array)"))
 		static TArray<FTimespan> SortTimespanArray(const TArray<FTimespan>& TimespanArray, const bool Reversed = false);
 
 
@@ -460,7 +422,7 @@ public:
 	/**
 	* Creates a String of the given length.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (DisplayName = "Create String"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (DisplayName = "Create String"))
 		static FString CreateString(const int32 Length, const FString& Filler = TEXT(" "));
 
 
@@ -468,13 +430,13 @@ public:
 	/**
 	* Removes all characters except the characters chosen to keep.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (DisplayName = "Remove Characters"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (DisplayName = "Remove Characters"))
 		static FString RemoveCharactersExcept(const FString& String, const bool KeepLowercaseAZ, const bool KeepUppercaseAZ, const bool KeepNumbers, const FString& OtherCharactersToKeep);
 
 	/**
 	* Replaces all characters with the given replacement character except the characters chosen to keep.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (DisplayName = "Replace Characters"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (DisplayName = "Replace Characters"))
 		static FString ReplaceCharactersExcept(const FString& String, const FString& ReplacementCharacter, const bool KeepLowercaseAZ, const bool KeepUppercaseAZ, const bool KeepNumbers, const FString& OtherCharactersToKeep);
 
 
