@@ -12,7 +12,7 @@
 
 
 UCLASS()
-class ULowEntryExtendedStandardLibrary : public UBlueprintFunctionLibrary
+class LOWENTRYEXTENDEDSTANDARDLIBRARY_API ULowEntryExtendedStandardLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_UCLASS_BODY()
 
