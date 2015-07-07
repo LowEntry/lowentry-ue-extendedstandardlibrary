@@ -10,6 +10,51 @@
 // init <<
 
 
+void ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(UObject* WorldContextObject, const FString& InString, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)
+{
+#if !(UE_BUILD_SHIPPING || UE_BUILD_TEST)
+	WorldContextObject = GEngine->GetWorldFromContextObject(WorldContextObject, false);
+	FString Prefix;
+	if(WorldContextObject)
+	{
+		UWorld *World = WorldContextObject->GetWorld();
+		if(World->WorldType == EWorldType::PIE)
+		{
+			switch(World->GetNetMode())
+			{
+				case NM_Client:
+					Prefix = FString::Printf(TEXT("Client %d: "), GPlayInEditorID - 1);
+					break;
+				case NM_DedicatedServer:
+				case NM_ListenServer:
+					Prefix = FString::Printf(TEXT("Server: "));
+					break;
+			}
+		}
+	}
+
+	const FString FinalString = Prefix + InString;
+
+	if(bPrintToLog)
+	{
+		UE_LOG(LogBlueprintUserMessages, Log, TEXT("%s"), *FinalString);
+	}
+	else
+	{
+		UE_LOG(LogBlueprintUserMessages, Verbose, TEXT("%s"), *FinalString);
+	}
+
+	if(bPrintToScreen)
+	{
+		if(GAreScreenMessagesEnabled)
+		{
+			GEngine->AddOnScreenDebugMessage((uint64) -1, ScreenDurationTime, TextColor.ToFColor(true), FinalString);
+		}
+	}
+#endif
+}
+
+
 
 TArray<uint8> ULowEntryExtendedStandardLibrary::StringToBytesUtf8(const FString& String)
 {
@@ -757,6 +802,49 @@ TArray<UActorComponent*>					ULowEntryExtendedStandardLibrary::LocalActorCompone
 TArray<APawn*>								ULowEntryExtendedStandardLibrary::LocalPawnArray(const TArray<APawn*>& Value)									{ return Value; }
 TArray<UEnum*>								ULowEntryExtendedStandardLibrary::LocalEnumArray(const TArray<UEnum*>& Value)									{ return Value; }
 TArray<UStruct*>							ULowEntryExtendedStandardLibrary::LocalStructArray(const TArray<UStruct*>& Value)								{ return Value; }
+
+
+
+float										ULowEntryExtendedStandardLibrary::PurePrintFloat(UObject* WorldContextObject, float Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)														{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+int32										ULowEntryExtendedStandardLibrary::PurePrintInteger(UObject* WorldContextObject, int32 Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)													{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+uint8										ULowEntryExtendedStandardLibrary::PurePrintByte(UObject* WorldContextObject, uint8 Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)														{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+bool										ULowEntryExtendedStandardLibrary::PurePrintBoolean(UObject* WorldContextObject, bool Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)													{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+FString										ULowEntryExtendedStandardLibrary::PurePrintString(UObject* WorldContextObject, const FString& Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)											{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+FName										ULowEntryExtendedStandardLibrary::PurePrintName(UObject* WorldContextObject, const FName& Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)												{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+FText										ULowEntryExtendedStandardLibrary::PurePrintText(UObject* WorldContextObject, const FText& Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)												{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+FVector										ULowEntryExtendedStandardLibrary::PurePrintVector(UObject* WorldContextObject, const FVector& Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)											{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+FRotator									ULowEntryExtendedStandardLibrary::PurePrintRotator(UObject* WorldContextObject, const FRotator& Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)											{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+FDateTime									ULowEntryExtendedStandardLibrary::PurePrintDateTime(UObject* WorldContextObject, const FDateTime& Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)										{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+FTimespan									ULowEntryExtendedStandardLibrary::PurePrintTimespan(UObject* WorldContextObject, const FTimespan& Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)										{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+UClass*										ULowEntryExtendedStandardLibrary::PurePrintClass(UObject* WorldContextObject, UClass* Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)													{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+UObject*									ULowEntryExtendedStandardLibrary::PurePrintObject(UObject* WorldContextObject, UObject* Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)													{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+AActor*										ULowEntryExtendedStandardLibrary::PurePrintActor(UObject* WorldContextObject, AActor* Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)													{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+UActorComponent*							ULowEntryExtendedStandardLibrary::PurePrintActorComponent(UObject* WorldContextObject, UActorComponent* Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)									{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+APawn*										ULowEntryExtendedStandardLibrary::PurePrintPawn(UObject* WorldContextObject, APawn* Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)														{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+UEnum*										ULowEntryExtendedStandardLibrary::PurePrintEnum(UObject* WorldContextObject, UEnum* Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)														{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+UStruct*									ULowEntryExtendedStandardLibrary::PurePrintStruct(UObject* WorldContextObject, UStruct* Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)													{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+TScriptInterface<IInterface>				ULowEntryExtendedStandardLibrary::PurePrintInterface(UObject* WorldContextObject, TScriptInterface<IInterface> Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)							{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+
+
+
+TArray<float>								ULowEntryExtendedStandardLibrary::PurePrintFloatArray(UObject* WorldContextObject, const TArray<float>& Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)									{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+TArray<int32>								ULowEntryExtendedStandardLibrary::PurePrintIntegerArray(UObject* WorldContextObject, const TArray<int32>& Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)								{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+TArray<uint8>								ULowEntryExtendedStandardLibrary::PurePrintByteArray(UObject* WorldContextObject, const TArray<uint8>& Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)									{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+TArray<bool>								ULowEntryExtendedStandardLibrary::PurePrintBooleanArray(UObject* WorldContextObject, const TArray<bool>& Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)								{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+TArray<FString>								ULowEntryExtendedStandardLibrary::PurePrintStringArray(UObject* WorldContextObject, const TArray<FString>& Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)								{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+TArray<FName>								ULowEntryExtendedStandardLibrary::PurePrintNameArray(UObject* WorldContextObject, const TArray<FName>& Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)									{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+TArray<FText>								ULowEntryExtendedStandardLibrary::PurePrintTextArray(UObject* WorldContextObject, const TArray<FText>& Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)									{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+TArray<FVector>								ULowEntryExtendedStandardLibrary::PurePrintVectorArray(UObject* WorldContextObject, const TArray<FVector>& Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)								{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+TArray<FRotator>							ULowEntryExtendedStandardLibrary::PurePrintRotatorArray(UObject* WorldContextObject, const TArray<FRotator>& Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)							{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+TArray<FDateTime>							ULowEntryExtendedStandardLibrary::PurePrintDateTimeArray(UObject* WorldContextObject, const TArray<FDateTime>& Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)							{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+TArray<FTimespan>							ULowEntryExtendedStandardLibrary::PurePrintTimespanArray(UObject* WorldContextObject, const TArray<FTimespan>& Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)							{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+TArray<TSubclassOf<UObject>>				ULowEntryExtendedStandardLibrary::PurePrintClassArray(UObject* WorldContextObject, const TArray<TSubclassOf<UObject>>& Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)					{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+TArray<UObject*>							ULowEntryExtendedStandardLibrary::PurePrintObjectArray(UObject* WorldContextObject, const TArray<UObject*>& Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)								{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+TArray<AActor*>								ULowEntryExtendedStandardLibrary::PurePrintActorArray(UObject* WorldContextObject, const TArray<AActor*>& Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)								{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+TArray<UActorComponent*>					ULowEntryExtendedStandardLibrary::PurePrintActorComponentArray(UObject* WorldContextObject, const TArray<UActorComponent*>& Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)				{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+TArray<APawn*>								ULowEntryExtendedStandardLibrary::PurePrintPawnArray(UObject* WorldContextObject, const TArray<APawn*>& Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)									{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+TArray<UEnum*>								ULowEntryExtendedStandardLibrary::PurePrintEnumArray(UObject* WorldContextObject, const TArray<UEnum*>& Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)									{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
+TArray<UStruct*>							ULowEntryExtendedStandardLibrary::PurePrintStructArray(UObject* WorldContextObject, const TArray<UStruct*>& Value, const FString& Message, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)								{ ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(WorldContextObject, Message, ScreenDurationTime, bPrintToScreen, bPrintToLog, TextColor); return Value; }
 
 
 

@@ -19,6 +19,11 @@ class LOWENTRYEXTENDEDSTANDARDLIBRARY_API ULowEntryExtendedStandardLibrary : pub
 
 
 public:
+	static void KismetSystemLibraryPrintString(UObject* WorldContextObject, const FString& InString, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor);
+
+
+
+public:
 	/**
 	* Converts a String into a Byte Array (using UTF-8 encoding).
 	*/
@@ -664,6 +669,232 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Local", Meta = (DisplayName = "Local Struct Array"))
 		static TArray<UStruct*> LocalStructArray(const TArray<UStruct*>& Value);
+
+
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Float)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static float PurePrintFloat(UObject* WorldContextObject, float Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Integer)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static int32 PurePrintInteger(UObject* WorldContextObject, int32 Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Byte)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static uint8 PurePrintByte(UObject* WorldContextObject, uint8 Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Boolean)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static bool PurePrintBoolean(UObject* WorldContextObject, bool Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (String)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static FString PurePrintString(UObject* WorldContextObject, const FString& Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Name)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static FName PurePrintName(UObject* WorldContextObject, const FName& Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Text)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static FText PurePrintText(UObject* WorldContextObject, const FText& Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Vector)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static FVector PurePrintVector(UObject* WorldContextObject, const FVector& Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Rotator)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static FRotator PurePrintRotator(UObject* WorldContextObject, const FRotator& Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Date Time)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static FDateTime PurePrintDateTime(UObject* WorldContextObject, const FDateTime& Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Timespan)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static FTimespan PurePrintTimespan(UObject* WorldContextObject, const FTimespan& Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Class)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static UClass* PurePrintClass(UObject* WorldContextObject, UClass* Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Object)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static UObject* PurePrintObject(UObject* WorldContextObject, UObject* Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Actor)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static AActor* PurePrintActor(UObject* WorldContextObject, AActor* Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Actor Component)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static UActorComponent* PurePrintActorComponent(UObject* WorldContextObject, UActorComponent* Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Pawn)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static APawn* PurePrintPawn(UObject* WorldContextObject, APawn* Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Enum)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static UEnum* PurePrintEnum(UObject* WorldContextObject, UEnum* Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Struct)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static UStruct* PurePrintStruct(UObject* WorldContextObject, UStruct* Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Interface)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static TScriptInterface<IInterface> PurePrintInterface(UObject* WorldContextObject, TScriptInterface<IInterface> Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Float Array)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static TArray<float> PurePrintFloatArray(UObject* WorldContextObject, const TArray<float>& Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Integer Array)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static TArray<int32> PurePrintIntegerArray(UObject* WorldContextObject, const TArray<int32>& Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Byte Array)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static TArray<uint8> PurePrintByteArray(UObject* WorldContextObject, const TArray<uint8>& Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Boolean Array)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static TArray<bool> PurePrintBooleanArray(UObject* WorldContextObject, const TArray<bool>& Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (String Array)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static TArray<FString> PurePrintStringArray(UObject* WorldContextObject, const TArray<FString>& Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Name Array)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static TArray<FName> PurePrintNameArray(UObject* WorldContextObject, const TArray<FName>& Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Text Array)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static TArray<FText> PurePrintTextArray(UObject* WorldContextObject, const TArray<FText>& Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Vector Array)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static TArray<FVector> PurePrintVectorArray(UObject* WorldContextObject, const TArray<FVector>& Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Rotator Array)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static TArray<FRotator> PurePrintRotatorArray(UObject* WorldContextObject, const TArray<FRotator>& Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Date Time Array)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static TArray<FDateTime> PurePrintDateTimeArray(UObject* WorldContextObject, const TArray<FDateTime>& Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Timespan Array)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static TArray<FTimespan> PurePrintTimespanArray(UObject* WorldContextObject, const TArray<FTimespan>& Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Class Array)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static TArray<TSubclassOf<UObject>> PurePrintClassArray(UObject* WorldContextObject, const TArray<TSubclassOf<UObject>>& Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Object Array)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static TArray<UObject*> PurePrintObjectArray(UObject* WorldContextObject, const TArray<UObject*>& Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Actor Array)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static TArray<AActor*> PurePrintActorArray(UObject* WorldContextObject, const TArray<AActor*>& Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Actor Component Array)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static TArray<UActorComponent*> PurePrintActorComponentArray(UObject* WorldContextObject, const TArray<UActorComponent*>& Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Pawn Array)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static TArray<APawn*> PurePrintPawnArray(UObject* WorldContextObject, const TArray<APawn*>& Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Enum Array)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static TArray<UEnum*> PurePrintEnumArray(UObject* WorldContextObject, const TArray<UEnum*>& Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
+
+	/**
+	* Passes the parameter and prints a message, this can be really useful if you want to print a message whenever a Pure blueprint is called.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Pure Print", Meta = (DisplayName = "Pure Print (Struct Array)", WorldContext = "WorldContextObject", CallableWithoutWorldContext, Keywords = "log print", AdvancedDisplay = "3"))
+		static TArray<UStruct*> PurePrintStructArray(UObject* WorldContextObject, const TArray<UStruct*>& Value, const FString& Message, const float ScreenDurationTime = 5.0f, const bool bPrintToScreen = true, const bool bPrintToLog = true, const FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0));
 
 
 
