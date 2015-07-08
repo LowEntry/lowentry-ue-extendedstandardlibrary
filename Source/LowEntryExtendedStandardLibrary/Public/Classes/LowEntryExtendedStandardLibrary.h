@@ -25,6 +25,32 @@ public:
 
 public:
 	/**
+	* Returns true if this is a debug build (UE_BUILD_DEBUG), returns false otherwise.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Build", Meta = (DisplayName = "Is Debug Build", Keywords = "compile export mode version type"))
+		static bool DebugBuild();
+
+	/**
+	* Returns true if this is a debug build (UE_BUILD_DEVELOPMENT), returns false otherwise.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Build", Meta = (DisplayName = "Is Development Build", Keywords = "compile export mode version type"))
+		static bool DevelopmentBuild();
+
+	/**
+	* Returns true if this is a debug build (UE_BUILD_TEST), returns false otherwise.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Build", Meta = (DisplayName = "Is Test Build", Keywords = "compile export mode version type"))
+		static bool TestBuild();
+
+	/**
+	* Returns true if this is a debug build (UE_BUILD_SHIPPING), returns false otherwise.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Build", Meta = (DisplayName = "Is Shipping Build", Keywords = "compile export mode version type"))
+		static bool ShippingBuild();
+
+
+
+	/**
 	* Converts a String into a Byte Array (using UTF-8 encoding).
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "String To Bytes (Utf 8)", Keywords = "byte array string utf-8"))

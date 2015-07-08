@@ -56,6 +56,44 @@ void ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(UObject* W
 
 
 
+bool ULowEntryExtendedStandardLibrary::DebugBuild()
+{
+#if UE_BUILD_DEBUG
+	return true;
+#else
+	return false;
+#endif
+}
+
+bool ULowEntryExtendedStandardLibrary::DevelopmentBuild()
+{
+#if UE_BUILD_DEVELOPMENT
+	return true;
+#else
+	return false;
+#endif
+}
+
+bool ULowEntryExtendedStandardLibrary::TestBuild()
+{
+#if UE_BUILD_TEST
+	return true;
+#else
+	return false;
+#endif
+}
+
+bool ULowEntryExtendedStandardLibrary::ShippingBuild()
+{
+#if UE_BUILD_SHIPPING
+	return true;
+#else
+	return false;
+#endif
+}
+
+
+
 TArray<uint8> ULowEntryExtendedStandardLibrary::StringToBytesUtf8(const FString& String)
 {
 	int32 Size = String.Len();
