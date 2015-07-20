@@ -6,7 +6,7 @@
     "CreatedBy": "Low Entry",
     "CreatedByURL": "http://lowentry.com",
     "EngineVersion": "4.8.0",
-    "Description": "Low Entry - Extended Standard Library continues where the standard blueprints stop.",
+    "Description": "The Extended Standard Library plugin provides you with blueprints that add a lot of functionality and improvements to the blueprint scripting language.",
     "Category": "Low Entry.Plugins",
     "EnabledByDefault": true,
     "Modules": [
