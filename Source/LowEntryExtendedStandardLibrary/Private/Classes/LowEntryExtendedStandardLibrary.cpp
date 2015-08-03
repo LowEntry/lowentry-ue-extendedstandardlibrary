@@ -123,6 +123,23 @@ FString ULowEntryExtendedStandardLibrary::BytesToStringUtf8(const TArray<uint8>&
 }
 
 
+TArray<uint8> ULowEntryExtendedStandardLibrary::Base64ToBytes(const FString& Base64)
+{
+	TArray<uint8> ByteArray;
+	bool success = FBase64::Decode(Base64, ByteArray);
+	if(!success)
+	{
+		return TArray<uint8>();
+	}
+	return ByteArray;
+}
+
+FString ULowEntryExtendedStandardLibrary::BytesToBase64(const TArray<uint8>& ByteArray)
+{
+	return FBase64::Encode(ByteArray);
+}
+
+
 TArray<uint8> ULowEntryExtendedStandardLibrary::HexToBytes(const FString& String)
 {
 	int32 Size = String.Len();
@@ -147,31 +164,146 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::HexToBytes(const FString& String
 	return ByteArray;
 }
 
-FString ULowEntryExtendedStandardLibrary::BytesToHex(const TArray<uint8>& ByteArray)
+FString ULowEntryExtendedStandardLibrary::BytesToHex(const TArray<uint8>& ByteArray, const bool AddSpaces)
 {
 	int32 Size = ByteArray.Num();
 	if(Size <= 0)
 	{
 		return TEXT("");
 	}
-	return ::BytesToHex(ByteArray.GetData(), Size);
+	FString Hex = ::BytesToHex(ByteArray.GetData(), Size);
+	if(!AddSpaces)
+	{
+		return Hex;
+	}
+	FString String;
+	String.Reserve((Hex.Len() / 2) * 3);
+	TArray<TCHAR> Chars = Hex.GetCharArray();
+	for(int i = 1; i <= Chars.Num(); i++)
+	{
+		String.AppendChar(Chars[i - 1]);
+		if(((i % 2) == 0) && (i < Chars.Num()))
+		{
+			String.Append(TEXT(" "));
+		}
+	}
+	return String;
 }
 
 
-TArray<uint8> ULowEntryExtendedStandardLibrary::Base64ToBytes(const FString& Base64)
+TArray<uint8> ULowEntryExtendedStandardLibrary::BinaryToBytes(const FString& Binary)
 {
-	TArray<uint8> ByteArray;
-	bool success = FBase64::Decode(Base64, ByteArray);
-	if(!success)
+	if(Binary.Len() <= 0)
 	{
 		return TArray<uint8>();
 	}
+	FString String = Binary.Replace(TEXT(" "), TEXT(""));
+	if((String.Len() <= 0) || ((String.Len() % 8) != 0))
+	{
+		return TArray<uint8>();
+	}
+	TArray<TCHAR> Bits = String.GetCharArray();
+	TArray<uint8> Bytes;
+	Bytes.SetNum(String.Len() / 8);
+	int32 Index = 0;
+	for(int i = 0; i < String.Len(); i += 8)
+	{
+		uint8 b = 0;
+		for(int j = 0; j < 8; j++)
+		{
+			if(Bits[i + j] == '0')
+			{
+				continue;
+			}
+			else if(Bits[i + j] == '1')
+			{
+				b += (1 << (7 - j));
+			}
+			else
+			{
+				// encountered invalid character
+				return TArray<uint8>();
+			}
+		}
+		Bytes[Index] = b;
+		Index++;
+	}
+	return Bytes;
+}
+
+FString ULowEntryExtendedStandardLibrary::BytesToBinary(const TArray<uint8>& ByteArray, const bool AddSpaces)
+{
+	if(ByteArray.Num() <= 0)
+	{
+		return TEXT("");
+	}
+	FString String;
+	String.Reserve(ByteArray.Num() * (AddSpaces ? 9 : 8));
+	for(int32 i = 1; i <= ByteArray.Num(); i++)
+	{
+		for(int32 j = 7; j >= 0; j--)
+		{
+			if((ByteArray[i - 1] & (1 << j)) > 0)
+			{
+				String.Append(TEXT("1"));
+			}
+			else
+			{
+				String.Append(TEXT("0"));
+			}
+		}
+		if(AddSpaces && (i < ByteArray.Num()))
+		{
+			String.Append(TEXT(" "));
+		}
+	}
+	return String;
+}
+
+
+TArray<uint8> ULowEntryExtendedStandardLibrary::IntegerToBytes(const int32 Value)
+{
+	TArray<uint8> ByteArray;
+	ByteArray.SetNum(4);
+	ByteArray[0] = (Value >> 24);
+	ByteArray[1] = (Value >> 16);
+	ByteArray[2] = (Value >> 8);
+	ByteArray[3] = (Value);
 	return ByteArray;
 }
 
-FString ULowEntryExtendedStandardLibrary::BytesToBase64(const TArray<uint8>& ByteArray)
+int32 ULowEntryExtendedStandardLibrary::BytesToInteger(const TArray<uint8>& ByteArray)
 {
-	return FBase64::Encode(ByteArray);
+	if(ByteArray.Num() <= 0)
+	{
+		return 0;
+	}
+	if(ByteArray.Num() <= 1)
+	{
+		return (ByteArray[3] & 0xFF);
+	}
+	if(ByteArray.Num() <= 2)
+	{
+		return ((ByteArray[2] & 0xFF) << 8) | (ByteArray[3] & 0xFF);
+	}
+	if(ByteArray.Num() <= 3)
+	{
+		return ((ByteArray[1] & 0xFF) << 16) | ((ByteArray[2] & 0xFF) << 8) | (ByteArray[3] & 0xFF);
+	}
+	return (ByteArray[0] << 24) | ((ByteArray[1] & 0xFF) << 16) | ((ByteArray[2] & 0xFF) << 8) | (ByteArray[3] & 0xFF);
+}
+
+
+TArray<uint8> ULowEntryExtendedStandardLibrary::FloatToBytes(const float Value)
+{
+	int32 IntValue = *((int32*) (&Value));
+	return ULowEntryExtendedStandardLibrary::IntegerToBytes(IntValue);
+}
+
+float ULowEntryExtendedStandardLibrary::BytesToFloat(const TArray<uint8>& ByteArray)
+{
+	int32 IntValue = ULowEntryExtendedStandardLibrary::BytesToInteger(ByteArray);
+	return *((float*) (&IntValue));
 }
 
 

@@ -64,19 +64,6 @@ public:
 
 
 	/**
-	* Tries to convert a Hexadecimal (Base16) String into a Byte Array. Will return an empty Array on failure.
-	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Hex To Bytes", Keywords = "byte array hex hexadecimal base16"))
-		static TArray<uint8> HexToBytes(const FString& String);
-
-	/**
-	* Converts a Byte Array into a Hexadecimal (Base16) String.
-	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Hex", Keywords = "byte array hex hexadecimal base16"))
-		static FString BytesToHex(const TArray<uint8>& ByteArray);
-
-
-	/**
 	* Tries to convert a Base64 String into a Byte Array. Will return an empty Array on failure.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Base64 To Bytes", Keywords = "byte array base64"))
@@ -87,6 +74,66 @@ public:
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Base64", Keywords = "byte array base64"))
 		static FString BytesToBase64(const TArray<uint8>& ByteArray);
+
+
+	/**
+	* Tries to convert a Hexadecimal (Base16) String into a Byte Array. Will return an empty Array on failure.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Hex To Bytes", Keywords = "byte array hex hexadecimal base16"))
+		static TArray<uint8> HexToBytes(const FString& String);
+
+	/**
+	* Converts a Byte Array into a Hexadecimal (Base16) String.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Hex", Keywords = "byte array hex hexadecimal base16"))
+		static FString BytesToHex(const TArray<uint8>& ByteArray, const bool AddSpaces = false);
+
+
+	/**
+	* Tries to convert a Binary (Base2) String into a Byte Array. Will return an empty Array on failure.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Binary To Bytes", Keywords = "byte array binary base2"))
+		static TArray<uint8> BinaryToBytes(const FString& Binary);
+
+	/**
+	* Converts a Byte Array into a Binary (Base2) String.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Binary", Keywords = "byte array binary base2"))
+		static FString BytesToBinary(const TArray<uint8>& ByteArray, const bool AddSpaces = false);
+
+
+	/**
+	* Converts a signed integer (int32) into a Byte Array (4 bytes).
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Integer To Bytes", Keywords = "byte array int integer"))
+		static TArray<uint8> IntegerToBytes(const int32 Value);
+
+	/**
+	* Converts a Byte Array into a signed integer (int32).
+	* 
+	* If there are more than 4 bytes given, it will only convert the first 4 bytes to an integer.
+	* If there are less than 4 bytes given, it will prefix the bytes with 0 value bytes (so 01010101 01010101 01010101 turns into 00000000 01010101 01010101 01010101).
+	* If there are no bytes given, it will return 0.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Integer", Keywords = "byte array int integer"))
+		static int32 BytesToInteger(const TArray<uint8>& ByteArray);
+
+
+	/**
+	* Converts a float into a Byte Array (4 bytes).
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Float To Bytes", Keywords = "byte array float"))
+		static TArray<uint8> FloatToBytes(const float Value);
+
+	/**
+	* Converts a Byte Array into a float.
+	* 
+	* If there are more than 4 bytes given, it will only convert the first 4 bytes to a float.
+	* If there are less than 4 bytes given, it will prefix the bytes with 0 value bytes (so 01010101 01010101 01010101 turns into 00000000 01010101 01010101 01010101).
+	* If there are no bytes given, it will return 0.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Float", Keywords = "byte array float"))
+		static float BytesToFloat(const TArray<uint8>& ByteArray);
 		
 		
 		
