@@ -13,7 +13,11 @@
         {
             "Name": "LowEntryExtendedStandardLibrary",
             "Type": "Runtime"
-        }
+        },
+		{
+			"Name": "LowEntryExtendedStandardLibraryEditor",
+			"Type": "Editor"
+		}
     ],
 
     "CanContainContent": true
