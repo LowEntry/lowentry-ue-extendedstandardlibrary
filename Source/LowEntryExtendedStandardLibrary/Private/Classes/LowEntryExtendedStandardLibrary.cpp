@@ -94,6 +94,82 @@ bool ULowEntryExtendedStandardLibrary::ShippingBuild()
 
 
 
+void ULowEntryExtendedStandardLibrary::SplitBytes(const TArray<uint8>& ByteArray, const int32 LengthA, TArray<uint8>& A, TArray<uint8>& B)
+{
+	if(LengthA <= 0)
+	{
+		A = TArray<uint8>();
+		B = ByteArray;
+		return;
+	}
+	if(LengthA >= ByteArray.Num())
+	{
+		A = ByteArray;
+		B = TArray<uint8>();
+		return;
+	}
+
+	A = TArray<uint8>();
+	A.SetNum(LengthA);
+	for(int i = 0; i < LengthA; i++)
+	{
+		A[i] = ByteArray[i];
+	}
+
+	B = TArray<uint8>();
+	B.SetNum(ByteArray.Num() - LengthA);
+	for(int i = LengthA; i < ByteArray.Num(); i++)
+	{
+		B[i - LengthA] = ByteArray[i];
+	}
+}
+
+TArray<uint8> ULowEntryExtendedStandardLibrary::MergeBytes(const TArray<uint8>& A, const TArray<uint8>& B)
+{
+	TArray<uint8> ReturnArray = TArray<uint8>();
+	ReturnArray.SetNum(A.Num() + B.Num());
+	
+	for(int i = 0; i < A.Num(); i++)
+	{
+		ReturnArray[i] = A[i];
+	}
+
+	int32 LengthA = A.Num();
+	for(int i = 0; i < B.Num(); i++)
+	{
+		ReturnArray[i + LengthA] = B[i];
+	}
+
+	return ReturnArray;
+}
+
+TArray<uint8> ULowEntryExtendedStandardLibrary::BytesSubArray(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
+{
+	if(Index < 0)
+	{
+		Length += Index;
+		Index = 0;
+	}
+	if(Length > ByteArray.Num() - Index)
+	{
+		Length = ByteArray.Num() - Index;
+	}
+	if(Length <= 0)
+	{
+		return TArray<uint8>();
+	}
+
+	TArray<uint8> ReturnArray = TArray<uint8>();
+	ReturnArray.SetNum(Length);
+	for(int i = 0; i < Length; i++)
+	{
+		ReturnArray[i] = ByteArray[i + Index];
+	}
+	return ReturnArray;
+}
+
+
+
 TArray<uint8> ULowEntryExtendedStandardLibrary::StringToBytesUtf8(const FString& String)
 {
 	int32 Size = String.Len();

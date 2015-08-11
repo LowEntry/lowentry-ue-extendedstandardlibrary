@@ -51,6 +51,26 @@ public:
 
 
 	/**
+	* Splits the given Byte Array into two Byte Arrays.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Bytes", Meta = (DisplayName = "Split Bytes", Keywords = "byte array"))
+		static void SplitBytes(const TArray<uint8>& ByteArray, const int32 LengthA, TArray<uint8>& A, TArray<uint8>& B);
+
+	/**
+	* Merges two Byte Arrays into one.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Bytes", Meta = (DisplayName = "Merge Bytes", Keywords = "byte array"))
+		static TArray<uint8> MergeBytes(const TArray<uint8>& A, const TArray<uint8>& B);
+
+	/**
+	* Returns the values of the given bytes of the given index and length.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Bytes", Meta = (DisplayName = "Get Bytes Sub Array", Keywords = "get byte array"))
+		static TArray<uint8> BytesSubArray(const TArray<uint8>& ByteArray, int32 Index, int32 Length);
+
+
+
+	/**
 	* Converts a String into a Byte Array (using UTF-8 encoding).
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "String To Bytes (Utf 8)", Keywords = "byte array string utf-8"))
