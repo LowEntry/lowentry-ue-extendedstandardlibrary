@@ -51,6 +51,14 @@ public:
 
 
 	/**
+	* Returns an instance from the given Class.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Create Object", Keywords = "make instance"))
+		static void CreateObject(UClass* Class, UObject*& Object);
+
+
+
+	/**
 	* Splits the given Byte Array into two Byte Arrays.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Bytes", Meta = (DisplayName = "Split Bytes", Keywords = "byte array"))

@@ -94,6 +94,13 @@ bool ULowEntryExtendedStandardLibrary::ShippingBuild()
 
 
 
+void ULowEntryExtendedStandardLibrary::CreateObject(UClass* Class, UObject*& Object)
+{
+	Object = NewObject<UObject>((UObject*) GetTransientPackage(), Class);
+}
+
+
+
 void ULowEntryExtendedStandardLibrary::SplitBytes(const TArray<uint8>& ByteArray, const int32 LengthA, TArray<uint8>& A, TArray<uint8>& B)
 {
 	if(LengthA <= 0)
