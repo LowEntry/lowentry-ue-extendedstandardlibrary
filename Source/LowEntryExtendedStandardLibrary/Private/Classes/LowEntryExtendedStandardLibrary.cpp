@@ -117,41 +117,38 @@ void ULowEntryExtendedStandardLibrary::SplitBytes(const TArray<uint8>& ByteArray
 	}
 
 	A = TArray<uint8>();
-	A.SetNum(LengthA);
-	for(int i = 0; i < LengthA; i++)
-	{
-		A[i] = ByteArray[i];
-	}
-
+	A.Append(ByteArray.GetData(), LengthA);
+	
 	B = TArray<uint8>();
-	B.SetNum(ByteArray.Num() - LengthA);
-	for(int i = LengthA; i < ByteArray.Num(); i++)
-	{
-		B[i - LengthA] = ByteArray[i];
-	}
+	B.Append(ByteArray.GetData() + LengthA, ByteArray.Num() - LengthA);
 }
 
 TArray<uint8> ULowEntryExtendedStandardLibrary::MergeBytes(const TArray<uint8>& A, const TArray<uint8>& B)
 {
-	TArray<uint8> ReturnArray = TArray<uint8>();
-	ReturnArray.SetNum(A.Num() + B.Num());
-	
-	for(int i = 0; i < A.Num(); i++)
+	if(A.Num() <= 0)
 	{
-		ReturnArray[i] = A[i];
+		return B;
+	}
+	if(B.Num() <= 0)
+	{
+		return A;
 	}
 
-	int32 LengthA = A.Num();
-	for(int i = 0; i < B.Num(); i++)
-	{
-		ReturnArray[i + LengthA] = B[i];
-	}
+	TArray<uint8> ReturnArray = TArray<uint8>();
+	ReturnArray.Reserve(A.Num() + B.Num());
+	ReturnArray.Append(A.GetData(), A.Num());
+	ReturnArray.Append(B.GetData(), B.Num());
 
 	return ReturnArray;
 }
 
 TArray<uint8> ULowEntryExtendedStandardLibrary::BytesSubArray(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
 {
+	if(ByteArray.Num() <= 0)
+	{
+		return TArray<uint8>();
+	}
+
 	if(Index < 0)
 	{
 		Length += Index;
@@ -166,12 +163,12 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::BytesSubArray(const TArray<uint8
 		return TArray<uint8>();
 	}
 
-	TArray<uint8> ReturnArray = TArray<uint8>();
-	ReturnArray.SetNum(Length);
-	for(int i = 0; i < Length; i++)
+	if((Index == 0) && (Length == ByteArray.Num()))
 	{
-		ReturnArray[i] = ByteArray[i + Index];
+		return ByteArray;
 	}
+	TArray<uint8> ReturnArray = TArray<uint8>();
+	ReturnArray.Append(ByteArray.GetData() + Index, Length);
 	return ReturnArray;
 }
 
@@ -179,29 +176,41 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::BytesSubArray(const TArray<uint8
 
 TArray<uint8> ULowEntryExtendedStandardLibrary::StringToBytesUtf8(const FString& String)
 {
-	int32 Size = String.Len();
-	if(Size <= 0)
+	if(String.Len() <= 0)
 	{
 		return TArray<uint8>();
 	}
 
 	TArray<uint8> ByteArray;
 	const TCHAR* Chars = String.GetCharArray().GetData();
-	ByteArray.Append((uint8*) TCHAR_TO_UTF8(Chars), Size);
+	ByteArray.Append((uint8*) TCHAR_TO_UTF8(Chars), String.Len());
 	return ByteArray;
 }
 
-FString ULowEntryExtendedStandardLibrary::BytesToStringUtf8(const TArray<uint8>& ByteArray)
+FString ULowEntryExtendedStandardLibrary::BytesToStringUtf8(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
 {
-	int32 Size = ByteArray.Num();
-	if(Size <= 0)
+	if(ByteArray.Num() <= 0)
+	{
+		return TEXT("");
+	}
+
+	if(Index < 0)
+	{
+		Length += Index;
+		Index = 0;
+	}
+	if(Length > ByteArray.Num() - Index)
+	{
+		Length = ByteArray.Num() - Index;
+	}
+	if(Length <= 0)
 	{
 		return TEXT("");
 	}
 
 	FString String = TEXT("");
 	const uint8* Bytes = ByteArray.GetData();
-	String.AppendChars(UTF8_TO_TCHAR(Bytes), Size);
+	String.AppendChars(UTF8_TO_TCHAR(Bytes) + Index, Length);
 	return String;
 }
 
@@ -217,29 +226,52 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::Base64ToBytes(const FString& Bas
 	return ByteArray;
 }
 
-FString ULowEntryExtendedStandardLibrary::BytesToBase64(const TArray<uint8>& ByteArray)
+FString ULowEntryExtendedStandardLibrary::BytesToBase64(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
 {
-	return FBase64::Encode(ByteArray);
+	if(ByteArray.Num() <= 0)
+	{
+		return TEXT("");
+	}
+
+	if(Index < 0)
+	{
+		Length += Index;
+		Index = 0;
+	}
+	if(Length > ByteArray.Num() - Index)
+	{
+		Length = ByteArray.Num() - Index;
+	}
+	if(Length <= 0)
+	{
+		return TEXT("");
+	}
+
+	if((Index == 0) && (Length == ByteArray.Num()))
+	{
+		return FBase64::Encode(ByteArray);
+	}
+	return FBase64::Encode(BytesSubArray(ByteArray, Index, Length));
 }
 
 
-TArray<uint8> ULowEntryExtendedStandardLibrary::HexToBytes(const FString& String)
+TArray<uint8> ULowEntryExtendedStandardLibrary::HexToBytes(const FString& Hex)
 {
-	int32 Size = String.Len();
-	if(Size <= 0)
+	FString String = Hex.Replace(TEXT(" "), TEXT(""));
+	if(String.Len() <= 0)
 	{
 		return TArray<uint8>();
 	}
 
 	for(TCHAR c : String)
 	{
-		if(!CheckTCharIsHex(c))
+		if(!::CheckTCharIsHex(c))
 		{
 			return TArray<uint8>();
 		}
 	}
 
-	uint8* Bytes = new uint8[Size];
+	uint8* Bytes = new uint8[String.Len()];
 	int32 ByteCount = ::HexToBytes(String, Bytes);
 	TArray<uint8> ByteArray;
 	ByteArray.Append(Bytes, ByteCount + 1);
@@ -247,14 +279,28 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::HexToBytes(const FString& String
 	return ByteArray;
 }
 
-FString ULowEntryExtendedStandardLibrary::BytesToHex(const TArray<uint8>& ByteArray, const bool AddSpaces)
+FString ULowEntryExtendedStandardLibrary::BytesToHex(const TArray<uint8>& ByteArray, const bool AddSpaces, int32 Index, int32 Length)
 {
-	int32 Size = ByteArray.Num();
-	if(Size <= 0)
+	if(ByteArray.Num() <= 0)
 	{
 		return TEXT("");
 	}
-	FString Hex = ::BytesToHex(ByteArray.GetData(), Size);
+
+	if(Index < 0)
+	{
+		Length += Index;
+		Index = 0;
+	}
+	if(Length > ByteArray.Num() - Index)
+	{
+		Length = ByteArray.Num() - Index;
+	}
+	if(Length <= 0)
+	{
+		return TEXT("");
+	}
+
+	FString Hex = ::BytesToHex(ByteArray.GetData() + Index, Length);
 	if(!AddSpaces)
 	{
 		return Hex;
@@ -262,10 +308,10 @@ FString ULowEntryExtendedStandardLibrary::BytesToHex(const TArray<uint8>& ByteAr
 	FString String;
 	String.Reserve((Hex.Len() / 2) * 3);
 	TArray<TCHAR> Chars = Hex.GetCharArray();
-	for(int i = 1; i <= Chars.Num(); i++)
+	for(int32 i = 1; i <= Chars.Num(); i++)
 	{
 		String.AppendChar(Chars[i - 1]);
-		if(((i % 2) == 0) && (i < Chars.Num()))
+		if(((i % 2) == 0) && (i < (Chars.Num() - 1)))
 		{
 			String.Append(TEXT(" "));
 		}
@@ -289,10 +335,10 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::BinaryToBytes(const FString& Bin
 	TArray<uint8> Bytes;
 	Bytes.SetNum(String.Len() / 8);
 	int32 Index = 0;
-	for(int i = 0; i < String.Len(); i += 8)
+	for(int32 i = 0; i < String.Len(); i += 8)
 	{
 		uint8 b = 0;
-		for(int j = 0; j < 8; j++)
+		for(int32 j = 0; j < 8; j++)
 		{
 			if(Bits[i + j] == '0')
 			{
@@ -314,19 +360,34 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::BinaryToBytes(const FString& Bin
 	return Bytes;
 }
 
-FString ULowEntryExtendedStandardLibrary::BytesToBinary(const TArray<uint8>& ByteArray, const bool AddSpaces)
+FString ULowEntryExtendedStandardLibrary::BytesToBinary(const TArray<uint8>& ByteArray, const bool AddSpaces, int32 Index, int32 Length)
 {
 	if(ByteArray.Num() <= 0)
 	{
 		return TEXT("");
 	}
+
+	if(Index < 0)
+	{
+		Length += Index;
+		Index = 0;
+	}
+	if(Length > ByteArray.Num() - Index)
+	{
+		Length = ByteArray.Num() - Index;
+	}
+	if(Length <= 0)
+	{
+		return TEXT("");
+	}
+
 	FString String;
-	String.Reserve(ByteArray.Num() * (AddSpaces ? 9 : 8));
-	for(int32 i = 1; i <= ByteArray.Num(); i++)
+	String.Reserve(Length * (AddSpaces ? 9 : 8));
+	for(int32 i = 1; i <= Length; i++)
 	{
 		for(int32 j = 7; j >= 0; j--)
 		{
-			if((ByteArray[i - 1] & (1 << j)) > 0)
+			if((ByteArray[Index + (i - 1)] & (1 << j)) > 0)
 			{
 				String.Append(TEXT("1"));
 			}
@@ -335,7 +396,7 @@ FString ULowEntryExtendedStandardLibrary::BytesToBinary(const TArray<uint8>& Byt
 				String.Append(TEXT("0"));
 			}
 		}
-		if(AddSpaces && (i < ByteArray.Num()))
+		if(AddSpaces && (i < Length))
 		{
 			String.Append(TEXT(" "));
 		}
@@ -355,25 +416,44 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::IntegerToBytes(const int32 Value
 	return ByteArray;
 }
 
-int32 ULowEntryExtendedStandardLibrary::BytesToInteger(const TArray<uint8>& ByteArray)
+int32 ULowEntryExtendedStandardLibrary::BytesToInteger(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
 {
 	if(ByteArray.Num() <= 0)
 	{
 		return 0;
 	}
-	if(ByteArray.Num() <= 1)
+
+	if(Index < 0)
 	{
-		return (ByteArray[3] & 0xFF);
+		Length += Index;
+		Index = 0;
 	}
-	if(ByteArray.Num() <= 2)
+	if(Length > ByteArray.Num() - Index)
 	{
-		return ((ByteArray[2] & 0xFF) << 8) | (ByteArray[3] & 0xFF);
+		Length = ByteArray.Num() - Index;
 	}
-	if(ByteArray.Num() <= 3)
+	if(Length <= 0)
 	{
-		return ((ByteArray[1] & 0xFF) << 16) | ((ByteArray[2] & 0xFF) << 8) | (ByteArray[3] & 0xFF);
+		return 0;
 	}
-	return (ByteArray[0] << 24) | ((ByteArray[1] & 0xFF) << 16) | ((ByteArray[2] & 0xFF) << 8) | (ByteArray[3] & 0xFF);
+
+	if(Length <= 0)
+	{
+		return 0;
+	}
+	if(Length <= 1)
+	{
+		return (ByteArray[Index + 0] & 0xFF);
+	}
+	if(Length <= 2)
+	{
+		return ((ByteArray[Index + 0] & 0xFF) << 8) | (ByteArray[Index + 1] & 0xFF);
+	}
+	if(Length <= 3)
+	{
+		return ((ByteArray[Index + 0] & 0xFF) << 16) | ((ByteArray[Index + 1] & 0xFF) << 8) | (ByteArray[Index + 2] & 0xFF);
+	}
+	return (ByteArray[Index + 0] << 24) | ((ByteArray[Index + 1] & 0xFF) << 16) | ((ByteArray[Index + 2] & 0xFF) << 8) | (ByteArray[Index + 3] & 0xFF);
 }
 
 
@@ -383,22 +463,31 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::FloatToBytes(const float Value)
 	return ULowEntryExtendedStandardLibrary::IntegerToBytes(IntValue);
 }
 
-float ULowEntryExtendedStandardLibrary::BytesToFloat(const TArray<uint8>& ByteArray)
+float ULowEntryExtendedStandardLibrary::BytesToFloat(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
 {
-	int32 IntValue = ULowEntryExtendedStandardLibrary::BytesToInteger(ByteArray);
+	int32 IntValue = ULowEntryExtendedStandardLibrary::BytesToInteger(ByteArray, Index, Length);
 	return *((float*) (&IntValue));
 }
 
 
 
-TArray<uint8> ULowEntryExtendedStandardLibrary::Md5(const TArray<uint8>& ByteArray)
+TArray<uint8> ULowEntryExtendedStandardLibrary::Md5(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
 {
+	if(Index < 0)
+	{
+		Length += Index;
+		Index = 0;
+	}
+	if(Length > ByteArray.Num() - Index)
+	{
+		Length = ByteArray.Num() - Index;
+	}
+
 	FMD5 Hasher;
-	int32 Size = ByteArray.Num();
-	if(Size > 0)
+	if(Length > 0)
 	{
 		const uint8* Bytes = ByteArray.GetData();
-		Hasher.Update((uint8*) Bytes, Size);
+		Hasher.Update((uint8*) Bytes + Index, Length);
 	}
 
 	uint8 DigestBytes[16];
@@ -408,14 +497,23 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::Md5(const TArray<uint8>& ByteArr
 	return DigestByteArray;
 }
 
-TArray<uint8> ULowEntryExtendedStandardLibrary::Sha1(const TArray<uint8>& ByteArray)
+TArray<uint8> ULowEntryExtendedStandardLibrary::Sha1(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
 {
+	if(Index < 0)
+	{
+		Length += Index;
+		Index = 0;
+	}
+	if(Length > ByteArray.Num() - Index)
+	{
+		Length = ByteArray.Num() - Index;
+	}
+
 	FSHA1 Hasher;
-	int32 Size = ByteArray.Num();
-	if(Size > 0)
+	if(Length > 0)
 	{
 		const uint8* Bytes = ByteArray.GetData();
-		Hasher.Update((uint8*) Bytes, Size);
+		Hasher.Update((uint8*) Bytes + Index, Length);
 	}
 
 	uint8 DigestBytes[FSHA1::DigestSize];
