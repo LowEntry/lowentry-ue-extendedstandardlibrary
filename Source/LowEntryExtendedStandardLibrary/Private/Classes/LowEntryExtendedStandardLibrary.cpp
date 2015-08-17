@@ -1,6 +1,12 @@
 #include "LowEntryExtendedStandardLibraryPrivatePCH.h"
 #include "LowEntryExtendedStandardLibrary.h"
 
+#include "LowEntryLatentActionBoolean.h"
+#include "LowEntryLatentActionFloat.h"
+#include "LowEntryLatentActionInteger.h"
+#include "LowEntryLatentActionNone.h"
+#include "LowEntryLatentActionObject.h"
+#include "LowEntryLatentActionString.h"
 
 
 // init >>
@@ -97,6 +103,38 @@ bool ULowEntryExtendedStandardLibrary::ShippingBuild()
 void ULowEntryExtendedStandardLibrary::CreateObject(UClass* Class, UObject*& Object)
 {
 	Object = NewObject<UObject>((UObject*) GetTransientPackage(), Class);
+}
+
+
+
+void ULowEntryExtendedStandardLibrary::LatentAction_Create_Boolean(ULowEntryLatentActionBoolean*& LatentAction)
+{
+	LatentAction = ULowEntryLatentActionBoolean::Create();
+}
+
+void ULowEntryExtendedStandardLibrary::LatentAction_Create_Float(ULowEntryLatentActionFloat*& LatentAction)
+{
+	LatentAction = ULowEntryLatentActionFloat::Create();
+}
+
+void ULowEntryExtendedStandardLibrary::LatentAction_Create_Integer(ULowEntryLatentActionInteger*& LatentAction)
+{
+	LatentAction = ULowEntryLatentActionInteger::Create();
+}
+
+void ULowEntryExtendedStandardLibrary::LatentAction_Create_None(ULowEntryLatentActionNone*& LatentAction)
+{
+	LatentAction = ULowEntryLatentActionNone::Create();
+}
+
+void ULowEntryExtendedStandardLibrary::LatentAction_Create_Object(ULowEntryLatentActionObject*& LatentAction)
+{
+	LatentAction = ULowEntryLatentActionObject::Create();
+}
+
+void ULowEntryExtendedStandardLibrary::LatentAction_Create_String(ULowEntryLatentActionString*& LatentAction)
+{
+	LatentAction = ULowEntryLatentActionString::Create();
 }
 
 

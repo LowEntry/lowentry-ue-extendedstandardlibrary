@@ -11,6 +11,14 @@
 #include "LowEntryExtendedStandardLibrary.generated.h"
 
 
+class ULowEntryLatentActionBoolean;
+class ULowEntryLatentActionFloat;
+class ULowEntryLatentActionInteger;
+class ULowEntryLatentActionNone;
+class ULowEntryLatentActionObject;
+class ULowEntryLatentActionString;
+
+
 UCLASS()
 class LOWENTRYEXTENDEDSTANDARDLIBRARY_API ULowEntryExtendedStandardLibrary : public UBlueprintFunctionLibrary
 {
@@ -55,6 +63,44 @@ public:
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Create Object", Keywords = "make instance"))
 		static void CreateObject(UClass* Class, UObject*& Object);
+
+
+
+	/**
+	* Creates a new latent action.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Latent Action|Boolean", Meta = (DisplayName = "Create Latent Action (Boolean)", Keywords = "make instance"))
+		static void LatentAction_Create_Boolean(ULowEntryLatentActionBoolean*& LatentAction);
+
+	/**
+	* Creates a new latent action.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Latent Action|Float", Meta = (DisplayName = "Create Latent Action (Float)", Keywords = "make instance"))
+		static void LatentAction_Create_Float(ULowEntryLatentActionFloat*& LatentAction);
+
+	/**
+	* Creates a new latent action.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Latent Action|Integer", Meta = (DisplayName = "Create Latent Action (Integer)", Keywords = "make instance"))
+		static void LatentAction_Create_Integer(ULowEntryLatentActionInteger*& LatentAction);
+
+	/**
+	* Creates a new latent action.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Latent Action|None", Meta = (DisplayName = "Create Latent Action (None)", Keywords = "make instance"))
+		static void LatentAction_Create_None(ULowEntryLatentActionNone*& LatentAction);
+
+	/**
+	* Creates a new latent action.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Latent Action|Object", Meta = (DisplayName = "Create Latent Action (Object)", Keywords = "make instance"))
+		static void LatentAction_Create_Object(ULowEntryLatentActionObject*& LatentAction);
+
+	/**
+	* Creates a new latent action.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Latent Action|String", Meta = (DisplayName = "Create Latent Action (String)", Keywords = "make instance"))
+		static void LatentAction_Create_String(ULowEntryLatentActionString*& LatentAction);
 
 
 

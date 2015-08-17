@@ -1,0 +1,47 @@
+#pragma once
+
+
+#include "Engine.h"
+#include "Core.h"
+#include "CoreUObject.h"
+#include "DelayAction.h"
+
+#include "LowEntryLatentActionNone.generated.h"
+
+
+#define ULatentActionClass ULowEntryLatentActionNone
+#define FLatentActionClass FLowEntryLatentActionNone
+
+
+UCLASS(BlueprintType)
+class LOWENTRYEXTENDEDSTANDARDLIBRARY_API ULowEntryLatentActionNone : public UObject
+{
+	GENERATED_UCLASS_BODY()
+
+
+public:
+	static ULatentActionClass* Create();
+
+
+public:
+	bool Finished = false;
+
+
+	/**
+	* Waits till the latent action is done.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Latent Action|None", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", DisplayName = "Wait Till Done", Keywords = "untill for end finished complete completion"))
+		void WaitTillDone(UObject* WorldContextObject, FLatentActionInfo LatentInfo);
+
+	/**
+	* Causes the latent action to be done.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Latent Action|None", Meta = (DisplayName = "Done", Keywords = "end finished complete completion"))
+		void Done();
+
+	/**
+	* Returns true if the latent action is done.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Latent Action|None", Meta = (DisplayName = "Is Done", Keywords = "end finished complete completion"))
+		bool IsDone();
+};
