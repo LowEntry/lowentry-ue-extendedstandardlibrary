@@ -137,6 +137,12 @@ public:
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Bytes", Meta = (DisplayName = "Generate Random Bytes", Keywords = "make create"))
 		static void GenerateRandomBytes(const int32 Length, TArray<uint8>& ByteArray);
+
+	/**
+	* Returns random bytes.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Bytes", Meta = (DisplayName = "Generate Random Bytes (Random Length)", Keywords = "make create"))
+		static void GenerateRandomBytesRandomLength(int32 MinLength, int32 MaxLength, TArray<uint8>& ByteArray);
 	
 
 

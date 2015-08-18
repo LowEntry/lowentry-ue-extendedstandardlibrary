@@ -275,6 +275,59 @@ void ULowEntryExtendedStandardLibrary::GenerateRandomBytes(const int32 Length, T
 	}
 }
 
+void ULowEntryExtendedStandardLibrary::GenerateRandomBytesRandomLength(int32 MinLength, int32 MaxLength, TArray<uint8>& ByteArray)
+{
+	if(MinLength < 0)
+	{
+		MinLength = 0;
+	}
+	if(MaxLength < 0)
+	{
+		MaxLength = 0;
+	}
+
+	int32 Diff = 0;
+	int32 Min = 0;
+	if(MaxLength >= MinLength)
+	{
+		Diff = MaxLength - MinLength;
+		Min = MinLength;
+	}
+	else
+	{
+		Diff = MinLength - MaxLength;
+		Min = MaxLength;
+	}
+	if(Min < 0)
+	{
+		Min = 0;
+	}
+	if(Diff < 0)
+	{
+		Diff = 0;
+	}
+
+	if((Min == 0) && (Diff == 0))
+	{
+		ByteArray.SetNum(0);
+		return;
+	}
+
+	int Length = (FMath::Rand() % (Diff + 1)) + Min;
+	if(Length <= 0)
+	{
+		ByteArray.SetNum(0);
+		return;
+	}
+
+	ByteArray.SetNum(Length);
+	for(int32 i = 0; i < Length; i++)
+	{
+		int32 RandomByte = FMath::Rand() % 255;
+		ByteArray[i] = RandomByte;
+	}
+}
+
 
 
 TArray<uint8> ULowEntryExtendedStandardLibrary::StringToBytesUtf8(const FString& String)
