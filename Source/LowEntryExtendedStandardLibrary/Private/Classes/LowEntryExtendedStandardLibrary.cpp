@@ -107,6 +107,24 @@ void ULowEntryExtendedStandardLibrary::CreateObject(UClass* Class, UObject*& Obj
 
 
 
+void ULowEntryExtendedStandardLibrary::GenerateRandomBytes(const int32 Length, TArray<uint8>& ByteArray)
+{
+	if(Length <= 0)
+	{
+		ByteArray.SetNum(0);
+		return;
+	}
+
+	ByteArray.SetNum(Length);
+	for(int32 i = 0; i < Length; i++)
+	{
+		int32 RandomByte = FMath::Rand() % 255;
+		ByteArray[i] = RandomByte;
+	}
+}
+
+
+
 void ULowEntryExtendedStandardLibrary::LatentAction_Create_Boolean(ULowEntryLatentActionBoolean*& LatentAction)
 {
 	LatentAction = ULowEntryLatentActionBoolean::Create();

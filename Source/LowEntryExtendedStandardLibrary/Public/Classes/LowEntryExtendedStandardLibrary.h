@@ -67,6 +67,14 @@ public:
 
 
 	/**
+	* Returns random bytes.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Generate Random Bytes", Keywords = "make create"))
+		static void GenerateRandomBytes(const int32 Length, TArray<uint8>& ByteArray);
+
+
+
+	/**
 	* Creates a new latent action.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Latent Action|Boolean", Meta = (DisplayName = "Create Latent Action (Boolean)", Keywords = "make instance"))
