@@ -107,24 +107,6 @@ void ULowEntryExtendedStandardLibrary::CreateObject(UClass* Class, UObject*& Obj
 
 
 
-void ULowEntryExtendedStandardLibrary::GenerateRandomBytes(const int32 Length, TArray<uint8>& ByteArray)
-{
-	if(Length <= 0)
-	{
-		ByteArray.SetNum(0);
-		return;
-	}
-
-	ByteArray.SetNum(Length);
-	for(int32 i = 0; i < Length; i++)
-	{
-		int32 RandomByte = FMath::Rand() % 255;
-		ByteArray[i] = RandomByte;
-	}
-}
-
-
-
 void ULowEntryExtendedStandardLibrary::LatentAction_Create_Boolean(ULowEntryLatentActionBoolean*& LatentAction)
 {
 	LatentAction = ULowEntryLatentActionBoolean::Create();
@@ -153,6 +135,53 @@ void ULowEntryExtendedStandardLibrary::LatentAction_Create_Object(ULowEntryLaten
 void ULowEntryExtendedStandardLibrary::LatentAction_Create_String(ULowEntryLatentActionString*& LatentAction)
 {
 	LatentAction = ULowEntryLatentActionString::Create();
+}
+
+
+
+bool ULowEntryExtendedStandardLibrary::AreBytesEqual(const TArray<uint8>& A, const TArray<uint8>& B, int32 IndexA, int32 LengthA, int32 IndexB, int32 LengthB)
+{
+	if(IndexA < 0)
+	{
+		LengthA += IndexA;
+		IndexA = 0;
+	}
+	if(LengthA > (A.Num() - IndexA))
+	{
+		LengthA = A.Num() - IndexA;
+	}
+	if(LengthA < 0)
+	{
+		LengthA = 0;
+	}
+
+	if(IndexB < 0)
+	{
+		LengthB += IndexB;
+		IndexB = 0;
+	}
+	if(LengthB > (B.Num() - IndexB))
+	{
+		LengthB = B.Num() - IndexB;
+	}
+	if(LengthB < 0)
+	{
+		LengthB = 0;
+	}
+
+	if(LengthA != LengthB)
+	{
+		return false;
+	}
+
+	for(int i = 0; i < LengthA; i++)
+	{
+		if(A[IndexA + i] != B[IndexB + i])
+		{
+			return false;
+		}
+	}
+	return true;
 }
 
 
@@ -226,6 +255,24 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::BytesSubArray(const TArray<uint8
 	TArray<uint8> ReturnArray = TArray<uint8>();
 	ReturnArray.Append(ByteArray.GetData() + Index, Length);
 	return ReturnArray;
+}
+
+
+
+void ULowEntryExtendedStandardLibrary::GenerateRandomBytes(const int32 Length, TArray<uint8>& ByteArray)
+{
+	if(Length <= 0)
+	{
+		ByteArray.SetNum(0);
+		return;
+	}
+
+	ByteArray.SetNum(Length);
+	for(int32 i = 0; i < Length; i++)
+	{
+		int32 RandomByte = FMath::Rand() % 255;
+		ByteArray[i] = RandomByte;
+	}
 }
 
 

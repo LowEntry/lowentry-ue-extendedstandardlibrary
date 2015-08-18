@@ -67,14 +67,6 @@ public:
 
 
 	/**
-	* Returns random bytes.
-	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Generate Random Bytes", Keywords = "make create"))
-		static void GenerateRandomBytes(const int32 Length, TArray<uint8>& ByteArray);
-
-
-
-	/**
 	* Creates a new latent action.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Latent Action|Boolean", Meta = (DisplayName = "Create Latent Action (Boolean)", Keywords = "make instance"))
@@ -113,6 +105,14 @@ public:
 
 
 	/**
+	* Returns true if the two arrays contain the same data.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Bytes", Meta = (DisplayName = "Are Bytes Equal", Keywords = "same compare array ==", AdvancedDisplay = "2"))
+		static bool AreBytesEqual(const TArray<uint8>& A, const TArray<uint8>& B, int32 IndexA = 0, int32 LengthA = 0x7FFFFFFF, int32 IndexB = 0, int32 LengthB = 0x7FFFFFFF);
+
+
+
+	/**
 	* Splits the given Byte Array into two Byte Arrays.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Bytes", Meta = (DisplayName = "Split Bytes", Keywords = "byte array"))
@@ -130,6 +130,14 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Bytes", Meta = (DisplayName = "Get Bytes Sub Array", Keywords = "get byte array"))
 		static TArray<uint8> BytesSubArray(const TArray<uint8>& ByteArray, int32 Index, int32 Length);
 
+
+
+	/**
+	* Returns random bytes.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Bytes", Meta = (DisplayName = "Generate Random Bytes", Keywords = "make create"))
+		static void GenerateRandomBytes(const int32 Length, TArray<uint8>& ByteArray);
+	
 
 
 	/**
