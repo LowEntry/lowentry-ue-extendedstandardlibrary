@@ -128,7 +128,7 @@ public:
 	* Returns the values of the given bytes of the given index and length.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Bytes", Meta = (DisplayName = "Get Bytes Sub Array", Keywords = "get byte array"))
-		static TArray<uint8> BytesSubArray(const TArray<uint8>& ByteArray, int32 Index, int32 Length);
+		static TArray<uint8> BytesSubArray(const TArray<uint8>& ByteArray, int32 Index, int32 Length = 0x7FFFFFFF);
 
 
 
