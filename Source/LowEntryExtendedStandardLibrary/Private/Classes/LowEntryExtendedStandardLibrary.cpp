@@ -561,6 +561,46 @@ FString ULowEntryExtendedStandardLibrary::BytesToBinary(const TArray<uint8>& Byt
 }
 
 
+TArray<uint8> ULowEntryExtendedStandardLibrary::BooleanToBytes(const bool Value)
+{
+	TArray<uint8> ByteArray;
+	ByteArray.SetNum(1);
+	if(Value)
+	{
+		ByteArray[0] = 0x01;
+	}
+	else
+	{
+		ByteArray[0] = 0x00;
+	}
+	return ByteArray;
+}
+
+bool ULowEntryExtendedStandardLibrary::BytesToBoolean(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
+{
+	if(ByteArray.Num() <= 0)
+	{
+		return false;
+	}
+
+	if(Index < 0)
+	{
+		Length += Index;
+		Index = 0;
+	}
+	if(Length > ByteArray.Num() - Index)
+	{
+		Length = ByteArray.Num() - Index;
+	}
+	if(Length <= 0)
+	{
+		return false;
+	}
+
+	return (ByteArray[Index] == 0x01);
+}
+
+
 TArray<uint8> ULowEntryExtendedStandardLibrary::IntegerToBytes(const int32 Value)
 {
 	TArray<uint8> ByteArray;
@@ -593,10 +633,6 @@ int32 ULowEntryExtendedStandardLibrary::BytesToInteger(const TArray<uint8>& Byte
 		return 0;
 	}
 
-	if(Length <= 0)
-	{
-		return 0;
-	}
 	if(Length <= 1)
 	{
 		return (ByteArray[Index + 0] & 0xFF);

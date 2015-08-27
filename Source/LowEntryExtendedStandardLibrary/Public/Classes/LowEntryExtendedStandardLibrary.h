@@ -199,6 +199,22 @@ public:
 
 
 	/**
+	* Converts a boolean into a Byte Array (1 byte).
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Boolean To Bytes", Keywords = "byte array bool boolean"))
+		static TArray<uint8> BooleanToBytes(const bool Value);
+
+	/**
+	* Converts a Byte Array into a boolean (00000001 will return true, everything else will return false).
+	*
+	* If there is more than 1 byte given, it will only convert the first byte to a boolean.
+	* If there are no bytes given, it will return false.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Boolean", Keywords = "byte array bool boolean", AdvancedDisplay = "1"))
+		static bool BytesToBoolean(const TArray<uint8>& ByteArray, int32 Index = 0, int32 Length = 0x7FFFFFFF);
+
+
+	/**
 	* Converts a signed integer (int32) into a Byte Array (4 bytes).
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Integer To Bytes", Keywords = "byte array int integer"))
