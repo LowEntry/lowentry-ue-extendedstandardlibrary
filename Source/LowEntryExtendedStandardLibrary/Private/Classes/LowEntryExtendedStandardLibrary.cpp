@@ -1321,7 +1321,7 @@ void ULowEntryExtendedStandardLibrary::HostGame(UObject* WorldContextObject, con
 	APlayerController* TargetPC = Player ? Player : UGameplayStatics::GetPlayerController(WorldContextObject, 0);
 	if(TargetPC)
 	{
-		TargetPC->ConsoleCommand(TEXT("open ") + Map + TEXT("?listen ") + Args, true);
+		TargetPC->ConsoleCommand(TEXT("open ") + Map + TEXT("?listen") + Args, true);
 	}
 }
 
@@ -1330,7 +1330,7 @@ void ULowEntryExtendedStandardLibrary::JoinGame(UObject* WorldContextObject, con
 	APlayerController* TargetPC = Player ? Player : UGameplayStatics::GetPlayerController(WorldContextObject, 0);
 	if(TargetPC)
 	{
-		TargetPC->ConsoleCommand(TEXT("open ") + ServerAddress + TEXT(" ") + Args, true);
+		TargetPC->ConsoleCommand(TEXT("open ") + ServerAddress + Args, true);
 	}
 }
 
@@ -1339,7 +1339,7 @@ void ULowEntryExtendedStandardLibrary::ServerChangeMap(UObject* WorldContextObje
 	APlayerController* TargetPC = Player ? Player : UGameplayStatics::GetPlayerController(WorldContextObject, 0);
 	if(TargetPC)
 	{
-		TargetPC->ConsoleCommand(TEXT("servertravel ") + Map + TEXT(" ") + Args, true);
+		TargetPC->ConsoleCommand(TEXT("servertravel ") + Map + Args, true);
 	}
 }
 
@@ -1348,6 +1348,6 @@ void ULowEntryExtendedStandardLibrary::ChangeMap(UObject* WorldContextObject, co
 	APlayerController* TargetPC = Player ? Player : UGameplayStatics::GetPlayerController(WorldContextObject, 0);
 	if(TargetPC)
 	{
-		TargetPC->ConsoleCommand(TEXT("open ") + Map + TEXT(" ") + Args, true);
+		TargetPC->ConsoleCommand(TEXT("open ") + Map + Args, true);
 	}
 }
