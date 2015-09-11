@@ -8,6 +8,9 @@
 #include "DelayAction.h"
 #include "Engine/LatentActionManager.h"
 
+#include "FLowEntryTickFrames.h"
+#include "FLowEntryTickSeconds.h"
+
 #include "LowEntryExtendedStandardLibrary.generated.h"
 
 
@@ -662,4 +665,18 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Game", meta = (WorldContext = "WorldContextObject", DisplayName = "Change Map"))
 		static void ChangeMap(UObject* WorldContextObject, const FString& Map, const FString& Args, class APlayerController* SpecificPlayer = NULL);
+
+
+
+	/**
+	* Ticks for x times, with x frames interval between each tick.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", DisplayName = "Tick (Frames Interval)", Keywords = "loop timer loop delay"))
+		static void TickFrames(UObject* WorldContextObject, FLatentActionInfo LatentInfo, const int32 Ticks, const int32 FramesInterval);
+
+	/**
+	* Ticks for x times, with x seconds interval between each tick.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", DisplayName = "Tick (Seconds Interval)", Keywords = "loop timer loop delay"))
+		static void TickSeconds(UObject* WorldContextObject, FLatentActionInfo LatentInfo, const int32 Ticks, const float SecondsInterval);
 };

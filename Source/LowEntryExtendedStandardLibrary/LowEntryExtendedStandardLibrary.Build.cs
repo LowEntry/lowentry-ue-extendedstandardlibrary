@@ -10,6 +10,7 @@ namespace UnrealBuildTool.Rules
 					"LowEntryExtendedStandardLibrary/Public/Classes",
 					"LowEntryExtendedStandardLibrary/Public/ClassesLatentAction",
 					"LowEntryExtendedStandardLibrary/Public/FClassesLatentAction",
+					"LowEntryExtendedStandardLibrary/Public/FClassesTick",
 				}
 			);
 

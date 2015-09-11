@@ -1351,3 +1351,27 @@ void ULowEntryExtendedStandardLibrary::ChangeMap(UObject* WorldContextObject, co
 		TargetPC->ConsoleCommand(TEXT("open ") + Map + Args, true);
 	}
 }
+
+
+
+void ULowEntryExtendedStandardLibrary::TickFrames(UObject* WorldContextObject, FLatentActionInfo LatentInfo, const int32 Ticks, const int32 FramesInterval)
+{
+	UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject);
+	if(World == nullptr)
+	{
+		return;
+	}
+
+	World->GetLatentActionManager().AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FLowEntryTickFrames(LatentInfo, Ticks, FramesInterval));
+}
+
+void ULowEntryExtendedStandardLibrary::TickSeconds(UObject* WorldContextObject, FLatentActionInfo LatentInfo, const int32 Ticks, const float SecondsInterval)
+{
+	UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject);
+	if(World == nullptr)
+	{
+		return;
+	}
+
+	World->GetLatentActionManager().AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FLowEntryTickSeconds(LatentInfo, Ticks, SecondsInterval));
+}
