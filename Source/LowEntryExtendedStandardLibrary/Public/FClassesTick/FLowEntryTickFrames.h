@@ -13,35 +13,37 @@ public:
 	const int32 Ticks;
 	const int32 FramesInterval;
 
-	int32 CurrentTicks = 0;
+	int32& Tick;
 	int32 CurrentFramesInterval = 0;
 
 	FName ExecutionFunction;
 	int32 OutputLink;
 	FWeakObjectPtr CallbackTarget;
 
-	FLowEntryTickFrames(const FLatentActionInfo& LatentInfo, const int32 Ticks, const int32 FramesInterval)
+	FLowEntryTickFrames(const FLatentActionInfo& LatentInfo, const int32 Ticks, const int32 FramesInterval, int32& Tick)
 		: ExecutionFunction(LatentInfo.ExecutionFunction)
 		, OutputLink(LatentInfo.Linkage)
 		, CallbackTarget(LatentInfo.CallbackTarget)
 		, Ticks(Ticks)
 		, FramesInterval(FramesInterval)
+		, Tick(Tick)
 	{
+		Tick = 0;
 	}
 
 	void UpdateOperation(FLatentResponse& Response)
 	{
-		if(CurrentTicks >= Ticks)
+		if(Tick >= Ticks)
 		{
 			Response.DoneIf(true);
 			return;
 		}
 
 		CurrentFramesInterval++;
-		if(CurrentFramesInterval > FramesInterval)
+		if(CurrentFramesInterval >= FramesInterval)
 		{
 			CurrentFramesInterval = 0;
-			CurrentTicks++;
+			Tick++;
 			Response.TriggerLink(ExecutionFunction, OutputLink, CallbackTarget);
 		}
 	}
@@ -50,7 +52,7 @@ public:
 	// Returns a human readable description of the latent operation's current state
 	virtual FString GetDescription() const override
 	{
-		return FString::Printf(TEXT("Ticking (%i ticks left)"), (Ticks - CurrentTicks));
+		return FString::Printf(TEXT("Ticking (%i ticks left)"), (Ticks - Tick));
 	}
 #endif
 };
