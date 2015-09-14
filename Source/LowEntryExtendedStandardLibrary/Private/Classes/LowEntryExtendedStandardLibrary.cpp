@@ -8,6 +8,11 @@
 #include "LowEntryLatentActionObject.h"
 #include "LowEntryLatentActionString.h"
 
+#include "FLowEntryTickFrames.h"
+#include "FLowEntryTickSeconds.h"
+
+#include "FDelayFramesAction.h"
+
 
 // init >>
 	ULowEntryExtendedStandardLibrary::ULowEntryExtendedStandardLibrary(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
@@ -1169,6 +1174,66 @@ void ULowEntryExtendedStandardLibrary::RetriggerableRandomDelay(UObject* WorldCo
 		else
 		{
 			Action->TimeRemaining = FMath::FRandRange(MinDuration, MaxDuration);
+		}
+	}
+}
+
+
+
+void ULowEntryExtendedStandardLibrary::DelayFrames(UObject* WorldContextObject, int32 Frames, FLatentActionInfo LatentInfo)
+{
+	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject))
+	{
+		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
+		if(LatentActionManager.FindExistingAction<FDelayFramesAction>(LatentInfo.CallbackTarget, LatentInfo.UUID) == NULL)
+		{
+			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FDelayFramesAction(Frames, LatentInfo));
+		}
+	}
+}
+
+void ULowEntryExtendedStandardLibrary::RetriggerableDelayFrames(UObject* WorldContextObject, int32 Frames, FLatentActionInfo LatentInfo)
+{
+	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject))
+	{
+		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
+		FDelayFramesAction* Action = LatentActionManager.FindExistingAction<FDelayFramesAction>(LatentInfo.CallbackTarget, LatentInfo.UUID);
+		if(Action == NULL)
+		{
+			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FDelayFramesAction(Frames, LatentInfo));
+		}
+		else
+		{
+			Action->FramesRemaining = Frames;
+		}
+	}
+}
+
+void ULowEntryExtendedStandardLibrary::RandomDelayFrames(UObject* WorldContextObject, int32 MinFrames, int32 MaxFrames, FLatentActionInfo LatentInfo)
+{
+	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject))
+	{
+		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
+		if(LatentActionManager.FindExistingAction<FDelayFramesAction>(LatentInfo.CallbackTarget, LatentInfo.UUID) == NULL)
+		{
+			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FDelayFramesAction(FMath::RandRange(MinFrames, MaxFrames), LatentInfo));
+		}
+	}
+}
+
+void ULowEntryExtendedStandardLibrary::RetriggerableRandomDelayFrames(UObject* WorldContextObject, int32 MinFrames, int32 MaxFrames, FLatentActionInfo LatentInfo)
+{
+	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject))
+	{
+		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
+		FDelayFramesAction* Action = LatentActionManager.FindExistingAction<FDelayFramesAction>(LatentInfo.CallbackTarget, LatentInfo.UUID);
+		if(Action == NULL)
+		{
+			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FDelayFramesAction(FMath::RandRange(MinFrames, MaxFrames), LatentInfo));
+		}
+		else
+		{
+			Action->FramesRemaining = FMath::RandRange(MinFrames, MaxFrames);
 		}
 	}
 }

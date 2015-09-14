@@ -8,9 +8,6 @@
 #include "DelayAction.h"
 #include "Engine/LatentActionManager.h"
 
-#include "FLowEntryTickFrames.h"
-#include "FLowEntryTickSeconds.h"
-
 #include "LowEntryExtendedStandardLibrary.generated.h"
 
 
@@ -596,7 +593,7 @@ public:
 	* @param MaxDuration 	maximum length of delay (in seconds).
 	* @param LatentInfo 	The latent action.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Flow Control", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", MinDuration = "0.2", MaxDuration = "0.5"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Delay", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", MinDuration = "0.2", MaxDuration = "0.5"))
 		static void	RandomDelay(UObject* WorldContextObject, float MinDuration, float MaxDuration, struct FLatentActionInfo LatentInfo);
 
 	/**
@@ -607,8 +604,52 @@ public:
 	* @param MaxDuration 	maximum length of delay (in seconds).
 	* @param LatentInfo 	The latent action.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Flow Control", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", MinDuration = "0.2", MaxDuration = "0.5"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Delay", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", MinDuration = "0.2", MaxDuration = "0.5"))
 		static void RetriggerableRandomDelay(UObject* WorldContextObject, float MinDuration, float MaxDuration, FLatentActionInfo LatentInfo);
+
+
+
+	/**
+	* Perform a latent action with a delay (specified in frames).  Calling again while it is counting down will be ignored.
+	*
+	* @param WorldContext	World context.
+	* @param MinDuration 	frames of delay.
+	* @param LatentInfo 	The latent action.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Delay (Frames)", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", DisplayName = "Delay (Frames)"))
+		static void	DelayFrames(UObject* WorldContextObject, int32 Frames, struct FLatentActionInfo LatentInfo);
+
+	/**
+	* Perform a latent action with a retriggerable delay (specified in frames).  Calling again while it is counting down will reset the countdown to the given Frames.
+	*
+	* @param WorldContext	World context.
+	* @param MinDuration 	frames of delay.
+	* @param LatentInfo 	The latent action.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Delay (Frames)", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", DisplayName = "Retriggerable Delay (Frames)"))
+		static void RetriggerableDelayFrames(UObject* WorldContextObject, int32 Frames, FLatentActionInfo LatentInfo);
+
+	/**
+	* Perform a latent action with a random delay (specified in frames).  Calling again while it is counting down will be ignored.
+	*
+	* @param WorldContext	World context.
+	* @param MinDuration 	minimum frames of delay.
+	* @param MaxDuration 	maximum frames of delay.
+	* @param LatentInfo 	The latent action.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Delay (Frames)", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", MinFrames = "10", MaxFrames = "30", DisplayName = "Random Delay (Frames)"))
+		static void	RandomDelayFrames(UObject* WorldContextObject, int32 MinFrames, int32 MaxFrames, struct FLatentActionInfo LatentInfo);
+
+	/**
+	* Perform a latent action with a retriggerable random delay (specified in frames).  Calling again while it is counting down will reset the countdown to a new random Frames.
+	*
+	* @param WorldContext	World context.
+	* @param MinDuration 	minimum frames of delay.
+	* @param MaxDuration 	maximum frames of delay.
+	* @param LatentInfo 	The latent action.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Delay (Frames)", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", MinFrames = "10", MaxFrames = "30", DisplayName = "Retriggerable Random Delay (Frames)"))
+		static void RetriggerableRandomDelayFrames(UObject* WorldContextObject, int32 MinFrames, int32 MaxFrames, FLatentActionInfo LatentInfo);
 
 
 
