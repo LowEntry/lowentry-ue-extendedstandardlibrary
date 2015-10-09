@@ -9,11 +9,6 @@
 #include "LowEntryLatentActionFloat.generated.h"
 
 
-#define LatentActionResultType float
-#define ULatentActionClass ULowEntryLatentActionFloat
-#define FLatentActionClass FLowEntryLatentActionFloat
-
-
 UCLASS(BlueprintType)
 class LOWENTRYEXTENDEDSTANDARDLIBRARY_API ULowEntryLatentActionFloat : public UObject
 {
@@ -21,25 +16,25 @@ class LOWENTRYEXTENDEDSTANDARDLIBRARY_API ULowEntryLatentActionFloat : public UO
 
 
 public:
-	static ULatentActionClass* Create();
+	static ULowEntryLatentActionFloat* Create();
 
 
 public:
 	bool Finished = false;
-	LatentActionResultType Result = 0;
+	float Result = 0;
 	
 
 	/**
 	* Waits till the latent action is done.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Latent Action|Float", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", DisplayName = "Wait Till Done", Keywords = "untill for end finished complete completion"))
-		void WaitTillDone(UObject* WorldContextObject, FLatentActionInfo LatentInfo, float& Result); // LatentActionResultType
+		void WaitTillDone(UObject* WorldContextObject, FLatentActionInfo LatentInfo, float& Result);
 
 	/**
 	* Causes the latent action to be done.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Latent Action|Float", Meta = (DisplayName = "Done", Keywords = "end finished complete completion"))
-		void Done(float Result); // LatentActionResultType
+		void Done(float Result);
 
 	/**
 	* Returns true if the latent action is done.
@@ -51,5 +46,5 @@ public:
 	* Returns the result.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Latent Action|Float", Meta = (DisplayName = "Get Result", Keywords = "result return value"))
-		void GetResult(float& Result); // LatentActionResultType
+		void GetResult(float& Result);
 };

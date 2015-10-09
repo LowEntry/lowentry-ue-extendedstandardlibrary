@@ -9,10 +9,6 @@
 #include "LowEntryLatentActionNone.generated.h"
 
 
-#define ULatentActionClass ULowEntryLatentActionNone
-#define FLatentActionClass FLowEntryLatentActionNone
-
-
 UCLASS(BlueprintType)
 class LOWENTRYEXTENDEDSTANDARDLIBRARY_API ULowEntryLatentActionNone : public UObject
 {
@@ -20,7 +16,7 @@ class LOWENTRYEXTENDEDSTANDARDLIBRARY_API ULowEntryLatentActionNone : public UOb
 
 
 public:
-	static ULatentActionClass* Create();
+	static ULowEntryLatentActionNone* Create();
 
 
 public:

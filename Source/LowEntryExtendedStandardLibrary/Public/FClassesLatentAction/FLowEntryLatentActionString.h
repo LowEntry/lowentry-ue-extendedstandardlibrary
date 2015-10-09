@@ -9,17 +9,17 @@
 #include "LowEntryLatentActionString.h"
 
 
-class FLatentActionClass : public FPendingLatentAction
+class FLowEntryLatentActionString : public FPendingLatentAction
 {
 public:
-	ULatentActionClass* LatentActionObject = NULL;
-	LatentActionResultType& Result;
+	ULowEntryLatentActionString* LatentActionObject = NULL;
+	FString& Result;
 
 	FName ExecutionFunction;
 	int32 OutputLink;
 	FWeakObjectPtr CallbackTarget;
 
-	FLatentActionClass(const FLatentActionInfo& LatentInfo, ULatentActionClass* LatentActionObject, LatentActionResultType& Result)
+	FLowEntryLatentActionString(const FLatentActionInfo& LatentInfo, ULowEntryLatentActionString* LatentActionObject, FString& Result)
 		: ExecutionFunction(LatentInfo.ExecutionFunction)
 		, OutputLink(LatentInfo.Linkage)
 		, CallbackTarget(LatentInfo.CallbackTarget)

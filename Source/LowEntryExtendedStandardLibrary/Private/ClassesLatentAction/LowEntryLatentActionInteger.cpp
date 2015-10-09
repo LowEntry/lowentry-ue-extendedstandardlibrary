@@ -5,18 +5,18 @@
 
 
 // init >>
-	ULatentActionClass::ULatentActionClass(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+	ULowEntryLatentActionInteger::ULowEntryLatentActionInteger(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 	{
 	}
 
-	ULatentActionClass* ULatentActionClass::Create()
+	ULowEntryLatentActionInteger* ULowEntryLatentActionInteger::Create()
 	{
-		return NewObject<ULatentActionClass>();
+		return NewObject<ULowEntryLatentActionInteger>();
 	}
 // init <<
 
 
-void ULatentActionClass::WaitTillDone(UObject* WorldContextObject, FLatentActionInfo LatentInfo, LatentActionResultType& Result)
+void ULowEntryLatentActionInteger::WaitTillDone(UObject* WorldContextObject, FLatentActionInfo LatentInfo, int32& Result)
 {
 	UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject);
 	if(World == nullptr)
@@ -24,21 +24,21 @@ void ULatentActionClass::WaitTillDone(UObject* WorldContextObject, FLatentAction
 		return;
 	}
 
-	World->GetLatentActionManager().AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FLatentActionClass(LatentInfo, this, Result));
+	World->GetLatentActionManager().AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FLowEntryLatentActionInteger(LatentInfo, this, Result));
 }
 
-void ULatentActionClass::Done(LatentActionResultType Result)
+void ULowEntryLatentActionInteger::Done(int32 Result)
 {
 	this->Result = Result;
 	Finished = true;
 }
 
-bool ULatentActionClass::IsDone()
+bool ULowEntryLatentActionInteger::IsDone()
 {
 	return Finished;
 }
 
-void ULatentActionClass::GetResult(LatentActionResultType& Result)
+void ULowEntryLatentActionInteger::GetResult(int32& Result)
 {
 	Result = this->Result;
 }

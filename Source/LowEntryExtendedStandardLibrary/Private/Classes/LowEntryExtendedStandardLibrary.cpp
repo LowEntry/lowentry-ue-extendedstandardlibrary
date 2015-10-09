@@ -1376,7 +1376,7 @@ void ULowEntryExtendedStandardLibrary::Crash()
 	{
 		UE_LOG(LogBlueprintUserMessages, Log, TEXT("This crash was caused by LowEntryExtendedStandardLibrary::Crash() and was meant to happen."));
 	}
-	*((uint32*) 0) = 0xDEAD;
+	FDebug::AssertFailed("This crash was caused by LowEntryExtendedStandardLibrary::Crash() and was meant to happen.", __FILE__, __LINE__);
 }
 
 

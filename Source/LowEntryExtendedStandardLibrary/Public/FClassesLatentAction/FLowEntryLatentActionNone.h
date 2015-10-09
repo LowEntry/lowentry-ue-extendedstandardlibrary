@@ -9,16 +9,16 @@
 #include "LowEntryLatentActionNone.h"
 
 
-class FLatentActionClass : public FPendingLatentAction
+class FLowEntryLatentActionNone : public FPendingLatentAction
 {
 public:
-	ULatentActionClass* LatentActionObject = NULL;
+	ULowEntryLatentActionNone* LatentActionObject = NULL;
 
 	FName ExecutionFunction;
 	int32 OutputLink;
 	FWeakObjectPtr CallbackTarget;
 
-	FLatentActionClass(const FLatentActionInfo& LatentInfo, ULatentActionClass* LatentActionObject)
+	FLowEntryLatentActionNone(const FLatentActionInfo& LatentInfo, ULowEntryLatentActionNone* LatentActionObject)
 		: ExecutionFunction(LatentInfo.ExecutionFunction)
 		, OutputLink(LatentInfo.Linkage)
 		, CallbackTarget(LatentInfo.CallbackTarget)

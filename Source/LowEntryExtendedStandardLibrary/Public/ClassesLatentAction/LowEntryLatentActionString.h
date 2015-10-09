@@ -9,11 +9,6 @@
 #include "LowEntryLatentActionString.generated.h"
 
 
-#define LatentActionResultType FString
-#define ULatentActionClass ULowEntryLatentActionString
-#define FLatentActionClass FLowEntryLatentActionString
-
-
 UCLASS(BlueprintType)
 class LOWENTRYEXTENDEDSTANDARDLIBRARY_API ULowEntryLatentActionString : public UObject
 {
@@ -21,25 +16,25 @@ class LOWENTRYEXTENDEDSTANDARDLIBRARY_API ULowEntryLatentActionString : public U
 
 
 public:
-	static ULatentActionClass* Create();
+	static ULowEntryLatentActionString* Create();
 
 
 public:
 	bool Finished = false;
-	LatentActionResultType Result;
+	FString Result;
 	
 
 	/**
 	* Waits till the latent action is done.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Latent Action|String", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", DisplayName = "Wait Till Done", Keywords = "untill for end finished complete completion"))
-		void WaitTillDone(UObject* WorldContextObject, FLatentActionInfo LatentInfo, FString& Result); // LatentActionResultType
+		void WaitTillDone(UObject* WorldContextObject, FLatentActionInfo LatentInfo, FString& Result);
 
 	/**
 	* Causes the latent action to be done.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Latent Action|String", Meta = (DisplayName = "Done", Keywords = "end finished complete completion"))
-		void Done(FString Result); // LatentActionResultType
+		void Done(FString Result);
 
 	/**
 	* Returns true if the latent action is done.
@@ -51,5 +46,5 @@ public:
 	* Returns the result.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Latent Action|String", Meta = (DisplayName = "Get Result", Keywords = "result return value"))
-		void GetResult(FString& Result); // LatentActionResultType
+		void GetResult(FString& Result);
 };
