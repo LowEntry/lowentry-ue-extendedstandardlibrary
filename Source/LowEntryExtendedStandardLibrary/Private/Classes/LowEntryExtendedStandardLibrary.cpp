@@ -105,6 +105,80 @@ bool ULowEntryExtendedStandardLibrary::ShippingBuild()
 
 
 
+bool ULowEntryExtendedStandardLibrary::Html5Platform()
+{
+#if PLATFORM_HTML5
+	return true;
+#else
+	return false;
+#endif
+}
+
+bool ULowEntryExtendedStandardLibrary::WindowsPlatform()
+{
+#if PLATFORM_WINDOWS
+	return true;
+#else
+	return false;
+#endif
+}
+
+bool ULowEntryExtendedStandardLibrary::LinuxPlatform()
+{
+#if PLATFORM_LINUX
+	return true;
+#else
+	return false;
+#endif
+}
+
+bool ULowEntryExtendedStandardLibrary::MacPlatform()
+{
+#if PLATFORM_MAC
+	return true;
+#else
+	return false;
+#endif
+}
+
+bool ULowEntryExtendedStandardLibrary::Ps4Platform()
+{
+#if PLATFORM_PS4
+	return true;
+#else
+	return false;
+#endif
+}
+
+bool ULowEntryExtendedStandardLibrary::XboxOnePlatform()
+{
+#if PLATFORM_XBOXONE
+	return true;
+#else
+	return false;
+#endif
+}
+
+bool ULowEntryExtendedStandardLibrary::AndroidPlatform()
+{
+#if PLATFORM_ANDROID
+	return true;
+#else
+	return false;
+#endif
+}
+
+bool ULowEntryExtendedStandardLibrary::IosPlatform()
+{
+#if PLATFORM_IOS
+	return true;
+#else
+	return false;
+#endif
+}
+
+
+
 void ULowEntryExtendedStandardLibrary::CreateObject(UClass* Class, UObject*& Object)
 {
 	Object = NewObject<UObject>((UObject*) GetTransientPackage(), Class);

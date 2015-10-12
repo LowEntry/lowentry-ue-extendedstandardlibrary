@@ -59,6 +59,56 @@ public:
 
 
 	/**
+	* Returns true if this is the Html5 platform (PLATFORM_HTML5), returns false otherwise.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Html5 Platform", Keywords = "compile export mode version type"))
+		static bool Html5Platform();
+
+	/**
+	* Returns true if this is the Windows platform (PLATFORM_WINDOWS), returns false otherwise.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Windows Platform", Keywords = "compile export mode version type"))
+		static bool WindowsPlatform();
+
+	/**
+	* Returns true if this is the Linux platform (PLATFORM_LINUX), returns false otherwise.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Linux Platform", Keywords = "compile export mode version type"))
+		static bool LinuxPlatform();
+
+	/**
+	* Returns true if this is the Mac platform (PLATFORM_MAC), returns false otherwise.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Mac Platform", Keywords = "compile export mode version type"))
+		static bool MacPlatform();
+
+	/**
+	* Returns true if this is the PS4 platform (PLATFORM_PS4), returns false otherwise.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Ps4 Platform", Keywords = "compile export mode version type"))
+		static bool Ps4Platform();
+
+	/**
+	* Returns true if this is the Xbox One platform (PLATFORM_XBOXONE), returns false otherwise.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Xbox One Platform", Keywords = "compile export mode version type"))
+		static bool XboxOnePlatform();
+
+	/**
+	* Returns true if this is the Android platform (PLATFORM_ANDROID), returns false otherwise.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Android Platform", Keywords = "compile export mode version type"))
+		static bool AndroidPlatform();
+
+	/**
+	* Returns true if this is the IOS platform (PLATFORM_IOS), returns false otherwise.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Ios Platform", Keywords = "compile export mode version type"))
+		static bool IosPlatform();
+
+
+
+	/**
 	* Returns an instance from the given Class.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Create Object", Keywords = "make instance"))
