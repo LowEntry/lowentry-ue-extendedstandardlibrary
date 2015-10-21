@@ -71,6 +71,18 @@ public:
 		static bool WindowsPlatform();
 
 	/**
+	* Returns true if this is the Windows RT platform (PLATFORM_WINRT), returns false otherwise.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Windows Rt Platform", Keywords = "compile export mode version type"))
+		static bool WindowsRtPlatform();
+
+	/**
+	* Returns true if this is the Windows RT ARM platform (PLATFORM_WINRT_ARM), returns false otherwise.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Windows Rt Arm Platform", Keywords = "compile export mode version type"))
+		static bool WindowsRtArmPlatform();
+
+	/**
 	* Returns true if this is the Linux platform (PLATFORM_LINUX), returns false otherwise.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Linux Platform", Keywords = "compile export mode version type"))
@@ -105,6 +117,12 @@ public:
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Ios Platform", Keywords = "compile export mode version type"))
 		static bool IosPlatform();
+
+	/**
+	* Returns true if this is a desktop (PLATFORM_DESKTOP), returns false otherwise.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Desktop", Keywords = "compile export mode version type"))
+		static bool DesktopPlatform();
 
 
 

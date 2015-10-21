@@ -123,6 +123,24 @@ bool ULowEntryExtendedStandardLibrary::WindowsPlatform()
 #endif
 }
 
+bool ULowEntryExtendedStandardLibrary::WindowsRtPlatform()
+{
+#if PLATFORM_WINRT
+	return true;
+#else
+	return false;
+#endif
+}
+
+bool ULowEntryExtendedStandardLibrary::WindowsRtArmPlatform()
+{
+#if PLATFORM_WINRT_ARM
+	return true;
+#else
+	return false;
+#endif
+}
+
 bool ULowEntryExtendedStandardLibrary::LinuxPlatform()
 {
 #if PLATFORM_LINUX
@@ -171,6 +189,15 @@ bool ULowEntryExtendedStandardLibrary::AndroidPlatform()
 bool ULowEntryExtendedStandardLibrary::IosPlatform()
 {
 #if PLATFORM_IOS
+	return true;
+#else
+	return false;
+#endif
+}
+
+bool ULowEntryExtendedStandardLibrary::DesktopPlatform()
+{
+#if PLATFORM_DESKTOP
 	return true;
 #else
 	return false;
