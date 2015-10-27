@@ -18,6 +18,12 @@ class ULowEntryLatentActionNone;
 class ULowEntryLatentActionObject;
 class ULowEntryLatentActionString;
 
+class ULowEntryByteDataReader;
+class ULowEntryByteDataWriter;
+
+class ULowEntryLong;
+class ULowEntryDouble;
+
 
 UCLASS()
 class LOWENTRYEXTENDEDSTANDARDLIBRARY_API ULowEntryExtendedStandardLibrary : public UBlueprintFunctionLibrary
@@ -788,4 +794,44 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", DisplayName = "Tick (Seconds Interval)", Keywords = "loop timer loop delay"))
 		static void TickSeconds(UObject* WorldContextObject, FLatentActionInfo LatentInfo, const int32 Ticks, const float SecondsInterval, int32& Tick);
+
+
+
+	/**
+	* Creates a new Byte Data Reader.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Reader", Meta = (DisplayName = "Create Byte Data Reader", AdvancedDisplay = "1"))
+		static ULowEntryByteDataReader* ByteDataReader_Create(const TArray<uint8>& Bytes, int32 Index = 0, int32 Length = 0x7FFFFFFF);
+
+	/**
+	* Creates a new Byte Data Writer.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Writer", Meta = (DisplayName = "Create Byte Data Writer"))
+		static ULowEntryByteDataWriter* ByteDataWriter_Create();
+
+
+
+	/**
+	* Creates a new long (bytes), a long is always 8 bytes.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Types|Long (bytes)", Meta = (DisplayName = "Create Long (bytes) (Value of 0)"))
+		static ULowEntryLong* Long_CreateZero();
+
+	/**
+	* Creates a new long (bytes), a long is always 8 bytes (give less bytes and it will pad with 0, give more bytes and it will only take the first 8).
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Types|Long (bytes)", Meta = (DisplayName = "Create Long (bytes)", AdvancedDisplay = "1"))
+		static ULowEntryLong* Long_Create(const TArray<uint8>& ByteArray, int32 Index = 0, int32 Length = 0x7FFFFFFF);
+
+	/**
+	* Creates a new double (bytes), a double is always 8 bytes.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Types|Double (bytes)", Meta = (DisplayName = "Create Double (bytes) (Value of 0)"))
+		static ULowEntryDouble* Double_CreateZero();
+
+	/**
+	* Creates a new double (bytes), a double is always 8 bytes (give less bytes and it will pad with 0, give more bytes and it will only take the first 8).
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Types|Double (bytes)", Meta = (DisplayName = "Create Double (bytes)", AdvancedDisplay = "1"))
+		static ULowEntryDouble* Double_Create(const TArray<uint8>& ByteArray, int32 Index = 0, int32 Length = 0x7FFFFFFF);
 };

@@ -8,6 +8,7 @@ namespace UnrealBuildTool.Rules
 				new string[] {
 					"LowEntryExtendedStandardLibrary/Public/Module",
 					"LowEntryExtendedStandardLibrary/Public/Classes",
+					"LowEntryExtendedStandardLibrary/Public/ClassesTypes",
 					"LowEntryExtendedStandardLibrary/Public/ClassesLatentAction",
 					"LowEntryExtendedStandardLibrary/Public/FClassesLatentAction",
 					"LowEntryExtendedStandardLibrary/Public/FClassesTick",
@@ -19,6 +20,7 @@ namespace UnrealBuildTool.Rules
 				new string[] {
 					"LowEntryExtendedStandardLibrary/Private/Module",
 					"LowEntryExtendedStandardLibrary/Private/Classes",
+					"LowEntryExtendedStandardLibrary/Private/ClassesTypes",
 					"LowEntryExtendedStandardLibrary/Private/ClassesLatentAction",
 				}
 			);

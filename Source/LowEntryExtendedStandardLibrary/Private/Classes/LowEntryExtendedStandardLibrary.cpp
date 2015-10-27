@@ -8,6 +8,12 @@
 #include "LowEntryLatentActionObject.h"
 #include "LowEntryLatentActionString.h"
 
+#include "LowEntryByteDataReader.h"
+#include "LowEntryByteDataWriter.h"
+
+#include "LowEntryLong.h"
+#include "LowEntryDouble.h"
+
 #include "FLowEntryTickFrames.h"
 #include "FLowEntryTickSeconds.h"
 
@@ -472,7 +478,7 @@ FString ULowEntryExtendedStandardLibrary::BytesToStringUtf8(const TArray<uint8>&
 
 	FString String = TEXT("");
 	const uint8* Bytes = ByteArray.GetData();
-	String.AppendChars(UTF8_TO_TCHAR(Bytes) + Index, Length);
+	String.AppendChars(UTF8_TO_TCHAR(Bytes + Index), Length);
 	return String;
 }
 
@@ -1540,4 +1546,38 @@ void ULowEntryExtendedStandardLibrary::TickSeconds(UObject* WorldContextObject, 
 	}
 
 	World->GetLatentActionManager().AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FLowEntryTickSeconds(LatentInfo, Ticks, SecondsInterval, Tick));
+}
+
+
+
+ULowEntryByteDataReader* ULowEntryExtendedStandardLibrary::ByteDataReader_Create(const TArray<uint8>& Bytes, int32 Index, int32 Length)
+{
+	return ULowEntryByteDataReader::Create(Bytes, Index, Length);
+}
+
+ULowEntryByteDataWriter* ULowEntryExtendedStandardLibrary::ByteDataWriter_Create()
+{
+	return ULowEntryByteDataWriter::Create();
+}
+
+
+
+ULowEntryLong* ULowEntryExtendedStandardLibrary::Long_CreateZero()
+{
+	return ULowEntryLong::Create();
+}
+
+ULowEntryLong* ULowEntryExtendedStandardLibrary::Long_Create(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
+{
+	return ULowEntryLong::Create(ByteArray, Index, Length);
+}
+
+ULowEntryDouble* ULowEntryExtendedStandardLibrary::Double_CreateZero()
+{
+	return ULowEntryDouble::Create();
+}
+
+ULowEntryDouble* ULowEntryExtendedStandardLibrary::Double_Create(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
+{
+	return ULowEntryDouble::Create(ByteArray, Index, Length);
 }
