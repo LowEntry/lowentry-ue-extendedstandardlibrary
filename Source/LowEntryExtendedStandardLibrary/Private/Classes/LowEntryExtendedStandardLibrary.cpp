@@ -1556,6 +1556,8 @@ ULowEntryByteDataReader* ULowEntryExtendedStandardLibrary::ByteDataReader_Create
 	return ULowEntryByteDataReader::Create(Bytes, Index, Length);
 }
 
+
+
 ULowEntryByteDataWriter* ULowEntryExtendedStandardLibrary::ByteDataWriter_Create()
 {
 	return ULowEntryByteDataWriter::Create();
@@ -1569,6 +1571,11 @@ ULowEntryByteDataWriter* ULowEntryExtendedStandardLibrary::ByteDataWriter_Create
 ULowEntryByteDataWriter* ULowEntryExtendedStandardLibrary::ByteDataWriter_CreateFromEntryArrayPure(const TArray<ULowEntryByteDataEntry*>& Array)
 {
 	return ULowEntryByteDataWriter::CreateFromEntryArray(Array);
+}
+
+TArray<uint8> ULowEntryExtendedStandardLibrary::ByteDataWriter_GetBytes(ULowEntryByteDataWriter* ByteDataWriter)
+{
+	return ByteDataWriter->GetBytes();
 }
 
 

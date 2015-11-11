@@ -804,6 +804,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Reader", Meta = (DisplayName = "Create Byte Data Reader", AdvancedDisplay = "1"))
 		static ULowEntryByteDataReader* ByteDataReader_Create(const TArray<uint8>& Bytes, int32 Index = 0, int32 Length = 0x7FFFFFFF);
 
+
+
 	/**
 	* Creates a new Byte Data Writer.
 	*/
@@ -821,6 +823,12 @@ public:
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Writer", Meta = (DisplayName = "Create Byte Data Writer (Byte Data Entry Array) (Pure)"))
 		static ULowEntryByteDataWriter* ByteDataWriter_CreateFromEntryArrayPure(const TArray<ULowEntryByteDataEntry*>& Array);
+
+	/**
+	* Returns the byte data.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Writer", Meta = (DisplayName = "Get Bytes"))
+		static TArray<uint8> ByteDataWriter_GetBytes(ULowEntryByteDataWriter* ByteDataWriter);
 
 
 

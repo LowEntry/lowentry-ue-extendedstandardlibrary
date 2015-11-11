@@ -35,7 +35,7 @@ public:
 	/**
 	* Returns the byte data.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Writer", Meta = (DisplayName = "Get Bytes"))
+	/*UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Writer", Meta = (DisplayName = "Get Bytes"))*/
 		TArray<uint8> GetBytes();
 
 
