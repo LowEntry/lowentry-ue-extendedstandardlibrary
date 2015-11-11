@@ -20,8 +20,8 @@
 	static const FString ArrayOutputPinName = FString(TEXT("TempArray"));
 
 
-	#define MENU_CATEGORY "Low Entry|Extended Standard Library|Byte Data|Writer (Callable)"
-	#define TITLE "Create Byte Data Writer"
+	#define MENU_CATEGORY "Low Entry|Extended Standard Library|Byte Data|Writer"
+	#define TITLE "Create Byte Data Writer (Callable)"
 	#define TOOLTIP "Creates a new Byte Data Writer."
 	#define IS_PURE false
 // settings <<
