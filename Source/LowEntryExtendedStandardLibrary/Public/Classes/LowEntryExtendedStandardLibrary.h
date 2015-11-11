@@ -18,6 +18,7 @@ class ULowEntryLatentActionNone;
 class ULowEntryLatentActionObject;
 class ULowEntryLatentActionString;
 
+class ULowEntryByteDataEntry;
 class ULowEntryByteDataReader;
 class ULowEntryByteDataWriter;
 
@@ -806,8 +807,112 @@ public:
 	/**
 	* Creates a new Byte Data Writer.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Writer", Meta = (DisplayName = "Create Byte Data Writer"))
-		static ULowEntryByteDataWriter* ByteDataWriter_Create();
+	/*UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Writer", Meta = (DisplayName = "Create Byte Data Writer"))*/
+	static ULowEntryByteDataWriter* ByteDataWriter_Create();
+
+	/**
+	* Creates a new Byte Data Writer.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Writer", Meta = (DisplayName = "Create Byte Data Writer (Byte Data Entry Array) (Callable)"))
+		static ULowEntryByteDataWriter* ByteDataWriter_CreateFromEntryArray(const TArray<ULowEntryByteDataEntry*>& Array);
+
+	/**
+	* Creates a new Byte Data Writer.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Writer", Meta = (DisplayName = "Create Byte Data Writer (Byte Data Entry Array) (Pure)"))
+		static ULowEntryByteDataWriter* ByteDataWriter_CreateFromEntryArrayPure(const TArray<ULowEntryByteDataEntry*>& Array);
+
+
+
+	/**
+	* Creates a new Byte Data Entry.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Byte"))
+		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromByte(const uint8 Value);
+
+	/**
+	* Creates a new Byte Data Entry.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Integer"))
+		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromInteger(const int32 Value);
+
+	/**
+	* Creates a new Byte Data Entry.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Long (bytes)"))
+		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromLongBytes(ULowEntryLong* Value);
+
+
+	/**
+	* Creates a new Byte Data Entry.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Float"))
+		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromFloat(const float Value);
+
+	/**
+	* Creates a new Byte Data Entry.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Double (bytes)"))
+		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromDoubleBytes(ULowEntryDouble* Value);
+
+
+	/**
+	* Creates a new Byte Data Entry.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Boolean"))
+		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromBoolean(const bool Value);
+
+	/**
+	* Creates a new Byte Data Entry.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "String (Utf 8)"))
+		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromStringUtf8(const FString& Value);
+
+
+
+	/**
+	* Creates a new Byte Data Entry.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Byte Array"))
+		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromByteArray(const TArray<uint8>& Value);
+
+	/**
+	* Creates a new Byte Data Entry.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Integer Array"))
+		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromIntegerArray(const TArray<int32>& Value);
+
+	/**
+	* Creates a new Byte Data Entry.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Long (bytes) Array"))
+		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromLongBytesArray(const TArray<ULowEntryLong*>& Value);
+
+
+	/**
+	* Creates a new Byte Data Entry.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Float Array"))
+		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromFloatArray(const TArray<float>& Value);
+
+	/**
+	* Creates a new Byte Data Entry.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Double (bytes) Array"))
+		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromDoubleBytesArray(const TArray<ULowEntryDouble*>& Value);
+
+
+	/**
+	* Creates a new Byte Data Entry.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Boolean Array"))
+		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromBooleanArray(const TArray<bool>& Value);
+
+	/**
+	* Creates a new Byte Data Entry.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "String (Utf 8) Array"))
+		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromStringUtf8Array(const TArray<FString>& Value);
 
 
 

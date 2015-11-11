@@ -8,6 +8,7 @@
 #include "LowEntryLatentActionObject.h"
 #include "LowEntryLatentActionString.h"
 
+#include "LowEntryByteDataEntry.h"
 #include "LowEntryByteDataReader.h"
 #include "LowEntryByteDataWriter.h"
 
@@ -1558,6 +1559,81 @@ ULowEntryByteDataReader* ULowEntryExtendedStandardLibrary::ByteDataReader_Create
 ULowEntryByteDataWriter* ULowEntryExtendedStandardLibrary::ByteDataWriter_Create()
 {
 	return ULowEntryByteDataWriter::Create();
+}
+
+ULowEntryByteDataWriter* ULowEntryExtendedStandardLibrary::ByteDataWriter_CreateFromEntryArray(const TArray<ULowEntryByteDataEntry*>& Array)
+{
+	return ULowEntryByteDataWriter::CreateFromEntryArray(Array);
+}
+
+ULowEntryByteDataWriter* ULowEntryExtendedStandardLibrary::ByteDataWriter_CreateFromEntryArrayPure(const TArray<ULowEntryByteDataEntry*>& Array)
+{
+	return ULowEntryByteDataWriter::CreateFromEntryArray(Array);
+}
+
+
+
+ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromByte(const uint8 Value)
+{
+	return ULowEntryByteDataEntry::CreateFromByte(Value);
+}
+ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromInteger(const int32 Value)
+{
+	return ULowEntryByteDataEntry::CreateFromInteger(Value);
+}
+ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromLongBytes(ULowEntryLong* Value)
+{
+	return ULowEntryByteDataEntry::CreateFromLongBytes(Value);
+}
+
+ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromFloat(const float Value)
+{
+	return ULowEntryByteDataEntry::CreateFromFloat(Value);
+}
+ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromDoubleBytes(ULowEntryDouble* Value)
+{
+	return ULowEntryByteDataEntry::CreateFromDoubleBytes(Value);
+}
+
+ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromBoolean(const bool Value)
+{
+	return ULowEntryByteDataEntry::CreateFromBoolean(Value);
+}
+ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromStringUtf8(const FString& Value)
+{
+	return ULowEntryByteDataEntry::CreateFromStringUtf8(Value);
+}
+
+
+ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromByteArray(const TArray<uint8>& Value)
+{
+	return ULowEntryByteDataEntry::CreateFromByteArray(Value);
+}
+ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromIntegerArray(const TArray<int32>& Value)
+{
+	return ULowEntryByteDataEntry::CreateFromIntegerArray(Value);
+}
+ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromLongBytesArray(const TArray<ULowEntryLong*>& Value)
+{
+	return ULowEntryByteDataEntry::CreateFromLongBytesArray(Value);
+}
+
+ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromFloatArray(const TArray<float>& Value)
+{
+	return ULowEntryByteDataEntry::CreateFromFloatArray(Value);
+}
+ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromDoubleBytesArray(const TArray<ULowEntryDouble*>& Value)
+{
+	return ULowEntryByteDataEntry::CreateFromDoubleBytesArray(Value);
+}
+
+ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromBooleanArray(const TArray<bool>& Value)
+{
+	return ULowEntryByteDataEntry::CreateFromBooleanArray(Value);
+}
+ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromStringUtf8Array(const TArray<FString>& Value)
+{
+	return ULowEntryByteDataEntry::CreateFromStringUtf8Array(Value);
 }
 
 

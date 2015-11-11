@@ -1,5 +1,6 @@
 #include "LowEntryExtendedStandardLibraryPrivatePCH.h"
 #include "LowEntryByteDataWriter.h"
+#include "LowEntryByteDataEntry.h"
 #include "LowEntryExtendedStandardLibrary.h"
 
 
@@ -11,6 +12,75 @@
 	ULowEntryByteDataWriter* ULowEntryByteDataWriter::Create()
 	{
 		return NewObject<ULowEntryByteDataWriter>();
+	}
+	ULowEntryByteDataWriter* ULowEntryByteDataWriter::CreateFromEntryArray(const TArray<ULowEntryByteDataEntry*>& Array)
+	{
+		ULowEntryByteDataWriter* Instance = NewObject<ULowEntryByteDataWriter>();
+		for(int32 i = 0; i < Array.Num(); i++)
+		{
+			ULowEntryByteDataEntry* Item = Array[i];
+			if(Item != nullptr)
+			{
+				if(Item->IsByte())
+				{
+					Instance->AddByte(Item->GetByte());
+				}
+				else if(Item->IsInteger())
+				{
+					Instance->AddInteger(Item->GetInteger());
+				}
+				else if(Item->IsLongBytes())
+				{
+					Instance->AddLongBytes(Item->GetLongBytes());
+				}
+				else if(Item->IsFloat())
+				{
+					Instance->AddFloat(Item->GetFloat());
+				}
+				else if(Item->IsDoubleBytes())
+				{
+					Instance->AddDoubleBytes(Item->GetDoubleBytes());
+				}
+				else if(Item->IsBoolean())
+				{
+					Instance->AddBoolean(Item->GetBoolean());
+				}
+				else if(Item->IsStringUtf8())
+				{
+					Instance->AddStringUtf8(Item->GetStringUtf8());
+				}
+
+				else if(Item->IsByteArray())
+				{
+					Instance->AddByteArray(Item->GetByteArray());
+				}
+				else if(Item->IsIntegerArray())
+				{
+					Instance->AddIntegerArray(Item->GetIntegerArray());
+				}
+				else if(Item->IsLongBytesArray())
+				{
+					Instance->AddLongBytesArray(Item->GetLongBytesArray());
+				}
+				else if(Item->IsFloatArray())
+				{
+					Instance->AddFloatArray(Item->GetFloatArray());
+				}
+				else if(Item->IsDoubleBytesArray())
+				{
+					Instance->AddDoubleBytesArray(Item->GetDoubleBytesArray());
+				}
+				else if(Item->IsBooleanArray())
+				{
+					Instance->AddBooleanArray(Item->GetBooleanArray());
+				}
+				else if(Item->IsStringUtf8Array())
+				{
+					Instance->AddStringUtf8Array(Item->GetStringUtf8Array());
+				}
+			}
+		}
+		return Instance;
 	}
 // init <<
 

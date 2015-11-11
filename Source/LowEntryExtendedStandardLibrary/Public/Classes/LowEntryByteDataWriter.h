@@ -11,6 +11,9 @@
 #include "LowEntryByteDataWriter.generated.h"
 
 
+class ULowEntryByteDataEntry;
+
+
 UCLASS(BlueprintType)
 class LOWENTRYEXTENDEDSTANDARDLIBRARY_API ULowEntryByteDataWriter : public UObject
 {
@@ -19,6 +22,7 @@ class LOWENTRYEXTENDEDSTANDARDLIBRARY_API ULowEntryByteDataWriter : public UObje
 
 public:
 	static ULowEntryByteDataWriter* Create();
+	static ULowEntryByteDataWriter* CreateFromEntryArray(const TArray<ULowEntryByteDataEntry*>& Array);
 
 	void AddRawByte(const uint8 Value);
 	void AddRawBytes(const TArray<uint8>& Value);

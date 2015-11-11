@@ -29,6 +29,7 @@ namespace UnrealBuildTool.Rules
 					"EditorStyle",
 					"AIModule",
 					"BlueprintGraph",
+					"LowEntryExtendedStandardLibrary",
 				}
 			);
 
