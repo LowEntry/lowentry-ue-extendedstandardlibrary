@@ -542,8 +542,12 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::HexToBytes(const FString& Hex)
 
 	uint8* Bytes = new uint8[String.Len()];
 	int32 ByteCount = ::HexToBytes(String, Bytes);
+	if((GEngineVersion.GetMajor() == 4) && (GEngineVersion.GetMinor() <= 9))
+	{
+		ByteCount += 1;
+	}
 	TArray<uint8> ByteArray;
-	ByteArray.Append(Bytes, ByteCount + 1);
+	ByteArray.Append(Bytes, ByteCount);
 	delete [] Bytes;
 	return ByteArray;
 }

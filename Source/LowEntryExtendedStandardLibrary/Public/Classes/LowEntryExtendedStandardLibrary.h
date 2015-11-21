@@ -7,6 +7,7 @@
 #include "Base64.h"
 #include "DelayAction.h"
 #include "Engine/LatentActionManager.h"
+#include "EngineVersion.h"
 
 #include "LowEntryExtendedStandardLibrary.generated.h"
 
