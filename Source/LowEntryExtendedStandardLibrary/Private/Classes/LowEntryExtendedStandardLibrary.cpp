@@ -451,8 +451,8 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::StringToBytesUtf8(const FString&
 	}
 
 	TArray<uint8> ByteArray;
-	const TCHAR* Chars = String.GetCharArray().GetData();
-	ByteArray.Append((uint8*) TCHAR_TO_UTF8(Chars), String.Len());
+	FTCHARToUTF8 Src = FTCHARToUTF8(String.GetCharArray().GetData());
+	ByteArray.Append((uint8*) Src.Get(), Src.Length());
 	return ByteArray;
 }
 
@@ -478,8 +478,8 @@ FString ULowEntryExtendedStandardLibrary::BytesToStringUtf8(const TArray<uint8>&
 	}
 
 	FString String = TEXT("");
-	const uint8* Bytes = ByteArray.GetData();
-	String.AppendChars(UTF8_TO_TCHAR(Bytes + Index), Length);
+	FUTF8ToTCHAR Src = FUTF8ToTCHAR((const ANSICHAR*) (ByteArray.GetData() + Index), Length);
+	String.AppendChars(Src.Get(), Src.Length());
 	return String;
 }
 
