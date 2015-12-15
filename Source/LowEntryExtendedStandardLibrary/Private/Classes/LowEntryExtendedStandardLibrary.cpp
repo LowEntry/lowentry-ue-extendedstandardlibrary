@@ -220,7 +220,7 @@ void ULowEntryExtendedStandardLibrary::CreateObject(UClass* Class, UObject*& Obj
 
 
 
-void  ULowEntryExtendedStandardLibrary::SoundClass_SetVolume(USoundClass* SoundClass, const float Volume)
+void ULowEntryExtendedStandardLibrary::SoundClass_SetVolume(USoundClass* SoundClass, const float Volume)
 {
 	if(SoundClass == nullptr)
 	{
@@ -229,7 +229,7 @@ void  ULowEntryExtendedStandardLibrary::SoundClass_SetVolume(USoundClass* SoundC
 	SoundClass->Properties.Volume = Volume;
 }
 
-float  ULowEntryExtendedStandardLibrary::SoundClass_GetVolume(USoundClass* SoundClass)
+float ULowEntryExtendedStandardLibrary::SoundClass_GetVolume(USoundClass* SoundClass)
 {
 	if(SoundClass == nullptr)
 	{
@@ -238,7 +238,7 @@ float  ULowEntryExtendedStandardLibrary::SoundClass_GetVolume(USoundClass* Sound
 	return SoundClass->Properties.Volume;
 }
 
-void  ULowEntryExtendedStandardLibrary::SoundClass_SetPitch(USoundClass* SoundClass, const float Pitch)
+void ULowEntryExtendedStandardLibrary::SoundClass_SetPitch(USoundClass* SoundClass, const float Pitch)
 {
 	if(SoundClass == nullptr)
 	{
@@ -247,7 +247,7 @@ void  ULowEntryExtendedStandardLibrary::SoundClass_SetPitch(USoundClass* SoundCl
 	SoundClass->Properties.Pitch = Pitch;
 }
 
-float  ULowEntryExtendedStandardLibrary::SoundClass_GetPitch(USoundClass* SoundClass)
+float ULowEntryExtendedStandardLibrary::SoundClass_GetPitch(USoundClass* SoundClass)
 {
 	if(SoundClass == nullptr)
 	{
