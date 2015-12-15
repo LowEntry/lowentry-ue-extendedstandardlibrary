@@ -143,6 +143,32 @@ public:
 
 
 	/**
+	* Sets the volume of a Sound Class.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Sound Class", Meta = (DisplayName = "Set Volume"))
+		static void SoundClass_SetVolume(USoundClass* SoundClass, const float Volume);
+
+	/**
+	* Returns the volume of a Sound Class.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Sound Class", Meta = (DisplayName = "Get Volume"))
+		static float SoundClass_GetVolume(USoundClass* SoundClass);
+
+	/**
+	* Sets the pitch of a Sound Class.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Sound Class", Meta = (DisplayName = "Set Pitch"))
+		static void SoundClass_SetPitch(USoundClass* SoundClass, const float Pitch);
+
+	/**
+	* Returns the pitch of a Sound Class.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Sound Class", Meta = (DisplayName = "Get Pitch"))
+		static float SoundClass_GetPitch(USoundClass* SoundClass);
+
+
+
+	/**
 	* Creates a new latent action.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Latent Action|Boolean", Meta = (DisplayName = "Create Latent Action (Boolean)", Keywords = "make instance"))

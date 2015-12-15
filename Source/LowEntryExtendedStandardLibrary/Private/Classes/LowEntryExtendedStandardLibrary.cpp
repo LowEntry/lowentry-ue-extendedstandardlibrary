@@ -220,6 +220,44 @@ void ULowEntryExtendedStandardLibrary::CreateObject(UClass* Class, UObject*& Obj
 
 
 
+void  ULowEntryExtendedStandardLibrary::SoundClass_SetVolume(USoundClass* SoundClass, const float Volume)
+{
+	if(SoundClass == nullptr)
+	{
+		return;
+	}
+	SoundClass->Properties.Volume = Volume;
+}
+
+float  ULowEntryExtendedStandardLibrary::SoundClass_GetVolume(USoundClass* SoundClass)
+{
+	if(SoundClass == nullptr)
+	{
+		return 0;
+	}
+	return SoundClass->Properties.Volume;
+}
+
+void  ULowEntryExtendedStandardLibrary::SoundClass_SetPitch(USoundClass* SoundClass, const float Pitch)
+{
+	if(SoundClass == nullptr)
+	{
+		return;
+	}
+	SoundClass->Properties.Pitch = Pitch;
+}
+
+float  ULowEntryExtendedStandardLibrary::SoundClass_GetPitch(USoundClass* SoundClass)
+{
+	if(SoundClass == nullptr)
+	{
+		return 0;
+	}
+	return SoundClass->Properties.Pitch;
+}
+
+
+
 void ULowEntryExtendedStandardLibrary::LatentAction_Create_Boolean(ULowEntryLatentActionBoolean*& LatentAction)
 {
 	LatentAction = ULowEntryLatentActionBoolean::Create();
