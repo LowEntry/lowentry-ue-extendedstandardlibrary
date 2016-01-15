@@ -1,20 +1,6 @@
 #include "LowEntryExtendedStandardLibraryEditorPrivatePCH.h"
 
-
-// settings >>
-	#include "K2Node_LowEntry_PurePrint.h"
-
-
-	static const FString InputPinName = FString(TEXT("Value"));
-	static const FString StringInputPinName = FString(TEXT("Message"));
-	static const FString OutputPinName = FString(TEXT("Value "));
-
-
-	#define MENU_CATEGORY "Low Entry|Extended Standard Library|Utilities|Other"
-	#define TITLE "Pure Print"
-	#define TOOLTIP "Prints a message when a variable is accessed."
-	#define IS_PURE true
-// settings <<
+#include "K2Node_LowEntry_PurePrint.h"
 
 
 #define LOCTEXT_NAMESPACE "MakeArrayNode"
@@ -74,7 +60,7 @@ public:
 		CreatePrintStatement.RHS.Add(*StringInputPinVariable);
 
 
-		if(!IS_PURE)
+		if(!true)
 		{
 			GenerateSimpleThenGoto(Context, *Node);
 		}
@@ -124,40 +110,40 @@ FNodeHandlingFunctor* UK2Node_LowEntry_PurePrint::CreateNodeHandler(FKismetCompi
 
 FText UK2Node_LowEntry_PurePrint::GetNodeTitle(ENodeTitleType::Type TitleType) const
 {
-	return FText::FromString(TITLE);
+	return FText::FromString("Pure Print");
 }
 
 UEdGraphPin* UK2Node_LowEntry_PurePrint::GetInputPin() const
 {
-	return FindPin(InputPinName);
+	return FindPin(TEXT("Value"));
 }
 
 UEdGraphPin* UK2Node_LowEntry_PurePrint::GetStringInputPin() const
 {
-	return FindPin(StringInputPinName);
+	return FindPin(TEXT("Message"));
 }
 
 UEdGraphPin* UK2Node_LowEntry_PurePrint::GetOutputPin() const
 {
-	return FindPin(OutputPinName);
+	return FindPin(TEXT("Value "));
 }
 
 bool UK2Node_LowEntry_PurePrint::IsNodePure() const
 {
-	return IS_PURE;
+	return true;
 }
 
 void UK2Node_LowEntry_PurePrint::AllocateDefaultPins()
 {
-	if(!IS_PURE)
+	if(!true)
 	{
 		CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Exec, TEXT(""), NULL, false, false, UEdGraphSchema_K2::PN_Execute);
 		CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Exec, TEXT(""), NULL, false, false, UEdGraphSchema_K2::PN_Then);
 	}
 
-	UEdGraphPin* InputPin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Wildcard, TEXT(""), NULL, false, false, *InputPinName);
-	UEdGraphPin* StringInputPin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_String, TEXT(""), NULL, false, false, *StringInputPinName);
-	UEdGraphPin* OutputPin = CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Wildcard, TEXT(""), NULL, false, false, *OutputPinName);
+	UEdGraphPin* InputPin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Wildcard, TEXT(""), NULL, false, false, TEXT("Value"));
+	UEdGraphPin* StringInputPin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_String, TEXT(""), NULL, false, false, TEXT("Message"));
+	UEdGraphPin* OutputPin = CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Wildcard, TEXT(""), NULL, false, false, TEXT("Value "));
 }
 
 void UK2Node_LowEntry_PurePrint::NotifyPinConnectionListChanged(UEdGraphPin* Pin)
@@ -241,7 +227,7 @@ void UK2Node_LowEntry_PurePrint::PostReconstructNode()
 
 FText UK2Node_LowEntry_PurePrint::GetTooltipText() const
 {
-	return FText::FromString(TOOLTIP);
+	return FText::FromString("Prints a message when a variable is accessed.");
 }
 
 bool UK2Node_LowEntry_PurePrint::IsConnectionDisallowed(const UEdGraphPin* MyPin, const UEdGraphPin* OtherPin, FString& OutReason) const
@@ -288,7 +274,7 @@ void UK2Node_LowEntry_PurePrint::GetMenuActions(FBlueprintActionDatabaseRegistra
 
 FText UK2Node_LowEntry_PurePrint::GetMenuCategory() const
 {
-	return FText::FromString(TEXT(MENU_CATEGORY));
+	return FText::FromString("Low Entry|Extended Standard Library|Utilities|Other");
 }
 
 #undef LOCTEXT_NAMESPACE

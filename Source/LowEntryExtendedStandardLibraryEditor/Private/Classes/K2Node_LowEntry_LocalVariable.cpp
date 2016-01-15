@@ -1,19 +1,6 @@
 #include "LowEntryExtendedStandardLibraryEditorPrivatePCH.h"
 
-
-// settings >>
-	#include "K2Node_LowEntry_LocalVariable.h"
-
-
-	static const FString InputPinName = FString(TEXT("Value"));
-	static const FString OutputPinName = FString(TEXT("Value "));
-
-
-	#define MENU_CATEGORY "Low Entry|Extended Standard Library|Utilities|Other"
-	#define TITLE "Local Variable"
-	#define TOOLTIP "Caches a value."
-	#define IS_PURE false
-// settings <<
+#include "K2Node_LowEntry_LocalVariable.h"
 
 
 #define LOCTEXT_NAMESPACE "MakeArrayNode"
@@ -60,7 +47,7 @@ public:
 		AssignStatement.LHS = *OutputPinVariable;
 
 
-		if(!IS_PURE)
+		if(!false)
 		{
 			GenerateSimpleThenGoto(Context, *Node);
 		}
@@ -82,34 +69,34 @@ FNodeHandlingFunctor* UK2Node_LowEntry_LocalVariable::CreateNodeHandler(FKismetC
 
 FText UK2Node_LowEntry_LocalVariable::GetNodeTitle(ENodeTitleType::Type TitleType) const
 {
-	return FText::FromString(TITLE);
+	return FText::FromString("Local Variable");
 }
 
 UEdGraphPin* UK2Node_LowEntry_LocalVariable::GetInputPin() const
 {
-	return FindPin(InputPinName);
+	return FindPin(TEXT("Value"));
 }
 
 UEdGraphPin* UK2Node_LowEntry_LocalVariable::GetOutputPin() const
 {
-	return FindPin(OutputPinName);
+	return FindPin(TEXT("Value "));
 }
 
 bool UK2Node_LowEntry_LocalVariable::IsNodePure() const
 {
-	return IS_PURE;
+	return false;
 }
 
 void UK2Node_LowEntry_LocalVariable::AllocateDefaultPins()
 {
-	if(!IS_PURE)
+	if(!false)
 	{
 		CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Exec, TEXT(""), NULL, false, false, UEdGraphSchema_K2::PN_Execute);
 		CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Exec, TEXT(""), NULL, false, false, UEdGraphSchema_K2::PN_Then);
 	}
 
-	UEdGraphPin* InputPin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Wildcard, TEXT(""), NULL, false, false, *InputPinName);
-	UEdGraphPin* OutputPin = CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Wildcard, TEXT(""), NULL, false, false, *OutputPinName);
+	UEdGraphPin* InputPin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Wildcard, TEXT(""), NULL, false, false, TEXT("Value"));
+	UEdGraphPin* OutputPin = CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Wildcard, TEXT(""), NULL, false, false, TEXT("Value "));
 }
 
 void UK2Node_LowEntry_LocalVariable::NotifyPinConnectionListChanged(UEdGraphPin* Pin)
@@ -193,7 +180,7 @@ void UK2Node_LowEntry_LocalVariable::PostReconstructNode()
 
 FText UK2Node_LowEntry_LocalVariable::GetTooltipText() const
 {
-	return FText::FromString(TOOLTIP);
+	return FText::FromString("Caches a value.");
 }
 
 bool UK2Node_LowEntry_LocalVariable::IsConnectionDisallowed(const UEdGraphPin* MyPin, const UEdGraphPin* OtherPin, FString& OutReason) const
@@ -240,7 +227,7 @@ void UK2Node_LowEntry_LocalVariable::GetMenuActions(FBlueprintActionDatabaseRegi
 
 FText UK2Node_LowEntry_LocalVariable::GetMenuCategory() const
 {
-	return FText::FromString(TEXT(MENU_CATEGORY));
+	return FText::FromString("Low Entry|Extended Standard Library|Utilities|Other");
 }
 
 #undef LOCTEXT_NAMESPACE

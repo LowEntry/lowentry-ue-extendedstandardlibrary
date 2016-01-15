@@ -1,30 +1,10 @@
 #include "LowEntryExtendedStandardLibraryEditorPrivatePCH.h"
 #include "LowEntryExtendedStandardLibrary.h"
 
+#include "K2Node_LowEntry_CreateByteDataWriterPure.h"
 
-// settings >>
-	#include "K2Node_LowEntry_CreateByteDataWriterPure.h"
-
-
-	#include "LowEntryByteDataEntry.h"
-	#include "LowEntryByteDataWriter.h"
-
-	typedef ULowEntryByteDataEntry INPUT_PIN_TYPE;
-	typedef ULowEntryByteDataWriter OUTPUT_PIN_TYPE;
-
-
-	#define CONVERT_FUNCTION_NAME "ByteDataWriter_CreateFromEntryArrayPure"
-
-
-	static const FString ObjectOutputPinName = FString(TEXT("ByteDataWriter"));
-	static const FString ArrayOutputPinName = FString(TEXT("TempArray"));
-
-
-	#define MENU_CATEGORY "Low Entry|Extended Standard Library|Byte Data|Writer"
-	#define TITLE "Create Byte Data Writer (Pure)"
-	#define TOOLTIP "Creates a new Byte Data Writer."
-	#define IS_PURE true
-// settings <<
+#include "LowEntryByteDataEntry.h"
+#include "LowEntryByteDataWriter.h"
 
 
 #define LOCTEXT_NAMESPACE "MakeArrayNode"
@@ -91,7 +71,7 @@ public:
 
 
 		UClass* ConvertFunctionClass = Cast<UClass>(ULowEntryExtendedStandardLibrary::StaticClass());
-		UFunction* ConvertFunctionPointer = FindField<UFunction>(ConvertFunctionClass, TEXT(CONVERT_FUNCTION_NAME));
+		UFunction* ConvertFunctionPointer = FindField<UFunction>(ConvertFunctionClass, TEXT("ByteDataWriter_CreateFromEntryArrayPure"));
 		check(ConvertFunctionPointer);
 
 		FBlueprintCompiledStatement& CreateConvertStatement = Context.AppendStatementForNode(Node);
@@ -101,7 +81,7 @@ public:
 		CreateConvertStatement.RHS.Add(*ArrayOutputVariable);
 
 
-		if(!IS_PURE)
+		if(!true)
 		{
 			GenerateSimpleThenGoto(Context, *Node);
 		}
@@ -124,42 +104,42 @@ FNodeHandlingFunctor* UK2Node_LowEntry_CreateByteDataWriterPure::CreateNodeHandl
 
 FText UK2Node_LowEntry_CreateByteDataWriterPure::GetNodeTitle(ENodeTitleType::Type TitleType) const
 {
-	return FText::FromString(TITLE);
+	return FText::FromString("Create Byte Data Writer (Pure)");
 }
 
 UEdGraphPin* UK2Node_LowEntry_CreateByteDataWriterPure::GetArrayOutputPin() const
 {
-	return FindPin(ArrayOutputPinName);
+	return FindPin(TEXT("TempArray"));
 }
 
 UEdGraphPin* UK2Node_LowEntry_CreateByteDataWriterPure::GetObjectOutputPin() const
 {
-	return FindPin(ObjectOutputPinName);
+	return FindPin(TEXT("ByteDataWriter"));
 }
 
 bool UK2Node_LowEntry_CreateByteDataWriterPure::IsNodePure() const
 {
-	return IS_PURE;
+	return true;
 }
 
 void UK2Node_LowEntry_CreateByteDataWriterPure::AllocateDefaultPins()
 {
-	if(!IS_PURE)
+	if(!true)
 	{
 		CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Exec, TEXT(""), NULL, false, false, UEdGraphSchema_K2::PN_Execute);
 		CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Exec, TEXT(""), NULL, false, false, UEdGraphSchema_K2::PN_Then);
 	}
 
 	// Create the output pins
-	UEdGraphPin* ObjectOutputPin = CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Object, TEXT(""), OUTPUT_PIN_TYPE::StaticClass(), false, false, *ObjectOutputPinName);
-	UEdGraphPin* ArrayOutputPin = CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Object, TEXT(""), INPUT_PIN_TYPE::StaticClass(), true, false, *ArrayOutputPinName);
+	UEdGraphPin* ObjectOutputPin = CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Object, TEXT(""), ULowEntryByteDataWriter::StaticClass(), false, false, TEXT("ByteDataWriter"));
+	UEdGraphPin* ArrayOutputPin = CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Object, TEXT(""), ULowEntryByteDataEntry::StaticClass(), true, false, TEXT("TempArray"));
 
 	ArrayOutputPin->bHidden = true;
 
 	// Create the input pins to create the arrays from
 	for(int32 i = 0; i < NumInputs; ++i)
 	{
-		CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Object, TEXT(""), INPUT_PIN_TYPE::StaticClass(), false, false, *FString::Printf(TEXT("[%d]"), i));
+		CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Object, TEXT(""), ULowEntryByteDataEntry::StaticClass(), false, false, *FString::Printf(TEXT("[%d]"), i));
 	}
 }
 
@@ -238,7 +218,7 @@ void UK2Node_LowEntry_CreateByteDataWriterPure::NotifyPinConnectionListChanged(U
 
 FText UK2Node_LowEntry_CreateByteDataWriterPure::GetTooltipText() const
 {
-	return FText::FromString(TOOLTIP);
+	return FText::FromString("Creates a new Byte Data Writer.");
 }
 
 void UK2Node_LowEntry_CreateByteDataWriterPure::AddInputPin()
@@ -345,7 +325,7 @@ void UK2Node_LowEntry_CreateByteDataWriterPure::GetMenuActions(FBlueprintActionD
 
 FText UK2Node_LowEntry_CreateByteDataWriterPure::GetMenuCategory() const
 {
-	return FText::FromString(TEXT(MENU_CATEGORY));
+	return FText::FromString("Low Entry|Extended Standard Library|Byte Data|Writer");
 }
 
 #undef LOCTEXT_NAMESPACE
