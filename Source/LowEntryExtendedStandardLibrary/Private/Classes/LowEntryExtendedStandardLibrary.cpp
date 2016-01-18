@@ -359,7 +359,7 @@ void ULowEntryExtendedStandardLibrary::SplitBytes(const TArray<uint8>& ByteArray
 	B.Append(ByteArray.GetData() + LengthA, ByteArray.Num() - LengthA);
 }
 
-TArray<uint8> ULowEntryExtendedStandardLibrary::MergeBytes(const TArray<uint8>& A, const TArray<uint8>& B)
+TArray<uint8> ULowEntryExtendedStandardLibrary::MergeBytes(TArray<uint8> A, TArray<uint8> B)
 {
 	if(A.Num() <= 0)
 	{
@@ -891,7 +891,7 @@ FString ULowEntryExtendedStandardLibrary::TabCharacter()
 	
 
 
-FString ULowEntryExtendedStandardLibrary::MinString(const FString& A, const FString& B)
+FString ULowEntryExtendedStandardLibrary::MinString(FString A, FString B)
 {
 	if(A >= B)
 	{
@@ -903,7 +903,7 @@ FString ULowEntryExtendedStandardLibrary::MinString(const FString& A, const FStr
 	}
 }
 
-FString ULowEntryExtendedStandardLibrary::MaxString(const FString& A, const FString& B)
+FString ULowEntryExtendedStandardLibrary::MaxString(FString A, FString B)
 {
 	if(A >= B)
 	{

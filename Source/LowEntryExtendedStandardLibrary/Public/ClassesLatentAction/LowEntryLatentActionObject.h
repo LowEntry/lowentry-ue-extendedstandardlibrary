@@ -28,13 +28,13 @@ public:
 	* Waits till the latent action is done.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Latent Action|Object", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", DisplayName = "Wait Till Done", Keywords = "untill for end finished complete completion"))
-		void WaitTillDone(UObject* WorldContextObject, FLatentActionInfo LatentInfo, UObject*& Result);
+		void WaitTillDone(UObject* WorldContextObject, FLatentActionInfo LatentInfo, UObject*& Result_);
 
 	/**
 	* Causes the latent action to be done.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Latent Action|Object", Meta = (DisplayName = "Done", Keywords = "end finished complete completion"))
-		void Done(UObject* Result);
+		void Done(UObject* Result_);
 
 	/**
 	* Returns true if the latent action is done.
@@ -46,5 +46,5 @@ public:
 	* Returns the result.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Latent Action|Object", Meta = (DisplayName = "Get Result", Keywords = "result return value"))
-		void GetResult(UObject*& Result);
+		void GetResult(UObject*& Result_);
 };

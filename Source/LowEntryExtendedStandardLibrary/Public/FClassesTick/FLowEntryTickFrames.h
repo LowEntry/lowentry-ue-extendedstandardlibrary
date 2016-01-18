@@ -20,15 +20,15 @@ public:
 	int32 OutputLink;
 	FWeakObjectPtr CallbackTarget;
 
-	FLowEntryTickFrames(const FLatentActionInfo& LatentInfo, const int32 Ticks, const int32 FramesInterval, int32& Tick)
+	FLowEntryTickFrames(const FLatentActionInfo& LatentInfo, const int32 Ticks0, const int32 FramesInterval0, int32& Tick0)
 		: ExecutionFunction(LatentInfo.ExecutionFunction)
 		, OutputLink(LatentInfo.Linkage)
 		, CallbackTarget(LatentInfo.CallbackTarget)
-		, Ticks(Ticks)
-		, FramesInterval(FramesInterval)
-		, Tick(Tick)
+		, Ticks(Ticks0)
+		, FramesInterval(FramesInterval0)
+		, Tick(Tick0)
 	{
-		Tick = 0;
+		Tick0 = 0;
 	}
 
 	void UpdateOperation(FLatentResponse& Response)

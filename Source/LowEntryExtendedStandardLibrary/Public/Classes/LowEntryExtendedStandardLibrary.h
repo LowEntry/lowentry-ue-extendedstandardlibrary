@@ -223,7 +223,7 @@ public:
 	* Merges two Byte Arrays into one.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Bytes", Meta = (DisplayName = "Merge Bytes", Keywords = "byte array", CommutativeAssociativeBinaryOperator = "true"))
-		static TArray<uint8> MergeBytes(const TArray<uint8>& A, const TArray<uint8>& B);
+		static TArray<uint8> MergeBytes(TArray<uint8> A, TArray<uint8> B);
 
 	/**
 	* Returns the values of the given bytes of the given index and length.
@@ -405,13 +405,13 @@ public:
 	* Returns the minimum value of the given values.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (DisplayName = "Min (String)", CompactNodeTitle = "MIN", CommutativeAssociativeBinaryOperator = "true"))
-		static FString MinString(const FString& A, const FString& B);
+		static FString MinString(FString A, FString B);
 
 	/**
 	* Returns the maximum value of the given values.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (DisplayName = "Max (String)", CompactNodeTitle = "MAX", CommutativeAssociativeBinaryOperator = "true"))
-		static FString MaxString(const FString& A, const FString& B);
+		static FString MaxString(FString A, FString B);
 
 	/**
 	* Returns true if A is less than B (A < B)

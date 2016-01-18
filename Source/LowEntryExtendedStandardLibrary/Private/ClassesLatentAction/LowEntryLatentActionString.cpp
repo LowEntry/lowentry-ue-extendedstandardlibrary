@@ -16,7 +16,7 @@
 // init <<
 
 
-	void ULowEntryLatentActionString::WaitTillDone(UObject* WorldContextObject, FLatentActionInfo LatentInfo, FString& Result)
+	void ULowEntryLatentActionString::WaitTillDone(UObject* WorldContextObject, FLatentActionInfo LatentInfo, FString& Result_)
 {
 	UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject);
 	if(World == nullptr)
@@ -24,12 +24,12 @@
 		return;
 	}
 
-	World->GetLatentActionManager().AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FLowEntryLatentActionString(LatentInfo, this, Result));
+	World->GetLatentActionManager().AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FLowEntryLatentActionString(LatentInfo, this, Result_));
 }
 
-void ULowEntryLatentActionString::Done(FString Result)
+void ULowEntryLatentActionString::Done(FString Result_)
 {
-	this->Result = Result;
+	Result = Result_;
 	Finished = true;
 }
 
@@ -38,7 +38,7 @@ bool ULowEntryLatentActionString::IsDone()
 	return Finished;
 }
 
-void ULowEntryLatentActionString::GetResult(FString& Result)
+void ULowEntryLatentActionString::GetResult(FString& Result_)
 {
-	Result = this->Result;
+	Result_ = Result;
 }

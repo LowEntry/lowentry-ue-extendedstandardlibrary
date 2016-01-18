@@ -19,13 +19,13 @@ public:
 	int32 OutputLink;
 	FWeakObjectPtr CallbackTarget;
 
-	FLowEntryLatentActionBoolean(const FLatentActionInfo& LatentInfo, ULowEntryLatentActionBoolean* LatentActionObject, bool& Result)
+	FLowEntryLatentActionBoolean(const FLatentActionInfo& LatentInfo, ULowEntryLatentActionBoolean* LatentActionObject0, bool& Result0)
 		: ExecutionFunction(LatentInfo.ExecutionFunction)
 		, OutputLink(LatentInfo.Linkage)
 		, CallbackTarget(LatentInfo.CallbackTarget)
-		, Result(Result)
+		, Result(Result0)
 	{
-		this->LatentActionObject = LatentActionObject;
+		this->LatentActionObject = LatentActionObject0;
 	}
 
 	void UpdateOperation(FLatentResponse& Response)
