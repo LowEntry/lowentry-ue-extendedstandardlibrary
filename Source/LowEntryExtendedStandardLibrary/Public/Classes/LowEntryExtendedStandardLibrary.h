@@ -220,9 +220,9 @@ public:
 		static void SplitBytes(const TArray<uint8>& ByteArray, const int32 LengthA, TArray<uint8>& A, TArray<uint8>& B);
 
 	/**
-	* Merges two Byte Arrays into one.
+	* Merges multiple Byte Arrays into one.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Bytes", Meta = (DisplayName = "Merge Bytes", Keywords = "byte array", CommutativeAssociativeBinaryOperator = "true"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Bytes", Meta = (DeprecatedFunction, DeprecationMessage = "This function is commutative, meaning it sometimes causes bytes to be merged in an incorrect order. Use the new MergeBytes, in which this problem has been fixed.", DisplayName = "Merge Bytes (Unsafe)", Keywords = "byte array", CommutativeAssociativeBinaryOperator = "true"))
 		static TArray<uint8> MergeBytes(TArray<uint8> A, TArray<uint8> B);
 
 	/**
