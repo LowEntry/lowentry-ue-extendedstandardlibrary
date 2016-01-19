@@ -15,10 +15,14 @@
 #include "LowEntryLong.h"
 #include "LowEntryDouble.h"
 
+#include "LowEntryExecutionQueue.h"
+
 #include "FLowEntryTickFrames.h"
 #include "FLowEntryTickSeconds.h"
 
 #include "FDelayFramesAction.h"
+
+#include "FExecutionQueueAction.h"
 
 
 // init >>
@@ -1381,6 +1385,35 @@ void ULowEntryExtendedStandardLibrary::RetriggerableRandomDelayFrames(UObject* W
 		{
 			Action->FramesRemaining = FMath::RandRange(MinFrames, MaxFrames);
 		}
+	}
+}
+
+
+
+void ULowEntryExtendedStandardLibrary::QueueExecutions(UObject* WorldContextObject, ULowEntryExecutionQueue*& Queue, FLatentActionInfo LatentInfo)
+{
+	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject))
+	{
+		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
+		FExecutionQueueAction* Action = LatentActionManager.FindExistingAction<FExecutionQueueAction>(LatentInfo.CallbackTarget, LatentInfo.UUID);
+		if(Action == NULL)
+		{
+			Queue = ULowEntryExecutionQueue::Create(1, true);
+			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FExecutionQueueAction(Queue, LatentInfo));
+		}
+		else
+		{
+			Queue = Action->Queue;
+			Queue->Count++;
+		}
+	}
+}
+
+void ULowEntryExtendedStandardLibrary::NextQueueExecution(ULowEntryExecutionQueue* Queue)
+{
+	if(Queue != nullptr)
+	{
+		Queue->Next = true;
 	}
 }
 

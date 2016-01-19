@@ -12,8 +12,9 @@ namespace UnrealBuildTool.Rules
 					"LowEntryExtendedStandardLibrary/Public/ClassesLatentAction",
 					"LowEntryExtendedStandardLibrary/Public/FClassesLatentAction",
 					"LowEntryExtendedStandardLibrary/Public/FClassesTick",
-					"LowEntryExtendedStandardLibrary/Public/FClassesDelay",
-				}
+                    "LowEntryExtendedStandardLibrary/Public/FClassesDelay",
+                    "LowEntryExtendedStandardLibrary/Public/FClassesExecutionQueue",
+                }
 			);
 
 			PrivateIncludePaths.AddRange(

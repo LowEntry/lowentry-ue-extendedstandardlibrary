@@ -25,6 +25,8 @@ class ULowEntryByteDataWriter;
 class ULowEntryLong;
 class ULowEntryDouble;
 
+class ULowEntryExecutionQueue;
+
 
 UCLASS()
 class LOWENTRYEXTENDEDSTANDARDLIBRARY_API ULowEntryExtendedStandardLibrary : public UBlueprintFunctionLibrary
@@ -714,7 +716,7 @@ public:
 	* Perform a latent action with a delay (specified in frames).  Calling again while it is counting down will be ignored.
 	*
 	* @param WorldContext	World context.
-	* @param MinDuration 	frames of delay.
+	* @param Frames			frames of delay.
 	* @param LatentInfo 	The latent action.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Delay (Frames)", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", DisplayName = "Delay (Frames)"))
@@ -724,7 +726,7 @@ public:
 	* Perform a latent action with a retriggerable delay (specified in frames).  Calling again while it is counting down will reset the countdown to the given Frames.
 	*
 	* @param WorldContext	World context.
-	* @param MinDuration 	frames of delay.
+	* @param Frames			frames of delay.
 	* @param LatentInfo 	The latent action.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Delay (Frames)", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", DisplayName = "Retriggerable Delay (Frames)"))
@@ -734,8 +736,8 @@ public:
 	* Perform a latent action with a random delay (specified in frames).  Calling again while it is counting down will be ignored.
 	*
 	* @param WorldContext	World context.
-	* @param MinDuration 	minimum frames of delay.
-	* @param MaxDuration 	maximum frames of delay.
+	* @param MinFrames		minimum frames of delay.
+	* @param MaxFrames 		maximum frames of delay.
 	* @param LatentInfo 	The latent action.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Delay (Frames)", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", MinFrames = "10", MaxFrames = "30", DisplayName = "Random Delay (Frames)"))
@@ -745,12 +747,30 @@ public:
 	* Perform a latent action with a retriggerable random delay (specified in frames).  Calling again while it is counting down will reset the countdown to a new random Frames.
 	*
 	* @param WorldContext	World context.
-	* @param MinDuration 	minimum frames of delay.
-	* @param MaxDuration 	maximum frames of delay.
+	* @param MinFrames	 	minimum frames of delay.
+	* @param MaxFrames	 	maximum frames of delay.
 	* @param LatentInfo 	The latent action.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Delay (Frames)", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", MinFrames = "10", MaxFrames = "30", DisplayName = "Retriggerable Random Delay (Frames)"))
 		static void RetriggerableRandomDelayFrames(UObject* WorldContextObject, int32 MinFrames, int32 MaxFrames, FLatentActionInfo LatentInfo);
+
+
+
+	/**
+	* Queues up executions, will run a pending execution when Next() is called.
+	*
+	* @param WorldContext	World context.
+	* @param Queue 			the queue in which the executions are stored.
+	* @param LatentInfo 	The latent action.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Execution Queue", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", DisplayName = "Queue"))
+		static void	QueueExecutions(UObject* WorldContextObject, ULowEntryExecutionQueue*& Queue, struct FLatentActionInfo LatentInfo);
+
+	/**
+	* Runs a pending execution (if any). 
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Execution Queue", meta = (DisplayName = "Next"))
+		static void	NextQueueExecution(ULowEntryExecutionQueue* Queue);
 
 
 
