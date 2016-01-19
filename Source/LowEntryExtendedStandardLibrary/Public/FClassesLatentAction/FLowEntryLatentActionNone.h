@@ -12,11 +12,11 @@
 class FLowEntryLatentActionNone : public FPendingLatentAction
 {
 public:
-	ULowEntryLatentActionNone* LatentActionObject = NULL;
-
 	FName ExecutionFunction;
 	int32 OutputLink;
 	FWeakObjectPtr CallbackTarget;
+
+	ULowEntryLatentActionNone* LatentActionObject = NULL;
 
 	FLowEntryLatentActionNone(const FLatentActionInfo& LatentInfo, ULowEntryLatentActionNone* LatentActionObject0)
 		: ExecutionFunction(LatentInfo.ExecutionFunction)

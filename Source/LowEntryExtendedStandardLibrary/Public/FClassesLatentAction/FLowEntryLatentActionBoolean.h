@@ -12,12 +12,12 @@
 class FLowEntryLatentActionBoolean : public FPendingLatentAction
 {
 public:
-	ULowEntryLatentActionBoolean* LatentActionObject = NULL;
-	bool& Result;
-
 	FName ExecutionFunction;
 	int32 OutputLink;
 	FWeakObjectPtr CallbackTarget;
+
+	ULowEntryLatentActionBoolean* LatentActionObject = NULL;
+	bool& Result;
 
 	FLowEntryLatentActionBoolean(const FLatentActionInfo& LatentInfo, ULowEntryLatentActionBoolean* LatentActionObject0, bool& Result0)
 		: ExecutionFunction(LatentInfo.ExecutionFunction)
