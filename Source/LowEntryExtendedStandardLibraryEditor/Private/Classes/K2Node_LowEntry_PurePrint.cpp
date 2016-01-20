@@ -1,4 +1,5 @@
 #include "LowEntryExtendedStandardLibraryEditorPrivatePCH.h"
+#include "LowEntryExtendedStandardLibrary.h"
 
 #include "K2Node_LowEntry_PurePrint.h"
 
@@ -50,8 +51,8 @@ public:
 		AssignStatement.LHS = *OutputPinVariable;
 
 
-		UClass* PrintFunctionClass = Cast<UClass>(UK2Node_LowEntry_PurePrint::StaticClass());
-		UFunction* PrintFunctionPointer = FindField<UFunction>(PrintFunctionClass, TEXT("KismetSystemLibraryPrintString"));
+		UClass* PrintFunctionClass = Cast<UClass>(ULowEntryExtendedStandardLibrary::StaticClass());
+		UFunction* PrintFunctionPointer = FindField<UFunction>(PrintFunctionClass, TEXT("SimpleKismetSystemLibraryPrintString"));
 		check(PrintFunctionPointer);
 
 		FBlueprintCompiledStatement& CreatePrintStatement = Context.AppendStatementForNode(Node);
@@ -66,34 +67,6 @@ public:
 		}
 	}
 };
-
-
-void UK2Node_LowEntry_PurePrint::KismetSystemLibraryPrintString(const FString& InString)
-{
-#if !(UE_BUILD_SHIPPING || UE_BUILD_TEST)
-	float ScreenDurationTime = 5.0f;
-	bool bPrintToScreen = true;
-	bool bPrintToLog = true;
-	FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0);
-
-	if(bPrintToLog)
-	{
-		UE_LOG(LogBlueprintUserMessages, Log, TEXT("%s"), *InString);
-	}
-	else
-	{
-		UE_LOG(LogBlueprintUserMessages, Verbose, TEXT("%s"), *InString);
-	}
-
-	if(bPrintToScreen)
-	{
-		if(GAreScreenMessagesEnabled)
-		{
-			GEngine->AddOnScreenDebugMessage((uint64) -1, ScreenDurationTime, TextColor.ToFColor(true), InString);
-		}
-	}
-#endif
-}
 
 
 /////////////////////////////////////////////////////

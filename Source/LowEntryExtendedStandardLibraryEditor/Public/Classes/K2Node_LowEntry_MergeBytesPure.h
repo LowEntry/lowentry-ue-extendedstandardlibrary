@@ -37,14 +37,6 @@ class UK2Node_LowEntry_MergeBytesPure : public UK2Node
 
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Encapsulate Byte Array"))
-		static ULowEntryByteArray* EncapsulateByteArray(const TArray<uint8>& ByteArray);
-
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Merge Encapsulated Byte Arrays"))
-		static TArray<uint8> MergeEncapsulatedByteArrays(const TArray<ULowEntryByteArray*>& ByteArrays);
-
-
-public:
 	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API void AddInputPin();
 	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API void RemoveInputPin(UEdGraphPin* Pin);
 

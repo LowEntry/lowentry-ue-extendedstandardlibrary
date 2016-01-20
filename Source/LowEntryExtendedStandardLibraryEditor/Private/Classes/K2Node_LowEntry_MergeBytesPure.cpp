@@ -67,7 +67,7 @@ public:
 		check(ObjectOutputVariable);
 
 
-		UClass* ConvertFunctionClass2 = Cast<UClass>(UK2Node_LowEntry_MergeBytesPure::StaticClass());
+		UClass* ConvertFunctionClass2 = Cast<UClass>(ULowEntryExtendedStandardLibrary::StaticClass());
 		UFunction* ConvertFunctionPointer2 = FindField<UFunction>(ConvertFunctionClass2, TEXT("EncapsulateByteArray"));
 		check(ConvertFunctionPointer2);
 
@@ -123,7 +123,7 @@ public:
 		}
 
 
-		UClass* ConvertFunctionClass = Cast<UClass>(UK2Node_LowEntry_MergeBytesPure::StaticClass());
+		UClass* ConvertFunctionClass = Cast<UClass>(ULowEntryExtendedStandardLibrary::StaticClass());
 		UFunction* ConvertFunctionPointer = FindField<UFunction>(ConvertFunctionClass, TEXT("MergeEncapsulatedByteArrays"));
 		check(ConvertFunctionPointer);
 
@@ -140,51 +140,6 @@ public:
 		}
 	}
 };
-
-
-ULowEntryByteArray* UK2Node_LowEntry_MergeBytesPure::EncapsulateByteArray(const TArray<uint8>& ByteArray)
-{
-	return ULowEntryByteArray::CreateFromByteArray(ByteArray);
-}
-
-TArray<uint8> UK2Node_LowEntry_MergeBytesPure::MergeEncapsulatedByteArrays(const TArray<ULowEntryByteArray*>& ByteArrays)
-{
-	if(ByteArrays.Num() <= 0)
-	{
-		return TArray<uint8>();
-	}
-	if(ByteArrays.Num() == 1)
-	{
-		ULowEntryByteArray* Array = ByteArrays[0];
-		if(Array == nullptr)
-		{
-			return TArray<uint8>();
-		}
-		return Array->ByteArray;
-	}
-	int Length = 0;
-	for(ULowEntryByteArray* Array : ByteArrays)
-	{
-		if(Array != nullptr)
-		{
-			Length += Array->ByteArray.Num();
-		}
-	}
-	if(Length <= 0)
-	{
-		return TArray<uint8>();
-	}
-	TArray<uint8> Merged = TArray<uint8>();
-	Merged.Reserve(Length);
-	for(ULowEntryByteArray* Array : ByteArrays)
-	{
-		if(Array != nullptr)
-		{
-			Merged.Append(Array->ByteArray);
-		}
-	}
-	return Merged;
-}
 
 
 /////////////////////////////////////////////////////

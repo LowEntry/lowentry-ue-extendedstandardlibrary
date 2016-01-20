@@ -29,10 +29,6 @@ class UK2Node_LowEntry_PurePrint : public UK2Node
 	GENERATED_UCLASS_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Kismet Print", Keywords = "log print"))
-		static void KismetSystemLibraryPrintString(const FString& InString);
-
-public:
 	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API UEdGraphPin* GetInputPin() const;
 	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API UEdGraphPin* GetStringInputPin() const;
 	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API UEdGraphPin* GetOutputPin() const;

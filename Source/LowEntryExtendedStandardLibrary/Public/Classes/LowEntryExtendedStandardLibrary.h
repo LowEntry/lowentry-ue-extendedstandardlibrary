@@ -18,6 +18,8 @@ class ULowEntryLatentActionNone;
 class ULowEntryLatentActionObject;
 class ULowEntryLatentActionString;
 
+class ULowEntryByteArray;
+
 class ULowEntryByteDataEntry;
 class ULowEntryByteDataReader;
 class ULowEntryByteDataWriter;
@@ -993,4 +995,15 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Types|Double (bytes)", Meta = (DisplayName = "Create Double (bytes)", AdvancedDisplay = "1"))
 		static ULowEntryDouble* Double_Create(const TArray<uint8>& ByteArray, int32 Index = 0, int32 Length = 0x7FFFFFFF);
+
+
+
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Internal", Meta = (BlueprintInternalUseOnly, DisplayName = "Kismet Print"))
+		static void SimpleKismetSystemLibraryPrintString(const FString& InString);
+
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Internal", Meta = (BlueprintInternalUseOnly, DisplayName = "Encapsulate Byte Array"))
+		static ULowEntryByteArray* EncapsulateByteArray(const TArray<uint8>& ByteArray);
+
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Internal", Meta = (BlueprintInternalUseOnly, DisplayName = "Merge Encapsulated Byte Arrays"))
+		static TArray<uint8> MergeEncapsulatedByteArrays(const TArray<ULowEntryByteArray*>& ByteArrays);
 };

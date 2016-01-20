@@ -8,6 +8,8 @@
 #include "LowEntryLatentActionObject.h"
 #include "LowEntryLatentActionString.h"
 
+#include "LowEntryByteArray.h"
+
 #include "LowEntryByteDataEntry.h"
 #include "LowEntryByteDataReader.h"
 #include "LowEntryByteDataWriter.h"
@@ -1734,4 +1736,77 @@ ULowEntryDouble* ULowEntryExtendedStandardLibrary::Double_CreateZero()
 ULowEntryDouble* ULowEntryExtendedStandardLibrary::Double_Create(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
 {
 	return ULowEntryDouble::Create(ByteArray, Index, Length);
+}
+
+
+
+void ULowEntryExtendedStandardLibrary::SimpleKismetSystemLibraryPrintString(const FString& InString)
+{
+#if !(UE_BUILD_SHIPPING || UE_BUILD_TEST)
+	float ScreenDurationTime = 5.0f;
+	bool bPrintToScreen = true;
+	bool bPrintToLog = true;
+	FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0);
+
+	if(bPrintToLog)
+	{
+		UE_LOG(LogBlueprintUserMessages, Log, TEXT("%s"), *InString);
+	}
+	else
+	{
+		UE_LOG(LogBlueprintUserMessages, Verbose, TEXT("%s"), *InString);
+	}
+
+	if(bPrintToScreen)
+	{
+		if(GAreScreenMessagesEnabled)
+		{
+			GEngine->AddOnScreenDebugMessage((uint64) -1, ScreenDurationTime, TextColor.ToFColor(true), InString);
+		}
+	}
+#endif
+}
+
+ULowEntryByteArray* ULowEntryExtendedStandardLibrary::EncapsulateByteArray(const TArray<uint8>& ByteArray)
+{
+	return ULowEntryByteArray::CreateFromByteArray(ByteArray);
+}
+
+TArray<uint8> ULowEntryExtendedStandardLibrary::MergeEncapsulatedByteArrays(const TArray<ULowEntryByteArray*>& ByteArrays)
+{
+	if(ByteArrays.Num() <= 0)
+	{
+		return TArray<uint8>();
+	}
+	if(ByteArrays.Num() == 1)
+	{
+		ULowEntryByteArray* Array = ByteArrays[0];
+		if(Array == nullptr)
+		{
+			return TArray<uint8>();
+		}
+		return Array->ByteArray;
+	}
+	int Length = 0;
+	for(ULowEntryByteArray* Array : ByteArrays)
+	{
+		if(Array != nullptr)
+		{
+			Length += Array->ByteArray.Num();
+		}
+	}
+	if(Length <= 0)
+	{
+		return TArray<uint8>();
+	}
+	TArray<uint8> Merged = TArray<uint8>();
+	Merged.Reserve(Length);
+	for(ULowEntryByteArray* Array : ByteArrays)
+	{
+		if(Array != nullptr)
+		{
+			Merged.Append(Array->ByteArray);
+		}
+	}
+	return Merged;
 }
