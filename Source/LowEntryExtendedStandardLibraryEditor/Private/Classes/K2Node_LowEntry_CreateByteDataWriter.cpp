@@ -203,9 +203,9 @@ void UK2Node_LowEntry_CreateByteDataWriter::NotifyPinConnectionListChanged(UEdGr
 		for(int32 PinIndex = Pins.Num() - 1; PinIndex > FirstDisconnectedPinSinceLastConnected; --PinIndex)
 		{
 			UEdGraphPin* RemovePin = Pins[PinIndex];
-			Pins.RemoveAt(PinIndex);
 			RemovePin->Modify();
 			RemovePin->BreakAllPinLinks();
+			Pins.RemoveAt(PinIndex);
 			--NumInputs;
 		}
 		const bool bIsCompiling = GetBlueprint()->bBeingCompiled;
@@ -253,9 +253,9 @@ void UK2Node_LowEntry_CreateByteDataWriter::RemoveInputPin(UEdGraphPin* Pin)
 			Pins[PinIndex]->PinName = FString::Printf(TEXT("[%d]"), PinIndex - 2); // -1 to shift back one, -1 to account for the output pin at the 0th position
 		}
 
-		Pins.RemoveAt(PinRemovalIndex);
 		Pin->Modify();
 		Pin->BreakAllPinLinks();
+		Pins.RemoveAt(PinRemovalIndex);
 
 		--NumInputs;
 

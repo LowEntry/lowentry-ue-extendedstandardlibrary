@@ -37,22 +37,25 @@
 void ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(UObject* WorldContextObject, const FString& InString, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)
 {
 #if !(UE_BUILD_SHIPPING || UE_BUILD_TEST)
-	WorldContextObject = GEngine->GetWorldFromContextObject(WorldContextObject, false);
 	FString Prefix;
-	if(WorldContextObject)
+	if(GEngine != nullptr)
 	{
-		UWorld *World = WorldContextObject->GetWorld();
-		if(World->WorldType == EWorldType::PIE)
+		WorldContextObject = GEngine->GetWorldFromContextObject(WorldContextObject, false);
+		if(WorldContextObject)
 		{
-			switch(World->GetNetMode())
+			UWorld *World = WorldContextObject->GetWorld();
+			if(World->WorldType == EWorldType::PIE)
 			{
-				case NM_Client:
-					Prefix = FString::Printf(TEXT("Client %d: "), GPlayInEditorID - 1);
-					break;
-				case NM_DedicatedServer:
-				case NM_ListenServer:
-					Prefix = FString::Printf(TEXT("Server: "));
-					break;
+				switch(World->GetNetMode())
+				{
+					case NM_Client:
+						Prefix = FString::Printf(TEXT("Client %d: "), GPlayInEditorID - 1);
+						break;
+					case NM_DedicatedServer:
+					case NM_ListenServer:
+						Prefix = FString::Printf(TEXT("Server: "));
+						break;
+				}
 			}
 		}
 	}
@@ -72,7 +75,10 @@ void ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(UObject* W
 	{
 		if(GAreScreenMessagesEnabled)
 		{
-			GEngine->AddOnScreenDebugMessage((uint64) -1, ScreenDurationTime, TextColor.ToFColor(true), FinalString);
+			if(GEngine != nullptr)
+			{
+				GEngine->AddOnScreenDebugMessage((uint64) -1, ScreenDurationTime, TextColor.ToFColor(true), FinalString);
+			}
 		}
 	}
 #endif
@@ -1744,22 +1750,13 @@ void ULowEntryExtendedStandardLibrary::SimpleKismetSystemLibraryPrintString(cons
 {
 #if !(UE_BUILD_SHIPPING || UE_BUILD_TEST)
 	float ScreenDurationTime = 5.0f;
-	bool bPrintToScreen = true;
-	bool bPrintToLog = true;
 	FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0);
 
-	if(bPrintToLog)
-	{
-		UE_LOG(LogBlueprintUserMessages, Log, TEXT("%s"), *InString);
-	}
-	else
-	{
-		UE_LOG(LogBlueprintUserMessages, Verbose, TEXT("%s"), *InString);
-	}
+	UE_LOG(LogBlueprintUserMessages, Log, TEXT("%s"), *InString);
 
-	if(bPrintToScreen)
+	if(GAreScreenMessagesEnabled)
 	{
-		if(GAreScreenMessagesEnabled)
+		if(GEngine != nullptr)
 		{
 			GEngine->AddOnScreenDebugMessage((uint64) -1, ScreenDurationTime, TextColor.ToFColor(true), InString);
 		}

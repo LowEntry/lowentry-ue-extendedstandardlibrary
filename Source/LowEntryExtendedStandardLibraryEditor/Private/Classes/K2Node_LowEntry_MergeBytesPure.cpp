@@ -262,15 +262,16 @@ void UK2Node_LowEntry_MergeBytesPure::NotifyPinConnectionListChanged(UEdGraphPin
 		for(int32 PinIndex = Pins.Num() - 1; PinIndex > FirstDisconnectedPinSinceLastConnected + 1; --PinIndex)
 		{
 			UEdGraphPin* RemovePin2 = Pins[PinIndex];
-			Pins.RemoveAt(PinIndex);
 			RemovePin2->Modify();
 			RemovePin2->BreakAllPinLinks();
 			--PinIndex;
 
 			UEdGraphPin* RemovePin = Pins[PinIndex];
-			Pins.RemoveAt(PinIndex);
 			RemovePin->Modify();
 			RemovePin->BreakAllPinLinks();
+            
+			Pins.RemoveAt(PinIndex + 1);
+			Pins.RemoveAt(PinIndex);
 
 			--NumInputs;
 		}
@@ -326,13 +327,14 @@ void UK2Node_LowEntry_MergeBytesPure::RemoveInputPin(UEdGraphPin* Pin)
 		}
 
 		UEdGraphPin* Pin2 = GetPin(Pin->PinName + TEXT("2"));
-		Pins.RemoveAt(PinRemovalIndex + 1);
 		Pin2->Modify();
 		Pin2->BreakAllPinLinks();
 
-		Pins.RemoveAt(PinRemovalIndex);
 		Pin->Modify();
 		Pin->BreakAllPinLinks();
+
+		Pins.RemoveAt(PinRemovalIndex + 1);
+		Pins.RemoveAt(PinRemovalIndex);
 
 		--NumInputs;
 
