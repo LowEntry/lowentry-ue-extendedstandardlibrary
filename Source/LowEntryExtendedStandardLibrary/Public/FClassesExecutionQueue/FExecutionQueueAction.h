@@ -11,17 +11,17 @@
 class FExecutionQueueAction : public FPendingLatentAction
 {
 public:
-	ULowEntryExecutionQueue* Queue;
-
 	FName ExecutionFunction;
 	int32 OutputLink;
 	FWeakObjectPtr CallbackTarget;
 
+	ULowEntryExecutionQueue* Queue;
+
 	FExecutionQueueAction(ULowEntryExecutionQueue* Queue0, const FLatentActionInfo& LatentInfo)
-		: Queue(Queue0)
-		, ExecutionFunction(LatentInfo.ExecutionFunction)
+		: ExecutionFunction(LatentInfo.ExecutionFunction)
 		, OutputLink(LatentInfo.Linkage)
 		, CallbackTarget(LatentInfo.CallbackTarget)
+		, Queue(Queue0)
 	{
 	}
 

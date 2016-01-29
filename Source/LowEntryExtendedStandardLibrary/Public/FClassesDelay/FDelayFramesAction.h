@@ -10,17 +10,17 @@
 class FDelayFramesAction : public FPendingLatentAction
 {
 public:
-	int32 FramesRemaining;
-
 	FName ExecutionFunction;
 	int32 OutputLink;
 	FWeakObjectPtr CallbackTarget;
 
+	int32 FramesRemaining;
+
 	FDelayFramesAction(int32 Frames, const FLatentActionInfo& LatentInfo)
-		: FramesRemaining(Frames)
-		, ExecutionFunction(LatentInfo.ExecutionFunction)
+		: ExecutionFunction(LatentInfo.ExecutionFunction)
 		, OutputLink(LatentInfo.Linkage)
 		, CallbackTarget(LatentInfo.CallbackTarget)
+		, FramesRemaining(Frames)
 	{
 	}
 

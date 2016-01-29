@@ -10,15 +10,15 @@
 class FLowEntryTickFrames : public FPendingLatentAction
 {
 public:
+	FName ExecutionFunction;
+	int32 OutputLink;
+	FWeakObjectPtr CallbackTarget;
+
 	const int32 Ticks;
 	const int32 FramesInterval;
 
 	int32& Tick;
 	int32 CurrentFramesInterval = 0;
-
-	FName ExecutionFunction;
-	int32 OutputLink;
-	FWeakObjectPtr CallbackTarget;
 
 	FLowEntryTickFrames(const FLatentActionInfo& LatentInfo, const int32 Ticks0, const int32 FramesInterval0, int32& Tick0)
 		: ExecutionFunction(LatentInfo.ExecutionFunction)
