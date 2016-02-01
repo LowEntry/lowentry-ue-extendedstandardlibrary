@@ -825,6 +825,93 @@ float ULowEntryExtendedStandardLibrary::BytesToFloat(const TArray<uint8>& ByteAr
 }
 
 
+TArray<uint8> ULowEntryExtendedStandardLibrary::ByteToBytes(const uint8 Value)
+{
+	TArray<uint8> ByteArray;
+	ByteArray.SetNum(1);
+	ByteArray[0] = Value;
+	return ByteArray;
+}
+
+uint8 ULowEntryExtendedStandardLibrary::BytesToByte(const TArray<uint8>& ByteArray, int32 Index)
+{
+	if(ByteArray.Num() <= Index)
+	{
+		return 0;
+	}
+	return ByteArray[Index];
+}
+
+
+void ULowEntryExtendedStandardLibrary::BitsToByte(const bool Bit1, const bool Bit2, const bool Bit3, const bool Bit4, const bool Bit5, const bool Bit6, const bool Bit7, const bool Bit8, uint8& Byte)
+{
+	uint8 B = 0;
+	if(Bit8)
+	{
+		B |= (1 << 7);
+	}
+	if(Bit7)
+	{
+		B |= (1 << 6);
+	}
+	if(Bit6)
+	{
+		B |= (1 << 5);
+	}
+	if(Bit5)
+	{
+		B |= (1 << 4);
+	}
+	if(Bit4)
+	{
+		B |= (1 << 3);
+	}
+	if(Bit3)
+	{
+		B |= (1 << 2);
+	}
+	if(Bit2)
+	{
+		B |= (1 << 1);
+	}
+	if(Bit1)
+	{
+		B |= (1 << 0);
+	}
+	Byte = B;
+}
+
+void ULowEntryExtendedStandardLibrary::ByteToBits(const uint8 Byte, bool& Bit1, bool& Bit2, bool& Bit3, bool& Bit4, bool& Bit5, bool& Bit6, bool& Bit7, bool& Bit8)
+{
+	Bit8 = (((Byte >> 7) & 1) != 0);
+	Bit7 = (((Byte >> 6) & 1) != 0);
+	Bit6 = (((Byte >> 5) & 1) != 0);
+	Bit5 = (((Byte >> 4) & 1) != 0);
+	Bit4 = (((Byte >> 3) & 1) != 0);
+	Bit3 = (((Byte >> 2) & 1) != 0);
+	Bit2 = (((Byte >> 1) & 1) != 0);
+	Bit1 = (((Byte >> 0) & 1) != 0);
+}
+
+
+bool ULowEntryExtendedStandardLibrary::IsBitSet(const uint8 B, const int32 Bit)
+{
+	return (((B >> (Bit - 1)) & 1) != 0);
+}
+
+uint8 ULowEntryExtendedStandardLibrary::GetByteWithBitSet(const uint8 Byte, const int32 Bit, const bool Value)
+{
+	if(Value)
+	{
+		return Byte | (1 << (Bit - 1));
+	}
+	else
+	{
+		return Byte & ~(1 << (Bit - 1));
+	}
+}
+
+
 
 TArray<uint8> ULowEntryExtendedStandardLibrary::Md5(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
 {

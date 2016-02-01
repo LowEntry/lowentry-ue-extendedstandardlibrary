@@ -351,7 +351,53 @@ public:
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Float", Keywords = "byte array float", AdvancedDisplay = "1"))
 		static float BytesToFloat(const TArray<uint8>& ByteArray, int32 Index = 0, int32 Length = 0x7FFFFFFF);
-		
+
+
+	/**
+	* Converts a byte (uint8) into a Byte Array (1 byte).
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Byte To Bytes", Keywords = "byte array"))
+		static TArray<uint8> ByteToBytes(const uint8 Value);
+
+	/**
+	* Converts a Byte Array into a byte (uint8).
+	*
+	* If there are more than 1 bytes given, it will return the first byte.
+	* If there are less than 1 bytes given, it will return 0.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Byte", Keywords = "byte array", AdvancedDisplay = "1"))
+		static uint8 BytesToByte(const TArray<uint8>& ByteArray, int32 Index = 0);
+
+
+	/**
+	* Converts bits into a byte.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|Bits", Meta = (DisplayName = "Bits To Byte", Keywords = "bit byte"))
+		static void BitsToByte(const bool Bit1, const bool Bit2, const bool Bit3, const bool Bit4, const bool Bit5, const bool Bit6, const bool Bit7, const bool Bit8, uint8& Byte);
+
+	/**
+	* Converts a byte into bits.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|Bits", Meta = (DisplayName = "Byte To Bits", Keywords = "bit byte"))
+		static void ByteToBits(const uint8 Byte, bool& Bit1, bool& Bit2, bool& Bit3, bool& Bit4, bool& Bit5, bool& Bit6, bool& Bit7, bool& Bit8);
+
+
+	/**
+	* Returns true if the bit is 1, returns false if the bit is 0.
+	* 
+	* Bytes start with bit 8, ending with bit 1, as such: 87654321
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|Bits", Meta = (DisplayName = "Is Bit Set", Keywords = "bit byte"))
+		static bool IsBitSet(const uint8 B, const int32 Bit);
+
+	/**
+	* Sets a bit 1 or 0, depending on the given boolean.
+	* 
+	* Bytes start with bit 8, ending with bit 1, as such: 87654321
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|Bits", Meta = (DisplayName = "Get Byte With Bit Set", Keywords = "bit byte"))
+		static uint8 GetByteWithBitSet(const uint8 Byte, const int32 Bit, const bool Value);
+	
 		
 		
 	/**
