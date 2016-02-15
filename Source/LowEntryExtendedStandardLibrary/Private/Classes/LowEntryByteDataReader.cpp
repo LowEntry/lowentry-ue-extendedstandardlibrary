@@ -211,16 +211,25 @@ TArray<ULowEntryDouble*> ULowEntryByteDataReader::GetDoubleBytesArray()
 TArray<bool> ULowEntryByteDataReader::GetBooleanArray()
 {
 	int32 Length = GetInteger();
-	Length = FMath::Min(Length, MaxElementsRemaining(1));
+	Length = FMath::Min(Length, SafeMultiply(MaxElementsRemaining(1), 8));
 	if(Length <= 0)
 	{
 		return TArray<bool>();
 	}
 	TArray<bool> Array;
 	Array.SetNumUninitialized(Length);
-	for(int32 i = 0; i < Length; i++)
+	for(int32 i = 0; i < Length; i+=8)
 	{
-		Array[i] = GetBoolean();
+		uint8 B = GetByte();
+		for(int32 BIndex = 0; BIndex < 8; BIndex++)
+		{
+			int32 Index = i + BIndex;
+			if(Index >= Length)
+			{
+				return Array;
+			}
+			Array[Index] = (((B >> (7 - BIndex)) & 1) != 0);
+		}
 	}
 	return Array;
 }
@@ -240,4 +249,19 @@ TArray<FString> ULowEntryByteDataReader::GetStringUtf8Array()
 		Array[i] = GetStringUtf8();
 	}
 	return Array;
+}
+
+
+int32 ULowEntryByteDataReader::SafeMultiply(const int32 A, const int32 B)
+{
+	int64 Result = (int64) A * (int64) B;
+	if(Result > 0x7fffffffi32)
+	{
+		return 0x7fffffffi32;
+	}
+	if(Result < 0x80000000i32)
+	{
+		return 0x80000000i32;
+	}
+	return (int32) Result;
 }

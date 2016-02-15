@@ -138,7 +138,14 @@ void ULowEntryByteDataWriter::AddDoubleBytes(ULowEntryDouble* Value)
 }
 void ULowEntryByteDataWriter::AddBoolean(const bool Value)
 {
-	AddByteArray(ULowEntryExtendedStandardLibrary::BooleanToBytes(Value));
+	if(Value)
+	{
+		AddRawByte(0x01);
+	}
+	else
+	{
+		AddRawByte(0x00);
+	}
 }
 void ULowEntryByteDataWriter::AddStringUtf8(const FString& Value)
 {
@@ -186,9 +193,25 @@ void ULowEntryByteDataWriter::AddDoubleBytesArray(const TArray<ULowEntryDouble*>
 void ULowEntryByteDataWriter::AddBooleanArray(const TArray<bool>& Value)
 {
 	AddInteger(Value.Num());
+	uint8 B = 0;
+	int BIndex = 0;
 	for(bool V : Value)
 	{
-		AddBoolean(V);
+		if(V)
+		{
+			B |= (1 << (7 - BIndex));
+		}
+		BIndex++;
+		if(BIndex == 8)
+		{
+			AddRawByte(B);
+			B = 0;
+			BIndex = 0;
+		}
+	}
+	if(BIndex > 0)
+	{
+		AddRawByte(B);
 	}
 }
 void ULowEntryByteDataWriter::AddStringUtf8Array(const TArray<FString>& Value)

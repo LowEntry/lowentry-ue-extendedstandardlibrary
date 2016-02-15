@@ -114,4 +114,7 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Reader", Meta = (DisplayName = "Get String (Utf 8) Array"))
 		TArray<FString> GetStringUtf8Array();
+
+
+	int32 SafeMultiply(const int32 A, const int32 B);
 };
