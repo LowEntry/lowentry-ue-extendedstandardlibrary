@@ -1833,6 +1833,160 @@ ULowEntryDouble* ULowEntryExtendedStandardLibrary::Double_Create(const TArray<ui
 
 
 
+void ULowEntryExtendedStandardLibrary::SetMousePosition(APlayerController* Player, const int32 X, const int32 Y)
+{
+	if(Player == nullptr)
+	{
+		return;
+	}
+
+	const ULocalPlayer* LocalPlayer = Cast<ULocalPlayer>(Player->Player);
+	if(LocalPlayer == nullptr)
+	{
+		return;
+	}
+
+	const UGameViewportClient* ViewportClient = Cast<UGameViewportClient>(LocalPlayer->ViewportClient);
+	if(ViewportClient == nullptr)
+	{
+		return;
+	}
+
+	FViewport* Viewport = ViewportClient->Viewport;
+	if(Viewport == nullptr)
+	{
+		return;
+	}
+
+	FIntPoint Size = Viewport->GetSizeXY();
+	if((Size.X <= 0) || (Size.Y <= 0))
+	{
+		return;
+	}
+
+	Viewport->SetMouse(FMath::Clamp(X, 0, Size.X), FMath::Clamp(Y, 0, Size.Y));
+}
+
+void ULowEntryExtendedStandardLibrary::GetMousePosition(APlayerController* Player, bool& Success, int32& X, int32& Y)
+{
+	Success = false;
+	X = 0;
+	Y = 0;
+
+	if(Player == nullptr)
+	{
+		return;
+	}
+
+	const ULocalPlayer* LocalPlayer = Cast<ULocalPlayer>(Player->Player);
+	if(LocalPlayer == nullptr)
+	{
+		return;
+	}
+
+	const UGameViewportClient* ViewportClient = Cast<UGameViewportClient>(LocalPlayer->ViewportClient);
+	if(ViewportClient == nullptr)
+	{
+		return;
+	}
+
+	FViewport* Viewport = ViewportClient->Viewport;
+	if(Viewport == nullptr)
+	{
+		return;
+	}
+
+	int32 MouseX = Viewport->GetMouseX();
+	int32 MouseY = Viewport->GetMouseY();
+	if((MouseX < 0) || (MouseY < 0))
+	{
+		return;
+	}
+
+	Success = true;
+	X = MouseX;
+	Y = MouseY;
+}
+
+
+void ULowEntryExtendedStandardLibrary::SetMousePositionInPercentages(APlayerController* Player, const float X, const float Y)
+{
+	if(Player == nullptr)
+	{
+		return;
+	}
+
+	const ULocalPlayer* LocalPlayer = Cast<ULocalPlayer>(Player->Player);
+	if(LocalPlayer == nullptr)
+	{
+		return;
+	}
+
+	const UGameViewportClient* ViewportClient = Cast<UGameViewportClient>(LocalPlayer->ViewportClient);
+	if(ViewportClient == nullptr)
+	{
+		return;
+	}
+
+	FViewport* Viewport = ViewportClient->Viewport;
+	if(Viewport == nullptr)
+	{
+		return;
+	}
+
+	FIntPoint Size = Viewport->GetSizeXY();
+	Viewport->SetMouse(FMath::Round(Size.X * FMath::Clamp(X, 0.0f, 1.0f)), FMath::Round(Size.Y * FMath::Clamp(Y, 0.0f, 1.0f)));
+}
+
+void ULowEntryExtendedStandardLibrary::GetMousePositionInPercentages(APlayerController* Player, bool& Success, float& X, float& Y)
+{
+	Success = false;
+	X = 0;
+	Y = 0;
+
+	if(Player == nullptr)
+	{
+		return;
+	}
+
+	const ULocalPlayer* LocalPlayer = Cast<ULocalPlayer>(Player->Player);
+	if(LocalPlayer == nullptr)
+	{
+		return;
+	}
+
+	const UGameViewportClient* ViewportClient = Cast<UGameViewportClient>(LocalPlayer->ViewportClient);
+	if(ViewportClient == nullptr)
+	{
+		return;
+	}
+
+	FViewport* Viewport = ViewportClient->Viewport;
+	if(Viewport == nullptr)
+	{
+		return;
+	}
+
+	int32 MouseX = Viewport->GetMouseX();
+	int32 MouseY = Viewport->GetMouseY();
+	if((MouseX < 0) || (MouseY < 0))
+	{
+		return;
+	}
+
+	FIntPoint Size = Viewport->GetSizeXY();
+	if((Size.X <= 0) || (Size.Y <= 0))
+	{
+		return;
+	}
+
+	Success = true;
+	X = MouseX / (float) Size.X;
+	Y = MouseY / (float) Size.Y;
+}
+
+
+
 void ULowEntryExtendedStandardLibrary::SimpleKismetSystemLibraryPrintString(const FString& InString)
 {
 #if !(UE_BUILD_SHIPPING || UE_BUILD_TEST)

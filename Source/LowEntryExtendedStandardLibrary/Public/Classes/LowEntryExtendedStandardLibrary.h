@@ -1044,6 +1044,53 @@ public:
 
 
 
+	/**
+	* Sets the mouse position.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Player Controller", Meta = (DisplayName = "Set Mouse Position"))
+		static void SetMousePosition(APlayerController* Player, const int32 X, const int32 Y);
+
+	/**
+	* Returns the mouse position.
+	* 
+	* Returns Success=false, X=0 and Y=0 if the mouse position could not be determined, which happends when:
+	*  - the given PlayerController is null
+	*  - the PlayerController's Player is either null or not a LocalPlayer
+	*  - the LocalPlayer's ViewportClient is either null or not a GameViewportClient
+	*  - the GameViewportClient's Viewport is null
+	*  - the mouse is outside of the viewport
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Player Controller", Meta = (DisplayName = "Get Mouse Position"))
+		static void GetMousePosition(APlayerController* Player, bool& Success, int32& X, int32& Y);
+
+
+	/**
+	* Sets the mouse position in percentages, from 0.0 to 1.0.
+	* 
+	* X:  0.0 is left, 1.0 is right
+	* Y:  0.0 is top,  1.0 is bottom
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Player Controller", Meta = (DisplayName = "Set Mouse Position (Percentages)"))
+		static void SetMousePositionInPercentages(APlayerController* Player, const float X, const float Y);
+
+	/**
+	* Returns the mouse position in percentages, from 0.0 to 1.0.
+	* 
+	* X:  0.0 is left, 1.0 is right
+	* Y:  0.0 is top,  1.0 is bottom
+	*
+	* Returns Success=false, X=0.0 and Y=0.0 if the mouse position could not be determined, which happends when:
+	*  - the given PlayerController is null
+	*  - the PlayerController's Player is either null or not a LocalPlayer
+	*  - the LocalPlayer's ViewportClient is either null or not a GameViewportClient
+	*  - the GameViewportClient's Viewport is null
+	*  - the mouse is outside of the viewport
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Player Controller", Meta = (DisplayName = "Get Mouse Position (Percentages)"))
+		static void GetMousePositionInPercentages(APlayerController* Player, bool& Success, float& X, float& Y);
+
+
+
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Internal", Meta = (BlueprintInternalUseOnly = "true", DisplayName = "Kismet Print"))
 		static void SimpleKismetSystemLibraryPrintString(const FString& InString);
 
