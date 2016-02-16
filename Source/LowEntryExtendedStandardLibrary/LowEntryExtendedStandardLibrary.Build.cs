@@ -32,7 +32,9 @@ namespace UnrealBuildTool.Rules
 					"Engine",
 					"Core",
 					"CoreUObject",
-				}
+                    "Slate",
+                    "SlateCore"
+                }
 			);
 
 			PrivateDependencyModuleNames.AddRange(

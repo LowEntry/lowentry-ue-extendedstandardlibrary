@@ -1089,6 +1089,53 @@ public:
 
 
 
+	/**
+	* Returns the primary monitor resolution.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Monitor", Meta = (DisplayName = "Get Primary Monitor Resolution", Keywords = "screen size desktop"))
+		static void GetPrimaryMonitorResolution(int32& Width, int32& Height);
+
+	/**
+	* Returns the primary monitor work area, this is the area not covered by task bars or other docked widgets.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Monitor", Meta = (DisplayName = "Get Primary Monitor Work Area", Keywords = "screen size desktop"))
+		static void GetPrimaryMonitorWorkArea(int32& X, int32& Y, int32& Width, int32& Height);
+
+
+
+	/**
+	* Returns the windows bounds in screen space.
+	*
+	* Returns Success=false, X=0.0, Y=0.0, Width=0 and Height=0 if the window boundss could not be determined, which happends when:
+	*  - GEngine is null
+	*  - GEngine's GameViewportClient is null
+	*  - GameViewportClient's Window is null
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Get Window Bounds", Keywords = "size location position"))
+		static void GetWindowBounds(bool& Success, int32& X, int32& Y, int32& Width, int32& Height);
+
+	/**
+	* Sets the window position in screen space.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Set Window Position"))
+		static void SetWindowPosition(const int32 X, const int32 Y);
+
+	/**
+	* Sets the window size in screen pixels.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Set Window Size"))
+		static void SetWindowSize(const int32 Width, const int32 Height);
+
+	/**
+	* Sets the window position in screen space in percentages, relative to the primary monitor work area, from 0.0 to 1.0.
+	* 
+	* This will take the window size in account, meaning that X=0.5 and Y=0.5 will cause the window to be centered in the primary screen work area.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Set Window Position (Percentages)"))
+		static void SetWindowPositiomInPercentagesCentered(const float X, const float Y);
+
+
+
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Internal", Meta = (BlueprintInternalUseOnly = "true", DisplayName = "Kismet Print"))
 		static void SimpleKismetSystemLibraryPrintString(const FString& InString);
 

@@ -1917,7 +1917,7 @@ void ULowEntryExtendedStandardLibrary::SetMousePositionInPercentages(const float
 	}
 
 	FIntPoint Size = Viewport->GetSizeXY();
-	Viewport->SetMouse(FMath::Round(Size.X * FMath::Clamp(X, 0.0f, 1.0f)), FMath::Round(Size.Y * FMath::Clamp(Y, 0.0f, 1.0f)));
+	Viewport->SetMouse(FMath::RoundToInt(Size.X * FMath::Clamp(X, 0.0f, 1.0f)), FMath::RoundToInt(Size.Y * FMath::Clamp(Y, 0.0f, 1.0f)));
 }
 
 void ULowEntryExtendedStandardLibrary::GetMousePositionInPercentages(bool& Success, float& X, float& Y)
@@ -1959,6 +1959,143 @@ void ULowEntryExtendedStandardLibrary::GetMousePositionInPercentages(bool& Succe
 	Success = true;
 	X = MouseX / (float) Size.X;
 	Y = MouseY / (float) Size.Y;
+}
+
+
+
+void ULowEntryExtendedStandardLibrary::GetPrimaryMonitorResolution(int32& Width, int32& Height)
+{
+	FDisplayMetrics DisplayMetrics;
+	FDisplayMetrics::GetDisplayMetrics(DisplayMetrics);
+
+	Width = DisplayMetrics.PrimaryDisplayWidth;
+	Height = DisplayMetrics.PrimaryDisplayHeight;
+}
+
+void ULowEntryExtendedStandardLibrary::GetPrimaryMonitorWorkArea(int32& X, int32& Y, int32& Width, int32& Height)
+{
+	FDisplayMetrics DisplayMetrics;
+	FDisplayMetrics::GetDisplayMetrics(DisplayMetrics);
+
+	FPlatformRect Bounds = DisplayMetrics.PrimaryDisplayWorkAreaRect;
+	X = Bounds.Left;
+	Y = Bounds.Top;
+	Width = Bounds.Right - Bounds.Left;
+	Height = Bounds.Bottom - Bounds.Top;
+}
+
+
+
+void ULowEntryExtendedStandardLibrary::GetWindowBounds(bool& Success, int32& X, int32& Y, int32& Width, int32& Height)
+{
+	Success = false;
+	X = 0;
+	Y = 0;
+	Width = 0;
+	Height = 0;
+
+	if(GEngine == nullptr)
+	{
+		return;
+	}
+
+	UGameViewportClient* ViewportClient = GEngine->GameViewport;
+	if(ViewportClient == nullptr)
+	{
+		return;
+	}
+
+	TSharedPtr<SWindow> Window = ViewportClient->GetWindow();
+	if(!Window.IsValid())
+	{
+		return;
+	}
+
+	FVector2D Position = Window->GetPositionInScreen();
+	FVector2D Size = Window->GetSizeInScreen();
+
+	Success = true;
+	X = Position.X;
+	Y = Position.Y;
+	Width = Size.X;
+	Height = Size.Y;
+}
+
+void ULowEntryExtendedStandardLibrary::SetWindowPosition(const int32 X, const int32 Y)
+{
+	if(GEngine == nullptr)
+	{
+		return;
+	}
+
+	UGameViewportClient* ViewportClient = GEngine->GameViewport;
+	if(ViewportClient == nullptr)
+	{
+		return;
+	}
+
+	TSharedPtr<SWindow> Window = ViewportClient->GetWindow();
+	if(!Window.IsValid())
+	{
+		return;
+	}
+
+	Window->MoveWindowTo(FVector2D(X, Y));
+}
+
+void ULowEntryExtendedStandardLibrary::SetWindowSize(const int32 Width, const int32 Height)
+{
+	if(GEngine == nullptr)
+	{
+		return;
+	}
+
+	UGameViewportClient* ViewportClient = GEngine->GameViewport;
+	if(ViewportClient == nullptr)
+	{
+		return;
+	}
+
+	TSharedPtr<SWindow> Window = ViewportClient->GetWindow();
+	if(!Window.IsValid())
+	{
+		return;
+	}
+
+	Window->Resize(FVector2D(Width, Height));
+}
+
+void ULowEntryExtendedStandardLibrary::SetWindowPositiomInPercentagesCentered(const float X, const float Y)
+{
+	if(GEngine == nullptr)
+	{
+		return;
+	}
+
+	UGameViewportClient* ViewportClient = GEngine->GameViewport;
+	if(ViewportClient == nullptr)
+	{
+		return;
+	}
+
+	TSharedPtr<SWindow> Window = ViewportClient->GetWindow();
+	if(!Window.IsValid())
+	{
+		return;
+	}
+
+	int32 ScreenX = 0;
+	int32 ScreenY = 0;
+	int32 ScreenWidth = 0;
+	int32 ScreenHeight = 0;
+	GetPrimaryMonitorWorkArea(ScreenX, ScreenY, ScreenWidth, ScreenHeight);
+
+	FVector2D WindowSize = Window->GetSizeInScreen();
+	
+	float NewScreenX = ScreenX + (ScreenWidth * X) - (WindowSize.X / 2.0f);
+	float NewScreenY = ScreenY + (ScreenHeight * Y) - (WindowSize.Y / 2.0f);
+
+	Window->MoveWindowTo(FVector2D(NewScreenX, NewScreenY));
 }
 
 
