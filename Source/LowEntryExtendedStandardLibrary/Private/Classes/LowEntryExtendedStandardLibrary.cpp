@@ -1833,20 +1833,14 @@ ULowEntryDouble* ULowEntryExtendedStandardLibrary::Double_Create(const TArray<ui
 
 
 
-void ULowEntryExtendedStandardLibrary::SetMousePosition(APlayerController* Player, const int32 X, const int32 Y)
+void ULowEntryExtendedStandardLibrary::SetMousePosition(const int32 X, const int32 Y)
 {
-	if(Player == nullptr)
+	if(GEngine == nullptr)
 	{
 		return;
 	}
 
-	const ULocalPlayer* LocalPlayer = Cast<ULocalPlayer>(Player->Player);
-	if(LocalPlayer == nullptr)
-	{
-		return;
-	}
-
-	const UGameViewportClient* ViewportClient = Cast<UGameViewportClient>(LocalPlayer->ViewportClient);
+	UGameViewportClient* ViewportClient = GEngine->GameViewport;
 	if(ViewportClient == nullptr)
 	{
 		return;
@@ -1867,24 +1861,18 @@ void ULowEntryExtendedStandardLibrary::SetMousePosition(APlayerController* Playe
 	Viewport->SetMouse(FMath::Clamp(X, 0, Size.X), FMath::Clamp(Y, 0, Size.Y));
 }
 
-void ULowEntryExtendedStandardLibrary::GetMousePosition(APlayerController* Player, bool& Success, int32& X, int32& Y)
+void ULowEntryExtendedStandardLibrary::GetMousePosition(bool& Success, int32& X, int32& Y)
 {
 	Success = false;
 	X = 0;
 	Y = 0;
 
-	if(Player == nullptr)
+	if(GEngine == nullptr)
 	{
 		return;
 	}
 
-	const ULocalPlayer* LocalPlayer = Cast<ULocalPlayer>(Player->Player);
-	if(LocalPlayer == nullptr)
-	{
-		return;
-	}
-
-	const UGameViewportClient* ViewportClient = Cast<UGameViewportClient>(LocalPlayer->ViewportClient);
+	UGameViewportClient* ViewportClient = GEngine->GameViewport;
 	if(ViewportClient == nullptr)
 	{
 		return;
@@ -1909,20 +1897,14 @@ void ULowEntryExtendedStandardLibrary::GetMousePosition(APlayerController* Playe
 }
 
 
-void ULowEntryExtendedStandardLibrary::SetMousePositionInPercentages(APlayerController* Player, const float X, const float Y)
+void ULowEntryExtendedStandardLibrary::SetMousePositionInPercentages(const float X, const float Y)
 {
-	if(Player == nullptr)
+	if(GEngine == nullptr)
 	{
 		return;
 	}
 
-	const ULocalPlayer* LocalPlayer = Cast<ULocalPlayer>(Player->Player);
-	if(LocalPlayer == nullptr)
-	{
-		return;
-	}
-
-	const UGameViewportClient* ViewportClient = Cast<UGameViewportClient>(LocalPlayer->ViewportClient);
+	UGameViewportClient* ViewportClient = GEngine->GameViewport;
 	if(ViewportClient == nullptr)
 	{
 		return;
@@ -1938,24 +1920,18 @@ void ULowEntryExtendedStandardLibrary::SetMousePositionInPercentages(APlayerCont
 	Viewport->SetMouse(FMath::Round(Size.X * FMath::Clamp(X, 0.0f, 1.0f)), FMath::Round(Size.Y * FMath::Clamp(Y, 0.0f, 1.0f)));
 }
 
-void ULowEntryExtendedStandardLibrary::GetMousePositionInPercentages(APlayerController* Player, bool& Success, float& X, float& Y)
+void ULowEntryExtendedStandardLibrary::GetMousePositionInPercentages(bool& Success, float& X, float& Y)
 {
 	Success = false;
 	X = 0;
 	Y = 0;
 
-	if(Player == nullptr)
+	if(GEngine == nullptr)
 	{
 		return;
 	}
 
-	const ULocalPlayer* LocalPlayer = Cast<ULocalPlayer>(Player->Player);
-	if(LocalPlayer == nullptr)
-	{
-		return;
-	}
-
-	const UGameViewportClient* ViewportClient = Cast<UGameViewportClient>(LocalPlayer->ViewportClient);
+	UGameViewportClient* ViewportClient = GEngine->GameViewport;
 	if(ViewportClient == nullptr)
 	{
 		return;
