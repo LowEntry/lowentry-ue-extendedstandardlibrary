@@ -255,13 +255,15 @@ TArray<FString> ULowEntryByteDataReader::GetStringUtf8Array()
 int32 ULowEntryByteDataReader::SafeMultiply(const int32 A, const int32 B)
 {
 	int64 Result = (int64) A * (int64) B;
-	if(Result > 0x7fffffffi32)
+	int32 Max = 2147483647;
+	int32 Min = -2147483647; // -2147483648 will make it -(uint32)2147483648, which will error
+	if(Result >= Max)
 	{
-		return 0x7fffffffi32;
+		return Max;
 	}
-	if(Result < 0x80000000i32)
+	if(Result <= Min)
 	{
-		return 0x80000000i32;
+		return Min;
 	}
 	return (int32) Result;
 }
