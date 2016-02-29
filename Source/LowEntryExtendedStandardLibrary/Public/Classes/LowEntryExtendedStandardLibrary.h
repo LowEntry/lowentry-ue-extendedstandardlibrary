@@ -1106,13 +1106,49 @@ public:
 	/**
 	* Returns the windows bounds in screen space.
 	*
-	* Returns Success=false, X=0.0, Y=0.0, Width=0 and Height=0 if the window boundss could not be determined, which happends when:
+	* Returns Success=false, X=0, Y=0, Width=0 and Height=0 if the window bounds could not be determined, which happends when:
 	*  - GEngine is null
 	*  - GEngine's GameViewportClient is null
 	*  - GameViewportClient's Window is null
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Get Window Bounds", Keywords = "size location position"))
 		static void GetWindowBounds(bool& Success, int32& X, int32& Y, int32& Width, int32& Height);
+
+	/**
+	* Gets the window position in screen space.
+	*
+	* Returns Success=false, X=0 and Y=0 if the window bounds could not be determined, which happends when:
+	*  - GEngine is null
+	*  - GEngine's GameViewportClient is null
+	*  - GameViewportClient's Window is null
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Get Window Position"))
+		static void GetWindowPosition(bool& Success, int32& X, int32& Y);
+
+	/**
+	* Gets the window size in screen pixels.
+	*
+	* Returns Success=false, Width=0 and Height=0 if the window bounds could not be determined, which happends when:
+	*  - GEngine is null
+	*  - GEngine's GameViewportClient is null
+	*  - GameViewportClient's Window is null
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Get Window Size"))
+		static void GetWindowSize(bool& Success, int32& Width, int32& Height);
+
+	/**
+	* Gets the window position in screen space in percentages, relative to the primary monitor work area, from 0.0 to 1.0.
+	*
+	* This will take the window size in account, meaning that X=0.5 and Y=0.5 will cause the window to be centered in the primary screen work area.
+	*
+	* Returns Success=false, X=0.0 and Y=0.0 if the window bounds could not be determined, which happends when:
+	*  - GEngine is null
+	*  - GEngine's GameViewportClient is null
+	*  - GameViewportClient's Window is null
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Get Window Position (Percentages)"))
+		static void GetWindowPositiomInPercentagesCentered(bool& Success, float& X, float& Y);
+
 
 	/**
 	* Sets the window position in screen space.

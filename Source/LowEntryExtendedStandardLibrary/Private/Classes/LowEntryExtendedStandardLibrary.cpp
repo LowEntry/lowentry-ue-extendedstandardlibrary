@@ -2021,6 +2021,107 @@ void ULowEntryExtendedStandardLibrary::GetWindowBounds(bool& Success, int32& X, 
 	Height = Size.Y;
 }
 
+void ULowEntryExtendedStandardLibrary::GetWindowPosition(bool& Success, int32& X, int32& Y)
+{
+	Success = false;
+	X = 0;
+	Y = 0;
+
+	if(GEngine == nullptr)
+	{
+		return;
+	}
+
+	UGameViewportClient* ViewportClient = GEngine->GameViewport;
+	if(ViewportClient == nullptr)
+	{
+		return;
+	}
+
+	TSharedPtr<SWindow> Window = ViewportClient->GetWindow();
+	if(!Window.IsValid())
+	{
+		return;
+	}
+
+	FVector2D Position = Window->GetPositionInScreen();
+
+	Success = true;
+	X = Position.X;
+	Y = Position.Y;
+}
+
+void ULowEntryExtendedStandardLibrary::GetWindowSize(bool& Success, int32& Width, int32& Height)
+{
+	Success = false;
+	Width = 0;
+	Height = 0;
+
+	if(GEngine == nullptr)
+	{
+		return;
+	}
+
+	UGameViewportClient* ViewportClient = GEngine->GameViewport;
+	if(ViewportClient == nullptr)
+	{
+		return;
+	}
+
+	TSharedPtr<SWindow> Window = ViewportClient->GetWindow();
+	if(!Window.IsValid())
+	{
+		return;
+	}
+
+	FVector2D Size = Window->GetSizeInScreen();
+
+	Success = true;
+	Width = Size.X;
+	Height = Size.Y;
+}
+
+void ULowEntryExtendedStandardLibrary::GetWindowPositiomInPercentagesCentered(bool& Success, float& X, float& Y)
+{
+	Success = false;
+	X = 0;
+	Y = 0;
+
+	if(GEngine == nullptr)
+	{
+		return;
+	}
+
+	UGameViewportClient* ViewportClient = GEngine->GameViewport;
+	if(ViewportClient == nullptr)
+	{
+		return;
+	}
+
+	TSharedPtr<SWindow> Window = ViewportClient->GetWindow();
+	if(!Window.IsValid())
+	{
+		return;
+	}
+
+	int32 ScreenX = 0;
+	int32 ScreenY = 0;
+	int32 ScreenWidth = 0;
+	int32 ScreenHeight = 0;
+	GetPrimaryMonitorWorkArea(ScreenX, ScreenY, ScreenWidth, ScreenHeight);
+
+	FVector2D Position = Window->GetPositionInScreen();
+	FVector2D WindowSize = Window->GetSizeInScreen();
+
+	float NewScreenX = ((Position.X + (WindowSize.X / 2.0f)) - ScreenX) / ScreenWidth;
+	float NewScreenY = ((Position.Y + (WindowSize.Y / 2.0f)) - ScreenY) / ScreenHeight;
+
+	Success = true;
+	X = NewScreenX;
+	Y = NewScreenY;
+}
+
+
 void ULowEntryExtendedStandardLibrary::SetWindowPosition(const int32 X, const int32 Y)
 {
 	if(GEngine == nullptr)
@@ -2040,7 +2141,7 @@ void ULowEntryExtendedStandardLibrary::SetWindowPosition(const int32 X, const in
 		return;
 	}
 
-	Window->MoveWindowTo(FVector2D(X, Y));
+	Window->MoveWindowTo(FVector2D(FMath::Max(0, X), FMath::Max(0, Y)));
 }
 
 void ULowEntryExtendedStandardLibrary::SetWindowSize(const int32 Width, const int32 Height)
@@ -2095,7 +2196,7 @@ void ULowEntryExtendedStandardLibrary::SetWindowPositiomInPercentagesCentered(co
 	float NewScreenX = ScreenX + (ScreenWidth * X) - (WindowSize.X / 2.0f);
 	float NewScreenY = ScreenY + (ScreenHeight * Y) - (WindowSize.Y / 2.0f);
 
-	Window->MoveWindowTo(FVector2D(NewScreenX, NewScreenY));
+	Window->MoveWindowTo(FVector2D(FMath::Max(0.0f, NewScreenX), FMath::Max(0.0f, NewScreenY)));
 }
 
 
