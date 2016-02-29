@@ -2141,7 +2141,9 @@ void ULowEntryExtendedStandardLibrary::SetWindowPosition(const int32 X, const in
 		return;
 	}
 
-	Window->MoveWindowTo(FVector2D(FMath::Max(0, X), FMath::Max(0, Y)));
+	FMargin BorderSize = Window->GetWindowBorderSize(true);
+
+	Window->MoveWindowTo(FVector2D(FMath::Max(BorderSize.Left, ((float) X)), FMath::Max(BorderSize.Top, ((float) Y))));
 }
 
 void ULowEntryExtendedStandardLibrary::SetWindowSize(const int32 Width, const int32 Height)
@@ -2196,7 +2198,9 @@ void ULowEntryExtendedStandardLibrary::SetWindowPositiomInPercentagesCentered(co
 	float NewScreenX = ScreenX + (ScreenWidth * X) - (WindowSize.X / 2.0f);
 	float NewScreenY = ScreenY + (ScreenHeight * Y) - (WindowSize.Y / 2.0f);
 
-	Window->MoveWindowTo(FVector2D(FMath::Max(0.0f, NewScreenX), FMath::Max(0.0f, NewScreenY)));
+	FMargin BorderSize = Window->GetWindowBorderSize(true);
+
+	Window->MoveWindowTo(FVector2D(FMath::Max(BorderSize.Left, NewScreenX), FMath::Max(BorderSize.Top, NewScreenY)));
 }
 
 
