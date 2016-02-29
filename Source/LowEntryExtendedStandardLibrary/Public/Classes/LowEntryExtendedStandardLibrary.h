@@ -1172,6 +1172,36 @@ public:
 
 
 
+	/**
+	* Returns the window mode. 
+	* 
+	* If Fullscreen is false then IsFullscreenWindowed will also be false.
+	* 
+	* Returns Success=false, Fullscreen=false and Windowed=false if the window mode could not be determined, which happends when:
+	*  - GEngine is null
+	*  - GEngine's GameViewportClient is null
+	*  - GameViewportClient's Window is null
+	*  - The mode is pseudo-fullscreen (used for devices like HMDs)
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Get Window Mode", Keywords = "screen fullscreen windowed"))
+		static void GetWindowMode(bool& Success, bool& Fullscreen, bool& IsFullscreenWindowed);
+
+	/**
+	* Sets the window mode.
+	* 
+	* If Fullscreen is false, it will be windowed.
+	* If Fullscreen is true and IsFullscreenWindowed is false, it will be fullscreen.
+	* If Fullscreen is true and IsFullscreenWindowed is true, it will be windowed fullscreen.
+	* 
+	* IsFullscreenWindowed is only used when Fullscreen is true.
+	* 
+	* Fullscreen and Windowed can both be true.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Set Window Mode", Keywords = "screen fullscreen windowed"))
+		static void SetWindowMode(const bool Fullscreen, const bool IsFullscreenWindowed);
+
+
+
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Internal", Meta = (BlueprintInternalUseOnly = "true", DisplayName = "Kismet Print"))
 		static void SimpleKismetSystemLibraryPrintString(const FString& InString);
 

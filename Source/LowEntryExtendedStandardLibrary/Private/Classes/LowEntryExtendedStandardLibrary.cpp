@@ -2205,6 +2205,93 @@ void ULowEntryExtendedStandardLibrary::SetWindowPositiomInPercentagesCentered(co
 
 
 
+void ULowEntryExtendedStandardLibrary::GetWindowMode(bool& Success, bool& Fullscreen, bool& IsFullscreenWindowed)
+{
+	Success = false;
+	Fullscreen = false;
+	IsFullscreenWindowed = false;
+
+	if(GEngine == nullptr)
+	{
+		return;
+	}
+
+	UGameViewportClient* ViewportClient = GEngine->GameViewport;
+	if(ViewportClient == nullptr)
+	{
+		return;
+	}
+
+	TSharedPtr<SWindow> Window = ViewportClient->GetWindow();
+	if(!Window.IsValid())
+	{
+		return;
+	}
+
+	EWindowMode::Type Mode = Window->GetWindowMode();
+
+	if(Mode == EWindowMode::Type::Fullscreen)
+	{
+		Success = true;
+		Fullscreen = true;
+	}
+	else if(Mode == EWindowMode::Type::WindowedFullscreen)
+	{
+		Success = true;
+		Fullscreen = true;
+		IsFullscreenWindowed = true;
+	}
+	else if(Mode == EWindowMode::Type::Windowed)
+	{
+		Success = true;
+	}
+}
+
+void ULowEntryExtendedStandardLibrary::SetWindowMode(const bool Fullscreen, const bool IsFullscreenWindowed)
+{
+	if(GEngine == nullptr)
+	{
+		return;
+	}
+
+	UGameViewportClient* ViewportClient = GEngine->GameViewport;
+	if(ViewportClient == nullptr)
+	{
+		return;
+	}
+
+	TSharedPtr<SWindow> Window = ViewportClient->GetWindow();
+	if(!Window.IsValid())
+	{
+		return;
+	}
+
+	EWindowMode::Type Mode = Window->GetWindowMode();
+
+	if(Mode == EWindowMode::Type::WindowedMirror)
+	{
+		return;
+	}
+
+	if(Fullscreen)
+	{
+		if(IsFullscreenWindowed)
+		{
+			Window->SetWindowMode(EWindowMode::Type::WindowedFullscreen);
+		}
+		else
+		{
+			Window->SetWindowMode(EWindowMode::Type::Fullscreen);
+		}
+	}
+	else
+	{
+		Window->SetWindowMode(EWindowMode::Type::Windowed);
+	}
+}
+
+
+
 void ULowEntryExtendedStandardLibrary::SimpleKismetSystemLibraryPrintString(const FString& InString)
 {
 #if !(UE_BUILD_SHIPPING || UE_BUILD_TEST)
