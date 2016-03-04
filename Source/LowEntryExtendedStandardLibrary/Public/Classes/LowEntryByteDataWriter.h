@@ -28,6 +28,10 @@ public:
 	void AddRawBytes(const TArray<uint8>& Value);
 
 
+protected:
+	void AddUinteger(const int32 Value);
+
+
 public:
 	TArray<uint8> Bytes;
 

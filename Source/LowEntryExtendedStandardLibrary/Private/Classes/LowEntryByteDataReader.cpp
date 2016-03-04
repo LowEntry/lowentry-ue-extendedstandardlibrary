@@ -40,12 +40,7 @@ int32 ULowEntryByteDataReader::MaxElementsRemaining(const int32 MinimumSizePerEl
 	{
 		return RemainingCount;
 	}
-	int32 Count = RemainingCount / MinimumSizePerElement;
-	if((RemainingCount % MinimumSizePerElement) > 0)
-	{
-		Count++;
-	}
-	return Count;
+	return (RemainingCount / MinimumSizePerElement) + 1;
 }
 
 
@@ -67,6 +62,32 @@ int32 ULowEntryByteDataReader::GetInteger()
 		return 0;
 	}
 	return ULowEntryExtendedStandardLibrary::BytesToInteger(Bytes, Pos, 4);
+}
+
+int32 ULowEntryByteDataReader::GetUinteger()
+{
+	int32 Pos = GetAndIncreasePosition(1);
+	if(Bytes.Num() <= Pos)
+	{
+		return 0;
+	}
+	uint8 B = Bytes[Pos];
+	if(((B >> 7) & 1) == 0)
+	{
+		return B;
+	}
+
+	Pos = GetAndIncreasePosition(3);
+	if(Bytes.Num() <= (Pos + 2))
+	{
+		return 0;
+	}
+	int32 Value = (((B & 0xFF) & ~(1 << 7)) << 24) | ((Bytes[Pos + 0] & 0xFF) << 16) | ((Bytes[Pos + 1] & 0xFF) << 8) | (Bytes[Pos + 2] & 0xFF);
+	if(Value <= 127)
+	{
+		return 0;
+	}
+	return Value;
 }
 
 ULowEntryLong* ULowEntryByteDataReader::GetLongBytes()
@@ -111,7 +132,7 @@ bool ULowEntryByteDataReader::GetBoolean()
 
 FString ULowEntryByteDataReader::GetStringUtf8()
 {
-	int32 Length = GetInteger();
+	int32 Length = GetUinteger();
 	if(Length <= 0)
 	{
 		return TEXT("");
@@ -127,7 +148,7 @@ FString ULowEntryByteDataReader::GetStringUtf8()
 
 TArray<uint8> ULowEntryByteDataReader::GetByteArray()
 {
-	int32 Length = GetInteger();
+	int32 Length = GetUinteger();
 	if(Length <= 0)
 	{
 		return TArray<uint8>();
@@ -142,7 +163,7 @@ TArray<uint8> ULowEntryByteDataReader::GetByteArray()
 
 TArray<int32> ULowEntryByteDataReader::GetIntegerArray()
 {
-	int32 Length = GetInteger();
+	int32 Length = GetUinteger();
 	Length = FMath::Min(Length, MaxElementsRemaining(4));
 	if(Length <= 0)
 	{
@@ -159,7 +180,7 @@ TArray<int32> ULowEntryByteDataReader::GetIntegerArray()
 
 TArray<ULowEntryLong*> ULowEntryByteDataReader::GetLongBytesArray()
 {
-	int32 Length = GetInteger();
+	int32 Length = GetUinteger();
 	Length = FMath::Min(Length, MaxElementsRemaining(8));
 	if(Length <= 0)
 	{
@@ -176,7 +197,7 @@ TArray<ULowEntryLong*> ULowEntryByteDataReader::GetLongBytesArray()
 
 TArray<float> ULowEntryByteDataReader::GetFloatArray()
 {
-	int32 Length = GetInteger();
+	int32 Length = GetUinteger();
 	Length = FMath::Min(Length, MaxElementsRemaining(4));
 	if(Length <= 0)
 	{
@@ -193,7 +214,7 @@ TArray<float> ULowEntryByteDataReader::GetFloatArray()
 
 TArray<ULowEntryDouble*> ULowEntryByteDataReader::GetDoubleBytesArray()
 {
-	int32 Length = GetInteger();
+	int32 Length = GetUinteger();
 	Length = FMath::Min(Length, MaxElementsRemaining(8));
 	if(Length <= 0)
 	{
@@ -210,7 +231,7 @@ TArray<ULowEntryDouble*> ULowEntryByteDataReader::GetDoubleBytesArray()
 
 TArray<bool> ULowEntryByteDataReader::GetBooleanArray()
 {
-	int32 Length = GetInteger();
+	int32 Length = GetUinteger();
 	Length = FMath::Min(Length, SafeMultiply(MaxElementsRemaining(1), 8));
 	if(Length <= 0)
 	{
@@ -236,7 +257,7 @@ TArray<bool> ULowEntryByteDataReader::GetBooleanArray()
 
 TArray<FString> ULowEntryByteDataReader::GetStringUtf8Array()
 {
-	int32 Length = GetInteger();
+	int32 Length = GetUinteger();
 	Length = FMath::Min(Length, MaxElementsRemaining(4));
 	if(Length <= 0)
 	{

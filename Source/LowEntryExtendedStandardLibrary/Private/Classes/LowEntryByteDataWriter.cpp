@@ -108,7 +108,24 @@ void ULowEntryByteDataWriter::AddByte(const uint8 Value)
 }
 void ULowEntryByteDataWriter::AddInteger(const int32 Value)
 {
-	AddRawBytes(ULowEntryExtendedStandardLibrary::IntegerToBytes(Value));
+	AddRawByte(Value >> 24);
+	AddRawByte(Value >> 16);
+	AddRawByte(Value >> 8);
+	AddRawByte(Value);
+}
+void ULowEntryByteDataWriter::AddUinteger(const int32 Value)
+{
+	if(Value <= 127)
+	{
+		AddRawByte(Value);
+	}
+	else
+	{
+		AddRawByte((Value >> 24) | (1 << 7));
+		AddRawByte(Value >> 16);
+		AddRawByte(Value >> 8);
+		AddRawByte(Value);
+	}
 }
 void ULowEntryByteDataWriter::AddLongBytes(ULowEntryLong* Value)
 {
@@ -155,12 +172,12 @@ void ULowEntryByteDataWriter::AddStringUtf8(const FString& Value)
 
 void ULowEntryByteDataWriter::AddByteArray(const TArray<uint8>& Value)
 {
-	AddInteger(Value.Num());
+	AddUinteger(Value.Num());
 	AddRawBytes(Value);
 }
 void ULowEntryByteDataWriter::AddIntegerArray(const TArray<int32>& Value)
 {
-	AddInteger(Value.Num());
+	AddUinteger(Value.Num());
 	for(int32 V : Value)
 	{
 		AddInteger(V);
@@ -168,7 +185,7 @@ void ULowEntryByteDataWriter::AddIntegerArray(const TArray<int32>& Value)
 }
 void ULowEntryByteDataWriter::AddLongBytesArray(const TArray<ULowEntryLong*>& Value)
 {
-	AddInteger(Value.Num());
+	AddUinteger(Value.Num());
 	for(ULowEntryLong* V : Value)
 	{
 		AddLongBytes(V);
@@ -176,7 +193,7 @@ void ULowEntryByteDataWriter::AddLongBytesArray(const TArray<ULowEntryLong*>& Va
 }
 void ULowEntryByteDataWriter::AddFloatArray(const TArray<float>& Value)
 {
-	AddInteger(Value.Num());
+	AddUinteger(Value.Num());
 	for(float V : Value)
 	{
 		AddFloat(V);
@@ -184,7 +201,7 @@ void ULowEntryByteDataWriter::AddFloatArray(const TArray<float>& Value)
 }
 void ULowEntryByteDataWriter::AddDoubleBytesArray(const TArray<ULowEntryDouble*>& Value)
 {
-	AddInteger(Value.Num());
+	AddUinteger(Value.Num());
 	for(ULowEntryDouble* V : Value)
 	{
 		AddDoubleBytes(V);
@@ -192,9 +209,9 @@ void ULowEntryByteDataWriter::AddDoubleBytesArray(const TArray<ULowEntryDouble*>
 }
 void ULowEntryByteDataWriter::AddBooleanArray(const TArray<bool>& Value)
 {
-	AddInteger(Value.Num());
+	AddUinteger(Value.Num());
 	uint8 B = 0;
-	int BIndex = 0;
+	int32 BIndex = 0;
 	for(bool V : Value)
 	{
 		if(V)
@@ -216,7 +233,7 @@ void ULowEntryByteDataWriter::AddBooleanArray(const TArray<bool>& Value)
 }
 void ULowEntryByteDataWriter::AddStringUtf8Array(const TArray<FString>& Value)
 {
-	AddInteger(Value.Num());
+	AddUinteger(Value.Num());
 	for(FString V : Value)
 	{
 		AddStringUtf8(V);

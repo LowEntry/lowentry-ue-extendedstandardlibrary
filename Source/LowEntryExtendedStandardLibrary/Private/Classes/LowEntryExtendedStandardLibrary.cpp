@@ -337,7 +337,7 @@ bool ULowEntryExtendedStandardLibrary::AreBytesEqual(const TArray<uint8>& A, con
 		return false;
 	}
 
-	for(int i = 0; i < LengthA; i++)
+	for(int32 i = 0; i < LengthA; i++)
 	{
 		if(A[IndexA + i] != B[IndexB + i])
 		{
@@ -476,7 +476,7 @@ void ULowEntryExtendedStandardLibrary::GenerateRandomBytesRandomLength(int32 Min
 		return;
 	}
 
-	int Length = (FMath::Rand() % (Diff + 1)) + Min;
+	int32 Length = (FMath::Rand() % (Diff + 1)) + Min;
 	if(Length <= 0)
 	{
 		ByteArray.SetNum(0);
@@ -2330,7 +2330,7 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::MergeEncapsulatedByteArrays(cons
 		}
 		return Array->ByteArray;
 	}
-	int Length = 0;
+	int32 Length = 0;
 	for(ULowEntryByteArray* Array : ByteArrays)
 	{
 		if(Array != nullptr)

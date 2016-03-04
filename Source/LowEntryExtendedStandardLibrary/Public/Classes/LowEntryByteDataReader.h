@@ -25,6 +25,10 @@ public:
 	int32 MaxElementsRemaining(const int32 MinimumSizePerElement);
 
 
+protected:
+	int32 GetUinteger();
+
+
 public:
 	TArray<uint8> Bytes;
 	int32 Position = 0;
