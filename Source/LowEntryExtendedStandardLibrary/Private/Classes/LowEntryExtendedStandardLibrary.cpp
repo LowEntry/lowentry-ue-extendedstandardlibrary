@@ -798,17 +798,17 @@ int32 ULowEntryExtendedStandardLibrary::BytesToInteger(const TArray<uint8>& Byte
 
 	if(Length <= 1)
 	{
-		return (ByteArray[Index + 0] & 0xFF);
+		return ByteArray[Index + 0];
 	}
 	if(Length <= 2)
 	{
-		return ((ByteArray[Index + 0] & 0xFF) << 8) | (ByteArray[Index + 1] & 0xFF);
+		return (ByteArray[Index + 0] << 8) | ByteArray[Index + 1];
 	}
 	if(Length <= 3)
 	{
-		return ((ByteArray[Index + 0] & 0xFF) << 16) | ((ByteArray[Index + 1] & 0xFF) << 8) | (ByteArray[Index + 2] & 0xFF);
+		return (ByteArray[Index + 0] << 16) | (ByteArray[Index + 1] << 8) | ByteArray[Index + 2];
 	}
-	return (ByteArray[Index + 0] << 24) | ((ByteArray[Index + 1] & 0xFF) << 16) | ((ByteArray[Index + 2] & 0xFF) << 8) | (ByteArray[Index + 3] & 0xFF);
+	return (ByteArray[Index + 0] << 24) | (ByteArray[Index + 1] << 16) | (ByteArray[Index + 2] << 8) | ByteArray[Index + 3];
 }
 
 

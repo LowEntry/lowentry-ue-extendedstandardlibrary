@@ -82,7 +82,7 @@ int32 ULowEntryByteDataReader::GetUinteger()
 	{
 		return 0;
 	}
-	int32 Value = (((B & 0xFF) & ~(1 << 7)) << 24) | ((Bytes[Pos + 0] & 0xFF) << 16) | ((Bytes[Pos + 1] & 0xFF) << 8) | (Bytes[Pos + 2] & 0xFF);
+	int32 Value = ((B & ~(1 << 7)) << 24) | (Bytes[Pos + 0] << 16) | (Bytes[Pos + 1] << 8) | Bytes[Pos + 2];
 	if(Value <= 127)
 	{
 		return 0;
