@@ -1088,6 +1088,13 @@ public:
 		static void GetMousePositionInPercentages(bool& Success, float& X, float& Y);
 
 
+	/**
+	* Sets the mouse locked to the viewport (meaning the mouse cursor won't be able to get out of the viewport).
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Mouse", Meta = (DisplayName = "Set Mouse Locked To Viewport", Keywords = "cursor confined min max"))
+		static void SetMouseLockedToViewport(const bool Locked);
+
+
 
 	/**
 	* Returns the primary monitor resolution.

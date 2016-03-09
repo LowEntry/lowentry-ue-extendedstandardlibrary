@@ -1962,6 +1962,53 @@ void ULowEntryExtendedStandardLibrary::GetMousePositionInPercentages(bool& Succe
 }
 
 
+void ULowEntryExtendedStandardLibrary::SetMouseLockedToViewport(const bool Locked)
+{
+	if(GEngine == nullptr)
+	{
+		return;
+	}
+
+	UGameViewportClient* ViewportClient = GEngine->GameViewport;
+	if(ViewportClient == nullptr)
+	{
+		return;
+	}
+
+	TSharedPtr<SViewport> ViewportWidget = ViewportClient->GetGameViewportWidget();
+	if(!ViewportWidget.IsValid())
+	{
+		return;
+	}
+
+	TArray<APlayerController*> LocalPlayerControllers;
+	GEngine->GetAllLocalPlayerControllers(LocalPlayerControllers);
+
+	for(APlayerController* LocalPlayerController : LocalPlayerControllers)
+	{
+		if(LocalPlayerController == nullptr)
+		{
+			continue;
+		}
+
+		ULocalPlayer* LocalPlayer = Cast<ULocalPlayer>(LocalPlayerController->Player);
+		if(LocalPlayer == nullptr)
+		{
+			continue;
+		}
+
+		if(Locked)
+		{
+			LocalPlayer->GetSlateOperations().LockMouseToWidget(ViewportWidget.ToSharedRef());
+		}
+		else
+		{
+			LocalPlayer->GetSlateOperations().ReleaseMouseLock();
+		}
+	}
+}
+
+
 
 void ULowEntryExtendedStandardLibrary::GetPrimaryMonitorResolution(int32& Width, int32& Height)
 {
