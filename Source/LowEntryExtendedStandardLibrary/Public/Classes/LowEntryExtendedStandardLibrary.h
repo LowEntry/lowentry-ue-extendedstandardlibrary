@@ -411,6 +411,17 @@ public:
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Hashes|Generate", Meta = (DisplayName = "Generate Hash (Sha1)", AdvancedDisplay = "1"))
 		static TArray<uint8> Sha1(const TArray<uint8>& ByteArray, int32 Index = 0, int32 Length = 0x7FFFFFFF);
+
+	/**
+	* Generates a BCrypt hash, always returns 24 bytes.
+	*
+	* The given salt needs to be 16 bytes.
+	* The given strength needs to be between 4 and 30, a strength between 10 and 12 is recommended.
+	* 
+	* If these conditions aren't met, this blueprint will return an empty byte array.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Hashes|Generate", Meta = (DisplayName = "Generate Hash (Bcrypt)", AdvancedDisplay = "3"))
+		static TArray<uint8> BCrypt(const TArray<uint8>& ByteArray, const TArray<uint8>& Salt, int32 Strength = 10, int32 Index = 0, int32 Length = 0x7FFFFFFF);
 	
 	
 	
