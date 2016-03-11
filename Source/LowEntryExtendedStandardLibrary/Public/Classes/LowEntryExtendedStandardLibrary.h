@@ -414,7 +414,9 @@ public:
 
 	/**
 	* Generates a BCrypt hash, always returns 24 bytes.
-	*
+	* 
+	* If the given ByteArray contain more than 72 bytes, only the first 72 bytes will be used.
+	* 
 	* The given salt needs to be 16 bytes.
 	* The given strength needs to be between 4 and 30, a strength between 10 and 12 is recommended.
 	* 
