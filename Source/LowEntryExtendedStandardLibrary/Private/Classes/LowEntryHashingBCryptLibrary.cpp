@@ -126,19 +126,16 @@ void ULowEntryHashingBCryptLibrary::ekskey(TArray<uint8> data, TArray<uint8> key
 
 TArray<uint8> ULowEntryHashingBCryptLibrary::crypt_raw(TArray<uint8> password, TArray<uint8> salt, int32 log_rounds, int32 cdata[])
 {
+	if((password.Num() <= 0) || (salt.Num() != BCRYPT_SALT_LEN) || (log_rounds < 4) || (log_rounds > 30))
+	{
+		return TArray<uint8>();
+	}
+
 	int32 rounds, i, j;
 	int32 clen = bf_crypt_ciphertext_len;
 	TArray<uint8> ret;
 
-	if((log_rounds < 4) || (log_rounds > 30))
-	{
-		return TArray<uint8>();
-	}
 	rounds = 1 << log_rounds;
-	if(salt.Num() != BCRYPT_SALT_LEN)
-	{
-		return TArray<uint8>();
-	}
 
 	init_key();
 	ekskey(salt, password);
