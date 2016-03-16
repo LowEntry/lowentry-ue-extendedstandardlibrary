@@ -835,12 +835,27 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::ByteToBytes(const uint8 Value)
 	return ByteArray;
 }
 
-uint8 ULowEntryExtendedStandardLibrary::BytesToByte(const TArray<uint8>& ByteArray, int32 Index)
+uint8 ULowEntryExtendedStandardLibrary::BytesToByte(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
 {
-	if(ByteArray.Num() <= Index)
+	if(ByteArray.Num() <= 0)
 	{
-		return 0;
+		return false;
 	}
+
+	if(Index < 0)
+	{
+		Length += Index;
+		Index = 0;
+	}
+	if(Length > ByteArray.Num() - Index)
+	{
+		Length = ByteArray.Num() - Index;
+	}
+	if(Length <= 0)
+	{
+		return false;
+	}
+
 	return ByteArray[Index];
 }
 

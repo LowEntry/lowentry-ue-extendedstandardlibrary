@@ -366,7 +366,7 @@ public:
 	* If there are less than 1 bytes given, it will return 0.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Byte", Keywords = "byte array", AdvancedDisplay = "1"))
-		static uint8 BytesToByte(const TArray<uint8>& ByteArray, int32 Index = 0);
+		static uint8 BytesToByte(const TArray<uint8>& ByteArray, int32 Index = 0, int32 Length = 0x7FFFFFFF);
 
 
 	/**
