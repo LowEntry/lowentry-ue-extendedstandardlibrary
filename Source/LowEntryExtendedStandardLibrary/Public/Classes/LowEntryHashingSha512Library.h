@@ -34,7 +34,7 @@ private:
 	TArray<uint8> padBuffer();
 	TArray<uint8> getResult();
 	void sha(const TArray<uint8>& in, int32 offset);
-	FORCEINLINE int64 s(const int64 a, const int32 b);
+	FORCEINLINE static int64 s(const int64 a, const int32 b);
 
 
 public:
