@@ -7,6 +7,20 @@
 class ULowEntryHashingBCryptLibrary
 {
 private:
+	const static int32 BCRYPT_SALT_LEN = 16;
+
+	const static int32 BLOWFISH_NUM_ROUNDS = 16;
+
+	const static int32 P_len = 18;
+	const static int32 S_len = 1024;
+	const static int32 bf_crypt_ciphertext_len = 6;
+
+	const static int32 P_orig[18];
+	const static int32 S_orig[1024];
+	const static int32 bf_crypt_ciphertext[6];
+
+
+private:
 	int32 P[18];
 	int32 S[1024];
 
@@ -16,15 +30,15 @@ private:
 
 
 private:
-	void encipher(int32 lr[], int off);
-	static int32 streamtoword(TArray<uint8> data, int32 offp[]);
+	void encipher(int32 lr[], const int32 off);
+	static int32 streamtoword(const TArray<uint8>& data, int32 offp[]);
 	void init_key();
-	void key(TArray<uint8> key);
-	void ekskey(TArray<uint8> data, TArray<uint8> key);
-	TArray<uint8> crypt_raw(TArray<uint8> password, TArray<uint8> salt, int32 log_rounds, int32 cdata[]);
-	TArray<uint8> crypt_raw(TArray<uint8> password, TArray<uint8> salt, int32 log_rounds);
+	void key(const TArray<uint8>& key);
+	void ekskey(const TArray<uint8>& data, const TArray<uint8>& key);
+	TArray<uint8> crypt_raw(const TArray<uint8>& password, const TArray<uint8>& salt, const int32 log_rounds, int32 cdata[]);
+	TArray<uint8> crypt_raw(const TArray<uint8>& password, const TArray<uint8>& salt, const int32 log_rounds);
 
 
 public:
-	static TArray<uint8> Hash(TArray<uint8> Bytes, TArray<uint8> Salt, int32 Strength);
+	static TArray<uint8> Hash(const TArray<uint8>& Bytes, const TArray<uint8>& Salt, const int32 Strength);
 };

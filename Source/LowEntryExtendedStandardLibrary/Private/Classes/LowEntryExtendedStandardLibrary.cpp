@@ -2,6 +2,8 @@
 #include "LowEntryExtendedStandardLibrary.h"
 
 #include "LowEntryHashingBCryptLibrary.h"
+#include "LowEntryHashingSha256Library.h"
+#include "LowEntryHashingSha512Library.h"
 
 #include "LowEntryLatentActionBoolean.h"
 #include "LowEntryLatentActionFloat.h"
@@ -981,6 +983,16 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::Sha1(const TArray<uint8>& ByteAr
 	TArray<uint8> DigestByteArray;
 	DigestByteArray.Append(DigestBytes, FSHA1::DigestSize);
 	return DigestByteArray;
+}
+
+TArray<uint8> ULowEntryExtendedStandardLibrary::Sha256(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
+{
+	return ULowEntryHashingSha256Library::Hash(ByteArray, Index, Length);
+}
+
+TArray<uint8> ULowEntryExtendedStandardLibrary::Sha512(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
+{
+	return ULowEntryHashingSha512Library::Hash(ByteArray, Index, Length);
 }
 
 TArray<uint8> ULowEntryExtendedStandardLibrary::BCrypt(const TArray<uint8>& ByteArray, const TArray<uint8>& Salt, int32 Strength, int32 Index, int32 Length)
