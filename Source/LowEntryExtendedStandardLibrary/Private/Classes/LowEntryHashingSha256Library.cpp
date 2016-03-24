@@ -71,7 +71,7 @@ TArray<uint8> ULowEntryHashingSha256Library::padBuffer()
 TArray<uint8> ULowEntryHashingSha256Library::getResult()
 {
 	TArray<uint8> result;
-	result.SetNumUninitialized(32);
+	result.SetNum(32);
 
 	result[0] = (uint8) (h0 >> 24);
 	result[1] = (uint8) (h0 >> 16);

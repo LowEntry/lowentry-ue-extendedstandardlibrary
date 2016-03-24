@@ -170,7 +170,7 @@ TArray<int32> ULowEntryByteDataReader::GetIntegerArray()
 		return TArray<int32>();
 	}
 	TArray<int32> Array;
-	Array.SetNumUninitialized(Length);
+	Array.SetNum(Length);
 	for(int32 i = 0; i < Length; i++)
 	{
 		Array[i] = GetInteger();
@@ -187,7 +187,7 @@ TArray<ULowEntryLong*> ULowEntryByteDataReader::GetLongBytesArray()
 		return TArray<ULowEntryLong*>();
 	}
 	TArray<ULowEntryLong*> Array;
-	Array.SetNumUninitialized(Length);
+	Array.SetNum(Length);
 	for(int32 i = 0; i < Length; i++)
 	{
 		Array[i] = GetLongBytes();
@@ -204,7 +204,7 @@ TArray<float> ULowEntryByteDataReader::GetFloatArray()
 		return TArray<float>();
 	}
 	TArray<float> Array;
-	Array.SetNumUninitialized(Length);
+	Array.SetNum(Length);
 	for(int32 i = 0; i < Length; i++)
 	{
 		Array[i] = GetFloat();
@@ -221,7 +221,7 @@ TArray<ULowEntryDouble*> ULowEntryByteDataReader::GetDoubleBytesArray()
 		return TArray<ULowEntryDouble*>();
 	}
 	TArray<ULowEntryDouble*> Array;
-	Array.SetNumUninitialized(Length);
+	Array.SetNum(Length);
 	for(int32 i = 0; i < Length; i++)
 	{
 		Array[i] = GetDoubleBytes();
@@ -238,7 +238,7 @@ TArray<bool> ULowEntryByteDataReader::GetBooleanArray()
 		return TArray<bool>();
 	}
 	TArray<bool> Array;
-	Array.SetNumUninitialized(Length);
+	Array.SetNum(Length);
 	for(int32 i = 0; i < Length; i+=8)
 	{
 		uint8 B = GetByte();
@@ -277,7 +277,7 @@ int32 ULowEntryByteDataReader::SafeMultiply(const int32 A, const int32 B)
 {
 	int64 Result = (int64) A * (int64) B;
 	int32 Max = 2147483647;
-	int32 Min = -2147483647; // -2147483648 will make it -(uint32)2147483648, which will error
+	int32 Min = (-2147483647 - 1);
 	if(Result >= Max)
 	{
 		return Max;
