@@ -22,6 +22,7 @@ public:
 
 
 public:
+	UPROPERTY()
 	TArray<uint8> Bytes;
 
 

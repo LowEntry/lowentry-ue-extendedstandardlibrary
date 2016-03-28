@@ -30,7 +30,9 @@ protected:
 
 
 public:
+	UPROPERTY()
 	TArray<uint8> Bytes;
+	UPROPERTY()
 	int32 Position = 0;
 
 

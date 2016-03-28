@@ -17,7 +17,9 @@ public:
 	const int32 Ticks;
 	const int32 FramesInterval;
 
+	UPROPERTY()
 	int32& Tick;
+	UPROPERTY()
 	int32 CurrentFramesInterval = 0;
 
 	FLowEntryTickFrames(const FLatentActionInfo& LatentInfo, const int32 Ticks0, const int32 FramesInterval0, int32& Tick0)

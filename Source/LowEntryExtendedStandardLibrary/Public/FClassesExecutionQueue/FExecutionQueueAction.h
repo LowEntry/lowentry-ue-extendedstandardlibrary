@@ -15,6 +15,7 @@ public:
 	int32 OutputLink;
 	FWeakObjectPtr CallbackTarget;
 
+	UPROPERTY()
 	ULowEntryExecutionQueue* Queue;
 
 	FExecutionQueueAction(ULowEntryExecutionQueue* Queue0, const FLatentActionInfo& LatentInfo)

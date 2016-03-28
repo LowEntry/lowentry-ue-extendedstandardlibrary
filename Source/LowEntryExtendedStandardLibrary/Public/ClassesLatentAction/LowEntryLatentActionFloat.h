@@ -20,7 +20,9 @@ public:
 
 
 public:
+	UPROPERTY()
 	bool Finished = false;
+	UPROPERTY()
 	float Result = 0;
 	
 

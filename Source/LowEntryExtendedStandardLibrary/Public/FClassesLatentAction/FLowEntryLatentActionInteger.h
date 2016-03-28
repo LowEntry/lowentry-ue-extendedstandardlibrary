@@ -16,7 +16,9 @@ public:
 	int32 OutputLink;
 	FWeakObjectPtr CallbackTarget;
 
+	UPROPERTY()
 	ULowEntryLatentActionInteger* LatentActionObject = NULL;
+	UPROPERTY()
 	int32& Result;
 
 	FLowEntryLatentActionInteger(const FLatentActionInfo& LatentInfo, ULowEntryLatentActionInteger* LatentActionObject0, int32& Result0)

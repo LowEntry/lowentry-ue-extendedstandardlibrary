@@ -41,28 +41,43 @@ public:
 
 
 public:
+	UPROPERTY()
 	uint8 Type = 0;
 
 
+	UPROPERTY()
 	uint8 ByteValue;
+	UPROPERTY()
 	int32 IntegerValue;
+	UPROPERTY()
 	ULowEntryLong* LongBytesValue = NULL;
 
+	UPROPERTY()
 	float FloatValue;
+	UPROPERTY()
 	ULowEntryDouble* DoubleBytesValue = NULL;
 
+	UPROPERTY()
 	bool BooleanValue;
+	UPROPERTY()
 	FString StringUtf8Value;
 
 
+	UPROPERTY()
 	TArray<uint8> ByteArrayValue;
+	UPROPERTY()
 	TArray<int32> IntegerArrayValue;
+	UPROPERTY()
 	TArray<ULowEntryLong*> LongBytesArrayValue;
 
+	UPROPERTY()
 	TArray<float> FloatArrayValue;
+	UPROPERTY()
 	TArray<ULowEntryDouble*> DoubleBytesArrayValue;
 
+	UPROPERTY()
 	TArray<bool> BooleanArrayValue;
+	UPROPERTY()
 	TArray<FString> StringUtf8ArrayValue;
 
 

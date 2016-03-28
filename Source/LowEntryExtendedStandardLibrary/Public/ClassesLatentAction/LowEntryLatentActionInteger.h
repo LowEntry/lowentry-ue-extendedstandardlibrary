@@ -20,7 +20,9 @@ public:
 
 
 public:
+	UPROPERTY()
 	bool Finished = false;
+	UPROPERTY()
 	int32 Result = 0;
 	
 

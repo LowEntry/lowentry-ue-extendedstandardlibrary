@@ -20,6 +20,7 @@ public:
 
 
 public:
+	UPROPERTY()
 	bool Finished = false;
 
 

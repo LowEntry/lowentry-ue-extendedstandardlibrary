@@ -20,6 +20,8 @@ public:
 
 
 public:
+	UPROPERTY()
 	int32 Count = 0;
+	UPROPERTY()
 	bool Next = false;
 };
