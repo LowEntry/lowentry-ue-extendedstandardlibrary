@@ -28,7 +28,7 @@ public:
 
 	virtual void UpdateOperation(FLatentResponse& Response) override
 	{
-		if(Queue->Count > 0)
+		if((Queue != nullptr) && Queue->IsValidLowLevel() && (Queue->Count > 0))
 		{
 			if(Queue->Next)
 			{

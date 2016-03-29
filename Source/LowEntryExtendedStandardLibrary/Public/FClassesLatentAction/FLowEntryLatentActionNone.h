@@ -29,6 +29,11 @@ public:
 
 	void UpdateOperation(FLatentResponse& Response)
 	{
+		if((LatentActionObject == nullptr) || !LatentActionObject->IsValidLowLevel())
+		{
+			Response.FinishAndTriggerIf(true, ExecutionFunction, OutputLink, CallbackTarget);
+			return;
+		}
 		if(LatentActionObject->Finished)
 		{
 			Response.FinishAndTriggerIf(true, ExecutionFunction, OutputLink, CallbackTarget);

@@ -28,7 +28,7 @@ public:
 	virtual void UpdateOperation(FLatentResponse& Response) override
 	{
 		FramesRemaining--;
-		Response.FinishAndTriggerIf(FramesRemaining <= 0, ExecutionFunction, OutputLink, CallbackTarget);
+		Response.FinishAndTriggerIf((FramesRemaining <= 0), ExecutionFunction, OutputLink, CallbackTarget);
 	}
 
 #if WITH_EDITOR
