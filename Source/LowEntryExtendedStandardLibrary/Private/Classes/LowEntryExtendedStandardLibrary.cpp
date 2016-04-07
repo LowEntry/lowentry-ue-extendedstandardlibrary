@@ -1539,7 +1539,7 @@ void ULowEntryExtendedStandardLibrary::QueueExecutions(UObject* WorldContextObje
 
 void ULowEntryExtendedStandardLibrary::NextQueueExecution(ULowEntryExecutionQueue* Queue)
 {
-	if(Queue != nullptr)
+	if((Queue != nullptr) && Queue->IsValidLowLevel() && !Queue->IsPendingKill())
 	{
 		Queue->Next = true;
 	}
