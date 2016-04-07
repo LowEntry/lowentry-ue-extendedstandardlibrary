@@ -21,16 +21,11 @@ private:
 
 
 private:
-	UPROPERTY()
 	int32 P[18];
-	UPROPERTY()
 	int32 S[1024];
 
-	UPROPERTY()
 	int32					nk = 0;
-	UPROPERTY()
 	int32					nr = 0;
-	UPROPERTY()
 	TArray<TArray<uint8>>	w;
 
 

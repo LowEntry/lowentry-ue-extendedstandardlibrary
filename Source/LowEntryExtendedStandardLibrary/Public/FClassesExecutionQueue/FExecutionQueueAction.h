@@ -15,7 +15,6 @@ public:
 	int32 OutputLink;
 	FWeakObjectPtr CallbackTarget;
 
-	UPROPERTY()
 	ULowEntryExecutionQueue* Queue;
 
 	FExecutionQueueAction(ULowEntryExecutionQueue* Queue0, const FLatentActionInfo& LatentInfo)
@@ -28,25 +27,38 @@ public:
 
 	virtual void UpdateOperation(FLatentResponse& Response) override
 	{
-		if((Queue != nullptr) && Queue->IsValidLowLevel() && (Queue->Count > 0))
+		if((Queue == nullptr) || !Queue->IsValidLowLevel() || Queue->IsPendingKill() || (Queue->Count <= 0))
 		{
-			if(Queue->Next)
-			{
-				Queue->Count--;
-				Queue->Next = false;
-				Response.TriggerLink(ExecutionFunction, OutputLink, CallbackTarget);
-			}
-		}
-		else
+            Response.DoneIf(true);
+            return;
+        }
+        if(Queue->Next)
+        {
+			Queue->Next = false;
+			Queue->DecreaseCount();
+            Response.TriggerLink(ExecutionFunction, OutputLink, CallbackTarget);
+        }
+	}
+
+	ULowEntryExecutionQueue* GetOrCreateQueueAndIncreaseCount()
+	{
+		if((Queue == nullptr) || !Queue->IsValidLowLevel() || Queue->IsPendingKill())
 		{
-			Response.DoneIf(true);
+			Queue = ULowEntryExecutionQueue::Create(1, true);
+			return Queue;
 		}
+		Queue->IncreaseCount();
+		return Queue;
 	}
 
 #if WITH_EDITOR
 	// Returns a human readable description of the latent operation's current state
 	virtual FString GetDescription() const override
 	{
+		if((Queue == nullptr) || !Queue->IsValidLowLevel() || Queue->IsPendingKill() || (Queue->Count <= 0))
+		{
+			return FString::Printf(TEXT("Queued (0 executions remaining)"));
+		}
 		return FString::Printf(TEXT("Queued (%i executions remaining)"), Queue->Count);
 	}
 #endif

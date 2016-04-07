@@ -1532,8 +1532,7 @@ void ULowEntryExtendedStandardLibrary::QueueExecutions(UObject* WorldContextObje
 		}
 		else
 		{
-			Queue = Action->Queue;
-			Queue->Count++;
+			Queue = Action->GetOrCreateQueueAndIncreaseCount();
 		}
 	}
 }

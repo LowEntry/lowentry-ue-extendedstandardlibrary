@@ -24,4 +24,8 @@ public:
 	int32 Count = 0;
 	UPROPERTY()
 	bool Next = false;
+
+
+	void IncreaseCount();
+	void DecreaseCount();
 };

@@ -24,6 +24,9 @@ public:
 	bool Finished = false;
 	UPROPERTY()
 	int32 Result = 0;
+
+	UPROPERTY()
+	int32 KeepAliveCount = 0;
 	
 
 	/**
@@ -31,6 +34,8 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Latent Action|Integer", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", DisplayName = "Wait Till Done", Keywords = "untill for end finished complete completion"))
 		void WaitTillDone(UObject* WorldContextObject, FLatentActionInfo LatentInfo, int32& Result_);
+
+	void LatentActionDone();
 
 	/**
 	* Causes the latent action to be done.

@@ -7,6 +7,8 @@
 // init >>
 	ULowEntryLatentActionFloat::ULowEntryLatentActionFloat(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 	{
+		KeepAliveCount = 1;
+		AddToRoot();
 	}
 
 	ULowEntryLatentActionFloat* ULowEntryLatentActionFloat::Create()
@@ -23,14 +25,40 @@ void ULowEntryLatentActionFloat::WaitTillDone(UObject* WorldContextObject, FLate
 	{
 		return;
 	}
-
+	if(World->GetLatentActionManager().FindExistingAction<FLowEntryLatentActionFloat>(LatentInfo.CallbackTarget, LatentInfo.UUID) != NULL)
+	{
+		return;
+	}
 	World->GetLatentActionManager().AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FLowEntryLatentActionFloat(LatentInfo, this, Result_));
+
+	KeepAliveCount++;
+	if(KeepAliveCount == 1)
+	{
+		AddToRoot();
+	}
+}
+
+void ULowEntryLatentActionFloat::LatentActionDone()
+{
+	KeepAliveCount--;
+	if(KeepAliveCount == 0)
+	{
+		RemoveFromRoot();
+	}
+	if(KeepAliveCount < 0)
+	{
+		KeepAliveCount = 0;
+	}
 }
 
 void ULowEntryLatentActionFloat::Done(float Result_)
 {
 	Result = Result_;
-	Finished = true;
+	if(!Finished)
+	{
+		LatentActionDone(); // used to reduce KeepAliveCount by 1
+		Finished = true;
+	}
 }
 
 bool ULowEntryLatentActionFloat::IsDone()

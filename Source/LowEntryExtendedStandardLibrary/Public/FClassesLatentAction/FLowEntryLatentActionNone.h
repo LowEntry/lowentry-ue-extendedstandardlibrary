@@ -16,8 +16,9 @@ public:
 	int32 OutputLink;
 	FWeakObjectPtr CallbackTarget;
 
-	UPROPERTY()
 	ULowEntryLatentActionNone* LatentActionObject = NULL;
+
+	bool Done = false;
 
 	FLowEntryLatentActionNone(const FLatentActionInfo& LatentInfo, ULowEntryLatentActionNone* LatentActionObject0)
 		: ExecutionFunction(LatentInfo.ExecutionFunction)
@@ -27,15 +28,29 @@ public:
 		this->LatentActionObject = LatentActionObject0;
 	}
 
+	~FLowEntryLatentActionNone()
+	{
+		if(!Done)
+		{
+			if((LatentActionObject != nullptr) && LatentActionObject->IsValidLowLevel() && !LatentActionObject->IsPendingKill())
+			{
+				Done = true;
+				LatentActionObject->LatentActionDone();
+			}
+		}
+	}
+
 	void UpdateOperation(FLatentResponse& Response)
 	{
-		if((LatentActionObject == nullptr) || !LatentActionObject->IsValidLowLevel())
+		if((LatentActionObject == nullptr) || !LatentActionObject->IsValidLowLevel() || LatentActionObject->IsPendingKill())
 		{
 			Response.FinishAndTriggerIf(true, ExecutionFunction, OutputLink, CallbackTarget);
 			return;
 		}
 		if(LatentActionObject->Finished)
 		{
+			Done = true;
+			LatentActionObject->LatentActionDone();
 			Response.FinishAndTriggerIf(true, ExecutionFunction, OutputLink, CallbackTarget);
 		}
 	}

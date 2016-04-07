@@ -17,6 +17,33 @@
 		ULowEntryExecutionQueue* Instance = NewObject<ULowEntryExecutionQueue>();
 		Instance->Count = Count;
 		Instance->Next = Next;
+		if(Count > 0)
+		{
+			Instance->AddToRoot();
+		}
 		return Instance;
 	}
 // init <<
+
+
+void ULowEntryExecutionQueue::IncreaseCount()
+{
+	Count++;
+	if(Count == 1)
+	{
+		AddToRoot();
+	}
+}
+
+void ULowEntryExecutionQueue::DecreaseCount()
+{
+	Count--;
+	if(Count == 0)
+	{
+		RemoveFromRoot();
+	}
+	if(Count < 0)
+	{
+		Count = 0;
+	}
+}

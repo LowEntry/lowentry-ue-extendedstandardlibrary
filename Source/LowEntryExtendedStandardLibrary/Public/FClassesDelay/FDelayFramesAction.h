@@ -14,7 +14,6 @@ public:
 	int32 OutputLink;
 	FWeakObjectPtr CallbackTarget;
 
-	UPROPERTY()
 	int32 FramesRemaining;
 
 	FDelayFramesAction(int32 Frames, const FLatentActionInfo& LatentInfo)
