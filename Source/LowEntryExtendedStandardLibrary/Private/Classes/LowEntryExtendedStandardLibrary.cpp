@@ -90,20 +90,6 @@ void ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(UObject* W
 
 
 
-void ULowEntryExtendedStandardLibrary::CollectGarbage(const bool bFullPurge)
-{
-	if(GEngine != nullptr)
-	{
-		UWorld* World = GEngine->GetWorld();
-		if(World != nullptr)
-		{
-			World->ForceGarbageCollection(bFullPurge);
-		}
-	}
-}
-
-
-
 bool ULowEntryExtendedStandardLibrary::DebugBuild()
 {
 #if UE_BUILD_DEBUG

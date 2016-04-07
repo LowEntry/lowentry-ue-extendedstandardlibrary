@@ -44,20 +44,6 @@ public:
 
 public:
 	/**
-	* Collects the garbage.
-	* 
-	* The default Collect Garbage blueprint is simply an alias for console command "obj gc".
-	* Because of this, the default Collect Garbage blueprint always prints something in the logs.
-	* Not only that, but the default Collect Garbage blueprint also doesn't allow any options.
-	* 
-	* This blueprint overcomes the limitations of the default Collect Garbage blueprint.
-	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Collect Garbage", Keywords = "clear memory run execute force"))
-		static void CollectGarbage(const bool bFullPurge = false);
-
-
-
-	/**
 	* Returns true if this is a debug build (UE_BUILD_DEBUG), returns false otherwise.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Build", Meta = (DisplayName = "Is Debug Build", Keywords = "compile export mode version type"))
