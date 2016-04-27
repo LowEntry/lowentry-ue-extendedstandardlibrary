@@ -320,6 +320,19 @@ public:
 
 
 	/**
+	* Converts a boolean into a Byte.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Boolean To Byte", Keywords = "byte bool boolean"))
+		static uint8 BooleanToByte(const bool Value);
+
+	/**
+	* Converts a Byte into a boolean (00000001 will return true, everything else will return false).
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Byte To Boolean", Keywords = "byte bool boolean", AdvancedDisplay = "1"))
+		static bool ByteToBoolean(const uint8 Byte);
+
+
+	/**
 	* Converts a signed integer (int32) into a Byte Array (4 bytes).
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Integer To Bytes", Keywords = "byte array int integer"))

@@ -768,6 +768,24 @@ bool ULowEntryExtendedStandardLibrary::BytesToBoolean(const TArray<uint8>& ByteA
 }
 
 
+uint8 ULowEntryExtendedStandardLibrary::BooleanToByte(const bool Value)
+{
+	if(Value)
+	{
+		return 0x01;
+	}
+	else
+	{
+		return 0x00;
+	}
+}
+
+bool ULowEntryExtendedStandardLibrary::ByteToBoolean(const uint8 Byte)
+{
+	return (Byte == 0x01);
+}
+
+
 TArray<uint8> ULowEntryExtendedStandardLibrary::IntegerToBytes(const int32 Value)
 {
 	TArray<uint8> ByteArray;
