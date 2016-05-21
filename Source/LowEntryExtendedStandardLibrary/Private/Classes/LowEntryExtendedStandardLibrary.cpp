@@ -2364,13 +2364,6 @@ void ULowEntryExtendedStandardLibrary::SetWindowMode(const bool Fullscreen, cons
 		return;
 	}
 
-	EWindowMode::Type Mode = Window->GetWindowMode();
-
-	if(Mode == EWindowMode::Type::WindowedMirror)
-	{
-		return;
-	}
-
 	if(Fullscreen)
 	{
 		if(IsFullscreenWindowed)
