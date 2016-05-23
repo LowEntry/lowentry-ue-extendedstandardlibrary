@@ -7,6 +7,9 @@
 #include "Base64.h"
 #include "DelayAction.h"
 #include "Engine/LatentActionManager.h"
+#include "Regex.h"
+
+#include "FLowEntryRegexMatch.h"
 
 #include "LowEntryExtendedStandardLibrary.generated.h"
 
@@ -879,6 +882,32 @@ public:
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (DisplayName = "Replace Characters"))
 		static FString ReplaceCharactersExcept(const FString& String, const FString& ReplacementCharacter, const bool KeepLowercaseAZ, const bool KeepUppercaseAZ, const bool KeepNumbers, const FString& OtherCharactersToKeep);
+
+
+
+	/**
+	* Returns true if the regex was found in the given String.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (DisplayName = "Regex Match"))
+		static bool RegexMatch(const FString& String, const FString& Pattern);
+	
+	/**
+	* Returns the number of times the regex was found in the given String.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (DisplayName = "Regex Count"))
+		static int32 RegexCount(const FString& String, const FString& Pattern);
+
+	/**
+	* Returns the begin index, end index and matched string of each regex found in the given String.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (DisplayName = "Regex Get Matches"))
+		static TArray<FLowEntryRegexMatch> RegexGetMatches(const FString& String, const FString& Pattern);
+
+	/**
+	* Replaces every regex match with the given replacement String.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (DisplayName = "Regex Replace"))
+		static FString RegexReplace(const FString& String, const FString& Pattern, const FString& Replacement);
 	
 
 

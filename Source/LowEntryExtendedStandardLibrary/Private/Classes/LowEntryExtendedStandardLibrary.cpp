@@ -1695,6 +1695,82 @@ FString ULowEntryExtendedStandardLibrary::ReplaceCharactersExcept(const FString&
 
 
 
+bool ULowEntryExtendedStandardLibrary::RegexMatch(const FString& String, const FString& Pattern)
+{
+	FRegexPattern RegexPattern(Pattern);
+	FRegexMatcher RegexMatcher(RegexPattern, String);
+	return RegexMatcher.FindNext();
+}
+
+int32 ULowEntryExtendedStandardLibrary::RegexCount(const FString& String, const FString& Pattern)
+{
+	FRegexPattern RegexPattern(Pattern);
+	FRegexMatcher RegexMatcher(RegexPattern, String);
+	int32 Count = 0;
+	while(RegexMatcher.FindNext())
+	{
+		Count++;
+	}
+	return Count;
+}
+
+TArray<FLowEntryRegexMatch> ULowEntryExtendedStandardLibrary::RegexGetMatches(const FString& String, const FString& Pattern)
+{
+	TArray<FLowEntryRegexMatch> Matches;
+
+	int32 Length = String.Len();
+	FRegexPattern RegexPattern(Pattern);
+	FRegexMatcher RegexMatcher(RegexPattern, String);
+	while(RegexMatcher.FindNext())
+	{
+		int32 b = RegexMatcher.GetMatchBeginning();
+		int32 e = RegexMatcher.GetMatchEnding();
+
+		FLowEntryRegexMatch Match;
+		Match.BeginIndex = b;
+		Match.EndIndex = e;
+		Match.Match = String.Mid(b, e - b);
+		Matches.Add(Match);
+
+		RegexMatcher.SetLimits(e, Length);
+	}
+
+	return Matches;
+}
+
+FString ULowEntryExtendedStandardLibrary::RegexReplace(const FString& String, const FString& Pattern, const FString& Replacement)
+{
+	TArray<TCHAR> Characters = String.GetCharArray();
+	int32 Length = String.Len();
+
+	FString Result = TEXT("");
+	int32 LastMatchEnding = 0;
+
+	FRegexPattern RegexPattern(Pattern);
+	FRegexMatcher RegexMatcher(RegexPattern, String);
+	while(RegexMatcher.FindNext())
+	{
+		int32 b = RegexMatcher.GetMatchBeginning();
+		int32 e = RegexMatcher.GetMatchEnding();
+
+		for(int32 i = LastMatchEnding; i < b; i++)
+		{
+			Result += Characters[i];
+		}
+		Result += Replacement;
+
+		RegexMatcher.SetLimits(e, Length);
+		LastMatchEnding = e;
+	}
+	for(int32 i = LastMatchEnding; i < Length; i++)
+	{
+		Result += Characters[i];
+	}
+	return Result;
+}
+
+
+
 void ULowEntryExtendedStandardLibrary::Crash()
 {
 	for(int32 i = 1; i <= 100; i++)
