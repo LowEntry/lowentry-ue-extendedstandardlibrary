@@ -1707,9 +1707,12 @@ int32 ULowEntryExtendedStandardLibrary::RegexCount(const FString& String, const 
 	FRegexPattern RegexPattern(Pattern);
 	FRegexMatcher RegexMatcher(RegexPattern, String);
 	int32 Count = 0;
+	int32 Length = String.Len();
 	while(RegexMatcher.FindNext())
 	{
 		Count++;
+		int32 e = RegexMatcher.GetMatchEnding();
+		RegexMatcher.SetLimits(e, Length);
 	}
 	return Count;
 }
