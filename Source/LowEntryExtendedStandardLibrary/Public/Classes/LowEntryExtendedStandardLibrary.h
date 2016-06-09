@@ -441,6 +441,8 @@ public:
 	* Loads a video (UMediaTexture, which is a child of Texture2D).
 	* 
 	* The URL is either a http/https URL or a filepath URL relative to Content/Movies/
+	* 
+	* Currently, only MP4 can be played on every platform, so it's best to only use MP4 videos for now.
 	*
 	* Returns NULL if it fails.
 	*/
