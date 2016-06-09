@@ -440,13 +440,17 @@ public:
 	/**
 	* Loads a video (UMediaTexture, which is a child of Texture2D).
 	* 
-	* The URL is either a http/https URL or a filepath URL relative to Content/Movies/
+	* The URL is either:
+	* - a http/https URL, for example "http://public.lowentry.com/files/test_data/TestVideoMp4.mp4"
+	* - a filepath URL of a video located in "YourProject/Content/Movies/" formatted like "./Movies/YourVideo.mp4"
 	* 
-	* Currently, only MP4 can be played on every platform, so it's best to only use MP4 videos for now.
+	* Some tips:
+	* - only MP4 can be played on every platform, so it's best to only use MP4 videos for now
+	* - don't forget to call Play on the MediaPlayer of the returned MediaTexture, otherwise nothing will happen
 	*
-	* Returns NULL if it fails.
+	* Returns NULL if it fails (not every fail case will return NULL, some fail cases will return a MediaTexture that will not play).
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Video", Meta = (DisplayName = "Load Video"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Video", Meta = (DisplayName = "Load Video", Keywords = "movie"))
 		static UMediaTexture* LoadVideo(const FString& Url);
 
 

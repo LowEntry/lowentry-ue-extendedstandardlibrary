@@ -994,13 +994,13 @@ UMediaTexture* ULowEntryExtendedStandardLibrary::LoadVideo(const FString& Url)
 		return NULL;
 	}
 
-	UMediaTexture* Texture = NewObject<UMediaTexture>();
-	if(Texture == nullptr)
+	if(!Player->OpenUrl(Url))
 	{
 		return NULL;
 	}
 
-	if(!Player->OpenUrl(Url))
+	UMediaTexture* Texture = NewObject<UMediaTexture>();
+	if(Texture == nullptr)
 	{
 		return NULL;
 	}
