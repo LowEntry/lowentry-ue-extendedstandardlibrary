@@ -33,7 +33,10 @@ namespace UnrealBuildTool.Rules
 					"Core",
 					"CoreUObject",
                     "Slate",
-                    "SlateCore"
+                    "SlateCore",
+                    "ImageWrapper",
+                    "Media",
+                    "MediaAssets"
                 }
 			);
 

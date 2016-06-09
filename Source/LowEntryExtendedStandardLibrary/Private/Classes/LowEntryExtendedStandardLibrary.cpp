@@ -950,6 +950,68 @@ uint8 ULowEntryExtendedStandardLibrary::GetByteWithBitSet(const uint8 Byte, cons
 
 
 
+UTexture2D* ULowEntryExtendedStandardLibrary::BytesToImage(const TArray<uint8>& ByteArray, const ELowEntryEImageFormat ImageFormat, int32 Index, int32 Length)
+{
+	IImageWrapperModule* ImageWrapperModule = FModuleManager::LoadModulePtr<IImageWrapperModule>("ImageWrapper");
+	if(ImageWrapperModule == nullptr)
+	{
+		return NULL;
+	}
+
+	IImageWrapperPtr ImageWrapper = ImageWrapperModule->CreateImageWrapper(ELowEntryEImageFormatToUE4(ImageFormat));
+	if(!ImageWrapper.IsValid() || !ImageWrapper->SetCompressed(ByteArray.GetData(), ByteArray.Num()))
+	{
+		return NULL;
+	}
+
+	const TArray<uint8>* Uncompressed = NULL;
+	if(!ImageWrapper->GetRaw(ERGBFormat::BGRA, 8, Uncompressed))
+	{
+		return NULL;
+	}
+
+	UTexture2D* LoadedT2D = UTexture2D::CreateTransient(ImageWrapper->GetWidth(), ImageWrapper->GetHeight(), PF_B8G8R8A8);
+	if(LoadedT2D == nullptr)
+	{
+		return NULL;
+	}
+
+	void* TextureData = LoadedT2D->PlatformData->Mips[0].BulkData.Lock(LOCK_READ_WRITE);
+	FMemory::Memcpy(TextureData, Uncompressed->GetData(), Uncompressed->Num());
+	LoadedT2D->PlatformData->Mips[0].BulkData.Unlock();
+
+	LoadedT2D->UpdateResource();
+	return LoadedT2D;
+}
+
+
+
+UMediaTexture* ULowEntryExtendedStandardLibrary::LoadVideo(const FString& Url)
+{
+	UMediaPlayer* Player = NewObject<UMediaPlayer>();
+	if(Player == nullptr)
+	{
+		return NULL;
+	}
+
+	UMediaTexture* Texture = NewObject<UMediaTexture>();
+	if(Texture == nullptr)
+	{
+		return NULL;
+	}
+
+	if(!Player->OpenUrl(Url))
+	{
+		return NULL;
+	}
+
+	Player->SetLooping(true);
+	Texture->SetMediaPlayer(Player);
+	return Texture;
+}
+
+
+
 TArray<uint8> ULowEntryExtendedStandardLibrary::Md5(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
 {
 	if(Index < 0)

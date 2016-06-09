@@ -11,6 +11,17 @@
 
 #include "FLowEntryRegexMatch.h"
 
+#include "Interfaces/IImageWrapper.h"
+#include "Interfaces/IImageWrapperModule.h"
+
+#include "ELowEntryEImageFormat.h"
+#include "ELowEntryERGBFormat.h"
+
+#include "IMediaModule.h"
+#include "IMediaPlayer.h"
+#include "MediaPlayer.h"
+#include "MediaTexture.h"
+
 #include "LowEntryExtendedStandardLibrary.generated.h"
 
 
@@ -415,7 +426,29 @@ public:
 		static uint8 GetByteWithBitSet(const uint8 Byte, const int32 Bit, const bool Value);
 	
 		
-		
+
+	/**
+	* Converts a Byte Array into an image (Texture2D).
+	* 
+	* Returns NULL if it fails.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Image", Keywords = "byte array binary", AdvancedDisplay = "2"))
+		static UTexture2D* BytesToImage(const TArray<uint8>& ByteArray, const ELowEntryEImageFormat ImageFormat, int32 Index = 0, int32 Length = 0x7FFFFFFF);
+
+
+
+	/**
+	* Loads a video (UMediaTexture, which is a child of Texture2D).
+	* 
+	* The URL is either a http/https URL or a filepath URL relative to Content/Movies/
+	*
+	* Returns NULL if it fails.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Video", Meta = (DisplayName = "Load Video"))
+		static UMediaTexture* LoadVideo(const FString& Url);
+
+
+
 	/**
 	* Generates a MD5 hash, always returns 16 bytes.
 	*/
