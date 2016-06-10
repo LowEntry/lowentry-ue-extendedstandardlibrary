@@ -30,10 +30,6 @@
 
 #include "FExecutionQueueAction.h"
 
-#if PLATFORM_ANDROID
-	#include "Android/AndroidMisc.h"
-#endif
-
 
 // init >>
 	ULowEntryExtendedStandardLibrary::ULowEntryExtendedStandardLibrary(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
@@ -294,8 +290,8 @@ void ULowEntryExtendedStandardLibrary::GetCurrentVolume(int32& Volume, bool& Suc
 {
 #if PLATFORM_ANDROID
 	Success = true;
-	extern int32 AndroidThunkCpp_GetCurrentVolume();
-	Volume = AndroidThunkCpp_GetCurrentVolume();
+	extern int32 AndroidThunkJava_GetCurrentVolume();
+	Volume = AndroidThunkJava_GetCurrentVolume();
 #else
 	Success = false;
 	Volume = 0;
