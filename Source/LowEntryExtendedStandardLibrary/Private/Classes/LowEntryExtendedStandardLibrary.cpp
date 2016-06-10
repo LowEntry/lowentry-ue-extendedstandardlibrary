@@ -32,7 +32,6 @@
 
 #if PLATFORM_ANDROID
 	#include "Android/AndroidMisc.h"
-	#include "Android/AndroidJNI.h"
 #endif
 
 
