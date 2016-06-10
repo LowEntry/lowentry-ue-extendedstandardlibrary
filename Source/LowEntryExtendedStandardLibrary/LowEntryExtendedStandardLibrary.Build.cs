@@ -23,7 +23,7 @@ namespace UnrealBuildTool.Rules
 					"LowEntryExtendedStandardLibrary/Private/Classes",
 					"LowEntryExtendedStandardLibrary/Private/ClassesTypes",
 					"LowEntryExtendedStandardLibrary/Private/ClassesLatentAction",
-				}
+                }
 			);
 
 			PublicDependencyModuleNames.AddRange(
@@ -36,20 +36,20 @@ namespace UnrealBuildTool.Rules
                     "SlateCore",
                     "ImageWrapper",
                     "Media",
-                    "MediaAssets"
+                    "MediaAssets",
                 }
 			);
 
 			PrivateDependencyModuleNames.AddRange(
 				new string[]
-				{
-				}
+                {
+                }
 			);
 
 			DynamicallyLoadedModuleNames.AddRange(
 				new string[]
-				{
-				}
+                {
+                }
 			);
 		}
 	}

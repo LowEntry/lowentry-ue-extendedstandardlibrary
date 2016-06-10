@@ -30,6 +30,13 @@
 
 #include "FExecutionQueueAction.h"
 
+#include "Runtime/Launch/Resources/Version.h"
+
+#if PLATFORM_ANDROID && (ENGINE_MINOR_VERSION >= 10)
+	#include "Android/AndroidApplication.h"
+	#include "Runtime/Launch/Public/Android/AndroidJNI.h"
+#endif
+
 
 // init >>
 	ULowEntryExtendedStandardLibrary::ULowEntryExtendedStandardLibrary(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
@@ -288,8 +295,22 @@ void ULowEntryExtendedStandardLibrary::GetBatteryTemperature(float& Celsius, boo
 
 void ULowEntryExtendedStandardLibrary::GetCurrentVolume(int32& Volume, bool& Success)
 {
+#if PLATFORM_ANDROID && (ENGINE_MINOR_VERSION >= 10)
+	if(JNIEnv* Env = FAndroidApplication::GetJavaEnv())
+	{
+		Success = true;
+		jmethodID AndroidThunkJava_GetCurrentVolume = FJavaWrapper::FindMethod(Env, FJavaWrapper::GameActivityClassID, "AndroidThunkJava_GetCurrentVolume", "()I", false); // missing from AndroidJNI.cpp
+		Volume = FJavaWrapper::CallIntMethod(Env, FJavaWrapper::GameActivityThis, AndroidThunkJava_GetCurrentVolume);
+	}
+	else
+	{
+		Success = false;
+		Volume = 0;
+	}
+#else
 	Success = false;
 	Volume = 0;
+#endif
 }
 
 
