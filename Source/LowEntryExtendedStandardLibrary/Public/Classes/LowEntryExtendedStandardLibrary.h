@@ -450,7 +450,7 @@ public:
 	*
 	* Returns NULL if it fails (not every fail case will return NULL, some fail cases will return a MediaTexture that will not play).
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Video", Meta = (DisplayName = "Load Video", Keywords = "movie"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|External", Meta = (DisplayName = "Load Video", Keywords = "movie"))
 		static UMediaTexture* LoadVideo(const FString& Url);
 
 

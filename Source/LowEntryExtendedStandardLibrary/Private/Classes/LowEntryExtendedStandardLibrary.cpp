@@ -952,6 +952,24 @@ uint8 ULowEntryExtendedStandardLibrary::GetByteWithBitSet(const uint8 Byte, cons
 
 UTexture2D* ULowEntryExtendedStandardLibrary::BytesToImage(const TArray<uint8>& ByteArray, const ELowEntryEImageFormat ImageFormat, int32 Index, int32 Length)
 {
+	if(ByteArray.Num() <= 0)
+	{
+		return NULL;
+	}
+	if(Index < 0)
+	{
+		Length += Index;
+		Index = 0;
+	}
+	if(Length > ByteArray.Num() - Index)
+	{
+		Length = ByteArray.Num() - Index;
+	}
+	if(Length <= 0)
+	{
+		return NULL;
+	}
+
 	IImageWrapperModule* ImageWrapperModule = FModuleManager::LoadModulePtr<IImageWrapperModule>("ImageWrapper");
 	if(ImageWrapperModule == nullptr)
 	{
@@ -959,7 +977,7 @@ UTexture2D* ULowEntryExtendedStandardLibrary::BytesToImage(const TArray<uint8>& 
 	}
 
 	IImageWrapperPtr ImageWrapper = ImageWrapperModule->CreateImageWrapper(ELowEntryEImageFormatToUE4(ImageFormat));
-	if(!ImageWrapper.IsValid() || !ImageWrapper->SetCompressed(ByteArray.GetData(), ByteArray.Num()))
+	if(!ImageWrapper.IsValid() || !ImageWrapper->SetCompressed(ByteArray.GetData() + Index, Length))
 	{
 		return NULL;
 	}
@@ -970,7 +988,7 @@ UTexture2D* ULowEntryExtendedStandardLibrary::BytesToImage(const TArray<uint8>& 
 		return NULL;
 	}
 
-	UTexture2D* LoadedT2D = UTexture2D::CreateTransient(ImageWrapper->GetWidth(), ImageWrapper->GetHeight(), PF_B8G8R8A8);
+	UTexture2D* LoadedT2D = UTexture2D::CreateTransient(ImageWrapper->GetWidth(), ImageWrapper->GetHeight(), EPixelFormat::PF_B8G8R8A8);
 	if(LoadedT2D == nullptr)
 	{
 		return NULL;
