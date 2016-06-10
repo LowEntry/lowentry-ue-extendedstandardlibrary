@@ -288,14 +288,8 @@ void ULowEntryExtendedStandardLibrary::GetBatteryTemperature(float& Celsius, boo
 
 void ULowEntryExtendedStandardLibrary::GetCurrentVolume(int32& Volume, bool& Success)
 {
-#if PLATFORM_ANDROID
-	Success = true;
-	extern int32 AndroidThunkJava_GetCurrentVolume();
-	Volume = AndroidThunkJava_GetCurrentVolume();
-#else
 	Success = false;
 	Volume = 0;
-#endif
 }
 
 
