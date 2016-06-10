@@ -32,6 +32,7 @@
 
 #if PLATFORM_ANDROID
 	#include "Android/AndroidMisc.h"
+	#include "Android/AndroidJNI.h"
 #endif
 
 
@@ -264,7 +265,7 @@ void ULowEntryExtendedStandardLibrary::GetBatteryState(ELowEntryBatteryState& St
 #endif
 }
 
-void ULowEntryExtendedStandardLibrary::GetBatteryCharge(int& Percentage, bool& Success)
+void ULowEntryExtendedStandardLibrary::GetBatteryCharge(int32& Percentage, bool& Success)
 {
 #if PLATFORM_ANDROID
 	Success = true;
@@ -285,6 +286,20 @@ void ULowEntryExtendedStandardLibrary::GetBatteryTemperature(float& Celsius, boo
 #else
 	Success = false;
 	Celsius = 0;
+#endif
+}
+
+
+
+void ULowEntryExtendedStandardLibrary::GetCurrentVolume(int32& Volume, bool& Success)
+{
+#if PLATFORM_ANDROID
+	Success = true;
+	extern int32 AndroidThunkCpp_GetCurrentVolume();
+	Volume = AndroidThunkCpp_GetCurrentVolume();
+#else
+	Success = false;
+	Volume = 0;
 #endif
 }
 

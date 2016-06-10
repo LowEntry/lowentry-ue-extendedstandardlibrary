@@ -167,15 +167,25 @@ public:
 	* Currently only works on Android devices.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Battery", Meta = (DisplayName = "Get Battery Charge", Keywords = "life live"))
-		static void GetBatteryCharge(int& Percentage, bool& Success);
+		static void GetBatteryCharge(int32& Percentage, bool& Success);
 
 	/**
 	* Returns the battery temperature (in degrees of Celsius).
-	* 
+	*
 	* Currently only works on Android devices.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Battery", Meta = (DisplayName = "Get Battery Temperature", Keywords = "degrees"))
 		static void GetBatteryTemperature(float& Celsius, bool& Success);
+
+
+
+	/**
+	* Returns the current volume.
+	*
+	* Currently only works on Android devices.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Get Current Volume", Keywords = "sound audio"))
+		static void GetCurrentVolume(int32& Volume, bool& Success);
 
 
 
