@@ -6,11 +6,11 @@
 
 #include "Interfaces/IImageWrapper.h"
 
-#include "ELowEntryEImageFormat.generated.h"
+#include "ELowEntryImageFormat.generated.h"
 
 
 UENUM()
-enum class ELowEntryEImageFormat
+enum class ELowEntryImageFormat
 {
 	/** Invalid or unrecognized format */
 	Invalid,
@@ -38,76 +38,76 @@ enum class ELowEntryEImageFormat
 };
 
 
-static EImageFormat::Type ELowEntryEImageFormatToUE4(ELowEntryEImageFormat Value)
+static EImageFormat::Type ELowEntryImageFormatToUE4(ELowEntryImageFormat Value)
 {
-	if(Value == ELowEntryEImageFormat::Invalid)
+	if(Value == ELowEntryImageFormat::Invalid)
 	{
 		return EImageFormat::Type::Invalid;
 	}
-	if(Value == ELowEntryEImageFormat::PNG)
+	if(Value == ELowEntryImageFormat::PNG)
 	{
 		return EImageFormat::Type::PNG;
 	}
-	if(Value == ELowEntryEImageFormat::JPEG)
+	if(Value == ELowEntryImageFormat::JPEG)
 	{
 		return EImageFormat::Type::JPEG;
 	}
-	if(Value == ELowEntryEImageFormat::GrayscaleJPEG)
+	if(Value == ELowEntryImageFormat::GrayscaleJPEG)
 	{
 		return EImageFormat::Type::GrayscaleJPEG;
 	}
-	if(Value == ELowEntryEImageFormat::BMP)
+	if(Value == ELowEntryImageFormat::BMP)
 	{
 		return EImageFormat::Type::BMP;
 	}
-	if(Value == ELowEntryEImageFormat::ICO)
+	if(Value == ELowEntryImageFormat::ICO)
 	{
 		return EImageFormat::Type::ICO;
 	}
-	if(Value == ELowEntryEImageFormat::EXR)
+	if(Value == ELowEntryImageFormat::EXR)
 	{
 		return EImageFormat::Type::EXR;
 	}
-	if(Value == ELowEntryEImageFormat::ICNS)
+	if(Value == ELowEntryImageFormat::ICNS)
 	{
 		return EImageFormat::Type::ICNS;
 	}
 	return EImageFormat::Type::Invalid;
 }
 
-static ELowEntryEImageFormat ELowEntryEImageFormatFromUE4(EImageFormat::Type Value)
+static ELowEntryImageFormat ELowEntryImageFormatFromUE4(EImageFormat::Type Value)
 {
 	if(Value == EImageFormat::Type::Invalid)
 	{
-		return ELowEntryEImageFormat::Invalid;
+		return ELowEntryImageFormat::Invalid;
 	}
 	if(Value == EImageFormat::Type::PNG)
 	{
-		return ELowEntryEImageFormat::PNG;
+		return ELowEntryImageFormat::PNG;
 	}
 	if(Value == EImageFormat::Type::JPEG)
 	{
-		return ELowEntryEImageFormat::JPEG;
+		return ELowEntryImageFormat::JPEG;
 	}
 	if(Value == EImageFormat::Type::GrayscaleJPEG)
 	{
-		return ELowEntryEImageFormat::GrayscaleJPEG;
+		return ELowEntryImageFormat::GrayscaleJPEG;
 	}
 	if(Value == EImageFormat::Type::BMP)
 	{
-		return ELowEntryEImageFormat::BMP;
+		return ELowEntryImageFormat::BMP;
 	}
 	if(Value == EImageFormat::Type::ICO)
 	{
-		return ELowEntryEImageFormat::ICO;
+		return ELowEntryImageFormat::ICO;
 	}
 	if(Value == EImageFormat::Type::EXR)
 	{
-		return ELowEntryEImageFormat::EXR;
+		return ELowEntryImageFormat::EXR;
 	}
 	if(Value == EImageFormat::Type::ICNS)
 	{
-		return ELowEntryEImageFormat::ICNS;
+		return ELowEntryImageFormat::ICNS;
 	}
-	return ELowEntryEImageFormat::Invalid;
+	return ELowEntryImageFormat::Invalid;
 }

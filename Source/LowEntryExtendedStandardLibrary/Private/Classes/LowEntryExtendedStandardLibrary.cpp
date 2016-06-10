@@ -30,6 +30,10 @@
 
 #include "FExecutionQueueAction.h"
 
+#if PLATFORM_ANDROID
+	#include "Android/AndroidMisc.h"
+#endif
+
 
 // init >>
 	ULowEntryExtendedStandardLibrary::ULowEntryExtendedStandardLibrary(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
@@ -224,6 +228,63 @@ bool ULowEntryExtendedStandardLibrary::DesktopPlatform()
 	return true;
 #else
 	return false;
+#endif
+}
+
+
+
+void ULowEntryExtendedStandardLibrary::GetBatteryState(ELowEntryBatteryState& State, bool& Success)
+{
+#if PLATFORM_ANDROID
+	Success = true;
+	FAndroidMisc::FBatteryState Data = FAndroidMisc::GetBatteryState();
+	if(Data.State == FAndroidMisc::EBatteryState::BATTERY_STATE_CHARGING)
+	{
+		State = ELowEntryBatteryState::Charging;
+	}
+	else if(Data.State == FAndroidMisc::EBatteryState::BATTERY_STATE_DISCHARGING)
+	{
+		State = ELowEntryBatteryState::Discharging;
+	}
+	else if(Data.State == FAndroidMisc::EBatteryState::BATTERY_STATE_FULL)
+	{
+		State = ELowEntryBatteryState::Full;
+	}
+	else if(Data.State == FAndroidMisc::EBatteryState::BATTERY_STATE_NOT_CHARGING)
+	{
+		State = ELowEntryBatteryState::NotCharging;
+	}
+	else
+	{
+		State = ELowEntryBatteryState::Unknown;
+	}
+#else
+	Success = false;
+	State = ELowEntryBatteryState::Unknown;
+#endif
+}
+
+void ULowEntryExtendedStandardLibrary::GetBatteryCharge(int& Percentage, bool& Success)
+{
+#if PLATFORM_ANDROID
+	Success = true;
+	FAndroidMisc::FBatteryState Data = FAndroidMisc::GetBatteryState();
+	Percentage = Data.Level;
+#else
+	Success = false;
+	Percentage = 0;
+#endif
+}
+
+void ULowEntryExtendedStandardLibrary::GetBatteryTemperature(float& Celsius, bool& Success)
+{
+#if PLATFORM_ANDROID
+	Success = true;
+	FAndroidMisc::FBatteryState Data = FAndroidMisc::GetBatteryState();
+	Celsius = Data.Temperature;
+#else
+	Success = false;
+	Celsius = 0;
 #endif
 }
 
@@ -950,7 +1011,7 @@ uint8 ULowEntryExtendedStandardLibrary::GetByteWithBitSet(const uint8 Byte, cons
 
 
 
-UTexture2D* ULowEntryExtendedStandardLibrary::BytesToImage(const TArray<uint8>& ByteArray, const ELowEntryEImageFormat ImageFormat, int32 Index, int32 Length)
+UTexture2D* ULowEntryExtendedStandardLibrary::BytesToImage(const TArray<uint8>& ByteArray, const ELowEntryImageFormat ImageFormat, int32 Index, int32 Length)
 {
 	if(ByteArray.Num() <= 0)
 	{
@@ -976,7 +1037,7 @@ UTexture2D* ULowEntryExtendedStandardLibrary::BytesToImage(const TArray<uint8>& 
 		return NULL;
 	}
 
-	IImageWrapperPtr ImageWrapper = ImageWrapperModule->CreateImageWrapper(ELowEntryEImageFormatToUE4(ImageFormat));
+	IImageWrapperPtr ImageWrapper = ImageWrapperModule->CreateImageWrapper(ELowEntryImageFormatToUE4(ImageFormat));
 	if(!ImageWrapper.IsValid() || !ImageWrapper->SetCompressed(ByteArray.GetData() + Index, Length))
 	{
 		return NULL;

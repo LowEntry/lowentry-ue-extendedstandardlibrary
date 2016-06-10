@@ -14,8 +14,10 @@
 #include "Interfaces/IImageWrapper.h"
 #include "Interfaces/IImageWrapperModule.h"
 
-#include "ELowEntryEImageFormat.h"
-#include "ELowEntryERGBFormat.h"
+#include "ELowEntryBatteryState.h"
+
+#include "ELowEntryImageFormat.h"
+#include "ELowEntryRGBFormat.h"
 
 #include "IMediaModule.h"
 #include "IMediaPlayer.h"
@@ -148,6 +150,32 @@ public:
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Desktop", Keywords = "compile export mode version type"))
 		static bool DesktopPlatform();
+
+
+
+	/**
+	* Returns the battery state.
+	* 
+	* Currently only works on Android devices.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Battery", Meta = (DisplayName = "Get Battery State"))
+		static void GetBatteryState(ELowEntryBatteryState& State, bool& Success);
+
+	/**
+	* Returns the battery charge (in percentages, from 0% to 100%).
+	* 
+	* Currently only works on Android devices.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Battery", Meta = (DisplayName = "Get Battery Charge", Keywords = "life live"))
+		static void GetBatteryCharge(int& Percentage, bool& Success);
+
+	/**
+	* Returns the battery temperature (in degrees of Celsius).
+	* 
+	* Currently only works on Android devices.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Battery", Meta = (DisplayName = "Get Battery Temperature", Keywords = "degrees"))
+		static void GetBatteryTemperature(float& Celsius, bool& Success);
 
 
 
@@ -426,14 +454,13 @@ public:
 		static uint8 GetByteWithBitSet(const uint8 Byte, const int32 Bit, const bool Value);
 	
 		
-
 	/**
 	* Converts a Byte Array into an image (Texture2D).
 	* 
 	* Returns NULL if it fails.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Image", Keywords = "byte array binary", AdvancedDisplay = "2"))
-		static UTexture2D* BytesToImage(const TArray<uint8>& ByteArray, const ELowEntryEImageFormat ImageFormat, int32 Index = 0, int32 Length = 0x7FFFFFFF);
+		static UTexture2D* BytesToImage(const TArray<uint8>& ByteArray, const ELowEntryImageFormat ImageFormat, int32 Index = 0, int32 Length = 0x7FFFFFFF);
 
 
 
