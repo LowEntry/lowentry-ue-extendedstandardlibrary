@@ -1507,107 +1507,279 @@ TArray<FString> ULowEntryExtendedStandardLibrary::SortStringArray(const TArray<F
 	TArray<FString> Array = StringArray;
 	if(!Reversed)
 	{
-		Array.Sort([](const FString& A, const FString& B){
+		Array.Sort([](const FString& A, const FString& B)
+		{
 			return A < B;
 		});
 	}
 	else
 	{
-		Array.Sort([](const FString& A, const FString& B){
+		Array.Sort([](const FString& A, const FString& B)
+		{
 			return A > B;
 		});
 	}
 	return Array;
 }
+
+void ULowEntryExtendedStandardLibrary::SortStringArrayDirectly(const TArray<FString>& StringArray, const bool Reversed)
+{
+	if(!Reversed)
+	{
+		const_cast<TArray<FString>&>(StringArray).Sort([](const FString& A, const FString& B)
+		{
+			return A < B;
+		});
+	}
+	else
+	{
+		const_cast<TArray<FString>&>(StringArray).Sort([](const FString& A, const FString& B)
+		{
+			return A > B;
+		});
+	}
+}
+
 
 TArray<int32> ULowEntryExtendedStandardLibrary::SortIntegerArray(const TArray<int32>& IntegerArray, const bool Reversed)
 {
 	TArray<int32> Array = IntegerArray;
 	if(!Reversed)
 	{
-		Array.Sort([] (const int32 A, const int32 B){
+		Array.Sort([](const int32 A, const int32 B)
+		{
 			return A < B;
 		});
 	}
 	else
 	{
-		Array.Sort([] (const int32 A, const int32 B){
+		Array.Sort([](const int32 A, const int32 B)
+		{
 			return A > B;
 		});
 	}
 	return Array;
 }
+
+void ULowEntryExtendedStandardLibrary::SortIntegerArrayDirectly(const TArray<int32>& IntegerArray, const bool Reversed)
+{
+	if(!Reversed)
+	{
+		const_cast<TArray<int32>&>(IntegerArray).Sort([](const int32 A, const int32 B)
+		{
+			return A < B;
+		});
+	}
+	else
+	{
+		const_cast<TArray<int32>&>(IntegerArray).Sort([](const int32 A, const int32 B)
+		{
+			return A > B;
+		});
+	}
+}
+
 
 TArray<float> ULowEntryExtendedStandardLibrary::SortFloatArray(const TArray<float>& FloatArray, const bool Reversed)
 {
 	TArray<float> Array = FloatArray;
 	if(!Reversed)
 	{
-		Array.Sort([] (const float A, const float B){
+		Array.Sort([](const float A, const float B)
+		{
 			return A < B;
 		});
 	}
 	else
 	{
-		Array.Sort([] (const float A, const float B){
+		Array.Sort([](const float A, const float B)
+		{
 			return A > B;
 		});
 	}
 	return Array;
 }
+
+void ULowEntryExtendedStandardLibrary::SortFloatArrayDirectly(const TArray<float>& FloatArray, const bool Reversed)
+{
+	if(!Reversed)
+	{
+		const_cast<TArray<float>&>(FloatArray).Sort([](const float A, const float B)
+		{
+			return A < B;
+		});
+	}
+	else
+	{
+		const_cast<TArray<float>&>(FloatArray).Sort([](const float A, const float B)
+		{
+			return A > B;
+		});
+	}
+}
+
 
 TArray<uint8> ULowEntryExtendedStandardLibrary::SortByteArray(const TArray<uint8>& ByteArray, const bool Reversed)
 {
 	TArray<uint8> Array = ByteArray;
 	if(!Reversed)
 	{
-		Array.Sort([] (const uint8 A, const uint8 B){
+		Array.Sort([](const uint8 A, const uint8 B)
+		{
 			return A < B;
 		});
 	}
 	else
 	{
-		Array.Sort([] (const uint8 A, const uint8 B){
+		Array.Sort([](const uint8 A, const uint8 B)
+		{
 			return A > B;
 		});
 	}
 	return Array;
 }
+
+void ULowEntryExtendedStandardLibrary::SortByteArrayDirectly(const TArray<uint8>& ByteArray, const bool Reversed)
+{
+	if(!Reversed)
+	{
+		const_cast<TArray<uint8>&>(ByteArray).Sort([](const uint8 A, const uint8 B)
+		{
+			return A < B;
+		});
+	}
+	else
+	{
+		const_cast<TArray<uint8>&>(ByteArray).Sort([](const uint8 A, const uint8 B)
+		{
+			return A > B;
+		});
+	}
+}
+
 
 TArray<FDateTime> ULowEntryExtendedStandardLibrary::SortDateTimeArray(const TArray<FDateTime>& DateTimeArray, const bool Reversed)
 {
 	TArray<FDateTime> Array = DateTimeArray;
 	if(!Reversed)
 	{
-		Array.Sort([] (const FDateTime& A, const FDateTime& B){
+		Array.Sort([](const FDateTime& A, const FDateTime& B)
+		{
 			return A < B;
 		});
 	}
 	else
 	{
-		Array.Sort([] (const FDateTime& A, const FDateTime& B){
+		Array.Sort([](const FDateTime& A, const FDateTime& B)
+		{
 			return A > B;
 		});
 	}
 	return Array;
 }
 
-TArray<FTimespan> ULowEntryExtendedStandardLibrary::SortTimespanArray(const TArray<FTimespan>& TimespanArray, const bool Reversed)
+void ULowEntryExtendedStandardLibrary::SortDateTimeArrayDirectly(const TArray<FDateTime>& DateTimeArray, const bool Reversed)
 {
-	TArray<FTimespan> Array = TimespanArray;
 	if(!Reversed)
 	{
-		Array.Sort([] (const FTimespan& A, const FTimespan& B){
+		const_cast<TArray<FDateTime>&>(DateTimeArray).Sort([](const FDateTime& A, const FDateTime& B)
+		{
 			return A < B;
 		});
 	}
 	else
 	{
-		Array.Sort([] (const FTimespan& A, const FTimespan& B){
+		const_cast<TArray<FDateTime>&>(DateTimeArray).Sort([](const FDateTime& A, const FDateTime& B)
+		{
+			return A > B;
+		});
+	}
+}
+
+
+TArray<FTimespan> ULowEntryExtendedStandardLibrary::SortTimespanArray(const TArray<FTimespan>& TimespanArray, const bool Reversed)
+{
+	TArray<FTimespan> Array = TimespanArray;
+	if(!Reversed)
+	{
+		Array.Sort([](const FTimespan& A, const FTimespan& B)
+		{
+			return A < B;
+		});
+	}
+	else
+	{
+		Array.Sort([](const FTimespan& A, const FTimespan& B)
+		{
 			return A > B;
 		});
 	}
 	return Array;
+}
+
+void ULowEntryExtendedStandardLibrary::SortTimespanArrayDirectly(const TArray<FTimespan>& TimespanArray, const bool Reversed)
+{
+	if(!Reversed)
+	{
+		const_cast<TArray<FTimespan>&>(TimespanArray).Sort([](const FTimespan& A, const FTimespan& B)
+		{
+			return A < B;
+		});
+	}
+	else
+	{
+		const_cast<TArray<FTimespan>&>(TimespanArray).Sort([](const FTimespan& A, const FTimespan& B)
+		{
+			return A > B;
+		});
+	}
+}
+
+
+TArray<UObject*> ULowEntryExtendedStandardLibrary::SortObjectArray(const TArray<UObject*>& ObjectArray, FDelegateULowEntryExtendedStandardLibraryCompareObjects Comparator, const bool Reversed)
+{
+	TArray<UObject*> Array = ObjectArray;
+	if(!Reversed)
+	{
+		Array.Sort([Comparator](UObject& A, UObject& B)
+		{
+			bool Result = false;
+			Comparator.Execute(&A, &B, Result);
+			return Result;
+		});
+	}
+	else
+	{
+		Array.Sort([Comparator](UObject& A, UObject& B)
+		{
+			bool Result = false;
+			Comparator.Execute(&A, &B, Result);
+			return !Result;
+		});
+	}
+	return Array;
+}
+
+void ULowEntryExtendedStandardLibrary::SortObjectArrayDirectly(const TArray<UObject*>& ObjectArray, FDelegateULowEntryExtendedStandardLibraryCompareObjects Comparator, const bool Reversed)
+{
+	if(!Reversed)
+	{
+		const_cast<TArray<UObject*>&>(ObjectArray).Sort([Comparator](UObject& A, UObject& B)
+		{
+			bool Result = false;
+			Comparator.Execute(&A, &B, Result);
+			return Result;
+		});
+	}
+	else
+	{
+		const_cast<TArray<UObject*>&>(ObjectArray).Sort([Comparator](UObject& A, UObject& B)
+		{
+			bool Result = false;
+			Comparator.Execute(&A, &B, Result);
+			return !Result;
+		});
+	}
 }
 
 

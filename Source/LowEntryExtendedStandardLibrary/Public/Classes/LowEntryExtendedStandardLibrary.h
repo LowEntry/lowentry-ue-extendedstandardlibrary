@@ -46,6 +46,9 @@ class ULowEntryDouble;
 class ULowEntryExecutionQueue;
 
 
+DECLARE_DYNAMIC_DELEGATE_ThreeParams(FDelegateULowEntryExtendedStandardLibraryCompareObjects, UObject*, ObjectA, UObject*, ObjectB, bool&, Result);
+
+
 UCLASS()
 class LOWENTRYEXTENDEDSTANDARDLIBRARY_API ULowEntryExtendedStandardLibrary : public UBlueprintFunctionLibrary
 {
@@ -816,42 +819,106 @@ public:
 
 
 	/**
-	* Sorts the given array.
+	* Sorts a copy of the given array.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (String Array)"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (String Array) (Copy)"))
 		static TArray<FString> SortStringArray(const TArray<FString>& StringArray, const bool Reversed = false);
 
 	/**
-	* Sorts the given array.
+	* Sorts a copy of the given array.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Integer Array)"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (String Array)"))
+		static void SortStringArrayDirectly(const TArray<FString>& StringArray, const bool Reversed = false);
+
+
+	/**
+	* Sorts a copy of the given array.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Integer Array) (Copy)"))
 		static TArray<int32> SortIntegerArray(const TArray<int32>& IntegerArray, const bool Reversed = false);
 
 	/**
-	* Sorts the given array.
+	* Sorts a copy of the given array.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Float Array)"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Integer Array)"))
+		static void SortIntegerArrayDirectly(const TArray<int32>& IntegerArray, const bool Reversed = false);
+
+
+	/**
+	* Sorts a copy of the given array.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Float Array) (Copy)"))
 		static TArray<float> SortFloatArray(const TArray<float>& FloatArray, const bool Reversed = false);
 
 	/**
-	* Sorts the given array.
+	* Sorts a copy of the given array.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Byte Array)"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Float Array)"))
+		static void SortFloatArrayDirectly(const TArray<float>& FloatArray, const bool Reversed = false);
+
+
+	/**
+	* Sorts a copy of the given array.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Byte Array) (Copy)"))
 		static TArray<uint8> SortByteArray(const TArray<uint8>& ByteArray, const bool Reversed = false);
 
 	/**
-	* Sorts the given array.
+	* Sorts a copy of the given array.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (DateTime Array)"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Byte Array)"))
+		static void SortByteArrayDirectly(const TArray<uint8>& ByteArray, const bool Reversed = false);
+
+
+	/**
+	* Sorts a copy of the given array.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (DateTime Array) (Copy)"))
 		static TArray<FDateTime> SortDateTimeArray(const TArray<FDateTime>& DateTimeArray, const bool Reversed = false);
 
 	/**
-	* Sorts the given array.
+	* Sorts a copy of the given array.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Timespan Array)"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (DateTime Array)"))
+		static void SortDateTimeArrayDirectly(const TArray<FDateTime>& DateTimeArray, const bool Reversed = false);
+
+
+	/**
+	* Sorts a copy of the given array.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Timespan Array) (Copy)"))
 		static TArray<FTimespan> SortTimespanArray(const TArray<FTimespan>& TimespanArray, const bool Reversed = false);
 
+	/**
+	* Sorts a copy of the given array.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Timespan Array)"))
+		static void SortTimespanArrayDirectly(const TArray<FTimespan>& TimespanArray, const bool Reversed = false);
 
+
+	/**
+	* Sorts a copy of the given array.
+	* 
+	* To create the Comparator, do this:
+	*  - create a function that has 2 input parameters (Object and Object) and 1 output parameter (Boolean)
+	*  - in that function, return true if the first Object is smaller than the second Object, return false otherwise
+	*  - then, when using the Sort Object Array blueprint, use the Create Event blueprint and set its value as the function created earlier
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Object Array) (Copy)"))
+		static TArray<UObject*> SortObjectArray(const TArray<UObject*>& ObjectArray, FDelegateULowEntryExtendedStandardLibraryCompareObjects Comparator, const bool Reversed = false);
+
+	/**
+	* Sorts the given array.
+	*
+	* To create the Comparator, do this:
+	*  - create a function that has 2 input parameters (Object and Object) and 1 output parameter (Boolean)
+	*  - in that function, return true if the first Object is smaller than the second Object, return false otherwise
+	*  - then, when using the Sort Object Array blueprint, use the Create Event blueprint and set its value as the function created earlier
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Object Array)"))
+		static void SortObjectArrayDirectly(const TArray<UObject*>& ObjectArray, FDelegateULowEntryExtendedStandardLibraryCompareObjects Comparator, const bool Reversed);
+
+	
 
 	/**
 	* Perform a latent action with a random delay (specified in seconds).  Calling again while it is counting down will be ignored.
