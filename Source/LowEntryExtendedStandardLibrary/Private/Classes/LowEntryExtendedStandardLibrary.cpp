@@ -1522,7 +1522,7 @@ TArray<FString> ULowEntryExtendedStandardLibrary::SortStringArray(const TArray<F
 	return Array;
 }
 
-void ULowEntryExtendedStandardLibrary::SortStringArrayDirectly(TArray<FString>& StringArray, const bool Reversed)
+void ULowEntryExtendedStandardLibrary::SortStringArrayDirectly(UPARAM(ref) TArray<FString>& StringArray, const bool Reversed)
 {
 	if(!Reversed)
 	{
@@ -1561,7 +1561,7 @@ TArray<int32> ULowEntryExtendedStandardLibrary::SortIntegerArray(const TArray<in
 	return Array;
 }
 
-void ULowEntryExtendedStandardLibrary::SortIntegerArrayDirectly(TArray<int32>& IntegerArray, const bool Reversed)
+void ULowEntryExtendedStandardLibrary::SortIntegerArrayDirectly(UPARAM(ref) TArray<int32>& IntegerArray, const bool Reversed)
 {
 	if(!Reversed)
 	{
@@ -1600,7 +1600,7 @@ TArray<float> ULowEntryExtendedStandardLibrary::SortFloatArray(const TArray<floa
 	return Array;
 }
 
-void ULowEntryExtendedStandardLibrary::SortFloatArrayDirectly(TArray<float>& FloatArray, const bool Reversed)
+void ULowEntryExtendedStandardLibrary::SortFloatArrayDirectly(UPARAM(ref) TArray<float>& FloatArray, const bool Reversed)
 {
 	if(!Reversed)
 	{
@@ -1639,7 +1639,7 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::SortByteArray(const TArray<uint8
 	return Array;
 }
 
-void ULowEntryExtendedStandardLibrary::SortByteArrayDirectly(TArray<uint8>& ByteArray, const bool Reversed)
+void ULowEntryExtendedStandardLibrary::SortByteArrayDirectly(UPARAM(ref) TArray<uint8>& ByteArray, const bool Reversed)
 {
 	if(!Reversed)
 	{
@@ -1678,7 +1678,7 @@ TArray<FDateTime> ULowEntryExtendedStandardLibrary::SortDateTimeArray(const TArr
 	return Array;
 }
 
-void ULowEntryExtendedStandardLibrary::SortDateTimeArrayDirectly(TArray<FDateTime>& DateTimeArray, const bool Reversed)
+void ULowEntryExtendedStandardLibrary::SortDateTimeArrayDirectly(UPARAM(ref) TArray<FDateTime>& DateTimeArray, const bool Reversed)
 {
 	if(!Reversed)
 	{
@@ -1717,7 +1717,7 @@ TArray<FTimespan> ULowEntryExtendedStandardLibrary::SortTimespanArray(const TArr
 	return Array;
 }
 
-void ULowEntryExtendedStandardLibrary::SortTimespanArrayDirectly(TArray<FTimespan>& TimespanArray, const bool Reversed)
+void ULowEntryExtendedStandardLibrary::SortTimespanArrayDirectly(UPARAM(ref) TArray<FTimespan>& TimespanArray, const bool Reversed)
 {
 	if(!Reversed)
 	{
@@ -1760,7 +1760,7 @@ TArray<UObject*> ULowEntryExtendedStandardLibrary::SortObjectArray(const TArray<
 	return Array;
 }
 
-void ULowEntryExtendedStandardLibrary::SortObjectArrayDirectly(TArray<UObject*>& ObjectArray, FDelegateULowEntryExtendedStandardLibraryCompareObjects Comparator, const bool Reversed)
+void ULowEntryExtendedStandardLibrary::SortObjectArrayDirectly(UPARAM(ref) TArray<UObject*>& ObjectArray, FDelegateULowEntryExtendedStandardLibraryCompareObjects Comparator, const bool Reversed)
 {
 	if(!Reversed)
 	{
