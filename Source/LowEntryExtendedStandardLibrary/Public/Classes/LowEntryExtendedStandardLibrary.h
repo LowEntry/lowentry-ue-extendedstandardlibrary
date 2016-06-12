@@ -23,6 +23,7 @@
 #include "IMediaPlayer.h"
 #include "MediaPlayer.h"
 #include "MediaTexture.h"
+#include "MediaSoundWave.h"
 
 #include "LowEntryExtendedStandardLibrary.generated.h"
 
@@ -478,7 +479,14 @@ public:
 
 
 	/**
-	* Loads a video (UMediaTexture, which is a child of Texture2D).
+	* Loads a video, returns a:
+	*  - MediaPlayer (to play/pause/etc the video)
+	*  - MediaTexture (to see the video)
+	*  - MediaSoundWave (to hear the video)
+	* 
+	* This blueprint also returns a boolean called Success.
+	*  - true: every returned Object is valid
+	*  - false: every returned Object is NULL
 	* 
 	* The URL is either:
 	* - a http/https URL, for example "http://public.lowentry.com/files/test_data/TestVideoMp4.mp4"
@@ -486,12 +494,11 @@ public:
 	* 
 	* Some tips:
 	* - only MP4 can be played on every platform, so it's best to only use MP4 videos for now
-	* - don't forget to call Play on the MediaPlayer of the returned MediaTexture, otherwise nothing will happen
-	*
-	* Returns NULL if it fails (not every fail case will return NULL, some fail cases will return a MediaTexture that will not play).
+	* - don't forget to call Play on the MediaPlayer, otherwise nothing will happen
+	* - don't forget to call Play Sound with the MediaSoundWave, otherwise you won't hear any sound
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|External", Meta = (DisplayName = "Load Video", Keywords = "movie"))
-		static UMediaTexture* LoadVideo(const FString& Url);
+		static void LoadVideo(const FString& Url, bool& Success, UMediaPlayer*& Player, UMediaTexture*& Texture, UMediaSoundWave*& Sound);
 
 
 

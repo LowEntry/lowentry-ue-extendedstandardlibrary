@@ -1090,28 +1090,29 @@ UTexture2D* ULowEntryExtendedStandardLibrary::BytesToImage(const TArray<uint8>& 
 
 
 
-UMediaTexture* ULowEntryExtendedStandardLibrary::LoadVideo(const FString& Url)
+void ULowEntryExtendedStandardLibrary::LoadVideo(const FString& Url, bool& Success, UMediaPlayer*& Player, UMediaTexture*& Texture, UMediaSoundWave*& Sound)
 {
-	UMediaPlayer* Player = NewObject<UMediaPlayer>();
-	if(Player == nullptr)
+	Success = false;
+	Player = NULL;
+	Texture = NULL;
+	Sound = NULL;
+
+	UMediaPlayer* LoadPlayer = NewObject<UMediaPlayer>();
+	if(!LoadPlayer->OpenUrl(Url))
 	{
-		return NULL;
+		return;
 	}
 
-	if(!Player->OpenUrl(Url))
-	{
-		return NULL;
-	}
+	Success = true;
 
-	UMediaTexture* Texture = NewObject<UMediaTexture>();
-	if(Texture == nullptr)
-	{
-		return NULL;
-	}
-
+	Player = LoadPlayer;
 	Player->SetLooping(true);
+
+	Texture = NewObject<UMediaTexture>();
 	Texture->SetMediaPlayer(Player);
-	return Texture;
+
+	Sound = NewObject<UMediaSoundWave>();
+	Sound->SetMediaPlayer(Player);
 }
 
 
