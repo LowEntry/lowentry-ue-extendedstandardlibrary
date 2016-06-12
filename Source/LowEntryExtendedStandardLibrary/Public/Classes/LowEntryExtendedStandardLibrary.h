@@ -828,7 +828,7 @@ public:
 	* Sorts a copy of the given array.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (String Array)"))
-		static void SortStringArrayDirectly(const TArray<FString>& StringArray, const bool Reversed = false);
+		static void SortStringArrayDirectly(UPARAM(ref) TArray<FString>& StringArray, const bool Reversed = false);
 
 
 	/**
@@ -841,7 +841,7 @@ public:
 	* Sorts a copy of the given array.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Integer Array)"))
-		static void SortIntegerArrayDirectly(const TArray<int32>& IntegerArray, const bool Reversed = false);
+		static void SortIntegerArrayDirectly(UPARAM(ref) TArray<int32>& IntegerArray, const bool Reversed = false);
 
 
 	/**
@@ -854,7 +854,7 @@ public:
 	* Sorts a copy of the given array.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Float Array)"))
-		static void SortFloatArrayDirectly(const TArray<float>& FloatArray, const bool Reversed = false);
+		static void SortFloatArrayDirectly(UPARAM(ref) TArray<float>& FloatArray, const bool Reversed = false);
 
 
 	/**
@@ -867,7 +867,7 @@ public:
 	* Sorts a copy of the given array.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Byte Array)"))
-		static void SortByteArrayDirectly(const TArray<uint8>& ByteArray, const bool Reversed = false);
+		static void SortByteArrayDirectly(UPARAM(ref) TArray<uint8>& ByteArray, const bool Reversed = false);
 
 
 	/**
@@ -880,7 +880,7 @@ public:
 	* Sorts a copy of the given array.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (DateTime Array)"))
-		static void SortDateTimeArrayDirectly(const TArray<FDateTime>& DateTimeArray, const bool Reversed = false);
+		static void SortDateTimeArrayDirectly(UPARAM(ref) TArray<FDateTime>& DateTimeArray, const bool Reversed = false);
 
 
 	/**
@@ -893,7 +893,7 @@ public:
 	* Sorts a copy of the given array.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Timespan Array)"))
-		static void SortTimespanArrayDirectly(const TArray<FTimespan>& TimespanArray, const bool Reversed = false);
+		static void SortTimespanArrayDirectly(UPARAM(ref) TArray<FTimespan>& TimespanArray, const bool Reversed = false);
 
 
 	/**
@@ -916,7 +916,7 @@ public:
 	*  - then, when using the Sort Object Array blueprint, use the Create Event blueprint and set its value as the function created earlier
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Object Array)"))
-		static void SortObjectArrayDirectly(const TArray<UObject*>& ObjectArray, FDelegateULowEntryExtendedStandardLibraryCompareObjects Comparator, const bool Reversed);
+		static void SortObjectArrayDirectly(UPARAM(ref) TArray<UObject*>& ObjectArray, FDelegateULowEntryExtendedStandardLibraryCompareObjects Comparator, const bool Reversed);
 
 	
 
