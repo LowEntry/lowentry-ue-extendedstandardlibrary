@@ -14,6 +14,14 @@
 		Item->Bytes = ULowEntryExtendedStandardLibrary::BytesSubArray(Bytes, Index, Length);
 		return Item;
 	}
+
+	ULowEntryByteDataReader* ULowEntryByteDataReader::CreateClone(const TArray<uint8>& Bytes, const int32 Position)
+	{
+		ULowEntryByteDataReader* Item = NewObject<ULowEntryByteDataReader>();
+		Item->Bytes = Bytes;
+		Item->Position = Position;
+		return Item;
+	}
 // init <<
 
 
@@ -22,11 +30,6 @@ int32 ULowEntryByteDataReader::GetAndIncreasePosition(const int32 Increasement)
 	int32 Pos = Position;
 	Position = FMath::Min(Bytes.Num(), Position + Increasement);
 	return Pos;
-}
-
-int32 ULowEntryByteDataReader::Remaining()
-{
-	return Bytes.Num() - Position;
 }
 
 int32 ULowEntryByteDataReader::MaxElementsRemaining(const int32 MinimumSizePerElement)
@@ -41,6 +44,32 @@ int32 ULowEntryByteDataReader::MaxElementsRemaining(const int32 MinimumSizePerEl
 		return RemainingCount;
 	}
 	return (RemainingCount / MinimumSizePerElement) + 1;
+}
+
+
+ULowEntryByteDataReader* ULowEntryByteDataReader::GetClone()
+{
+	return ULowEntryByteDataReader::CreateClone(Bytes, Position);
+}
+
+int32 ULowEntryByteDataReader::ULowEntryByteDataReader::GetPosition()
+{
+	return Position;
+}
+
+void ULowEntryByteDataReader::SetPosition(const int32 Position_)
+{
+	Position = Position_;
+}
+
+void ULowEntryByteDataReader::Reset()
+{
+	Position = 0;
+}
+
+int32 ULowEntryByteDataReader::Remaining()
+{
+	return Bytes.Num() - Position;
 }
 
 
@@ -83,7 +112,88 @@ int32 ULowEntryByteDataReader::GetUinteger()
 		return 0;
 	}
 	int32 Value = ((B & ~(1 << 7)) << 24) | (Bytes[Pos + 0] << 16) | (Bytes[Pos + 1] << 8) | Bytes[Pos + 2];
-	if(Value <= 127)
+	if(Value < 128)
+	{
+		return 0;
+	}
+	return Value;
+}
+
+int32 ULowEntryByteDataReader::GetPositiveInteger1()
+{
+	int32 Pos = GetAndIncreasePosition(1);
+	if(Bytes.Num() <= Pos)
+	{
+		return 0;
+	}
+	uint8 B = Bytes[Pos];
+	if(((B >> 7) & 1) == 0)
+	{
+		return B;
+	}
+
+	Pos = GetAndIncreasePosition(3);
+	if(Bytes.Num() <= (Pos + 2))
+	{
+		return 0;
+	}
+	int32 Value = ((B & ~(1 << 7)) << 24) | (Bytes[Pos + 0] << 16) | (Bytes[Pos + 1] << 8) | Bytes[Pos + 2];
+	if(Value < 128)
+	{
+		return 0;
+	}
+	return Value;
+}
+
+int32 ULowEntryByteDataReader::GetPositiveInteger2()
+{
+	int32 Pos = GetAndIncreasePosition(2);
+	if(Bytes.Num() <= (Pos + 1))
+	{
+		return 0;
+	}
+	uint8 B1 = Bytes[Pos + 0];
+	uint8 B2 = Bytes[Pos + 1];
+	if(((B1 >> 7) & 1) == 0)
+	{
+		return (B1 << 8) | B2;
+	}
+
+	Pos = GetAndIncreasePosition(2);
+	if(Bytes.Num() <= (Pos + 1))
+	{
+		return 0;
+	}
+	int32 Value = ((B1 & ~(1 << 7)) << 24) | (B2 << 16) | (Bytes[Pos + 0] << 8) | Bytes[Pos + 1];
+	if(Value < 32768)
+	{
+		return 0;
+	}
+	return Value;
+}
+
+int32 ULowEntryByteDataReader::GetPositiveInteger3()
+{
+	int32 Pos = GetAndIncreasePosition(3);
+	if(Bytes.Num() <= (Pos + 2))
+	{
+		return 0;
+	}
+	uint8 B1 = Bytes[Pos + 0];
+	uint8 B2 = Bytes[Pos + 1];
+	uint8 B3 = Bytes[Pos + 2];
+	if(((B1 >> 7) & 1) == 0)
+	{
+		return (B1 << 16) | (B2 << 8) | B3;
+	}
+
+	Pos = GetAndIncreasePosition(1);
+	if(Bytes.Num() <= Pos)
+	{
+		return 0;
+	}
+	int32 Value = ((B1 & ~(1 << 7)) << 24) | (B2 << 16) | (B3 << 8) | Bytes[Pos];
+	if(Value < 8388608)
 	{
 		return 0;
 	}
@@ -178,6 +288,57 @@ TArray<int32> ULowEntryByteDataReader::GetIntegerArray()
 	return Array;
 }
 
+TArray<int32> ULowEntryByteDataReader::GetPositiveInteger1Array()
+{
+	int32 Length = GetUinteger();
+	Length = FMath::Min(Length, MaxElementsRemaining(1));
+	if(Length <= 0)
+	{
+		return TArray<int32>();
+	}
+	TArray<int32> Array;
+	Array.SetNum(Length);
+	for(int32 i = 0; i < Length; i++)
+	{
+		Array[i] = GetPositiveInteger1();
+	}
+	return Array;
+}
+
+TArray<int32> ULowEntryByteDataReader::GetPositiveInteger2Array()
+{
+	int32 Length = GetUinteger();
+	Length = FMath::Min(Length, MaxElementsRemaining(2));
+	if(Length <= 0)
+	{
+		return TArray<int32>();
+	}
+	TArray<int32> Array;
+	Array.SetNum(Length);
+	for(int32 i = 0; i < Length; i++)
+	{
+		Array[i] = GetPositiveInteger2();
+	}
+	return Array;
+}
+
+TArray<int32> ULowEntryByteDataReader::GetPositiveInteger3Array()
+{
+	int32 Length = GetUinteger();
+	Length = FMath::Min(Length, MaxElementsRemaining(3));
+	if(Length <= 0)
+	{
+		return TArray<int32>();
+	}
+	TArray<int32> Array;
+	Array.SetNum(Length);
+	for(int32 i = 0; i < Length; i++)
+	{
+		Array[i] = GetPositiveInteger3();
+	}
+	return Array;
+}
+
 TArray<ULowEntryLong*> ULowEntryByteDataReader::GetLongBytesArray()
 {
 	int32 Length = GetUinteger();
@@ -239,7 +400,7 @@ TArray<bool> ULowEntryByteDataReader::GetBooleanArray()
 	}
 	TArray<bool> Array;
 	Array.SetNum(Length);
-	for(int32 i = 0; i < Length; i+=8)
+	for(int32 i = 0; i < Length; i += 8)
 	{
 		uint8 B = GetByte();
 		for(int32 BIndex = 0; BIndex < 8; BIndex++)
@@ -258,7 +419,7 @@ TArray<bool> ULowEntryByteDataReader::GetBooleanArray()
 TArray<FString> ULowEntryByteDataReader::GetStringUtf8Array()
 {
 	int32 Length = GetUinteger();
-	Length = FMath::Min(Length, MaxElementsRemaining(4));
+	Length = FMath::Min(Length, MaxElementsRemaining(1));
 	if(Length <= 0)
 	{
 		return TArray<FString>();

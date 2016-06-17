@@ -162,7 +162,7 @@ public:
 	* 
 	* Currently only works on Android devices.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Battery", Meta = (DisplayName = "Get Battery State"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Battery", Meta = (DisplayName = "Get Battery State", Keywords = "android"))
 		static void GetBatteryState(ELowEntryBatteryState& State, bool& Success);
 
 	/**
@@ -170,7 +170,7 @@ public:
 	* 
 	* Currently only works on Android devices.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Battery", Meta = (DisplayName = "Get Battery Charge", Keywords = "life live"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Battery", Meta = (DisplayName = "Get Battery Charge", Keywords = "life live android"))
 		static void GetBatteryCharge(int32& Percentage, bool& Success);
 
 	/**
@@ -178,17 +178,19 @@ public:
 	*
 	* Currently only works on Android devices.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Battery", Meta = (DisplayName = "Get Battery Temperature", Keywords = "degrees"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Battery", Meta = (DisplayName = "Get Battery Temperature", Keywords = "degrees android"))
 		static void GetBatteryTemperature(float& Celsius, bool& Success);
 
 
 
 	/**
-	* Returns the current volume.
+	* Returns the system volume.
 	*
 	* Currently only works on Android devices.
+	* 
+	* Note: This blueprint is not used to retrieve or change the sound volume in-game, you will have to use Sound Classes for that.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Get Current Volume", Keywords = "sound audio"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Get System Volume", Keywords = "current sound audio android"))
 		static void GetCurrentVolume(int32& Volume, bool& Success);
 
 
@@ -1144,45 +1146,75 @@ public:
 
 
 	/**
-	* Creates a new Byte Data Entry.
+	* Creates a new Byte Data Entry with the value of a byte.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Byte"))
 		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromByte(const uint8 Value);
 
 	/**
-	* Creates a new Byte Data Entry.
+	* Creates a new Byte Data Entry with the value of an integer.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Integer"))
 		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromInteger(const int32 Value);
 
 	/**
-	* Creates a new Byte Data Entry.
+	* Creates a new Byte Data Entry with the value of a positive integer.
+	*
+	* Will store values below 128 in 1 byte, higher values will be stored in 4 bytes.
+	*
+	* The given integer has to be 0 or higher, values under 0 will be changed to 0.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Positive Integer 1"))
+		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromPositiveInteger1(const int32 Value);
+
+	/**
+	* Creates a new Byte Data Entry with the value of a positive integer.
+	*
+	* Will store values below 32.768 in 2 bytes, higher values will be stored in 4 bytes.
+	*
+	* The given integer has to be 0 or higher, values under 0 will be changed to 0.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Positive Integer 2"))
+		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromPositiveInteger2(const int32 Value);
+
+	/**
+	* Creates a new Byte Data Entry with the value of a positive integer.
+	*
+	* Will store values below 8.388.608 in 3 bytes, higher values will be stored in 4 bytes.
+	*
+	* The given integer has to be 0 or higher, values under 0 will be changed to 0.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Positive Integer 3"))
+		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromPositiveInteger3(const int32 Value);
+
+	/**
+	* Creates a new Byte Data Entry with the value of a long (bytes).
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Long (bytes)"))
 		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromLongBytes(ULowEntryLong* Value);
 
 
 	/**
-	* Creates a new Byte Data Entry.
+	* Creates a new Byte Data Entry with the value of a float.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Float"))
 		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromFloat(const float Value);
 
 	/**
-	* Creates a new Byte Data Entry.
+	* Creates a new Byte Data Entry with the value of a double (bytes).
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Double (bytes)"))
 		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromDoubleBytes(ULowEntryDouble* Value);
 
 
 	/**
-	* Creates a new Byte Data Entry.
+	* Creates a new Byte Data Entry with the value of a boolean.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Boolean"))
 		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromBoolean(const bool Value);
 
 	/**
-	* Creates a new Byte Data Entry.
+	* Creates a new Byte Data Entry with the value of a String (UTF-8).
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "String (Utf 8)"))
 		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromStringUtf8(const FString& Value);
@@ -1190,45 +1222,75 @@ public:
 
 
 	/**
-	* Creates a new Byte Data Entry.
+	* Creates a new Byte Data Entry with the value of a byte array.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Byte Array"))
 		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromByteArray(const TArray<uint8>& Value);
 
 	/**
-	* Creates a new Byte Data Entry.
+	* Creates a new Byte Data Entry with the value of an integer array.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Integer Array"))
 		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromIntegerArray(const TArray<int32>& Value);
 
 	/**
-	* Creates a new Byte Data Entry.
+	* Creates a new Byte Data Entry with the value of a positive integer array.
+	*
+	* Will store values below 128 in 1 byte, higher values will be stored in 4 bytes.
+	*
+	* The given integers have to be 0 or higher, values under 0 will be changed to 0.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Positive Integer 1 Array"))
+		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromPositiveInteger1Array(const TArray<int32>& Value);
+
+	/**
+	* Creates a new Byte Data Entry with the value of a positive integer array.
+	*
+	* Will store values below 32.768 in 2 bytes, higher values will be stored in 4 bytes.
+	*
+	* The given integers have to be 0 or higher, values under 0 will be changed to 0.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Positive Integer 2 Array"))
+		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromPositiveInteger2Array(const TArray<int32>& Value);
+
+	/**
+	* Creates a new Byte Data Entry with the value of a positive integer array.
+	*
+	* Will store values below 8.388.608 in 3 bytes, higher values will be stored in 4 bytes.
+	*
+	* The given integers have to be 0 or higher, values under 0 will be changed to 0.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Positive Integer 3 Array"))
+		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromPositiveInteger3Array(const TArray<int32>& Value);
+
+	/**
+	* Creates a new Byte Data Entry with the value of a long (bytes) array.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Long (bytes) Array"))
 		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromLongBytesArray(const TArray<ULowEntryLong*>& Value);
 
 
 	/**
-	* Creates a new Byte Data Entry.
+	* Creates a new Byte Data Entry with the value of a float array.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Float Array"))
 		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromFloatArray(const TArray<float>& Value);
 
 	/**
-	* Creates a new Byte Data Entry.
+	* Creates a new Byte Data Entry with the value of a double (bytes) array.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Double (bytes) Array"))
 		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromDoubleBytesArray(const TArray<ULowEntryDouble*>& Value);
 
 
 	/**
-	* Creates a new Byte Data Entry.
+	* Creates a new Byte Data Entry with the value of a boolean array.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Boolean Array"))
 		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromBooleanArray(const TArray<bool>& Value);
 
 	/**
-	* Creates a new Byte Data Entry.
+	* Creates a new Byte Data Entry with the value of a String (UTF-8) array.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "String (Utf 8) Array"))
 		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromStringUtf8Array(const TArray<FString>& Value);

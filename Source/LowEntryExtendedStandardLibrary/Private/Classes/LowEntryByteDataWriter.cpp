@@ -29,6 +29,18 @@
 				{
 					Instance->AddInteger(Item->GetInteger());
 				}
+				else if(Item->IsPositiveInteger1())
+				{
+					Instance->AddPositiveInteger1(Item->GetPositiveInteger1());
+				}
+				else if(Item->IsPositiveInteger2())
+				{
+					Instance->AddPositiveInteger2(Item->GetPositiveInteger2());
+				}
+				else if(Item->IsPositiveInteger3())
+				{
+					Instance->AddPositiveInteger3(Item->GetPositiveInteger3());
+				}
 				else if(Item->IsLongBytes())
 				{
 					Instance->AddLongBytes(Item->GetLongBytes());
@@ -57,6 +69,18 @@
 				else if(Item->IsIntegerArray())
 				{
 					Instance->AddIntegerArray(Item->GetIntegerArray());
+				}
+				else if(Item->IsPositiveInteger1Array())
+				{
+					Instance->AddPositiveInteger1Array(Item->GetPositiveInteger1Array());
+				}
+				else if(Item->IsPositiveInteger2Array())
+				{
+					Instance->AddPositiveInteger2Array(Item->GetPositiveInteger2Array());
+				}
+				else if(Item->IsPositiveInteger3Array())
+				{
+					Instance->AddPositiveInteger3Array(Item->GetPositiveInteger3Array());
 				}
 				else if(Item->IsLongBytesArray())
 				{
@@ -115,8 +139,69 @@ void ULowEntryByteDataWriter::AddInteger(const int32 Value)
 }
 void ULowEntryByteDataWriter::AddUinteger(const int32 Value)
 {
-	if(Value <= 127)
+	if(Value <= 0)
 	{
+		AddRawByte(0);
+	}
+	else if(Value < 128)
+	{
+		AddRawByte(Value);
+	}
+	else
+	{
+		AddRawByte((Value >> 24) | (1 << 7));
+		AddRawByte(Value >> 16);
+		AddRawByte(Value >> 8);
+		AddRawByte(Value);
+	}
+}
+void ULowEntryByteDataWriter::AddPositiveInteger1(const int32 Value)
+{
+	if(Value <= 0)
+	{
+		AddRawByte(0);
+	}
+	else if(Value < 128)
+	{
+		AddRawByte(Value);
+	}
+	else
+	{
+		AddRawByte((Value >> 24) | (1 << 7));
+		AddRawByte(Value >> 16);
+		AddRawByte(Value >> 8);
+		AddRawByte(Value);
+	}
+}
+void ULowEntryByteDataWriter::AddPositiveInteger2(const int32 Value)
+{
+	if(Value <= 0)
+	{
+		AddRawByte(0);
+	}
+	else if(Value < 32768)
+	{
+		AddRawByte(Value >> 8);
+		AddRawByte(Value);
+	}
+	else
+	{
+		AddRawByte((Value >> 24) | (1 << 7));
+		AddRawByte(Value >> 16);
+		AddRawByte(Value >> 8);
+		AddRawByte(Value);
+	}
+}
+void ULowEntryByteDataWriter::AddPositiveInteger3(const int32 Value)
+{
+	if(Value <= 0)
+	{
+		AddRawByte(0);
+	}
+	else if(Value < 8388608)
+	{
+		AddRawByte(Value >> 16);
+		AddRawByte(Value >> 8);
 		AddRawByte(Value);
 	}
 	else
@@ -181,6 +266,30 @@ void ULowEntryByteDataWriter::AddIntegerArray(const TArray<int32>& Value)
 	for(int32 V : Value)
 	{
 		AddInteger(V);
+	}
+}
+void ULowEntryByteDataWriter::AddPositiveInteger1Array(const TArray<int32>& Value)
+{
+	AddUinteger(Value.Num());
+	for(int32 V : Value)
+	{
+		AddPositiveInteger1(V);
+	}
+}
+void ULowEntryByteDataWriter::AddPositiveInteger2Array(const TArray<int32>& Value)
+{
+	AddUinteger(Value.Num());
+	for(int32 V : Value)
+	{
+		AddPositiveInteger2(V);
+	}
+}
+void ULowEntryByteDataWriter::AddPositiveInteger3Array(const TArray<int32>& Value)
+{
+	AddUinteger(Value.Num());
+	for(int32 V : Value)
+	{
+		AddPositiveInteger3(V);
 	}
 }
 void ULowEntryByteDataWriter::AddLongBytesArray(const TArray<ULowEntryLong*>& Value)

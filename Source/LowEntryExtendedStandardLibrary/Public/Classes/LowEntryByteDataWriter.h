@@ -57,6 +57,36 @@ public:
 		void AddInteger(const int32 Value);
 
 	/**
+	* Adds a positive integer.
+	*
+	* Will store values below 128 in 1 byte, higher values will be stored in 4 bytes.
+	*
+	* The given integer has to be 0 or higher, values under 0 will be changed to 0.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Writer", Meta = (DisplayName = "Add Positive Integer 1"))
+		void AddPositiveInteger1(const int32 Value);
+
+	/**
+	* Adds a positive integer.
+	*
+	* Will store values below 32.768 in 2 bytes, higher values will be stored in 4 bytes.
+	*
+	* The given integer has to be 0 or higher, values under 0 will be changed to 0.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Writer", Meta = (DisplayName = "Add Positive Integer 2"))
+		void AddPositiveInteger2(const int32 Value);
+
+	/**
+	* Adds a positive integer.
+	*
+	* Will store values below 8.388.608 in 3 bytes, higher values will be stored in 4 bytes.
+	*
+	* The given integer has to be 0 or higher, values under 0 will be changed to 0.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Writer", Meta = (DisplayName = "Add Positive Integer 3"))
+		void AddPositiveInteger3(const int32 Value);
+
+	/**
 	* Adds a long (bytes).
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Writer", Meta = (DisplayName = "Add Long (Bytes)"))
@@ -98,7 +128,37 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Writer", Meta = (DisplayName = "Add Integer Array"))
 		void AddIntegerArray(const TArray<int32>& Value);
-	
+
+	/**
+	* Adds a positive integer array.
+	*
+	* Will store values below 128 in 1 byte, higher values will be stored in 4 bytes.
+	*
+	* The given integers have to be 0 or higher, values under 0 will be changed to 0.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Writer", Meta = (DisplayName = "Add Positive Integer 1 Array"))
+		void AddPositiveInteger1Array(const TArray<int32>& Value);
+
+	/**
+	* Adds a positive integer array.
+	*
+	* Will store values below 32.768 in 2 bytes, higher values will be stored in 4 bytes.
+	*
+	* The given integers have to be 0 or higher, values under 0 will be changed to 0.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Writer", Meta = (DisplayName = "Add Positive Integer 2 Array"))
+		void AddPositiveInteger2Array(const TArray<int32>& Value);
+
+	/**
+	* Adds a positive integer array.
+	*
+	* Will store values below 8.388.608 in 3 bytes, higher values will be stored in 4 bytes.
+	*
+	* The given integers have to be 0 or higher, values under 0 will be changed to 0.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Writer", Meta = (DisplayName = "Add Positive Integer 3 Array"))
+		void AddPositiveInteger3Array(const TArray<int32>& Value);
+
 	/**
 	* Adds a long (bytes) array.
 	*/

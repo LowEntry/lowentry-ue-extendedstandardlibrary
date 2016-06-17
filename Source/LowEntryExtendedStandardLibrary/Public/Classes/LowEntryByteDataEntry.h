@@ -20,6 +20,9 @@ class LOWENTRYEXTENDEDSTANDARDLIBRARY_API ULowEntryByteDataEntry : public UObjec
 public:
 	static ULowEntryByteDataEntry* CreateFromByte(const uint8 Value);
 	static ULowEntryByteDataEntry* CreateFromInteger(const int32 Value);
+	static ULowEntryByteDataEntry* CreateFromPositiveInteger1(const int32 Value);
+	static ULowEntryByteDataEntry* CreateFromPositiveInteger2(const int32 Value);
+	static ULowEntryByteDataEntry* CreateFromPositiveInteger3(const int32 Value);
 	static ULowEntryByteDataEntry* CreateFromLongBytes(ULowEntryLong* Value);
 
 	static ULowEntryByteDataEntry* CreateFromFloat(const float Value);
@@ -31,6 +34,9 @@ public:
 
 	static ULowEntryByteDataEntry* CreateFromByteArray(const TArray<uint8>& Value);
 	static ULowEntryByteDataEntry* CreateFromIntegerArray(const TArray<int32>& Value);
+	static ULowEntryByteDataEntry* CreateFromPositiveInteger1Array(const TArray<int32>& Value);
+	static ULowEntryByteDataEntry* CreateFromPositiveInteger2Array(const TArray<int32>& Value);
+	static ULowEntryByteDataEntry* CreateFromPositiveInteger3Array(const TArray<int32>& Value);
 	static ULowEntryByteDataEntry* CreateFromLongBytesArray(const TArray<ULowEntryLong*>& Value);
 
 	static ULowEntryByteDataEntry* CreateFromFloatArray(const TArray<float>& Value);
@@ -90,6 +96,18 @@ public:
 	void SetInteger(const int32 Value);
 	int32 GetInteger();
 
+	bool IsPositiveInteger1();
+	void SetPositiveInteger1(const int32 Value);
+	int32 GetPositiveInteger1();
+
+	bool IsPositiveInteger2();
+	void SetPositiveInteger2(const int32 Value);
+	int32 GetPositiveInteger2();
+
+	bool IsPositiveInteger3();
+	void SetPositiveInteger3(const int32 Value);
+	int32 GetPositiveInteger3();
+
 	bool IsLongBytes();
 	void SetLongBytes(ULowEntryLong* Value);
 	ULowEntryLong* GetLongBytes();
@@ -121,6 +139,18 @@ public:
 	bool IsIntegerArray();
 	void SetIntegerArray(const TArray<int32>& Value);
 	TArray<int32> GetIntegerArray();
+
+	bool IsPositiveInteger1Array();
+	void SetPositiveInteger1Array(const TArray<int32>& Value);
+	TArray<int32> GetPositiveInteger1Array();
+
+	bool IsPositiveInteger2Array();
+	void SetPositiveInteger2Array(const TArray<int32>& Value);
+	TArray<int32> GetPositiveInteger2Array();
+
+	bool IsPositiveInteger3Array();
+	void SetPositiveInteger3Array(const TArray<int32>& Value);
+	TArray<int32> GetPositiveInteger3Array();
 
 	bool IsLongBytesArray();
 	void SetLongBytesArray(const TArray<ULowEntryLong*>& Value);

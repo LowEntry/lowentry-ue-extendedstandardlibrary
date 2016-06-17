@@ -2223,6 +2223,18 @@ ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFr
 {
 	return ULowEntryByteDataEntry::CreateFromInteger(Value);
 }
+ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromPositiveInteger1(const int32 Value)
+{
+	return ULowEntryByteDataEntry::CreateFromPositiveInteger1(Value);
+}
+ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromPositiveInteger2(const int32 Value)
+{
+	return ULowEntryByteDataEntry::CreateFromPositiveInteger2(Value);
+}
+ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromPositiveInteger3(const int32 Value)
+{
+	return ULowEntryByteDataEntry::CreateFromPositiveInteger3(Value);
+}
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromLongBytes(ULowEntryLong* Value)
 {
 	return ULowEntryByteDataEntry::CreateFromLongBytes(Value);
@@ -2254,6 +2266,18 @@ ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFr
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromIntegerArray(const TArray<int32>& Value)
 {
 	return ULowEntryByteDataEntry::CreateFromIntegerArray(Value);
+}
+ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromPositiveInteger1Array(const TArray<int32>& Value)
+{
+	return ULowEntryByteDataEntry::CreateFromPositiveInteger1Array(Value);
+}
+ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromPositiveInteger2Array(const TArray<int32>& Value)
+{
+	return ULowEntryByteDataEntry::CreateFromPositiveInteger2Array(Value);
+}
+ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromPositiveInteger3Array(const TArray<int32>& Value)
+{
+	return ULowEntryByteDataEntry::CreateFromPositiveInteger3Array(Value);
 }
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromLongBytesArray(const TArray<ULowEntryLong*>& Value)
 {

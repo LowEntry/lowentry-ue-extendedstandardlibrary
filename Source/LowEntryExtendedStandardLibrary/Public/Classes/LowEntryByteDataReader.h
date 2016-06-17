@@ -19,9 +19,9 @@ class LOWENTRYEXTENDEDSTANDARDLIBRARY_API ULowEntryByteDataReader : public UObje
 
 public:
 	static ULowEntryByteDataReader* Create(const TArray<uint8>& Bytes, int32 Index = 0, int32 Length = 0x7FFFFFFF);
+	static ULowEntryByteDataReader* CreateClone(const TArray<uint8>& Bytes, const int32 Position);
 
 	int32 GetAndIncreasePosition(const int32 Increasement);
-	int32 Remaining();
 	int32 MaxElementsRemaining(const int32 MinimumSizePerElement);
 
 
@@ -37,6 +37,39 @@ public:
 
 
 	/**
+	* Clones the clone of this ByteDataReader.
+	* 
+	* Allows you to easily read and revert the position (by cloning, reading data with the clone, and then throwing the clone away).
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Reader (Meta)", Meta = (DisplayName = "Get Clone"))
+		ULowEntryByteDataReader* GetClone();
+
+	/**
+	* Returns the current position.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Reader (Meta)", Meta = (DisplayName = "Get Position"))
+		int32 GetPosition();
+
+	/**
+	* Sets the current position.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Reader (Meta)", Meta = (DisplayName = "Set Position"))
+		void SetPosition(const int32 Position_);
+
+	/**
+	* Sets the current position to 0.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Reader (Meta)", Meta = (DisplayName = "Reset"))
+		void Reset();
+
+	/**
+	* Returns the amount of bytes left.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Reader (Meta)", Meta = (DisplayName = "Get Remaining"))
+		int32 Remaining();
+
+
+	/**
 	* Gets a byte.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Reader", Meta = (DisplayName = "Get Byte"))
@@ -47,6 +80,24 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Reader", Meta = (DisplayName = "Get Integer"))
 		int32 GetInteger();
+
+	/**
+	* Gets a positive integer.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Reader", Meta = (DisplayName = "Get Positive Integer 1"))
+		int32 GetPositiveInteger1();
+
+	/**
+	* Gets a positive integer.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Reader", Meta = (DisplayName = "Get Positive Integer 2"))
+		int32 GetPositiveInteger2();
+
+	/**
+	* Gets a positive integer.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Reader", Meta = (DisplayName = "Get Positive Integer 3"))
+		int32 GetPositiveInteger3();
 	
 	/**
 	* Gets a long (bytes).
@@ -90,6 +141,24 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Reader", Meta = (DisplayName = "Get Integer Array"))
 		TArray<int32> GetIntegerArray();
+
+	/**
+	* Gets a positive integer array.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Reader", Meta = (DisplayName = "Get Positive Integer 1 Array"))
+		TArray<int32> GetPositiveInteger1Array();
+
+	/**
+	* Gets a positive integer array.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Reader", Meta = (DisplayName = "Get Positive Integer 2 Array"))
+		TArray<int32> GetPositiveInteger2Array();
+
+	/**
+	* Gets a positive integer array.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Reader", Meta = (DisplayName = "Get Positive Integer 3 Array"))
+		TArray<int32> GetPositiveInteger3Array();
 
 	/**
 	* Gets a long (bytes) array.
