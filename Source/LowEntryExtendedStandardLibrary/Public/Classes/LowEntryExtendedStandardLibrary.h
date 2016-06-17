@@ -184,14 +184,24 @@ public:
 
 
 	/**
-	* Returns the system volume.
+	* Returns the current system volume.
 	*
 	* Currently only works on Android devices (only on 4.10+).
-	* 
+	*
 	* Note: This blueprint is not used to retrieve or change the sound volume in-game, you will have to use Sound Classes for that.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Get System Volume", Keywords = "current sound audio android"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Get Current System Volume", Keywords = "sound audio android"))
 		static void GetCurrentVolume(int32& Volume, bool& Success);
+
+	/**
+	* Returns the maximum system volume.
+	*
+	* Currently only works on Android devices (only on 4.10+).
+	*
+	* Note: This blueprint is not used to retrieve or change the sound volume in-game, you will have to use Sound Classes for that.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Get Maximum System Volume", Keywords = "sound audio android"))
+		static void GetMaximumVolume(int32& Volume, bool& Success);
 
 
 

@@ -313,6 +313,26 @@ void ULowEntryExtendedStandardLibrary::GetCurrentVolume(int32& Volume, bool& Suc
 #endif
 }
 
+void ULowEntryExtendedStandardLibrary::GetMaximumVolume(int32& Volume, bool& Success)
+{
+#if PLATFORM_ANDROID && (ENGINE_MINOR_VERSION >= 10)
+	if(JNIEnv* Env = FAndroidApplication::GetJavaEnv())
+	{
+		Success = true;
+		jmethodID AndroidThunkJava_GetMaximumVolume = FJavaWrapper::FindMethod(Env, FJavaWrapper::GameActivityClassID, "AndroidThunkJava_GetMaximumVolume", "()I", false); // missing from AndroidJNI.cpp
+		Volume = FJavaWrapper::CallIntMethod(Env, FJavaWrapper::GameActivityThis, AndroidThunkJava_GetMaximumVolume);
+	}
+	else
+	{
+		Success = false;
+		Volume = 0;
+	}
+#else
+	Success = false;
+	Volume = 0;
+#endif
+}
+
 
 
 void ULowEntryExtendedStandardLibrary::CreateObject(UClass* Class, UObject*& Object)
