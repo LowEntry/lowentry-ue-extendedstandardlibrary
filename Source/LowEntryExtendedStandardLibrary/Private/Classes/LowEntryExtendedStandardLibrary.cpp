@@ -293,6 +293,36 @@ void ULowEntryExtendedStandardLibrary::GetBatteryTemperature(float& Celsius, boo
 
 
 
+void ULowEntryExtendedStandardLibrary::GetCurrentVolumePercentage(float& Percentage, bool& Success)
+{
+	int32 CurrentVolume = 0;
+	bool SuccessCurrentVolume = false;
+	ULowEntryExtendedStandardLibrary::GetCurrentVolume(CurrentVolume, SuccessCurrentVolume);
+
+	int32 MaxVolume = 0;
+	bool SuccessMaxVolume = false;
+	ULowEntryExtendedStandardLibrary::GetMaximumVolume(MaxVolume, SuccessMaxVolume);
+
+	if(!SuccessCurrentVolume || !SuccessMaxVolume || (MaxVolume <= 0))
+	{
+		Success = false;
+		Percentage = 0.0;
+	}
+	else
+	{
+		Success = true;
+		Percentage = ((float) CurrentVolume) / ((float) MaxVolume);
+		if(Percentage < 0.0)
+		{
+			Percentage = 0.0;
+		}
+		else if(Percentage > 1.0)
+		{
+			Percentage = 1.0;
+		}
+	}
+}
+
 void ULowEntryExtendedStandardLibrary::GetCurrentVolume(int32& Volume, bool& Success)
 {
 #if PLATFORM_ANDROID && (ENGINE_MINOR_VERSION >= 10)
