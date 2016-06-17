@@ -186,7 +186,7 @@ public:
 	/**
 	* Returns the system volume.
 	*
-	* Currently only works on Android devices.
+	* Currently only works on Android devices (only on 4.10+).
 	* 
 	* Note: This blueprint is not used to retrieve or change the sound volume in-game, you will have to use Sound Classes for that.
 	*/
