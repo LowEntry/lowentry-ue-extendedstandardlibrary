@@ -186,7 +186,7 @@ public:
 	/**
 	* Returns the current system volume in percentages, from 0.0 to 1.0.
 	*
-	* Currently only works on Android devices (only on 4.10+).
+	* Currently doesn't work on anything yet, support for Android will hopefully be added soon (changes to the Engine have to be made first to make it work).
 	*
 	* Note: This blueprint is not used to retrieve or change the sound volume in-game, you will have to use Sound Classes for that.
 	*/
@@ -196,7 +196,7 @@ public:
 	/**
 	* Returns the current system volume.
 	*
-	* Currently only works on Android devices (only on 4.10+).
+	* Currently doesn't work on anything yet, support for Android will hopefully be added soon (changes to the Engine have to be made first to make it work).
 	*
 	* Note: This blueprint is not used to retrieve or change the sound volume in-game, you will have to use Sound Classes for that.
 	*/
@@ -206,7 +206,7 @@ public:
 	/**
 	* Returns the maximum system volume.
 	*
-	* Currently only works on Android devices (only on 4.10+).
+	* Currently doesn't work on anything yet, support for Android will hopefully be added soon (changes to the Engine have to be made first to make it work).
 	*
 	* Note: This blueprint is not used to retrieve or change the sound volume in-game, you will have to use Sound Classes for that.
 	*/

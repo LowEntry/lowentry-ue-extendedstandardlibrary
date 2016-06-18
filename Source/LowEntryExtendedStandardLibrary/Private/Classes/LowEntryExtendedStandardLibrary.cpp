@@ -325,42 +325,42 @@ void ULowEntryExtendedStandardLibrary::GetCurrentVolumePercentage(float& Percent
 
 void ULowEntryExtendedStandardLibrary::GetCurrentVolume(int32& Volume, bool& Success)
 {
-#if PLATFORM_ANDROID && (ENGINE_MINOR_VERSION >= 10)
-	if(JNIEnv* Env = FAndroidApplication::GetJavaEnv())
-	{
-		Success = true;
-		jmethodID AndroidThunkJava_GetCurrentVolume = FJavaWrapper::FindMethod(Env, FJavaWrapper::GameActivityClassID, "AndroidThunkJava_GetCurrentVolume", "()I", false); // missing from AndroidJNI.cpp
-		Volume = FJavaWrapper::CallIntMethod(Env, FJavaWrapper::GameActivityThis, AndroidThunkJava_GetCurrentVolume);
-	}
-	else
-	{
-		Success = false;
-		Volume = 0;
-	}
-#else
+//#if PLATFORM_ANDROID && (ENGINE_MINOR_VERSION >= 10)
+//	if(JNIEnv* Env = FAndroidApplication::GetJavaEnv())
+//	{
+//		Success = true;
+//		jmethodID AndroidThunkJava_GetCurrentVolume = FJavaWrapper::FindMethod(Env, FJavaWrapper::GameActivityClassID, "AndroidThunkJava_GetCurrentVolume", "()I", false); // missing from AndroidJNI.cpp
+//		Volume = FJavaWrapper::CallIntMethod(Env, FJavaWrapper::GameActivityThis, AndroidThunkJava_GetCurrentVolume);
+//	}
+//	else
+//	{
+//		Success = false;
+//		Volume = 0;
+//	}
+//#else
 	Success = false;
 	Volume = 0;
-#endif
+//#endif
 }
 
 void ULowEntryExtendedStandardLibrary::GetMaximumVolume(int32& Volume, bool& Success)
 {
-#if PLATFORM_ANDROID && (ENGINE_MINOR_VERSION >= 10)
-	if(JNIEnv* Env = FAndroidApplication::GetJavaEnv())
-	{
-		Success = true;
-		jmethodID AndroidThunkJava_GetMaximumVolume = FJavaWrapper::FindMethod(Env, FJavaWrapper::GameActivityClassID, "AndroidThunkJava_GetMaximumVolume", "()I", false); // missing from AndroidJNI.cpp
-		Volume = FJavaWrapper::CallIntMethod(Env, FJavaWrapper::GameActivityThis, AndroidThunkJava_GetMaximumVolume);
-	}
-	else
-	{
-		Success = false;
-		Volume = 0;
-	}
-#else
+//#if PLATFORM_ANDROID && (ENGINE_MINOR_VERSION >= 10)
+//	if(JNIEnv* Env = FAndroidApplication::GetJavaEnv())
+//	{
+//		Success = true;
+//		jmethodID AndroidThunkJava_GetMaximumVolume = FJavaWrapper::FindMethod(Env, FJavaWrapper::GameActivityClassID, "AndroidThunkJava_GetMaximumVolume", "()I", false); // missing from AndroidJNI.cpp
+//		Volume = FJavaWrapper::CallIntMethod(Env, FJavaWrapper::GameActivityThis, AndroidThunkJava_GetMaximumVolume);
+//	}
+//	else
+//	{
+//		Success = false;
+//		Volume = 0;
+//	}
+//#else
 	Success = false;
 	Volume = 0;
-#endif
+//#endif
 }
 
 
