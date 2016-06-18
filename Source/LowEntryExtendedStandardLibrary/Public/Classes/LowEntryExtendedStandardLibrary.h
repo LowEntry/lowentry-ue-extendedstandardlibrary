@@ -186,7 +186,7 @@ public:
 	/**
 	* Returns the current system volume in percentages, from 0.0 to 1.0.
 	*
-	* Currently doesn't work on anything yet, support for Android will hopefully be added soon (changes to the Engine have to be made first to make it work).
+	* Currently only works on Android devices.
 	*
 	* Note: This blueprint is not used to retrieve or change the sound volume in-game, you will have to use Sound Classes for that.
 	*/
@@ -196,21 +196,21 @@ public:
 	/**
 	* Returns the current system volume.
 	*
-	* Currently doesn't work on anything yet, support for Android will hopefully be added soon (changes to the Engine have to be made first to make it work).
+	* Doesn't work, use Get Current System Volume (Percentages) instead.
 	*
 	* Note: This blueprint is not used to retrieve or change the sound volume in-game, you will have to use Sound Classes for that.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Get Current System Volume", Keywords = "sound audio android"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DeprecatedFunction, DeprecationMessage = "This function has been replaced by Get Current System Volume (Percentages).", DisplayName = "Get Current System Volume (Old)", Keywords = "sound audio android"))
 		static void GetCurrentVolume(int32& Volume, bool& Success);
 
 	/**
 	* Returns the maximum system volume.
 	*
-	* Currently doesn't work on anything yet, support for Android will hopefully be added soon (changes to the Engine have to be made first to make it work).
+	* Doesn't work, use Get Current System Volume (Percentages) instead.
 	*
 	* Note: This blueprint is not used to retrieve or change the sound volume in-game, you will have to use Sound Classes for that.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Get Maximum System Volume", Keywords = "sound audio android"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DeprecatedFunction, DeprecationMessage = "This function has been replaced by Get Current System Volume (Percentages).", DisplayName = "Get Maximum System Volume (Old)", Keywords = "sound audio android"))
 		static void GetMaximumVolume(int32& Volume, bool& Success);
 
 
