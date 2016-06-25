@@ -322,7 +322,7 @@ void ULowEntryExtendedStandardLibrary::CreateObject(TSubclassOf<UObject> Class, 
 
 
 
-void ULowEntryExtendedStandardLibrary::GetGenericTeamId(AActor* Target, uint8& TeamId)
+void ULowEntryExtendedStandardLibrary::GetGenericTeamId(AActor* Target, uint8& TeamID)
 {
 	IGenericTeamAgentInterface* TeamAgentInterface = NULL;
 	if(Target != nullptr)
@@ -331,15 +331,15 @@ void ULowEntryExtendedStandardLibrary::GetGenericTeamId(AActor* Target, uint8& T
 	}
 	if(TeamAgentInterface == nullptr)
 	{
-		TeamId = FGenericTeamId::NoTeam;
+		TeamID = FGenericTeamId::NoTeam;
 	}
 	else
 	{
-		TeamId = TeamAgentInterface->GetGenericTeamId();
+		TeamID = TeamAgentInterface->GetGenericTeamId();
 	}
 }
 
-void ULowEntryExtendedStandardLibrary::SetGenericTeamId(AActor* Target, const uint8 TeamId)
+void ULowEntryExtendedStandardLibrary::SetGenericTeamId(AActor* Target, const uint8 TeamID)
 {
 	if(Target == nullptr)
 	{
@@ -350,7 +350,7 @@ void ULowEntryExtendedStandardLibrary::SetGenericTeamId(AActor* Target, const ui
 	{
 		return;
 	}
-	TeamAgentInterface->SetGenericTeamId(TeamId);
+	TeamAgentInterface->SetGenericTeamId(TeamID);
 }
 
 
