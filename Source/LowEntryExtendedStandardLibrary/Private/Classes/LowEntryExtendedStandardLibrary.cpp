@@ -313,7 +313,7 @@ void ULowEntryExtendedStandardLibrary::GetMaximumVolume(int32& Volume, bool& Suc
 
 
 
-void ULowEntryExtendedStandardLibrary::CreateObject(UClass* Class, UObject*& Object)
+void ULowEntryExtendedStandardLibrary::CreateObject(TSubclassOf<UObject> Class, UObject*& Object)
 {
 	Object = NewObject<UObject>((UObject*) GetTransientPackage(), Class);
 }

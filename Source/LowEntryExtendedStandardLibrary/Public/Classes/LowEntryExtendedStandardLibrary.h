@@ -218,8 +218,8 @@ public:
 	/**
 	* Returns an instance from the given Class.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Create Object", Keywords = "make instance"))
-		static void CreateObject(UClass* Class, UObject*& Object);
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Create Object", Keywords = "make instance", DeterminesOutputType = "Class", DynamicOutputParam = "Object"))
+		static void CreateObject(TSubclassOf<UObject> Class, UObject*& Object);
 
 
 
