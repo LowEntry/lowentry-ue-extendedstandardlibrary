@@ -37,6 +37,7 @@ namespace UnrealBuildTool.Rules
                     "ImageWrapper",
                     "Media",
                     "MediaAssets",
+                    "AIModule",
                 }
 			);
 

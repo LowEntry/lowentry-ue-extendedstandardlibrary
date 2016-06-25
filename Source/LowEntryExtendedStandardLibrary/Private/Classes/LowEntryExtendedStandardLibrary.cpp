@@ -30,6 +30,8 @@
 
 #include "FExecutionQueueAction.h"
 
+#include "GenericTeamAgentInterface.h"
+
 #include "Runtime/Launch/Resources/Version.h"
 
 
@@ -316,6 +318,39 @@ void ULowEntryExtendedStandardLibrary::GetMaximumVolume(int32& Volume, bool& Suc
 void ULowEntryExtendedStandardLibrary::CreateObject(TSubclassOf<UObject> Class, UObject*& Object)
 {
 	Object = NewObject<UObject>((UObject*) GetTransientPackage(), Class);
+}
+
+
+
+void ULowEntryExtendedStandardLibrary::GetGenericTeamId(AActor* Target, uint8& TeamId)
+{
+	IGenericTeamAgentInterface* TeamAgentInterface = NULL;
+	if(Target != nullptr)
+	{
+		TeamAgentInterface = Cast<IGenericTeamAgentInterface>(Target);
+	}
+	if(TeamAgentInterface == nullptr)
+	{
+		TeamId = FGenericTeamId::NoTeam;
+	}
+	else
+	{
+		TeamId = TeamAgentInterface->GetGenericTeamId();
+	}
+}
+
+void ULowEntryExtendedStandardLibrary::SetGenericTeamId(AActor* Target, const uint8 TeamId)
+{
+	if(Target == nullptr)
+	{
+		return;
+	}
+	IGenericTeamAgentInterface* TeamAgentInterface = Cast<IGenericTeamAgentInterface>(Target);
+	if(TeamAgentInterface == nullptr)
+	{
+		return;
+	}
+	TeamAgentInterface->SetGenericTeamId(TeamId);
 }
 
 
