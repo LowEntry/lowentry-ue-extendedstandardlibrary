@@ -227,13 +227,13 @@ public:
 	* Returns the Team ID of the given Actor.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|AI", Meta = (DisplayName = "Get Generic Team ID"))
-		void GetGenericTeamId(AActor* Target, uint8& TeamId);
+		static void GetGenericTeamId(AActor* Target, uint8& TeamId);
 	
 	/**
 	* Sets the Team ID of the given Actor.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|AI", Meta = (DisplayName = "Set Generic Team ID"))
-		void SetGenericTeamId(AActor* Target, const uint8 TeamId);
+		static void SetGenericTeamId(AActor* Target, const uint8 TeamId);
 
 
 
