@@ -441,6 +441,21 @@ public:
 		static int32 BytesToInteger(const TArray<uint8>& ByteArray, int32 Index = 0, int32 Length = 0x7FFFFFFF);
 
 
+	static TArray<uint8> LongToBytes(const int64 Value);
+
+	static int64 BytesToLong(const TArray<uint8>& ByteArray, int32 Index = 0, int32 Length = 0x7FFFFFFF);
+
+	/**
+	* Converts a Byte Array into a signed long (int64) (bytes).
+	*
+	* If there are more than 8 bytes given, it will only convert the first 8 bytes to a long.
+	* If there are less than 8 bytes given, it will prefix the bytes with 0 value bytes (so 01010101 01010101 01010101 turns into 00000000 00000000 00000000 00000000 00000000 01010101 01010101 01010101).
+	* If there are no bytes given, it will return 0.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Long (bytes)", Keywords = "byte array long", AdvancedDisplay = "1"))
+		static ULowEntryLong* BytesToLongBytes(const TArray<uint8>& ByteArray, int32 Index = 0, int32 Length = 0x7FFFFFFF);
+
+
 	/**
 	* Converts a float into a Byte Array (4 bytes).
 	*/
@@ -456,6 +471,21 @@ public:
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Float", Keywords = "byte array float", AdvancedDisplay = "1"))
 		static float BytesToFloat(const TArray<uint8>& ByteArray, int32 Index = 0, int32 Length = 0x7FFFFFFF);
+
+
+	static TArray<uint8> DoubleToBytes(const double Value);
+
+	static double BytesToDouble(const TArray<uint8>& ByteArray, int32 Index = 0, int32 Length = 0x7FFFFFFF);
+
+	/**
+	* Converts a Byte Array into a double (bytes).
+	*
+	* If there are more than 8 bytes given, it will only convert the first 8 bytes to a double.
+	* If there are less than 8 bytes given, it will prefix the bytes with 0 value bytes (so 01010101 01010101 01010101 turns into 00000000 00000000 00000000 00000000 00000000 01010101 01010101 01010101).
+	* If there are no bytes given, it will return 0.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Double (bytes)", Keywords = "byte array double", AdvancedDisplay = "1"))
+		static ULowEntryDouble* BytesToDoubleBytes(const TArray<uint8>& ByteArray, int32 Index = 0, int32 Length = 0x7FFFFFFF);
 
 
 	/**
@@ -858,6 +888,34 @@ public:
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array")
 		static void MinOfTimespanArray(const TArray<FTimespan>& TimespanArray, int32& IndexOfMinValue, FTimespan& MinValue);
+
+
+
+	/**
+	* Returns the ISO-8601 string representation of the FDateTime.
+	*
+	* The resulting string assumes that the FDateTime is in UTC.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Date Time", Meta = (DisplayName = "To String (Iso 8601)"))
+		static void DateTime_ToIso8601(const FDateTime& DateTime, FString& String);
+
+	/**
+	* Returns the string representation of this date.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Date Time", Meta = (DisplayName = "To String"))
+		static void DateTime_ToString(const FDateTime& DateTime, FString& String, const FString& Format = TEXT("yyyy.mm.dd-hh.mm.ss"));
+
+	/**
+	* Returns the string representation of this date.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Date Time", Meta = (DisplayName = "To Unix Timestamp"))
+		static void DateTime_ToUnixTimestamp(const FDateTime& DateTime, ULowEntryLong*& Timestamp);
+
+	/**
+	* Returns the string representation of this date.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Date Time", Meta = (DisplayName = "Date Time from Unix Timestamp"))
+		static void DateTime_FromUnixTimestamp(ULowEntryLong* Timestamp, FDateTime& DateTime);
 
 
 

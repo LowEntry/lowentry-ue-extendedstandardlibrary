@@ -953,6 +953,79 @@ int32 ULowEntryExtendedStandardLibrary::BytesToInteger(const TArray<uint8>& Byte
 }
 
 
+TArray<uint8> ULowEntryExtendedStandardLibrary::LongToBytes(const int64 Value)
+{
+	TArray<uint8> ByteArray;
+	ByteArray.SetNum(8);
+	ByteArray[0] = (Value >> 56);
+	ByteArray[1] = (Value >> 48);
+	ByteArray[2] = (Value >> 40);
+	ByteArray[3] = (Value >> 32);
+	ByteArray[4] = (Value >> 24);
+	ByteArray[5] = (Value >> 16);
+	ByteArray[6] = (Value >> 8);
+	ByteArray[7] = (Value);
+	return ByteArray;
+}
+
+int64 ULowEntryExtendedStandardLibrary::BytesToLong(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
+{
+	if(ByteArray.Num() <= 0)
+	{
+		return 0;
+	}
+
+	if(Index < 0)
+	{
+		Length += Index;
+		Index = 0;
+	}
+	if(Length > ByteArray.Num() - Index)
+	{
+		Length = ByteArray.Num() - Index;
+	}
+	if(Length <= 0)
+	{
+		return 0;
+	}
+
+	if(Length <= 1)
+	{
+		return ((int64) ByteArray[Index + 0]);
+	}
+	if(Length <= 2)
+	{
+		return (((int64) ByteArray[Index + 0]) << 8) | ((int64) ByteArray[Index + 1]);
+	}
+	if(Length <= 3)
+	{
+		return (((int64) ByteArray[Index + 0]) << 16) | (((int64) ByteArray[Index + 1]) << 8) | ((int64) ByteArray[Index + 2]);
+	}
+	if(Length <= 4)
+	{
+		return (((int64) ByteArray[Index + 0]) << 24) | (((int64) ByteArray[Index + 1]) << 16) | (((int64) ByteArray[Index + 2]) << 8) | ((int64) ByteArray[Index + 3]);
+	}
+	if(Length <= 5)
+	{
+		return (((int64) ByteArray[Index + 0]) << 32) | (((int64) ByteArray[Index + 1]) << 24) | (((int64) ByteArray[Index + 2]) << 16) | (((int64) ByteArray[Index + 3]) << 8) | ((int64) ByteArray[Index + 4]);
+	}
+	if(Length <= 6)
+	{
+		return (((int64) ByteArray[Index + 0]) << 40) | (((int64) ByteArray[Index + 1]) << 32) | (((int64) ByteArray[Index + 2]) << 24) | (((int64) ByteArray[Index + 3]) << 16) | (((int64) ByteArray[Index + 4]) << 8) | ((int64) ByteArray[Index + 5]);
+	}
+	if(Length <= 7)
+	{
+		return (((int64) ByteArray[Index + 0]) << 48) | (((int64) ByteArray[Index + 1]) << 40) | (((int64) ByteArray[Index + 2]) << 32) | (((int64) ByteArray[Index + 3]) << 24) | (((int64) ByteArray[Index + 4]) << 16) | (((int64) ByteArray[Index + 5]) << 8) | ((int64) ByteArray[Index + 6]);
+	}
+	return (((int64) ByteArray[Index + 0]) << 56) | (((int64) ByteArray[Index + 1]) << 48) | (((int64) ByteArray[Index + 2]) << 40) | (((int64) ByteArray[Index + 3]) << 32) | (((int64) ByteArray[Index + 4]) << 24) | (((int64) ByteArray[Index + 5]) << 16) | (((int64) ByteArray[Index + 6]) << 8) | ((int64) ByteArray[Index + 7]);
+}
+
+ULowEntryLong* ULowEntryExtendedStandardLibrary::BytesToLongBytes(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
+{
+	return ULowEntryLong::Create(ByteArray, Index, Length);
+}
+
+
 TArray<uint8> ULowEntryExtendedStandardLibrary::FloatToBytes(const float Value)
 {
 	int32 IntValue = *((int32*) (&Value));
@@ -963,6 +1036,24 @@ float ULowEntryExtendedStandardLibrary::BytesToFloat(const TArray<uint8>& ByteAr
 {
 	int32 IntValue = ULowEntryExtendedStandardLibrary::BytesToInteger(ByteArray, Index, Length);
 	return *((float*) (&IntValue));
+}
+
+
+TArray<uint8> ULowEntryExtendedStandardLibrary::DoubleToBytes(const double Value)
+{
+	int64 LongValue = *((int64*) (&Value));
+	return ULowEntryExtendedStandardLibrary::LongToBytes(LongValue);
+}
+
+double ULowEntryExtendedStandardLibrary::BytesToDouble(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
+{
+	int64 LongValue = ULowEntryExtendedStandardLibrary::BytesToLong(ByteArray, Index, Length);
+	return *((double*) (&LongValue));
+}
+
+ULowEntryDouble* ULowEntryExtendedStandardLibrary::BytesToDoubleBytes(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
+{
+	return ULowEntryDouble::Create(ByteArray, Index, Length);
 }
 
 
@@ -1532,6 +1623,37 @@ void ULowEntryExtendedStandardLibrary::MaxOfTimespanArray(const TArray<FTimespan
 void ULowEntryExtendedStandardLibrary::MinOfTimespanArray(const TArray<FTimespan>& TimespanArray, int32& IndexOfMinValue, FTimespan& MinValue)
 {
 	MinValue = FMath::Min(TimespanArray, &IndexOfMinValue);
+}
+
+
+
+void ULowEntryExtendedStandardLibrary::DateTime_ToIso8601(const FDateTime& DateTime, FString& String)
+{
+	String = DateTime.ToIso8601();
+}
+
+void ULowEntryExtendedStandardLibrary::DateTime_ToString(const FDateTime& DateTime, FString& String, const FString& Format)
+{
+	String = DateTime.ToString();
+}
+
+void ULowEntryExtendedStandardLibrary::DateTime_ToUnixTimestamp(const FDateTime& DateTime, ULowEntryLong*& Timestamp)
+{
+	Timestamp = ULowEntryLong::Create(ULowEntryExtendedStandardLibrary::LongToBytes(DateTime.ToUnixTimestamp()));
+}
+
+void ULowEntryExtendedStandardLibrary::DateTime_FromUnixTimestamp(ULowEntryLong* Timestamp, FDateTime& DateTime)
+{
+	FDateTime NewDateTime;
+	if(Timestamp == nullptr)
+	{
+		NewDateTime.FromUnixTimestamp(0);
+	}
+	else
+	{
+		NewDateTime.FromUnixTimestamp(ULowEntryExtendedStandardLibrary::BytesToLong(Timestamp->GetBytes()));
+	}
+	DateTime = NewDateTime;
 }
 
 
