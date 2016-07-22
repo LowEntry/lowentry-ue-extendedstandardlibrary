@@ -4,6 +4,7 @@
 #include "LowEntryHashingBCryptLibrary.h"
 #include "LowEntryHashingSha256Library.h"
 #include "LowEntryHashingSha512Library.h"
+#include "LowEntryHashingPearsonLibrary.h"
 
 #include "LowEntryLatentActionBoolean.h"
 #include "LowEntryLatentActionFloat.h"
@@ -1240,6 +1241,11 @@ void ULowEntryExtendedStandardLibrary::LoadVideo(const FString& Url, bool& Succe
 }
 
 
+
+TArray<uint8> ULowEntryExtendedStandardLibrary::Pearson(const TArray<uint8>& ByteArray, const int32 HashLength, int32 Index, int32 Length)
+{
+	return ULowEntryHashingPearsonLibrary::Hash(ByteArray, Index, Length, HashLength);
+}
 
 TArray<uint8> ULowEntryExtendedStandardLibrary::Md5(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
 {

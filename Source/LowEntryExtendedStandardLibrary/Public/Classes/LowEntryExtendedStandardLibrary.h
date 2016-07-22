@@ -569,6 +569,12 @@ public:
 
 
 	/**
+	* Generates a Pearson hash, returns the given HashLength number of bytes.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Hashes|Generate", Meta = (DisplayName = "Generate Hash (Pearson)", AdvancedDisplay = "2"))
+		static TArray<uint8> Pearson(const TArray<uint8>& ByteArray, const int32 HashLength, int32 Index = 0, int32 Length = 0x7FFFFFFF);
+
+	/**
 	* Generates a MD5 hash, always returns 16 bytes.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Hashes|Generate", Meta = (DisplayName = "Generate Hash (Md5)", AdvancedDisplay = "1"))
