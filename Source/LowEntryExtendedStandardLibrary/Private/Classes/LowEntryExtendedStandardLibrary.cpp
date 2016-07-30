@@ -1645,21 +1645,27 @@ void ULowEntryExtendedStandardLibrary::DateTime_ToString(const FDateTime& DateTi
 
 void ULowEntryExtendedStandardLibrary::DateTime_ToUnixTimestamp(const FDateTime& DateTime, ULowEntryLong*& Timestamp)
 {
-	Timestamp = ULowEntryLong::Create(ULowEntryExtendedStandardLibrary::LongToBytes(DateTime.ToUnixTimestamp()));
+	FTimespan Time = DateTime - FDateTime::FromUnixTimestamp(0);
+	Timestamp = ULowEntryLong::Create(ULowEntryExtendedStandardLibrary::LongToBytes((int64) Time.GetTotalMilliseconds()));
+
+	// ignores milliseconds:
+	//  Timestamp = ULowEntryLong::Create(ULowEntryExtendedStandardLibrary::LongToBytes(DateTime.ToUnixTimestamp() * 1000));
 }
 
 void ULowEntryExtendedStandardLibrary::DateTime_FromUnixTimestamp(ULowEntryLong* Timestamp, FDateTime& DateTime)
 {
-	FDateTime NewDateTime;
 	if(Timestamp == nullptr)
 	{
-		NewDateTime.FromUnixTimestamp(0);
+		DateTime = FDateTime::FromUnixTimestamp(0);
 	}
 	else
 	{
-		NewDateTime.FromUnixTimestamp(ULowEntryExtendedStandardLibrary::BytesToLong(Timestamp->GetBytes()));
+		int64 Millis = ULowEntryExtendedStandardLibrary::BytesToLong(Timestamp->GetBytes());
+		DateTime = FDateTime::FromUnixTimestamp(0) + FTimespan(Millis * (ETimespan::TicksPerSecond / 1000));
+
+		//ignored milliseconds:
+		// DateTime = FDateTime::FromUnixTimestamp(ULowEntryExtendedStandardLibrary::BytesToLong(Timestamp->GetBytes()) / 1000);
 	}
-	DateTime = NewDateTime;
 }
 
 
