@@ -5,6 +5,7 @@
 #include "LowEntryHashingSha256Library.h"
 #include "LowEntryHashingSha512Library.h"
 #include "LowEntryHashingPearsonLibrary.h"
+#include "LowEntryHashingHashcashLibrary.h"
 
 #include "LowEntryLatentActionBoolean.h"
 #include "LowEntryLatentActionFloat.h"
@@ -12,6 +13,8 @@
 #include "LowEntryLatentActionNone.h"
 #include "LowEntryLatentActionObject.h"
 #include "LowEntryLatentActionString.h"
+
+#include "LowEntryParsedHashcash.h"
 
 #include "LowEntryByteArray.h"
 
@@ -1317,6 +1320,49 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::BCrypt(const TArray<uint8>& Byte
 
 
 
+TArray<FString> ULowEntryExtendedStandardLibrary::HashcashArray(const TArray<FString>& Resources, const int32 Bits)
+{
+	return ULowEntryHashingHashcashLibrary::hashArray(Resources, Bits);
+}
+
+TArray<FString> ULowEntryExtendedStandardLibrary::HashcashArrayCustomCreationDate(const TArray<FString>& Resources, const FDateTime& UtcDate, const int32 Bits)
+{
+	return ULowEntryHashingHashcashLibrary::hashArrayCustomCreationDate(Resources, UtcDate, Bits);
+}
+
+FString ULowEntryExtendedStandardLibrary::Hashcash(const FString& Resource, const int32 Bits)
+{
+	return ULowEntryHashingHashcashLibrary::hash(Resource, Bits);
+}
+
+FString ULowEntryExtendedStandardLibrary::HashcashCustomCreationDate(const FString& Resource, const FDateTime& UtcDate, const int32 Bits)
+{
+	return ULowEntryHashingHashcashLibrary::hashCustomCreationDate(Resource, UtcDate, Bits);
+}
+
+
+TArray<ULowEntryParsedHashcash*> ULowEntryExtendedStandardLibrary::HashcashParseArray(const TArray<FString>& Hashes)
+{
+	return ULowEntryHashingHashcashLibrary::parseArray(Hashes);
+}
+
+ULowEntryParsedHashcash* ULowEntryExtendedStandardLibrary::HashcashParse(const FString& Hash)
+{
+	return ULowEntryHashingHashcashLibrary::parse(Hash);
+}
+
+
+bool ULowEntryExtendedStandardLibrary::ParsedHashcashIsValid(ULowEntryParsedHashcash* Target)
+{
+	if(Target == nullptr)
+	{
+		return false;
+	}
+	return Target->IsHashcashValid();
+}
+
+
+
 FString ULowEntryExtendedStandardLibrary::NewlineCharacter()
 {
 	return TEXT("\n");
@@ -1640,7 +1686,7 @@ void ULowEntryExtendedStandardLibrary::DateTime_ToIso8601(const FDateTime& DateT
 
 void ULowEntryExtendedStandardLibrary::DateTime_ToString(const FDateTime& DateTime, FString& String, const FString& Format)
 {
-	String = DateTime.ToString();
+	String = DateTime.ToString(*Format);
 }
 
 void ULowEntryExtendedStandardLibrary::DateTime_ToUnixTimestamp(const FDateTime& DateTime, ULowEntryLong*& Timestamp)
@@ -1666,6 +1712,18 @@ void ULowEntryExtendedStandardLibrary::DateTime_FromUnixTimestamp(ULowEntryLong*
 		//ignored milliseconds:
 		// DateTime = FDateTime::FromUnixTimestamp(ULowEntryExtendedStandardLibrary::BytesToLong(Timestamp->GetBytes()) / 1000);
 	}
+}
+
+
+
+void ULowEntryExtendedStandardLibrary::ConvertLocalDateToUtcDate(const FDateTime& Local, FDateTime& Utc)
+{
+	Utc = Local - (FDateTime::Now() - FDateTime::UtcNow());
+}
+
+void ULowEntryExtendedStandardLibrary::ConvertUtcDateToLocalDate(const FDateTime& Utc, FDateTime& Local)
+{
+	Local = Utc + (FDateTime::Now() - FDateTime::UtcNow());
 }
 
 

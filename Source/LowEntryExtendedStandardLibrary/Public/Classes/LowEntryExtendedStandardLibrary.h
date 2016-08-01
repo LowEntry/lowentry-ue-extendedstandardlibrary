@@ -35,6 +35,8 @@ class ULowEntryLatentActionNone;
 class ULowEntryLatentActionObject;
 class ULowEntryLatentActionString;
 
+class ULowEntryParsedHashcash;
+
 class ULowEntryByteArray;
 
 class ULowEntryByteDataEntry;
@@ -610,6 +612,120 @@ public:
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Hashes|Generate", Meta = (DisplayName = "Generate Hash (Bcrypt)", AdvancedDisplay = "3"))
 		static TArray<uint8> BCrypt(const TArray<uint8>& ByteArray, const TArray<uint8>& Salt, int32 Strength = 10, int32 Index = 0, int32 Length = 0x7FFFFFFF);
+
+
+
+	/**
+	* Creates Hashcash hashes, each will have a variable amount of characters.
+	*
+	* The strength (or value) of the Hashcash hashes is determined by the amount of given bits.
+	*
+	* 20 is an average amount of bits.
+	* 22 is a good amount of bits.
+	* 24 is a very good amount of bits.
+	*
+	* The given 'resources' are basically IDs of the service you are 'buying' with this Hashcash, like actions or an email addresses or whatever, something that is unique-ish but not necessarily unique.
+	*
+	* Hashcash hashes are only valid for a certain amount of time (depending on the receiver of the Hashcash), this blueprint uses the current date and time as the creation date of the Hashcash hashes (which is what you normally want).
+	*
+	* You can validate Hashcash hashes with the Parse Hashcash blueprints.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Hashcash|Generate", Meta = (DisplayName = "Generate Hashcash (Array)"))
+		static TArray<FString> HashcashArray(const TArray<FString>& Resources, const int32 Bits = 22);
+
+	/**
+	* Creates Hashcash hashes, each will have a variable amount of characters.
+	*
+	* The strength (or value) of the Hashcash hashes is determined by the amount of given bits.
+	*
+	* 20 is an average amount of bits.
+	* 22 is a good amount of bits.
+	* 24 is a very good amount of bits.
+	*
+	* The given 'resources' are basically IDs of the service you are 'buying' with this Hashcash, like actions or an email addresses or whatever, something that is unique-ish but not necessarily unique.
+	*
+	* Hashcash hashes are only valid for a certain amount of time (depending on the receiver of the Hashcash), the given DateTime is used as the creation date of the Hashcash hashes.
+	*
+	* You can validate Hashcash hashes with the Parse Hashcash blueprints.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Hashcash|Generate", Meta = (DisplayName = "Generate Hashcash (Array) (Custom Creation Date)"))
+		static TArray<FString> HashcashArrayCustomCreationDate(const TArray<FString>& Resources, const FDateTime& UtcDate, const int32 Bits = 22);
+
+	/**
+	* Creates a Hashcash hash, returns a variable amount of characters.
+	*
+	* The strength (or value) of the Hashcash hash is determined by the amount of given bits.
+	*
+	* 20 is an average amount of bits.
+	* 22 is a good amount of bits.
+	* 24 is a very good amount of bits.
+	*
+	* The given 'resource' is basically an ID of the service you are 'buying' with this Hashcash, like an action or an email address or whatever, something that is unique-ish but not necessarily unique.
+	*
+	* Hashcash hashes are only valid for a certain amount of time (depending on the receiver of the Hashcash), this blueprint uses the current date and time as the creation date of the Hashcash hash (which is what you normally want).
+	*
+	* You can validate Hashcash hashes with the Parse Hashcash blueprints.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Hashcash|Generate", Meta = (DisplayName = "Generate Hashcash"))
+		static FString Hashcash(const FString& Resource, const int32 Bits = 22);
+
+	/**
+	* Creates Hashcash hashes, returns a variable amount of characters, will never return null.
+	*
+	* The strength (or value) of the Hashcash hash is determined by the amount of given bits.
+	*
+	* 20 is an average amount of bits.
+	* 22 is a good amount of bits.
+	* 24 is a very good amount of bits.
+	*
+	* The given 'resource' is basically an ID of the service you are 'buying' with this Hashcash, like an action or an email address or whatever, something that is unique-ish but not necessarily unique.
+	*
+	* Hashcash hashes are only valid for a certain amount of time (depending on the receiver of the Hashcash), the given DateTime is used as the creation date of the Hashcash hash.
+	*
+	* You can validate Hashcash hashes with the Parse Hashcash blueprints.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Hashcash|Generate", Meta = (DisplayName = "Generate Hashcash (Custom Creation Date)"))
+		static FString HashcashCustomCreationDate(const FString& Resource, const FDateTime& UtcDate, const int32 Bits = 22);
+
+
+	/**
+	* Parses and validates a Hashcash hash.
+	*
+	* To successfully validate a Hashcash hash, do the following:
+	* 1) call this method to parse the hashes
+	* 2) check if the returned ParsedHashcashes return true for Is Parsed Hashcash Valid
+	* 3) check if the amount of bits of the returned ParsedHashcashes are of a desired number
+	* 4) check if the resources of the returned ParsedHashcashes matches the expected string
+	* 5) check if the dates of the returned ParsedHashcashes are not in the future and are not too long ago
+	* 6) check if the hash hasn't been used already (save the used Hashcash hashes in an Array for example)
+	*
+	* You can change the order of actions if desired.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Hashcash|Parse", Meta = (DisplayName = "Parse Hashcash (Array)"))
+		static TArray<ULowEntryParsedHashcash*> HashcashParseArray(const TArray<FString>& Hashes);
+
+	/**
+	* Parses and validates a Hashcash hash.
+	*
+	* To successfully validate a Hashcash hash, do the following:
+	* 1) call this method to parse the hash
+	* 2) check if the returned ParsedHashcash returns true for Is Parsed Hashcash Valid
+	* 3) check if the amount of bits of the returned ParsedHashcash is of a desired number
+	* 4) check if the resource of the returned ParsedHashcash matches the expected string
+	* 5) check if the date of the returned ParsedHashcash is not in the future and is not too long ago
+	* 6) check if the hash hasn't been used already (save the used Hashcash hashes in an Array for example)
+	*
+	* You can change the order of actions if desired.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Hashcash|Parse", Meta = (DisplayName = "Parse Hashcash"))
+		static ULowEntryParsedHashcash* HashcashParse(const FString& Hash);
+
+
+	/**
+	* Returns true if this Parsed Hashcash is valid, returns false if it is not valid.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Hashcash|Parsed", Meta = (DisplayName = "Is Parsed Hashcash Valid"))
+		static bool ParsedHashcashIsValid(ULowEntryParsedHashcash* Target);
 	
 	
 	
@@ -907,9 +1023,24 @@ public:
 
 	/**
 	* Returns the string representation of the given FDateTime.
+	* 
+	* The format works as follows:
+	* 
+	* case TCHAR('a'): Result += IsMorning() ? TEXT("am") : TEXT("pm"); break;
+	* case TCHAR('A'): Result += IsMorning() ? TEXT("AM") : TEXT("PM"); break;
+	* case TCHAR('d'): Result += FString::Printf(TEXT("%02i"), GetDay()); break;
+	* case TCHAR('D'): Result += FString::Printf(TEXT("%03i"), GetDayOfYear()); break;
+	* case TCHAR('m'): Result += FString::Printf(TEXT("%02i"), GetMonth()); break;
+	* case TCHAR('y'): Result += FString::Printf(TEXT("%02i"), GetYear() % 100); break;
+	* case TCHAR('Y'): Result += FString::Printf(TEXT("%04i"), GetYear()); break;
+	* case TCHAR('h'): Result += FString::Printf(TEXT("%02i"), GetHour12()); break;
+	* case TCHAR('H'): Result += FString::Printf(TEXT("%02i"), GetHour()); break;
+	* case TCHAR('M'): Result += FString::Printf(TEXT("%02i"), GetMinute()); break;
+	* case TCHAR('S'): Result += FString::Printf(TEXT("%02i"), GetSecond()); break;
+	* case TCHAR('s'): Result += FString::Printf(TEXT("%03i"), GetMillisecond()); break;
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Date Time", Meta = (DisplayName = "To String"))
-		static void DateTime_ToString(const FDateTime& DateTime, FString& String, const FString& Format = TEXT("yyyy.mm.dd-hh.mm.ss"));
+		static void DateTime_ToString(const FDateTime& DateTime, FString& String, const FString& Format = TEXT("%Y.%m.%d-%H.%M.%S"));
 
 	/**
 	* Creates a FDateTime with the given time in milliseconds after January 1, 1970 00:00:00 GMT.
@@ -922,6 +1053,20 @@ public:
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Date Time", Meta = (DisplayName = "Date Time from Unix Timestamp", Keywords = "byte array long get create convert"))
 		static void DateTime_FromUnixTimestamp(ULowEntryLong* Timestamp, FDateTime& DateTime);
+
+
+
+	/**
+	* Converts the given DateTime from the local time into the UTC time.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Date Time", Meta = (DisplayName = "Convert Local to Utc", Keywords = "get create convert time zone"))
+		static void ConvertLocalDateToUtcDate(const FDateTime& Local, FDateTime& Utc);
+
+	/**
+	* Converts the given DateTime from the UTC time into the local time.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Date Time", Meta = (DisplayName = "Convert Utc to Local", Keywords = "get create convert time zone"))
+		static void ConvertUtcDateToLocalDate(const FDateTime& Utc, FDateTime& Local);
 
 
 
