@@ -20,6 +20,8 @@
 
 #include "K2Node.h"
 
+#include "Runtime/Launch/Resources/Version.h"
+
 #include "K2Node_LowEntry_LocalVariable.generated.h"
 
 
@@ -38,8 +40,20 @@ public:
 	virtual void AllocateDefaultPins() override;
 	virtual void PostReconstructNode() override;
 	virtual FText GetTooltipText() const override;
-	virtual FName GetPaletteIcon(FLinearColor& OutColor) const override{ return TEXT("Kismet.AllClasses.FunctionIcon"); }
 	virtual void ValidateNodeDuringCompilation(class FCompilerResultsLog& MessageLog) const override;
+
+#if ENGINE_MINOR_VERSION <= 12
+	virtual FName GetPaletteIcon(FLinearColor& OutColor) const override
+	{
+		return TEXT("Kismet.AllClasses.FunctionIcon");
+	}
+#else
+	virtual FSlateIcon GetIconAndTint(FLinearColor& OutColor) const override
+	{
+		static FSlateIcon Icon("EditorStyle", "Kismet.AllClasses.FunctionIcon");
+		return Icon;
+	}
+#endif
 	// End of UEdGraphNode interface
 
 	// UK2Node interface

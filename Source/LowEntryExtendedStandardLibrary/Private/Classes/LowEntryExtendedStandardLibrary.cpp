@@ -1236,11 +1236,16 @@ void ULowEntryExtendedStandardLibrary::LoadVideo(const FString& Url, bool& Succe
 	Player = LoadPlayer;
 	Player->SetLooping(true);
 
+#if ENGINE_MINOR_VERSION <= 12
 	Texture = NewObject<UMediaTexture>();
 	Texture->SetMediaPlayer(Player);
 
 	Sound = NewObject<UMediaSoundWave>();
 	Sound->SetMediaPlayer(Player);
+#else
+	Texture = Player->GetVideoTexture();
+	Sound = Player->GetSoundWave();
+#endif
 }
 
 
