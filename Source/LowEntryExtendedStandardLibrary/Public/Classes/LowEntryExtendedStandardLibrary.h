@@ -188,12 +188,24 @@ public:
 	/**
 	* Returns the current system volume in percentages, from 0.0 to 1.0.
 	*
-	* Currently only works on Android devices.
+	* Currently only works on Android devices. If you only care about getting the volume on Android, you might as well use the "Get Android Volume" blueprint instead.
 	*
 	* Note: This blueprint is not used to retrieve or change the sound volume in-game, you will have to use Sound Classes for that.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Get Current System Volume (Percentages)", Keywords = "sound audio android"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Get System Volume (Percentages)", Keywords = "sound audio android current system"))
 		static void GetCurrentVolumePercentage(float& Percentage, bool& Success);
+
+	/**
+	* Returns the current Android volume, from 0 to 15.
+	*
+	* This will always only ever work on Android devices, other systems will always return 0. If you want more systems supported later on, use the "Get System Volume (Percentages)" blueprint instead.
+	*
+	* Note: This blueprint is not used to retrieve or change the sound volume in-game, you will have to use Sound Classes for that.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Get Android Volume", Keywords = "sound audio android current system"))
+		static void GetAndroidVolume(int& Volume);
+
+
 
 	/**
 	* Returns the current system volume.

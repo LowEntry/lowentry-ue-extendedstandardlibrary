@@ -298,12 +298,23 @@ void ULowEntryExtendedStandardLibrary::GetCurrentVolumePercentage(float& Percent
 {
 #if PLATFORM_ANDROID
 	Success = true;
-	Percentage = (FAndroidMisc::GetVolumeState(NULL) / 100.0f);
+	Percentage = (FAndroidMisc::GetVolumeState(NULL) / 15.0f);
 #else
 	Success = false;
 	Percentage = 0;
 #endif
 }
+
+void ULowEntryExtendedStandardLibrary::GetAndroidVolume(int& Volume)
+{
+#if PLATFORM_ANDROID
+	Volume = FAndroidMisc::GetVolumeState(NULL);
+#else
+	Volume = 0;
+#endif
+}
+
+
 
 void ULowEntryExtendedStandardLibrary::GetCurrentVolume(int32& Volume, bool& Success)
 {
