@@ -22,6 +22,10 @@
 #include "LowEntryByteDataReader.h"
 #include "LowEntryByteDataWriter.h"
 
+#include "LowEntryBitDataEntry.h"
+#include "LowEntryBitDataReader.h"
+#include "LowEntryBitDataWriter.h"
+
 #include "LowEntryLong.h"
 #include "LowEntryDouble.h"
 
@@ -2541,6 +2545,166 @@ ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFr
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromStringUtf8Array(const TArray<FString>& Value)
 {
 	return ULowEntryByteDataEntry::CreateFromStringUtf8Array(Value);
+}
+
+
+
+ULowEntryBitDataReader* ULowEntryExtendedStandardLibrary::BitDataReader_Create(const TArray<uint8>& Bytes, int32 Index, int32 Length)
+{
+	return ULowEntryBitDataReader::Create(Bytes, Index, Length);
+}
+
+
+
+ULowEntryBitDataWriter* ULowEntryExtendedStandardLibrary::BitDataWriter_Create()
+{
+	return ULowEntryBitDataWriter::Create();
+}
+
+ULowEntryBitDataWriter* ULowEntryExtendedStandardLibrary::BitDataWriter_CreateFromEntryArray(const TArray<ULowEntryBitDataEntry*>& Array)
+{
+	return ULowEntryBitDataWriter::CreateFromEntryArray(Array);
+}
+
+ULowEntryBitDataWriter* ULowEntryExtendedStandardLibrary::BitDataWriter_CreateFromEntryArrayPure(const TArray<ULowEntryBitDataEntry*>& Array)
+{
+	return ULowEntryBitDataWriter::CreateFromEntryArray(Array);
+}
+
+TArray<uint8> ULowEntryExtendedStandardLibrary::BitDataWriter_GetBytes(ULowEntryBitDataWriter* BitDataWriter)
+{
+	return BitDataWriter->GetBytes();
+}
+
+
+
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromBit(const bool Value)
+{
+	return ULowEntryBitDataEntry::CreateFromBit(Value);
+}
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromByteLeastSignificantBits(const uint8 Value, const int32 BitCount)
+{
+	return ULowEntryBitDataEntry::CreateFromByteLeastSignificantBits(Value, BitCount);
+}
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromByteMostSignificantBits(const uint8 Value, const int32 BitCount)
+{
+	return ULowEntryBitDataEntry::CreateFromByteMostSignificantBits(Value, BitCount);
+}
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromIntegerLeastSignificantBits(const int32 Value, const int32 BitCount)
+{
+	return ULowEntryBitDataEntry::CreateFromIntegerLeastSignificantBits(Value, BitCount);
+}
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromIntegerMostSignificantBits(const int32 Value, const int32 BitCount)
+{
+	return ULowEntryBitDataEntry::CreateFromIntegerMostSignificantBits(Value, BitCount);
+}
+
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromByte(const uint8 Value)
+{
+	return ULowEntryBitDataEntry::CreateFromByte(Value);
+}
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromInteger(const int32 Value)
+{
+	return ULowEntryBitDataEntry::CreateFromInteger(Value);
+}
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromPositiveInteger1(const int32 Value)
+{
+	return ULowEntryBitDataEntry::CreateFromPositiveInteger1(Value);
+}
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromPositiveInteger2(const int32 Value)
+{
+	return ULowEntryBitDataEntry::CreateFromPositiveInteger2(Value);
+}
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromPositiveInteger3(const int32 Value)
+{
+	return ULowEntryBitDataEntry::CreateFromPositiveInteger3(Value);
+}
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromLongBytes(ULowEntryLong* Value)
+{
+	return ULowEntryBitDataEntry::CreateFromLongBytes(Value);
+}
+
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromFloat(const float Value)
+{
+	return ULowEntryBitDataEntry::CreateFromFloat(Value);
+}
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromDoubleBytes(ULowEntryDouble* Value)
+{
+	return ULowEntryBitDataEntry::CreateFromDoubleBytes(Value);
+}
+
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromBoolean(const bool Value)
+{
+	return ULowEntryBitDataEntry::CreateFromBoolean(Value);
+}
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromStringUtf8(const FString& Value)
+{
+	return ULowEntryBitDataEntry::CreateFromStringUtf8(Value);
+}
+
+
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromBitArray(const TArray<bool>& Value)
+{
+	return ULowEntryBitDataEntry::CreateFromBitArray(Value);
+}
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromByteArrayLeastSignificantBits(const TArray<uint8>& Value, const int32 BitCount)
+{
+	return ULowEntryBitDataEntry::CreateFromByteArrayLeastSignificantBits(Value, BitCount);
+}
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromByteArrayMostSignificantBits(const TArray<uint8>& Value, const int32 BitCount)
+{
+	return ULowEntryBitDataEntry::CreateFromByteArrayMostSignificantBits(Value, BitCount);
+}
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromIntegerArrayLeastSignificantBits(const TArray<int32>& Value, const int32 BitCount)
+{
+	return ULowEntryBitDataEntry::CreateFromIntegerArrayLeastSignificantBits(Value, BitCount);
+}
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromIntegerArrayMostSignificantBits(const TArray<int32>& Value, const int32 BitCount)
+{
+	return ULowEntryBitDataEntry::CreateFromIntegerArrayMostSignificantBits(Value, BitCount);
+}
+
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromByteArray(const TArray<uint8>& Value)
+{
+	return ULowEntryBitDataEntry::CreateFromByteArray(Value);
+}
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromIntegerArray(const TArray<int32>& Value)
+{
+	return ULowEntryBitDataEntry::CreateFromIntegerArray(Value);
+}
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromPositiveInteger1Array(const TArray<int32>& Value)
+{
+	return ULowEntryBitDataEntry::CreateFromPositiveInteger1Array(Value);
+}
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromPositiveInteger2Array(const TArray<int32>& Value)
+{
+	return ULowEntryBitDataEntry::CreateFromPositiveInteger2Array(Value);
+}
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromPositiveInteger3Array(const TArray<int32>& Value)
+{
+	return ULowEntryBitDataEntry::CreateFromPositiveInteger3Array(Value);
+}
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromLongBytesArray(const TArray<ULowEntryLong*>& Value)
+{
+	return ULowEntryBitDataEntry::CreateFromLongBytesArray(Value);
+}
+
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromFloatArray(const TArray<float>& Value)
+{
+	return ULowEntryBitDataEntry::CreateFromFloatArray(Value);
+}
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromDoubleBytesArray(const TArray<ULowEntryDouble*>& Value)
+{
+	return ULowEntryBitDataEntry::CreateFromDoubleBytesArray(Value);
+}
+
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromBooleanArray(const TArray<bool>& Value)
+{
+	return ULowEntryBitDataEntry::CreateFromBooleanArray(Value);
+}
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromStringUtf8Array(const TArray<FString>& Value)
+{
+	return ULowEntryBitDataEntry::CreateFromStringUtf8Array(Value);
 }
 
 

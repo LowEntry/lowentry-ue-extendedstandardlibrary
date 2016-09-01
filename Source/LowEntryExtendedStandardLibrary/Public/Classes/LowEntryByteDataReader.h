@@ -63,6 +63,12 @@ public:
 		void Reset();
 
 	/**
+	* Causes Remaining to return 0.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Reader (Meta)", Meta = (DisplayName = "Empty"))
+		void Empty();
+
+	/**
 	* Returns the amount of bytes left.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Reader (Meta)", Meta = (DisplayName = "Get Remaining"))

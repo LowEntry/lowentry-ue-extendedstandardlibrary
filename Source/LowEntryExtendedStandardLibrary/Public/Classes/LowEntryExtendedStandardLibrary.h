@@ -43,6 +43,10 @@ class ULowEntryByteDataEntry;
 class ULowEntryByteDataReader;
 class ULowEntryByteDataWriter;
 
+class ULowEntryBitDataEntry;
+class ULowEntryBitDataReader;
+class ULowEntryBitDataWriter;
+
 class ULowEntryLong;
 class ULowEntryDouble;
 
@@ -1549,6 +1553,310 @@ public:
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "String (Utf 8) Array"))
 		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromStringUtf8Array(const TArray<FString>& Value);
+
+
+
+	/**
+	* Creates a new Bit Data Reader.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Bit Data|Reader", Meta = (DisplayName = "Create Bit Data Reader", AdvancedDisplay = "1"))
+		static ULowEntryBitDataReader* BitDataReader_Create(const TArray<uint8>& Bytes, int32 Index = 0, int32 Length = 0x7FFFFFFF);
+
+
+
+	/**
+	* Creates a new Bit Data Writer.
+	*
+	* This is basically a Byte Data Writer, except that it adds certain methods, like methods to add individual bits, and methods to only add a certain number of bits of a given byte or integer.
+	*
+	* Booleans are also always stored in 1 bit with a Bit Data Writer, with a Byte Data Writer it will take 1 full byte to store a boolean.
+	*
+	* This allows you to create smaller results than you can with the Byte Data Writer, but it costs a little bit more processing power to write data with the Bit Data Writer, and it also costs a little bit more processing power to read data with the Bit Data Reader.
+	*/
+	/*UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Bit Data|Writer", Meta = (DisplayName = "Create Bit Data Writer"))*/
+	static ULowEntryBitDataWriter* BitDataWriter_Create();
+
+	/**
+	* Creates a new Bit Data Writer.
+	*
+	* This is basically a Byte Data Writer, except that it adds certain methods, like methods to add individual bits, and methods to only add a certain number of bits of a given byte or integer.
+	*
+	* Booleans are also always stored in 1 bit with a Bit Data Writer, with a Byte Data Writer it will take 1 full byte to store a boolean.
+	*
+	* This allows you to create smaller results than you can with the Byte Data Writer, but it costs a little bit more processing power to write data with the Bit Data Writer, and it also costs a little bit more processing power to read data with the Bit Data Reader.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Bit Data|Writer", Meta = (DisplayName = "Create Bit Data Writer (Bit Data Entry Array) (Callable)"))
+		static ULowEntryBitDataWriter* BitDataWriter_CreateFromEntryArray(const TArray<ULowEntryBitDataEntry*>& Array);
+
+	/**
+	* Creates a new Bit Data Writer.
+	*
+	* This is basically a Byte Data Writer, except that it adds certain methods, like methods to add individual bits, and methods to only add a certain number of bits of a given byte or integer.
+	*
+	* Booleans are also always stored in 1 bit with a Bit Data Writer, with a Byte Data Writer it will take 1 full byte to store a boolean.
+	*
+	* This allows you to create smaller results than you can with the Byte Data Writer, but it costs a little bit more processing power to write data with the Bit Data Writer, and it also costs a little bit more processing power to read data with the Bit Data Reader.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Writer", Meta = (DisplayName = "Create Bit Data Writer (Bit Data Entry Array) (Pure)"))
+		static ULowEntryBitDataWriter* BitDataWriter_CreateFromEntryArrayPure(const TArray<ULowEntryBitDataEntry*>& Array);
+
+	/**
+	* Returns the byte data.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Writer", Meta = (DisplayName = "Get Bytes"))
+		static TArray<uint8> BitDataWriter_GetBytes(ULowEntryBitDataWriter* BitDataWriter);
+
+
+
+	/**
+	* Creates a new Bit Data Entry with the value of a bit.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Bit"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromBit(const bool Value);
+
+	/**
+	* Creates a new Bit Data Entry with the value of a byte, will only add a certain amount of bits from the given byte.
+	*
+	* For example, take 63 as the value (bitwise this is: 0011 1111).
+	* If you use this blueprint with value 63 and bitcount 4, only the lowest 4 bits will be added, meaning only 1111 will be added, which will then have a value of 15 when read again.
+	*
+	* The bitcount can be anything between 0 and 8, values higher or lower will be clamped to 0 to 8.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Byte (Least Significant Bits Only)"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromByteLeastSignificantBits(const uint8 Value, const int32 BitCount);
+
+	/**
+	* Creates a new Bit Data Entry with the value of a byte, will only add a certain amount of bits from the given byte.
+	*
+	* For example, take 63 as the value (bitwise this is: 0011 1111).
+	* If you use this blueprint with value 63 and bitcount 4, only the highest 4 bits will be added, meaning only 0011 will be added, which will then have a value of 48 when read again.
+	*
+	* The bitcount can be anything between 0 and 8, values higher or lower will be clamped to 0 to 8.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Byte (Most Significant Bits Only)"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromByteMostSignificantBits(const uint8 Value, const int32 BitCount);
+
+	/**
+	* Creates a new Bit Data Entry with the value of an integer, will only add a certain amount of bits from the given integer.
+	*
+	* For example, take 268435471 as the value (bitwise this is: 00010000 00000000 00000000 00001111).
+	* If you use this blueprint with value 268435471 and bitcount 4, only the lowest 4 bits will be added, meaning only 1111 will be added, which will then have a value of 15 when read again.
+	*
+	* The bitcount can be anything between 0 and 32, values higher or lower will be clamped to 0 to 32.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Integer (Least Significant Bits Only)"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromIntegerLeastSignificantBits(const int32 Value, const int32 BitCount);
+
+	/**
+	* Creates a new Bit Data Entry with the value of an integer, will only add a certain amount of bits from the given integer.
+	*
+	* For example, take 268435471 as the value (bitwise this is: 00010000 00000000 00000000 00001111).
+	* If you use this blueprint with value 268435471 and bitcount 4, only the highest 4 bits will be added, meaning only 0001 will be added, which will then have a value of 268435456 when read again.
+	*
+	* The bitcount can be anything between 0 and 32, values higher or lower will be clamped to 0 to 32.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Integer (Most Significant Bits Only)"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromIntegerMostSignificantBits(const int32 Value, const int32 BitCount);
+
+	/**
+	* Creates a new Bit Data Entry with the value of a byte.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Byte"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromByte(const uint8 Value);
+
+	/**
+	* Creates a new Bit Data Entry with the value of an integer.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Integer"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromInteger(const int32 Value);
+
+	/**
+	* Creates a new Bit Data Entry with the value of a positive integer.
+	*
+	* Will store values below 128 in 1 byte, higher values will be stored in 4 bytes.
+	*
+	* The given integer has to be 0 or higher, values under 0 will be changed to 0.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Positive Integer 1"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromPositiveInteger1(const int32 Value);
+
+	/**
+	* Creates a new Bit Data Entry with the value of a positive integer.
+	*
+	* Will store values below 32.768 in 2 bytes, higher values will be stored in 4 bytes.
+	*
+	* The given integer has to be 0 or higher, values under 0 will be changed to 0.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Positive Integer 2"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromPositiveInteger2(const int32 Value);
+
+	/**
+	* Creates a new Bit Data Entry with the value of a positive integer.
+	*
+	* Will store values below 8.388.608 in 3 bytes, higher values will be stored in 4 bytes.
+	*
+	* The given integer has to be 0 or higher, values under 0 will be changed to 0.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Positive Integer 3"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromPositiveInteger3(const int32 Value);
+
+	/**
+	* Creates a new Bit Data Entry with the value of a long (bytes).
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Long (bytes)"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromLongBytes(ULowEntryLong* Value);
+
+
+	/**
+	* Creates a new Bit Data Entry with the value of a float.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Float"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromFloat(const float Value);
+
+	/**
+	* Creates a new Bit Data Entry with the value of a double (bytes).
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Double (bytes)"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromDoubleBytes(ULowEntryDouble* Value);
+
+
+	/**
+	* Creates a new Bit Data Entry with the value of a boolean, this does the same as a Bit Data Entry with the value of a bit.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Boolean"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromBoolean(const bool Value);
+
+	/**
+	* Creates a new Bit Data Entry with the value of a String (UTF-8).
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "String (Utf 8)"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromStringUtf8(const FString& Value);
+
+
+
+	/**
+	* Creates a new Bit Data Entry with the value of a bit array.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Bit Array"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromBitArray(const TArray<bool>& Value);
+
+	/**
+	* Creates a new Bit Data Entry with the value of a byte array, will only add a certain amount of bits from every given byte.
+	*
+	* For example, take 63 as the value (bitwise this is: 0011 1111).
+	* If you use this blueprint with value [63, 63, 63] and bitcount 4, only the lowest 4 bits of each byte will be added, meaning only 1111 1111 1111 will be added, which will then have a value of 15 for each byte when read again.
+	*
+	* The bitcount can be anything between 0 and 8, values higher or lower will be clamped to 0 to 8.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Add Byte Array (Least Significant Bits Only)"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromByteArrayLeastSignificantBits(const TArray<uint8>& Value, const int32 BitCount);
+
+	/**
+	* Creates a new Bit Data Entry with the value of a byte array, will only add a certain amount of bits from every given byte.
+	*
+	* For example, take 63 as the value (bitwise this is: 0011 1111).
+	* If you use this blueprint with value [63, 63, 63] and bitcount 4, only the highest 4 bits of each byte will be added, meaning only 0011 0011 0011 will be added, which will then have a value of 48 for each byte when read again.
+	*
+	* The bitcount can be anything between 0 and 8, values higher or lower will be clamped to 0 to 8.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Add Byte Array (Most Significant Bits Only)"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromByteArrayMostSignificantBits(const TArray<uint8>& Value, const int32 BitCount);
+
+	/**
+	* Creates a new Bit Data Entry with the value of an integer array, will only add a certain amount of bits from every given integer.
+	*
+	* For example, take 268435471 as the value (bitwise this is: 00010000 00000000 00000000 00001111).
+	* If you use this blueprint with value [268435471, 268435471, 268435471] and bitcount 4, only the lowest 4 bits of each integer will be added, meaning only 1111 1111 1111 will be added, which will then have a value of 15 for each integer when read again.
+	*
+	* The bitcount can be anything between 0 and 32, values higher or lower will be clamped to 0 to 32.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Add Integer Array (Least Significant Bits Only)"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromIntegerArrayLeastSignificantBits(const TArray<int32>& Value, const int32 BitCount);
+
+	/**
+	* Creates a new Bit Data Entry with the value of an integer array, will only add a certain amount of bits from every given integer.
+	*
+	* For example, take 268435471 as the value (bitwise this is: 00010000 00000000 00000000 00001111).
+	* If you use this blueprint with value [268435471, 268435471, 268435471] and bitcount 4, only the highest 4 bits of each integer will be added, meaning only 0001 0001 0001 will be added, which will then have a value of 268435456 for each integer when read again.
+	*
+	* The bitcount can be anything between 0 and 32, values higher or lower will be clamped to 0 to 32.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Add Integer Array (Most Significant Bits Only)"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromIntegerArrayMostSignificantBits(const TArray<int32>& Value, const int32 BitCount);
+
+	/**
+	* Creates a new Bit Data Entry with the value of a byte array.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Byte Array"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromByteArray(const TArray<uint8>& Value);
+
+	/**
+	* Creates a new Bit Data Entry with the value of an integer array.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Integer Array"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromIntegerArray(const TArray<int32>& Value);
+
+	/**
+	* Creates a new Bit Data Entry with the value of a positive integer array.
+	*
+	* Will store values below 128 in 1 byte, higher values will be stored in 4 bytes.
+	*
+	* The given integers have to be 0 or higher, values under 0 will be changed to 0.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Positive Integer 1 Array"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromPositiveInteger1Array(const TArray<int32>& Value);
+
+	/**
+	* Creates a new Bit Data Entry with the value of a positive integer array.
+	*
+	* Will store values below 32.768 in 2 bytes, higher values will be stored in 4 bytes.
+	*
+	* The given integers have to be 0 or higher, values under 0 will be changed to 0.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Positive Integer 2 Array"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromPositiveInteger2Array(const TArray<int32>& Value);
+
+	/**
+	* Creates a new Bit Data Entry with the value of a positive integer array.
+	*
+	* Will store values below 8.388.608 in 3 bytes, higher values will be stored in 4 bytes.
+	*
+	* The given integers have to be 0 or higher, values under 0 will be changed to 0.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Positive Integer 3 Array"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromPositiveInteger3Array(const TArray<int32>& Value);
+
+	/**
+	* Creates a new Bit Data Entry with the value of a long (bytes) array.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Long (bytes) Array"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromLongBytesArray(const TArray<ULowEntryLong*>& Value);
+
+
+	/**
+	* Creates a new Bit Data Entry with the value of a float array.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Float Array"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromFloatArray(const TArray<float>& Value);
+
+	/**
+	* Creates a new Bit Data Entry with the value of a double (bytes) array.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Double (bytes) Array"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromDoubleBytesArray(const TArray<ULowEntryDouble*>& Value);
+
+
+	/**
+	* Creates a new Bit Data Entry with the value of a boolean array, this does the same as a Bit Data Entry with the value of a bit array.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Boolean Array"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromBooleanArray(const TArray<bool>& Value);
+
+	/**
+	* Creates a new Bit Data Entry with the value of a String (UTF-8) array.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "String (Utf 8) Array"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromStringUtf8Array(const TArray<FString>& Value);
 
 
 

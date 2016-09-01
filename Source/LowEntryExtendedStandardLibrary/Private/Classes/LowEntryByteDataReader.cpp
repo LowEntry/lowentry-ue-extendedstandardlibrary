@@ -28,7 +28,14 @@
 int32 ULowEntryByteDataReader::GetAndIncreasePosition(const int32 Increasement)
 {
 	int32 Pos = Position;
-	Position = FMath::Min(Bytes.Num(), Position + Increasement);
+	if((Bytes.Num() - Increasement) <= Position)
+	{
+		Position = Bytes.Num();
+	}
+	else
+	{
+		Position += Increasement;
+	}
 	return Pos;
 }
 
@@ -65,6 +72,11 @@ void ULowEntryByteDataReader::SetPosition(const int32 Position_)
 void ULowEntryByteDataReader::Reset()
 {
 	Position = 0;
+}
+
+void ULowEntryByteDataReader::Empty()
+{
+	Position = Bytes.Num();
 }
 
 int32 ULowEntryByteDataReader::Remaining()
