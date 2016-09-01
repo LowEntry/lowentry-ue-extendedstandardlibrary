@@ -414,6 +414,19 @@ public:
 
 
 	/**
+	* Tries to convert a Binary (Base2) String (with each byte reversed) into a Byte Array. Will return an empty Array on failure.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Bit String To Bytes", Keywords = "byte array binary base2 bits reversed"))
+		static TArray<uint8> BitStringToBytes(const FString& Bits);
+
+	/**
+	* Converts a Byte Array into a Bit (Base2) String, with each byte reversed.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Bit String", Keywords = "byte array binary base2 bits reversed", AdvancedDisplay = "2"))
+		static FString BytesToBitString(const TArray<uint8>& ByteArray, const bool AddSpaces = false, int32 Index = 0, int32 Length = 0x7FFFFFFF);
+
+
+	/**
 	* Converts a boolean into a Byte Array (1 byte).
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Boolean To Bytes", Keywords = "byte array bool boolean"))

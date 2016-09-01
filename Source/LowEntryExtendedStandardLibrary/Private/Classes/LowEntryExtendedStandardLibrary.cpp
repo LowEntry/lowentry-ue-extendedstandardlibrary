@@ -866,6 +866,91 @@ FString ULowEntryExtendedStandardLibrary::BytesToBinary(const TArray<uint8>& Byt
 }
 
 
+TArray<uint8> ULowEntryExtendedStandardLibrary::BitStringToBytes(const FString& Binary)
+{
+	if(Binary.Len() <= 0)
+	{
+		return TArray<uint8>();
+	}
+	FString String = Binary.Replace(TEXT(" "), TEXT(""));
+	if((String.Len() <= 0) || ((String.Len() % 8) != 0))
+	{
+		return TArray<uint8>();
+	}
+	TArray<TCHAR> Bits = String.GetCharArray();
+	TArray<uint8> Bytes;
+	Bytes.SetNum(String.Len() / 8);
+	int32 Index = 0;
+	for(int32 i = 0; i < String.Len(); i += 8)
+	{
+		uint8 b = 0;
+		for(int32 j = 0; j < 8; j++)
+		{
+			if(Bits[i + j] == '0')
+			{
+				continue;
+			}
+			else if(Bits[i + j] == '1')
+			{
+				b += (1 << j);
+			}
+			else
+			{
+				// encountered invalid character
+				return TArray<uint8>();
+			}
+		}
+		Bytes[Index] = b;
+		Index++;
+	}
+	return Bytes;
+}
+
+FString ULowEntryExtendedStandardLibrary::BytesToBitString(const TArray<uint8>& ByteArray, const bool AddSpaces, int32 Index, int32 Length)
+{
+	if(ByteArray.Num() <= 0)
+	{
+		return TEXT("");
+	}
+
+	if(Index < 0)
+	{
+		Length += Index;
+		Index = 0;
+	}
+	if(Length > ByteArray.Num() - Index)
+	{
+		Length = ByteArray.Num() - Index;
+	}
+	if(Length <= 0)
+	{
+		return TEXT("");
+	}
+
+	FString String;
+	String.Reserve(Length * (AddSpaces ? 9 : 8));
+	for(int32 i = 1; i <= Length; i++)
+	{
+		for(int32 j = 0; j < 8; j++)
+		{
+			if((ByteArray[Index + (i - 1)] & (1 << j)) > 0)
+			{
+				String.Append(TEXT("1"));
+			}
+			else
+			{
+				String.Append(TEXT("0"));
+			}
+		}
+		if(AddSpaces && (i < Length))
+		{
+			String.Append(TEXT(" "));
+		}
+	}
+	return String;
+}
+
+
 TArray<uint8> ULowEntryExtendedStandardLibrary::BooleanToBytes(const bool Value)
 {
 	TArray<uint8> ByteArray;
