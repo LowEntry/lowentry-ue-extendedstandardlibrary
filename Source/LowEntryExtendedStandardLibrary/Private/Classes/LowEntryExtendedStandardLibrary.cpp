@@ -3315,6 +3315,24 @@ void ULowEntryExtendedStandardLibrary::SetWindowMode(const bool Fullscreen, cons
 
 
 
+void ULowEntryExtendedStandardLibrary::SetSplitScreenEnabled(const bool Enabled)
+{
+	if(GEngine == nullptr)
+	{
+		return;
+	}
+
+	UGameViewportClient* ViewportClient = GEngine->GameViewport;
+	if(ViewportClient == nullptr)
+	{
+		return;
+	}
+
+	ViewportClient->SetDisableSplitscreenOverride(!Enabled);
+}
+
+
+
 void ULowEntryExtendedStandardLibrary::SimpleKismetSystemLibraryPrintString(const FString& InString)
 {
 #if !(UE_BUILD_SHIPPING || UE_BUILD_TEST)

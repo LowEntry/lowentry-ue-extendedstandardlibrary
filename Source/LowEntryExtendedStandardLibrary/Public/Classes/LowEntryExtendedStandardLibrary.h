@@ -2064,6 +2064,14 @@ public:
 
 
 
+	/**
+	* Enables or disables split screen.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Viewport", Meta = (DisplayName = "Set Split Screen Enabled", Keywords = "screen split multiplayer mode"))
+		static void SetSplitScreenEnabled(const bool Enabled);
+
+
+
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Internal", Meta = (BlueprintInternalUseOnly = "true", DisplayName = "Kismet Print"))
 		static void SimpleKismetSystemLibraryPrintString(const FString& InString);
 
