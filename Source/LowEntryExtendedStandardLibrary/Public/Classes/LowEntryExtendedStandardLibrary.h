@@ -1209,8 +1209,8 @@ public:
 	* @param MaxDuration 	maximum length of delay (in seconds).
 	* @param LatentInfo 	The latent action.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Delay", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", MinDuration = "0.2", MaxDuration = "0.5"))
-		static void	RandomDelay(UObject* WorldContextObject, float MinDuration, float MaxDuration, struct FLatentActionInfo LatentInfo);
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Delay", meta = (DeprecatedFunction, DeprecationMessage = "Use a [Delay] with a [Random Float In Range] instead.", Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", MinDuration = "0.2", MaxDuration = "0.5"))
+		static void	RandomDelay(UObject* WorldContextObject, float MinDuration, float MaxDuration, FLatentActionInfo LatentInfo);
 
 	/**
 	* Perform a latent action with a retriggerable random delay (specified in seconds).  Calling again while it is counting down will reset the countdown to a new random Duration.
@@ -1220,7 +1220,7 @@ public:
 	* @param MaxDuration 	maximum length of delay (in seconds).
 	* @param LatentInfo 	The latent action.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Delay", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", MinDuration = "0.2", MaxDuration = "0.5"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Delay", meta = (DeprecatedFunction, DeprecationMessage = "Use a [Retriggerable Delay] with a [Random Float In Range] instead.", Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", MinDuration = "0.2", MaxDuration = "0.5"))
 		static void RetriggerableRandomDelay(UObject* WorldContextObject, float MinDuration, float MaxDuration, FLatentActionInfo LatentInfo);
 
 
@@ -1233,7 +1233,7 @@ public:
 	* @param LatentInfo 	The latent action.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Delay (Frames)", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", DisplayName = "Delay (Frames)"))
-		static void	DelayFrames(UObject* WorldContextObject, int32 Frames, struct FLatentActionInfo LatentInfo);
+		static void	DelayFrames(UObject* WorldContextObject, int32 Frames, FLatentActionInfo LatentInfo);
 
 	/**
 	* Perform a latent action with a retriggerable delay (specified in frames).  Calling again while it is counting down will reset the countdown to the given Frames.
@@ -1253,8 +1253,8 @@ public:
 	* @param MaxFrames 		maximum frames of delay.
 	* @param LatentInfo 	The latent action.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Delay (Frames)", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", MinFrames = "10", MaxFrames = "30", DisplayName = "Random Delay (Frames)"))
-		static void	RandomDelayFrames(UObject* WorldContextObject, int32 MinFrames, int32 MaxFrames, struct FLatentActionInfo LatentInfo);
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Delay (Frames)", meta = (DeprecatedFunction, DeprecationMessage = "Use a [Delay (Frames)] with a [Random Integer In Range] instead.", Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", MinFrames = "10", MaxFrames = "30", DisplayName = "Random Delay (Frames)"))
+		static void	RandomDelayFrames(UObject* WorldContextObject, int32 MinFrames, int32 MaxFrames, FLatentActionInfo LatentInfo);
 
 	/**
 	* Perform a latent action with a retriggerable random delay (specified in frames).  Calling again while it is counting down will reset the countdown to a new random Frames.
@@ -1264,7 +1264,7 @@ public:
 	* @param MaxFrames	 	maximum frames of delay.
 	* @param LatentInfo 	The latent action.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Delay (Frames)", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", MinFrames = "10", MaxFrames = "30", DisplayName = "Retriggerable Random Delay (Frames)"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Delay (Frames)", meta = (DeprecatedFunction, DeprecationMessage = "Use a [Retriggerable Delay (Frames)] with a [Random Integer In Range] instead.", Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", MinFrames = "10", MaxFrames = "30", DisplayName = "Retriggerable Random Delay (Frames)"))
 		static void RetriggerableRandomDelayFrames(UObject* WorldContextObject, int32 MinFrames, int32 MaxFrames, FLatentActionInfo LatentInfo);
 
 
@@ -1277,7 +1277,7 @@ public:
 	* @param LatentInfo 	The latent action.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Execution Queue", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", DisplayName = "Queue"))
-		static void	QueueExecutions(UObject* WorldContextObject, ULowEntryExecutionQueue*& Queue, struct FLatentActionInfo LatentInfo);
+		static void	QueueExecutions(UObject* WorldContextObject, ULowEntryExecutionQueue*& Queue, FLatentActionInfo LatentInfo);
 
 	/**
 	* Runs a pending execution (if any). 
