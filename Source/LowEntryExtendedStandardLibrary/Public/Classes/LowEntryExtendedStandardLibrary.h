@@ -594,8 +594,11 @@ public:
 	* - only MP4 (MPEG-4) can be played on every platform, so it's best to only use MP4 (MPEG-4) videos for now
 	* - don't forget to call Play on the MediaPlayer, otherwise nothing will happen
 	* - don't forget to call Play Sound with the MediaSoundWave, otherwise you won't hear any sound
+	* 
+	* Additional tips:
+	* - this blueprint can also be used to load sound assets, just ignore the returned Texture then
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|External", Meta = (DisplayName = "Load Video", Keywords = "movie"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|External", Meta = (DisplayName = "Load Video", Keywords = "movie download audio sound"))
 		static void LoadVideo(const FString& Url, bool& Success, UMediaPlayer*& Player, UMediaTexture*& Texture, UMediaSoundWave*& Sound);
 
 
