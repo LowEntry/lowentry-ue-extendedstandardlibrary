@@ -1343,8 +1343,8 @@ void ULowEntryExtendedStandardLibrary::LoadVideo(const FString& Url, bool& Succe
 	Texture->SetMediaPlayer(Player);
 	Sound->SetMediaPlayer(Player);
 #else
-	LoadPlayer->SetVideoTexture(Texture);
-	LoadPlayer->SetSoundWave(Sound);
+	Player->SetVideoTexture(Texture);
+	Player->SetSoundWave(Sound);
 #endif
 }
 
