@@ -591,7 +591,7 @@ public:
 	* - an absolute filepath URL of a video prefixed by "file://", for example "file://C:/Program Files/Epic Games/4.13/Engine/Binaries/Win64/YourVideo.mp4"
 	* 
 	* Some tips:
-	* - only MP4 can be played on every platform, so it's best to only use MP4 videos for now
+	* - only MP4 (MPEG-4) can be played on every platform, so it's best to only use MP4 (MPEG-4) videos for now
 	* - don't forget to call Play on the MediaPlayer, otherwise nothing will happen
 	* - don't forget to call Play Sound with the MediaSoundWave, otherwise you won't hear any sound
 	*/
