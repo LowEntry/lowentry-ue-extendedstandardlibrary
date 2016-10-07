@@ -587,7 +587,8 @@ public:
 	* 
 	* The URL is either:
 	* - a http/https URL, for example "http://public.lowentry.com/files/test_data/TestVideoMp4.mp4"
-	* - a filepath URL of a video located in "YourProject/Content/Movies/" formatted like "./Movies/YourVideo.mp4"
+	* - a relative filepath URL of a video located in "YourProject/Content/Movies/" formatted like "./Movies/YourVideo.mp4"
+	* - an absolute filepath URL of a video prefixed by "file://", for example "file://C:/Program Files/Epic Games/4.13/Engine/Binaries/Win64/YourVideo.mp4"
 	* 
 	* Some tips:
 	* - only MP4 can be played on every platform, so it's best to only use MP4 videos for now
