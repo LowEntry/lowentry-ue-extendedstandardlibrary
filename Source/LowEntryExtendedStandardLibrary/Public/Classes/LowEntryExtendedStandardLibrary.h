@@ -574,32 +574,41 @@ public:
 		static UTexture2D* BytesToImage(const TArray<uint8>& ByteArray, const ELowEntryImageFormat ImageFormat, int32 Index = 0, int32 Length = 0x7FFFFFFF);
 
 
-
+	
 	/**
 	* Loads a video, returns a:
 	*  - MediaPlayer (to play/pause/etc the video)
 	*  - MediaTexture (to see the video)
 	*  - MediaSoundWave (to hear the video)
-	* 
+	*
 	* This blueprint also returns a boolean called Success.
 	*  - true: every returned Object is valid
 	*  - false: every returned Object is NULL
-	* 
+	*
 	* The URL is either:
 	* - a http/https URL, for example "http://public.lowentry.com/files/test_data/TestVideoMp4.mp4"
 	* - a relative filepath URL of a video located in "YourProject/Content/Movies/" formatted like "./Movies/YourVideo.mp4"
 	* - an absolute filepath URL of a video prefixed by "file://", for example "file://C:/Program Files/Epic Games/4.13/Engine/Binaries/Win64/YourVideo.mp4"
-	* 
+	*
 	* Some tips:
 	* - only MP4 (MPEG-4) can be played on every platform, so it's best to only use MP4 (MPEG-4) videos for now
-	* - don't forget to call Play on the MediaPlayer, otherwise nothing will happen
 	* - don't forget to call Play Sound with the MediaSoundWave, otherwise you won't hear any sound
-	* 
+	*
 	* Additional tips:
-	* - this blueprint can also be used to load sound assets, just ignore the returned Texture then
+	* - this blueprint can also be used to load sound assets, just ignore the returned Texture in that case
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|External", Meta = (DisplayName = "Load Video", Keywords = "movie download audio sound"))
-		static void LoadVideo(const FString& Url, bool& Success, UMediaPlayer*& Player, UMediaTexture*& Texture, UMediaSoundWave*& Sound);
+		static void LoadVideo(const FString& Url, bool& Success, UMediaPlayer*& Player, UMediaTexture*& Texture, UMediaSoundWave*& Sound, const bool PlayOnOpen = true, const bool Loop = true);
+
+
+
+	/**
+	* Calls Texture->UpdateResource() if the given Texture is valid.
+	* 
+	* Updating the resource of a texture might take several frames. During these frames, the texture will be blank.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Texture", Meta = (DisplayName = "Update Resource (Texture)", Keywords = ""))
+		static void TextureUpdateResource(UTexture* Texture);
 
 
 
