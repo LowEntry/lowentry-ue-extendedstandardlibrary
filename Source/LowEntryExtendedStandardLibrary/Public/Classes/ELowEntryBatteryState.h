@@ -8,7 +8,7 @@
 
 
 UENUM()
-enum class ELowEntryBatteryState
+enum class ELowEntryBatteryState : uint8
 {
 	Charging,
 	Discharging,

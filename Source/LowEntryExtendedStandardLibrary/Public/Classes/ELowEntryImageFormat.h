@@ -10,7 +10,7 @@
 
 
 UENUM()
-enum class ELowEntryImageFormat
+enum class ELowEntryImageFormat : uint8
 {
 	/** Invalid or unrecognized format */
 	Invalid,

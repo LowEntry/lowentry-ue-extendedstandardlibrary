@@ -10,7 +10,7 @@
 
 
 UENUM()
-enum class ELowEntryRGBFormat
+enum class ELowEntryRGBFormat : uint8
 {
 	Invalid,
 	RGBA,
