@@ -140,6 +140,17 @@ bool ULowEntryExtendedStandardLibrary::ShippingBuild()
 
 
 
+bool ULowEntryExtendedStandardLibrary::WithEditor()
+{
+#if WITH_EDITOR
+	return true;
+#else
+	return false;
+#endif
+}
+
+
+
 bool ULowEntryExtendedStandardLibrary::Html5Platform()
 {
 #if PLATFORM_HTML5

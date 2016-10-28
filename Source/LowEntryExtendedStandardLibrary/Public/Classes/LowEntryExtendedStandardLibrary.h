@@ -72,93 +72,101 @@ public:
 	/**
 	* Returns true if this is a debug build (UE_BUILD_DEBUG), returns false otherwise.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Build", Meta = (DisplayName = "Is Debug Build", Keywords = "compile export mode version type"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Build", Meta = (DisplayName = "Is Debug Build", Keywords = "compile export mode version type build platform"))
 		static bool DebugBuild();
 
 	/**
 	* Returns true if this is a debug build (UE_BUILD_DEVELOPMENT), returns false otherwise.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Build", Meta = (DisplayName = "Is Development Build", Keywords = "compile export mode version type"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Build", Meta = (DisplayName = "Is Development Build", Keywords = "compile export mode version type build platform"))
 		static bool DevelopmentBuild();
 
 	/**
 	* Returns true if this is a debug build (UE_BUILD_TEST), returns false otherwise.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Build", Meta = (DisplayName = "Is Test Build", Keywords = "compile export mode version type"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Build", Meta = (DisplayName = "Is Test Build", Keywords = "compile export mode version type build platform"))
 		static bool TestBuild();
 
 	/**
 	* Returns true if this is a debug build (UE_BUILD_SHIPPING), returns false otherwise.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Build", Meta = (DisplayName = "Is Shipping Build", Keywords = "compile export mode version type"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Build", Meta = (DisplayName = "Is Shipping Build", Keywords = "compile export mode version type build platform"))
 		static bool ShippingBuild();
+
+
+
+	/**
+	* Returns true if this is inside the editor (WITH_EDITOR), returns false otherwise.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Build", Meta = (DisplayName = "With Editor", Keywords = "compile export mode version type build platform in inside using"))
+		static bool WithEditor();
 
 
 
 	/**
 	* Returns true if this is the Html5 platform (PLATFORM_HTML5), returns false otherwise.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Html5 Platform", Keywords = "compile export mode version type"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Html5 Platform", Keywords = "compile export mode version type build platform"))
 		static bool Html5Platform();
 
 	/**
 	* Returns true if this is the Windows platform (PLATFORM_WINDOWS), returns false otherwise.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Windows Platform", Keywords = "compile export mode version type"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Windows Platform", Keywords = "compile export mode version type build platform"))
 		static bool WindowsPlatform();
 
 	/**
 	* Returns true if this is the Windows RT platform (PLATFORM_WINRT), returns false otherwise.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Windows Rt Platform", Keywords = "compile export mode version type"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Windows Rt Platform", Keywords = "compile export mode version type build platform"))
 		static bool WindowsRtPlatform();
 
 	/**
 	* Returns true if this is the Windows RT ARM platform (PLATFORM_WINRT_ARM), returns false otherwise.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Windows Rt Arm Platform", Keywords = "compile export mode version type"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Windows Rt Arm Platform", Keywords = "compile export mode version type build platform"))
 		static bool WindowsRtArmPlatform();
 
 	/**
 	* Returns true if this is the Linux platform (PLATFORM_LINUX), returns false otherwise.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Linux Platform", Keywords = "compile export mode version type"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Linux Platform", Keywords = "compile export mode version type build platform"))
 		static bool LinuxPlatform();
 
 	/**
 	* Returns true if this is the Mac platform (PLATFORM_MAC), returns false otherwise.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Mac Platform", Keywords = "compile export mode version type"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Mac Platform", Keywords = "compile export mode version type build platform"))
 		static bool MacPlatform();
 
 	/**
 	* Returns true if this is the PS4 platform (PLATFORM_PS4), returns false otherwise.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Ps4 Platform", Keywords = "compile export mode version type"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Ps4 Platform", Keywords = "compile export mode version type build platform"))
 		static bool Ps4Platform();
 
 	/**
 	* Returns true if this is the Xbox One platform (PLATFORM_XBOXONE), returns false otherwise.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Xbox One Platform", Keywords = "compile export mode version type"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Xbox One Platform", Keywords = "compile export mode version type build platform"))
 		static bool XboxOnePlatform();
 
 	/**
 	* Returns true if this is the Android platform (PLATFORM_ANDROID), returns false otherwise.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Android Platform", Keywords = "compile export mode version type"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Android Platform", Keywords = "compile export mode version type build platform"))
 		static bool AndroidPlatform();
 
 	/**
 	* Returns true if this is the IOS platform (PLATFORM_IOS), returns false otherwise.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Ios Platform", Keywords = "compile export mode version type"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Ios Platform", Keywords = "compile export mode version type build platform"))
 		static bool IosPlatform();
 
 	/**
 	* Returns true if this is a desktop (PLATFORM_DESKTOP), returns false otherwise.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Desktop", Keywords = "compile export mode version type"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Desktop", Keywords = "compile export mode version type build platform"))
 		static bool DesktopPlatform();
 
 
