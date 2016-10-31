@@ -2093,6 +2093,23 @@ public:
 
 
 
+	/**
+	* Finds a class.
+	* 
+	* The given ClassName has to be a specific path to your class/object, for example: /Game/Blueprints/GameMode.GameMode_C
+	* 
+	* Note that you have to append _C to the end of your ClassName, as is done in the example.
+	* Note that is also always has to start with /Game/, no matter what the path to your class is.
+	* 
+	* The easiest way to get the correct ClassName is by right clicking your class/object in the content browser and by then clicking on 'Copy Reference', then you'll just have to remove the 'Blueprint' and the quotes and add the _C at the end of it.
+	* So this: Blueprint'/Game/Blueprints/PlayerController.PlayerController'
+	* Would turn into this: /Game/Blueprints/PlayerController.PlayerController_C
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Get Class With Name", Keywords = "get retrieve create object path find by value"))
+		static void GetClassWithName(const FString& ClassName, UClass*& Class_, bool& Success);
+
+
+
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Internal", Meta = (BlueprintInternalUseOnly = "true", DisplayName = "Kismet Print"))
 		static void SimpleKismetSystemLibraryPrintString(const FString& InString);
 

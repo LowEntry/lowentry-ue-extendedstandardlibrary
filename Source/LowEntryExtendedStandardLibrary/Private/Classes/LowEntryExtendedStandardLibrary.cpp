@@ -3356,6 +3356,38 @@ void ULowEntryExtendedStandardLibrary::SetSplitScreenEnabled(const bool Enabled)
 
 
 
+void ULowEntryExtendedStandardLibrary::GetClassWithName(const FString& ClassName, UClass*& Class_, bool& Success)
+{
+	Class_ = NULL;
+	Success = false;
+
+	{// get class >>
+		UClass* FoundClass = FindObject<UClass>(ANY_PACKAGE, *ClassName);
+		if(FoundClass != nullptr)
+		{
+			Class_ = FoundClass;
+			Success = true;
+			return;
+		}
+	}// get class <<
+
+	{// get class through redirector >>
+		UObjectRedirector* RenamedClassRedirector = FindObject<UObjectRedirector>(ANY_PACKAGE, *ClassName);
+		if((RenamedClassRedirector != nullptr) && (RenamedClassRedirector->DestinationObject != nullptr))
+		{
+			UClass* FoundClass = CastChecked<UClass>(RenamedClassRedirector->DestinationObject);
+			if(FoundClass != nullptr)
+			{
+				Class_ = FoundClass;
+				Success = true;
+				return;
+			}
+		}
+	}// get class through redirector <<
+}
+
+
+
 void ULowEntryExtendedStandardLibrary::SimpleKismetSystemLibraryPrintString(const FString& InString)
 {
 #if !(UE_BUILD_SHIPPING || UE_BUILD_TEST)
