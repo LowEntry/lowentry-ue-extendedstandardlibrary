@@ -3388,6 +3388,35 @@ void ULowEntryExtendedStandardLibrary::GetClassWithName(const FString& ClassName
 
 
 
+FVector2D ULowEntryExtendedStandardLibrary::Divide_Vector2dVector2d(const FVector2D& A, const FVector2D& B)
+{
+	return A / B;
+}
+
+
+
+FVector2D ULowEntryExtendedStandardLibrary::GetAbsoluteSize(const FGeometry& Geometry)
+{
+	FVector2D LocalSize = Geometry.GetLocalSize();
+	return Geometry.LocalToAbsolute(LocalSize) - Geometry.LocalToAbsolute(FVector2D(0, 0));
+}
+
+FVector2D ULowEntryExtendedStandardLibrary::GetLocalToAbsoluteScale(const FGeometry& Geometry)
+{
+	FVector2D LocalSize = Geometry.GetLocalSize();
+	FVector2D AbsoluteSize = Geometry.LocalToAbsolute(LocalSize) - Geometry.LocalToAbsolute(FVector2D(0, 0));
+	return AbsoluteSize / LocalSize;
+}
+
+FVector2D ULowEntryExtendedStandardLibrary::GetAbsoluteToLocalScale(const FGeometry& Geometry)
+{
+	FVector2D LocalSize = Geometry.GetLocalSize();
+	FVector2D AbsoluteSize = Geometry.LocalToAbsolute(LocalSize) - Geometry.LocalToAbsolute(FVector2D(0, 0));
+	return LocalSize / AbsoluteSize;
+}
+
+
+
 void ULowEntryExtendedStandardLibrary::SimpleKismetSystemLibraryPrintString(const FString& InString)
 {
 #if !(UE_BUILD_SHIPPING || UE_BUILD_TEST)

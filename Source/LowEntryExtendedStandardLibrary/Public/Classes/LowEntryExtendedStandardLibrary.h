@@ -2110,6 +2110,34 @@ public:
 
 
 
+	/**
+	* Divides A by B.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (DisplayName = "vector2d / vector2d", Keywords = "divide vector2d", CompactNodeTitle = "/"))
+		static FVector2D Divide_Vector2dVector2d(const FVector2D& A, const FVector2D& B);
+
+
+
+	/**
+	* Returns the absolute size of the given Geometry.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Widgets", Meta = (DisplayName = "Get Absolute Size"))
+		static FVector2D GetAbsoluteSize(const FGeometry& Geometry);
+
+	/**
+	* Returns the scale of the given Geometry from Local to Absolute (Absolute Size divided by Local Size).
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Widgets", Meta = (DisplayName = "Get Local To Absolute Scale"))
+		static FVector2D GetLocalToAbsoluteScale(const FGeometry& Geometry);
+
+	/**
+	* Returns the scale of the given Geometry from Absolute to Local (Local Size divided by Absolute Size).
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Widgets", Meta = (DisplayName = "Get Absolute To Local Scale"))
+		static FVector2D GetAbsoluteToLocalScale(const FGeometry& Geometry);
+
+
+
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Internal", Meta = (BlueprintInternalUseOnly = "true", DisplayName = "Kismet Print"))
 		static void SimpleKismetSystemLibraryPrintString(const FString& InString);
 
