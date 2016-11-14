@@ -2091,6 +2091,22 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Viewport", Meta = (DisplayName = "Set Split Screen Enabled", Keywords = "screen split multiplayer mode"))
 		static void SetSplitScreenEnabled(const bool Enabled);
 
+	/**
+	* Retrieves whether world rendering is enabled.
+	* 
+	* Returns Success=false and Enabled=false if the world rendering enabled value could not be determined, which happends when:
+	*  - GEngine is null
+	*  - GEngine's GameViewportClient is null
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Viewport", Meta = (DisplayName = "Is World Rendering Enabled", Keywords = "disable game 3d view get"))
+		static void IsWorldRenderingEnabled(bool& Success, bool& Enabled);
+
+	/**
+	* Causes the world rendering to be enabled or disabled.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Viewport", Meta = (DisplayName = "Set World Rendering Enabled", Keywords = "disable game 3d view"))
+		static void SetWorldRenderingEnabled(const bool Enabled);
+
 
 
 	/**

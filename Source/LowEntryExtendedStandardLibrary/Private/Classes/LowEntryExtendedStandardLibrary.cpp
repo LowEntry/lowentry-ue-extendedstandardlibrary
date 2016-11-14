@@ -3354,6 +3354,42 @@ void ULowEntryExtendedStandardLibrary::SetSplitScreenEnabled(const bool Enabled)
 	ViewportClient->SetDisableSplitscreenOverride(!Enabled);
 }
 
+void ULowEntryExtendedStandardLibrary::IsWorldRenderingEnabled(bool& Success, bool& Enabled)
+{
+	Success = false;
+	Enabled = false;
+
+	if(GEngine == nullptr)
+	{
+		return;
+	}
+
+	UGameViewportClient* ViewportClient = GEngine->GameViewport;
+	if(ViewportClient == nullptr)
+	{
+		return;
+	}
+
+	Success = true;
+	Enabled = (ViewportClient->bDisableWorldRendering == 0);
+}
+
+void ULowEntryExtendedStandardLibrary::SetWorldRenderingEnabled(const bool Enabled)
+{
+	if(GEngine == nullptr)
+	{
+		return;
+	}
+
+	UGameViewportClient* ViewportClient = GEngine->GameViewport;
+	if(ViewportClient == nullptr)
+	{
+		return;
+	}
+
+	ViewportClient->bDisableWorldRendering = (Enabled ? 0 : 1);
+}
+
 
 
 void ULowEntryExtendedStandardLibrary::GetClassWithName(const FString& ClassName, UClass*& Class_, bool& Success)
