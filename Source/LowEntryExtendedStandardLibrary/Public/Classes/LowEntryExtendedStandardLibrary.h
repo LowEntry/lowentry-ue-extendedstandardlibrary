@@ -2182,19 +2182,19 @@ public:
 	* Executes a the pin of the matching value.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Case Switch Integer", ExpandEnumAsExecs = "Branch"))
-		static void CaseSwitchInteger(const int32 OnlyCheckFirstX, const int32 Value, const int32 _1_, const int32 _2_, const int32 _3_, const int32 _4_, const int32 _5_, const int32 _6_, const int32 _7_, const int32 _8_, const int32 _9_, const int32 _10_, ELowEntryExtendedStandardLibrary1to10other& Branch);
+		static void CaseSwitchInteger(const int32 OnlyCheckFirstX, const int32 Value, const int32 _1__, const int32 _2__, const int32 _3__, const int32 _4__, const int32 _5__, const int32 _6__, const int32 _7__, const int32 _8__, const int32 _9__, const int32 _10__, ELowEntryExtendedStandardLibrary1to10other& Branch);
 
 	/**
 	* Executes a the pin of the matching value.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Case Switch Byte", ExpandEnumAsExecs = "Branch"))
-		static void CaseSwitchByte(const int32 OnlyCheckFirstX, const uint8 Value, const uint8 _1_, const uint8 _2_, const uint8 _3_, const uint8 _4_, const uint8 _5_, const uint8 _6_, const uint8 _7_, const uint8 _8_, const uint8 _9_, const uint8 _10_, ELowEntryExtendedStandardLibrary1to10other& Branch);
+		static void CaseSwitchByte(const int32 OnlyCheckFirstX, const uint8 Value, const uint8 _1__, const uint8 _2__, const uint8 _3__, const uint8 _4__, const uint8 _5__, const uint8 _6__, const uint8 _7__, const uint8 _8__, const uint8 _9__, const uint8 _10__, ELowEntryExtendedStandardLibrary1to10other& Branch);
 
 	/**
 	* Executes a the pin of the matching value.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Case Switch Object", ExpandEnumAsExecs = "Branch"))
-		static void CaseSwitchObject(const int32 OnlyCheckFirstX, const UObject* Value, const UObject* _1_, const UObject* _2_, const UObject* _3_, const UObject* _4_, const UObject* _5_, const UObject* _6_, const UObject* _7_, const UObject* _8_, const UObject* _9_, const UObject* _10_, ELowEntryExtendedStandardLibrary1to10other& Branch);
+		static void CaseSwitchObject(const int32 OnlyCheckFirstX, const UObject* Value, const UObject* _1__, const UObject* _2__, const UObject* _3__, const UObject* _4__, const UObject* _5__, const UObject* _6__, const UObject* _7__, const UObject* _8__, const UObject* _9__, const UObject* _10__, ELowEntryExtendedStandardLibrary1to10other& Branch);
 
 
 
