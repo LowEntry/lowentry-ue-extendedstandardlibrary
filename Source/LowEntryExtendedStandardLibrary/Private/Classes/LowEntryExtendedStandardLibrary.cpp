@@ -3453,6 +3453,340 @@ FVector2D ULowEntryExtendedStandardLibrary::GetAbsoluteToLocalScale(const FGeome
 
 
 
+void ULowEntryExtendedStandardLibrary::ExecToBoolean(const ELowEntryExtendedStandardLibraryTrueOrFalse Branch, bool& Value)
+{
+	Value = (Branch == ELowEntryExtendedStandardLibraryTrueOrFalse::_True_);
+}
+
+void ULowEntryExtendedStandardLibrary::ExecToInteger(const ELowEntryExtendedStandardLibrary0to9 Branch, int32& Value)
+{
+	Value = (int32) Branch;
+}
+
+void ULowEntryExtendedStandardLibrary::ExecToByte(const ELowEntryExtendedStandardLibrary0to9 Branch, uint8& Value)
+{
+	Value = (uint8) Branch;
+}
+
+
+
+void ULowEntryExtendedStandardLibrary::CaseSwitchInteger(const int32 OnlyCheckFirstX, const int32 Value, const int32 _1_, const int32 _2_, const int32 _3_, const int32 _4_, const int32 _5_, const int32 _6_, const int32 _7_, const int32 _8_, const int32 _9_, const int32 _10_, ELowEntryExtendedStandardLibrary1to10other& Branch)
+{
+	Branch = ELowEntryExtendedStandardLibrary1to10other::Other;
+
+	if(OnlyCheckFirstX < 1)
+	{
+		return;
+	}
+	if(Value == _1_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_1_;
+		return;
+	}
+
+	if(OnlyCheckFirstX < 2)
+	{
+		return;
+	}
+	if(Value == _2_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_2_;
+		return;
+	}
+
+	if(OnlyCheckFirstX < 3)
+	{
+		return;
+	}
+	if(Value == _3_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_3_;
+		return;
+	}
+
+	if(OnlyCheckFirstX < 4)
+	{
+		return;
+	}
+	if(Value == _4_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_4_;
+		return;
+	}
+
+	if(OnlyCheckFirstX < 5)
+	{
+		return;
+	}
+	if(Value == _5_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_5_;
+		return;
+	}
+
+	if(OnlyCheckFirstX < 6)
+	{
+		return;
+	}
+	if(Value == _6_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_6_;
+		return;
+	}
+
+	if(OnlyCheckFirstX < 7)
+	{
+		return;
+	}
+	if(Value == _7_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_7_;
+		return;
+	}
+
+	if(OnlyCheckFirstX < 8)
+	{
+		return;
+	}
+	if(Value == _8_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_8_;
+		return;
+	}
+
+	if(OnlyCheckFirstX < 9)
+	{
+		return;
+	}
+	if(Value == _9_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_9_;
+		return;
+	}
+
+	if(OnlyCheckFirstX < 10)
+	{
+		return;
+	}
+	if(Value == _10_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_10_;
+		return;
+	}
+}
+
+void ULowEntryExtendedStandardLibrary::CaseSwitchByte(const int32 OnlyCheckFirstX, const uint8 Value, const uint8 _1_, const uint8 _2_, const uint8 _3_, const uint8 _4_, const uint8 _5_, const uint8 _6_, const uint8 _7_, const uint8 _8_, const uint8 _9_, const uint8 _10_, ELowEntryExtendedStandardLibrary1to10other& Branch)
+{
+	Branch = ELowEntryExtendedStandardLibrary1to10other::Other;
+
+	if(OnlyCheckFirstX < 1)
+	{
+		return;
+	}
+	if(Value == _1_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_1_;
+		return;
+	}
+
+	if(OnlyCheckFirstX < 2)
+	{
+		return;
+	}
+	if(Value == _2_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_2_;
+		return;
+	}
+
+	if(OnlyCheckFirstX < 3)
+	{
+		return;
+	}
+	if(Value == _3_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_3_;
+		return;
+	}
+
+	if(OnlyCheckFirstX < 4)
+	{
+		return;
+	}
+	if(Value == _4_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_4_;
+		return;
+	}
+
+	if(OnlyCheckFirstX < 5)
+	{
+		return;
+	}
+	if(Value == _5_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_5_;
+		return;
+	}
+
+	if(OnlyCheckFirstX < 6)
+	{
+		return;
+	}
+	if(Value == _6_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_6_;
+		return;
+	}
+
+	if(OnlyCheckFirstX < 7)
+	{
+		return;
+	}
+	if(Value == _7_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_7_;
+		return;
+	}
+
+	if(OnlyCheckFirstX < 8)
+	{
+		return;
+	}
+	if(Value == _8_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_8_;
+		return;
+	}
+
+	if(OnlyCheckFirstX < 9)
+	{
+		return;
+	}
+	if(Value == _9_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_9_;
+		return;
+	}
+
+	if(OnlyCheckFirstX < 10)
+	{
+		return;
+	}
+	if(Value == _10_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_10_;
+		return;
+	}
+}
+
+void ULowEntryExtendedStandardLibrary::CaseSwitchObject(const int32 OnlyCheckFirstX, const UObject* Value, const UObject* _1_, const UObject* _2_, const UObject* _3_, const UObject* _4_, const UObject* _5_, const UObject* _6_, const UObject* _7_, const UObject* _8_, const UObject* _9_, const UObject* _10_, ELowEntryExtendedStandardLibrary1to10other& Branch)
+{
+	Branch = ELowEntryExtendedStandardLibrary1to10other::Other;
+
+	if(OnlyCheckFirstX < 1)
+	{
+		return;
+	}
+	if(Value == _1_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_1_;
+		return;
+	}
+
+	if(OnlyCheckFirstX < 2)
+	{
+		return;
+	}
+	if(Value == _2_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_2_;
+		return;
+	}
+
+	if(OnlyCheckFirstX < 3)
+	{
+		return;
+	}
+	if(Value == _3_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_3_;
+		return;
+	}
+
+	if(OnlyCheckFirstX < 4)
+	{
+		return;
+	}
+	if(Value == _4_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_4_;
+		return;
+	}
+
+	if(OnlyCheckFirstX < 5)
+	{
+		return;
+	}
+	if(Value == _5_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_5_;
+		return;
+	}
+
+	if(OnlyCheckFirstX < 6)
+	{
+		return;
+	}
+	if(Value == _6_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_6_;
+		return;
+	}
+
+	if(OnlyCheckFirstX < 7)
+	{
+		return;
+	}
+	if(Value == _7_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_7_;
+		return;
+	}
+
+	if(OnlyCheckFirstX < 8)
+	{
+		return;
+	}
+	if(Value == _8_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_8_;
+		return;
+	}
+
+	if(OnlyCheckFirstX < 9)
+	{
+		return;
+	}
+	if(Value == _9_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_9_;
+		return;
+	}
+
+	if(OnlyCheckFirstX < 10)
+	{
+		return;
+	}
+	if(Value == _10_)
+	{
+		Branch = ELowEntryExtendedStandardLibrary1to10other::_10_;
+		return;
+	}
+}
+
+
+
 void ULowEntryExtendedStandardLibrary::SimpleKismetSystemLibraryPrintString(const FString& InString)
 {
 #if !(UE_BUILD_SHIPPING || UE_BUILD_TEST)

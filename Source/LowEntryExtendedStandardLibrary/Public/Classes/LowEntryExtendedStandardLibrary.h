@@ -14,6 +14,10 @@
 #include "Interfaces/IImageWrapper.h"
 #include "Interfaces/IImageWrapperModule.h"
 
+#include "ELowEntryExtendedStandardLibrary0to9.h"
+#include "ELowEntryExtendedStandardLibrary1to10other.h"
+#include "ELowEntryExtendedStandardLibraryTrueOrFalse.h"
+
 #include "ELowEntryBatteryState.h"
 
 #include "ELowEntryImageFormat.h"
@@ -2151,6 +2155,46 @@ public:
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Widgets", Meta = (DisplayName = "Get Absolute To Local Scale"))
 		static FVector2D GetAbsoluteToLocalScale(const FGeometry& Geometry);
+
+
+
+	/**
+	* Returns a boolean depending on which exec pin has been executed.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Exec To Boolean", ExpandEnumAsExecs = "Branch"))
+		static void ExecToBoolean(const ELowEntryExtendedStandardLibraryTrueOrFalse Branch, bool& Value);
+
+	/**
+	* Returns an integer depending on which exec pin has been executed.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Exec To Integer", ExpandEnumAsExecs = "Branch"))
+		static void ExecToInteger(const ELowEntryExtendedStandardLibrary0to9 Branch, int32& Value);
+
+	/**
+	* Returns a byte depending on which exec pin has been executed.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Exec To Byte", ExpandEnumAsExecs = "Branch"))
+		static void ExecToByte(const ELowEntryExtendedStandardLibrary0to9 Branch, uint8& Value);
+
+
+
+	/**
+	* Executes a the pin of the matching value.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Case Switch Integer", ExpandEnumAsExecs = "Branch"))
+		static void CaseSwitchInteger(const int32 OnlyCheckFirstX, const int32 Value, const int32 _1_, const int32 _2_, const int32 _3_, const int32 _4_, const int32 _5_, const int32 _6_, const int32 _7_, const int32 _8_, const int32 _9_, const int32 _10_, ELowEntryExtendedStandardLibrary1to10other& Branch);
+
+	/**
+	* Executes a the pin of the matching value.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Case Switch Byte", ExpandEnumAsExecs = "Branch"))
+		static void CaseSwitchByte(const int32 OnlyCheckFirstX, const uint8 Value, const uint8 _1_, const uint8 _2_, const uint8 _3_, const uint8 _4_, const uint8 _5_, const uint8 _6_, const uint8 _7_, const uint8 _8_, const uint8 _9_, const uint8 _10_, ELowEntryExtendedStandardLibrary1to10other& Branch);
+
+	/**
+	* Executes a the pin of the matching value.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Case Switch Object", ExpandEnumAsExecs = "Branch"))
+		static void CaseSwitchObject(const int32 OnlyCheckFirstX, const UObject* Value, const UObject* _1_, const UObject* _2_, const UObject* _3_, const UObject* _4_, const UObject* _5_, const UObject* _6_, const UObject* _7_, const UObject* _8_, const UObject* _9_, const UObject* _10_, ELowEntryExtendedStandardLibrary1to10other& Branch);
 
 
 
