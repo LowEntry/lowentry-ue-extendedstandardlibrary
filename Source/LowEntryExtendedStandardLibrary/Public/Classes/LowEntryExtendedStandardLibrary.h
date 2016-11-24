@@ -2159,6 +2159,38 @@ public:
 
 
 	/**
+	* Clears widget focus.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Widgets", Meta = (DisplayName = "Clear All User Focus", Keywords = "reset"))
+		static void ClearAllUserFocus();
+
+	/**
+	* Clears widget focus.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Widgets", Meta = (DisplayName = "Clear User Focus", Keywords = "reset"))
+		static void ClearUserFocus(const int32 UserIndex);
+
+	/**
+	* Clears widget focus.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Widgets", Meta = (DisplayName = "Clear Keyboard Focus", Keywords = "reset"))
+		static void ClearKeyboardFocus();
+
+	/**
+	* Clears widget focus.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Widgets", Meta = (DisplayName = "Get User Focused Widget Type"))
+		static FName GetUserFocusedWidgetType(const int32 UserIndex);
+
+	/**
+	* Clears widget focus.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Widgets", Meta = (DisplayName = "Get Keyboard Focused Widget Type"))
+		static FName GetKeyboardFocusedWidgetType();
+
+
+
+	/**
 	* Returns a boolean depending on which exec pin has been executed.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Exec To Boolean", ExpandEnumAsExecs = "Branch"))

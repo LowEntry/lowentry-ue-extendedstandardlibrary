@@ -3453,6 +3453,63 @@ FVector2D ULowEntryExtendedStandardLibrary::GetAbsoluteToLocalScale(const FGeome
 
 
 
+void ULowEntryExtendedStandardLibrary::ClearAllUserFocus()
+{
+	if(!FSlateApplication::IsInitialized())
+	{
+		return;
+	}
+	FSlateApplication::Get().ClearAllUserFocus();
+}
+
+void ULowEntryExtendedStandardLibrary::ClearUserFocus(const int32 UserIndex)
+{
+	if(!FSlateApplication::IsInitialized())
+	{
+		return;
+	}
+	FSlateApplication::Get().ClearUserFocus(UserIndex);
+}
+
+void ULowEntryExtendedStandardLibrary::ClearKeyboardFocus()
+{
+	if(!FSlateApplication::IsInitialized())
+	{
+		return;
+	}
+	FSlateApplication::Get().ClearKeyboardFocus();
+}
+
+FName ULowEntryExtendedStandardLibrary::GetUserFocusedWidgetType(const int32 UserIndex)
+{
+	if(!FSlateApplication::IsInitialized())
+	{
+		return TEXT("");
+	}
+	TSharedPtr<SWidget> Widget = FSlateApplication::Get().GetUserFocusedWidget(UserIndex);
+	if(!Widget.IsValid())
+	{
+		return TEXT("");
+	}
+	return Widget->GetType();
+}
+
+FName ULowEntryExtendedStandardLibrary::GetKeyboardFocusedWidgetType()
+{
+	if(!FSlateApplication::IsInitialized())
+	{
+		return TEXT("");
+	}
+	TSharedPtr<SWidget> Widget = FSlateApplication::Get().GetKeyboardFocusedWidget();
+	if(!Widget.IsValid())
+	{
+		return TEXT("");
+	}
+	return Widget->GetType();
+}
+
+
+
 void ULowEntryExtendedStandardLibrary::ExecToBoolean(const ELowEntryExtendedStandardLibraryTrueOrFalse Branch, bool& Value)
 {
 	Value = (Branch == ELowEntryExtendedStandardLibraryTrueOrFalse::_True_);
