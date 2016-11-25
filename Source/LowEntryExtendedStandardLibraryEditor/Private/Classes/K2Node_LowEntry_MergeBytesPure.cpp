@@ -6,6 +6,24 @@
 #include "K2Node_LowEntry_MergeBytesPure.h"
 
 
+#include "EdGraph/EdGraphPin.h"
+#include "Engine/Blueprint.h"
+#include "Framework/Commands/UIAction.h"
+#include "Framework/MultiBox/MultiBoxBuilder.h"
+#include "EdGraphSchema_K2.h"
+#include "EdGraph/EdGraphNodeUtils.h"
+#include "Kismet2/BlueprintEditorUtils.h"
+
+#include "Kismet/KismetArrayLibrary.h"
+#include "ScopedTransaction.h"
+#include "EdGraphUtilities.h"
+#include "KismetCompiledFunctionContext.h"
+#include "KismetCompilerMisc.h"
+#include "BlueprintNodeSpawner.h"
+#include "EditorCategoryUtils.h"
+#include "BlueprintActionDatabaseRegistrar.h"
+
+
 #define LOCTEXT_NAMESPACE "MakeArrayNode"
 
 

@@ -2,22 +2,6 @@
 
 
 #include "Engine.h"
-#include "GraphEditorSettings.h"
-#include "BlueprintGraphDefinitions.h"
-#include "BlueprintUtilities.h"
-#include "Kismet2/BlueprintEditorUtils.h"
-#include "UnrealEd.h"
-#include "EditorStyle.h"
-
-#include "SlateBasics.h"
-#include "Kismet/KismetArrayLibrary.h"
-#include "ScopedTransaction.h"
-#include "KismetCompiler.h"
-#include "BlueprintNodeSpawner.h"
-#include "EditorCategoryUtils.h"
-#include "BlueprintActionDatabaseRegistrar.h"
-#include "EdGraph/EdGraphNodeUtils.h"
-
 #include "K2Node.h"
 
 #include "Runtime/Launch/Resources/Version.h"
@@ -58,7 +42,7 @@ public:
 
 	// UK2Node interface
 	virtual bool IsNodePure() const override;
-	void NotifyPinConnectionListChanged(UEdGraphPin* Pin) override;
+	virtual void NotifyPinConnectionListChanged(UEdGraphPin* Pin) override;
 	virtual class FNodeHandlingFunctor* CreateNodeHandler(class FKismetCompilerContext& CompilerContext) const override;
 	virtual bool IsConnectionDisallowed(const UEdGraphPin* MyPin, const UEdGraphPin* OtherPin, FString& OutReason) const override;
 	virtual void GetMenuActions(FBlueprintActionDatabaseRegistrar& ActionRegistrar) const override;

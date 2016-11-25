@@ -41,7 +41,10 @@ namespace UnrealBuildTool.Rules
 					"UnrealEd",
 					"GraphEditor",
 					"SlateCore",
-				}
+                    "Kismet",
+                    "KismetWidgets",
+                    "PropertyEditor",
+                }
 			);
 		}
 	}
