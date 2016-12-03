@@ -1354,6 +1354,7 @@ void ULowEntryExtendedStandardLibrary::LoadVideo(const FString& Url, bool& Succe
 	Texture->SetMediaPlayer(Player);
 	Sound->SetMediaPlayer(Player);
 #else
+	Sound->bVirtualizeWhenSilent = true;
 	Player->PlayOnOpen = PlayOnOpen;
 	Player->SetVideoTexture(Texture);
 	Player->SetSoundWave(Sound);
