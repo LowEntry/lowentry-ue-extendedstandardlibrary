@@ -320,12 +320,113 @@ void ULowEntryExtendedStandardLibrary::GetCurrentVolumePercentage(float& Percent
 #endif
 }
 
+
+
 void ULowEntryExtendedStandardLibrary::GetAndroidVolume(int& Volume)
 {
 #if PLATFORM_ANDROID
 	Volume = FAndroidMisc::GetVolumeState(NULL);
 #else
 	Volume = 0;
+#endif
+}
+
+FString ULowEntryExtendedStandardLibrary::GetAndroidDeviceMake()
+{
+#if PLATFORM_ANDROID
+	return FAndroidMisc::GetDeviceMake();
+#else
+	return TEXT("");
+#endif
+}
+
+FString ULowEntryExtendedStandardLibrary::GetAndroidDeviceModel()
+{
+#if PLATFORM_ANDROID
+	return FAndroidMisc::GetDeviceModel();
+#else
+	return TEXT("");
+#endif
+}
+
+FString ULowEntryExtendedStandardLibrary::GetAndroidVersion()
+{
+#if PLATFORM_ANDROID
+	return FAndroidMisc::GetAndroidVersion();
+#else
+	return TEXT("");
+#endif
+}
+
+FString ULowEntryExtendedStandardLibrary::GetAndroidOsLanguage()
+{
+#if PLATFORM_ANDROID
+	return FAndroidMisc::GetOSLanguage();
+#else
+	return TEXT("");
+#endif
+}
+
+FString ULowEntryExtendedStandardLibrary::GetAndroidDefaultLocale()
+{
+#if PLATFORM_ANDROID
+	return FAndroidMisc::GetDefaultLocale();
+#else
+	return TEXT("");
+#endif
+}
+
+FString ULowEntryExtendedStandardLibrary::GetAndroidGpuFamily()
+{
+#if PLATFORM_ANDROID
+	return FAndroidMisc::GetGPUFamily();
+#else
+	return TEXT("");
+#endif
+}
+
+FString ULowEntryExtendedStandardLibrary::GetAndroidGlVersion()
+{
+#if PLATFORM_ANDROID
+	return FAndroidMisc::GetGLVersion();
+#else
+	return TEXT("");
+#endif
+}
+
+int32 ULowEntryExtendedStandardLibrary::GetAndroidBuildVersion()
+{
+#if PLATFORM_ANDROID
+	return FAndroidMisc::GetAndroidBuildVersion();
+#else
+	return -1;
+#endif
+}
+
+bool ULowEntryExtendedStandardLibrary::IsAndroidDaydreamApplication()
+{
+#if PLATFORM_ANDROID
+	return FAndroidMisc::IsDaydreamApplication();
+#else
+	return false;
+#endif
+}
+
+int32 ULowEntryExtendedStandardLibrary::GetAndroidNumberOfCores()
+{
+#if PLATFORM_ANDROID
+	return FAndroidMisc::NumberOfCores();
+#else
+	return -1;
+#endif
+}
+
+bool ULowEntryExtendedStandardLibrary::AreAndroidHeadphonesPluggedIn()
+{
+#if PLATFORM_ANDROID
+	return FAndroidMisc::AreHeadPhonesPluggedIn();
+#else
+	return false;
 #endif
 }
 

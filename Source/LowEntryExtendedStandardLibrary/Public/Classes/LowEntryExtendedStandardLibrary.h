@@ -211,6 +211,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Get System Volume (Percentages)", Keywords = "sound audio android current system"))
 		static void GetCurrentVolumePercentage(float& Percentage, bool& Success);
 
+
+
 	/**
 	* Returns the current Android volume, from 0 to 15.
 	*
@@ -218,8 +220,96 @@ public:
 	*
 	* Note: This blueprint is not used to retrieve or change the sound volume in-game, you will have to use Sound Classes for that.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Get Android Volume", Keywords = "sound audio android current system"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Android", Meta = (DisplayName = "Get Android Volume", Keywords = "sound audio android current system"))
 		static void GetAndroidVolume(int& Volume);
+
+	/**
+	* Returns the Android device make, returns an empty string if it failed.
+	*
+	* This will always only ever work on Android devices, other systems will always return an emptry string.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Android", Meta = (DisplayName = "Get Android Device Make", Keywords = "android system name make type"))
+		static FString GetAndroidDeviceMake();
+
+	/**
+	* Returns the Android device model, returns an empty string if it failed.
+	*
+	* This will always only ever work on Android devices, other systems will always return an emptry string.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Android", Meta = (DisplayName = "Get Android Device Model", Keywords = "android system name model type"))
+		static FString GetAndroidDeviceModel();
+
+	/**
+	* Returns the Android version, returns an empty string if it failed.
+	*
+	* This will always only ever work on Android devices, other systems will always return an emptry string.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Android", Meta = (DisplayName = "Get Android Version", Keywords = "android system"))
+		static FString GetAndroidVersion();
+
+	/**
+	* Returns the Android OS language, returns an empty string if it failed.
+	*
+	* This will always only ever work on Android devices, other systems will always return an emptry string.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Android", Meta = (DisplayName = "Get Android OS Language", Keywords = "android system locale language"))
+		static FString GetAndroidOsLanguage();
+
+	/**
+	* Returns the Android default locale, returns an empty string if it failed.
+	*
+	* This will always only ever work on Android devices, other systems will always return an emptry string.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Android", Meta = (DisplayName = "Get Android Default Locale", Keywords = "android system locale language"))
+		static FString GetAndroidDefaultLocale();
+
+	/**
+	* Returns the Android GPU family, returns an empty string if it failed.
+	*
+	* This will always only ever work on Android devices, other systems will always return an emptry string.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Android", Meta = (DisplayName = "Get Android GPU Family", Keywords = "android system"))
+		static FString GetAndroidGpuFamily();
+
+	/**
+	* Returns the Android GL version, returns an empty string if it failed.
+	*
+	* This will always only ever work on Android devices, other systems will always return an emptry string.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Android", Meta = (DisplayName = "Get Android GL Version", Keywords = "android system"))
+		static FString GetAndroidGlVersion();
+
+	/**
+	* Returns the Android build version, returns -1 if it failed.
+	*
+	* This will always only ever work on Android devices, other systems will always return -1.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Android", Meta = (DisplayName = "Get Android Build Version", Keywords = "android system"))
+		static int32 GetAndroidBuildVersion();
+
+	/**
+	* Returns true if this is an Android daydream application, returns false if it failed.
+	*
+	* This will always only ever work on Android devices, other systems will always return false.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Android", Meta = (DisplayName = "Is Android Daydream Application", Keywords = "android system"))
+		static bool IsAndroidDaydreamApplication();
+
+	/**
+	* Returns the number of cores, returns -1 if it failed.
+	*
+	* This will always only ever work on Android devices, other systems will always return -1.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Android", Meta = (DisplayName = "Get Android Number Of Cores", Keywords = "android system cpu"))
+		static int32 GetAndroidNumberOfCores();
+
+	/**
+	* Returns true if headphones are plugged in, returns false if it failed.
+	*
+	* This will always only ever work on Android devices, other systems will always return false.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Android", Meta = (DisplayName = "Are Android Headphones Plugged In", Keywords = "android system"))
+		static bool AreAndroidHeadphonesPluggedIn();
 
 
 
