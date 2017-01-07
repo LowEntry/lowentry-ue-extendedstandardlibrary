@@ -171,8 +171,12 @@ bool ULowEntryExtendedStandardLibrary::WindowsPlatform()
 
 bool ULowEntryExtendedStandardLibrary::WindowsRtPlatform()
 {
-#if PLATFORM_WINRT
-	return true;
+#ifdef PLATFORM_WINRT
+	#if PLATFORM_WINRT
+		return true;
+	#else
+		return false;
+	#endif
 #else
 	return false;
 #endif
@@ -180,8 +184,12 @@ bool ULowEntryExtendedStandardLibrary::WindowsRtPlatform()
 
 bool ULowEntryExtendedStandardLibrary::WindowsRtArmPlatform()
 {
-#if PLATFORM_WINRT_ARM
-	return true;
+#ifdef PLATFORM_WINRT_ARM
+	#if PLATFORM_WINRT_ARM
+		return true;
+	#else
+		return false;
+	#endif
 #else
 	return false;
 #endif
