@@ -2526,15 +2526,42 @@ TArray<FLowEntryRegexMatch> ULowEntryExtendedStandardLibrary::RegexGetMatches(co
 	int32 Length = String.Len();
 	FRegexPattern RegexPattern(Pattern);
 	FRegexMatcher RegexMatcher(RegexPattern, String);
+	int32 MatchNumber = 0;
 	while(RegexMatcher.FindNext())
 	{
+		MatchNumber++;
 		int32 b = RegexMatcher.GetMatchBeginning();
 		int32 e = RegexMatcher.GetMatchEnding();
+		if((b < 0) || (e < 0))
+		{
+			continue;
+		}
+
+		TArray<FLowEntryRegexCaptureGroup> CaptureGroups;
+		int32 CaptureGroupNumber = 0;
+		while(true)
+		{
+			CaptureGroupNumber++;
+			int32 gb = RegexMatcher.GetCaptureGroupBeginning(CaptureGroupNumber);
+			int32 ge = RegexMatcher.GetCaptureGroupEnding(CaptureGroupNumber);
+			if((gb < 0) || (ge < 0))
+			{
+				break;
+			}
+			FLowEntryRegexCaptureGroup GroupMatch;
+			GroupMatch.CaptureGroupNumber = CaptureGroupNumber;
+			GroupMatch.BeginIndex = gb;
+			GroupMatch.EndIndex = ge;
+			GroupMatch.Match = String.Mid(gb, ge - gb);
+			CaptureGroups.Add(GroupMatch);
+		}
 
 		FLowEntryRegexMatch Match;
+		Match.MatchNumber = MatchNumber;
 		Match.BeginIndex = b;
 		Match.EndIndex = e;
 		Match.Match = String.Mid(b, e - b);
+		Match.CaptureGroups = CaptureGroups;
 		Matches.Add(Match);
 
 		RegexMatcher.SetLimits(e, Length);

@@ -1425,19 +1425,19 @@ public:
 
 
 	/**
-	* Returns true if the regex was found in the given String.
+	* Returns true if a regex match was found in the given String.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (DisplayName = "Regex Match"))
 		static bool RegexMatch(const FString& String, const FString& Pattern);
 	
 	/**
-	* Returns the number of times the regex was found in the given String.
+	* Returns the number of times the regex matched in the given String.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (DisplayName = "Regex Count"))
 		static int32 RegexCount(const FString& String, const FString& Pattern);
 
 	/**
-	* Returns the begin index, end index and matched string of each regex found in the given String.
+	* Returns the begin index, end index and matched string of each regex match (including each capture group of the regex) found in the given String.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (DisplayName = "Regex Get Matches"))
 		static TArray<FLowEntryRegexMatch> RegexGetMatches(const FString& String, const FString& Pattern);

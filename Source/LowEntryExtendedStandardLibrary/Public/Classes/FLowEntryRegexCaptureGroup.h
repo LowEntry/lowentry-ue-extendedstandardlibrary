@@ -4,44 +4,36 @@
 #include "Engine.h"
 #include "Core.h"
 
-#include "FLowEntryRegexCaptureGroup.h"
-
-#include "FLowEntryRegexMatch.generated.h"
+#include "FLowEntryRegexCaptureGroup.generated.h"
 
 
 USTRUCT(BlueprintType)
-struct LOWENTRYEXTENDEDSTANDARDLIBRARY_API FLowEntryRegexMatch
+struct LOWENTRYEXTENDEDSTANDARDLIBRARY_API FLowEntryRegexCaptureGroup
 {
 	GENERATED_BODY()
 
 
 	/**
-	* This is the number of the match, starting with 1.
+	* This is the number of the capture group, starting with 1.
 	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Low Entry|Extended Standard Library|Utilities|String")
-		int32 MatchNumber;
+		int32 CaptureGroupNumber;
 
 	/**
-	* This is the start index of the match.
+	* This is the start index of the capture group match.
 	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Low Entry|Extended Standard Library|Utilities|String")
 		int32 BeginIndex;
 
 	/**
-	* This is the end index of the match.
+	* This is the end index of the capture group match.
 	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Low Entry|Extended Standard Library|Utilities|String")
 		int32 EndIndex;
 
 	/**
-	* This is the text of the match.
+	* This is the text of the capture group match.
 	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Low Entry|Extended Standard Library|Utilities|String")
 		FString Match;
-
-	/**
-	* These are the capture group matches of the match.
-	*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Low Entry|Extended Standard Library|Utilities|String")
-		TArray<FLowEntryRegexCaptureGroup> CaptureGroups;
 };
