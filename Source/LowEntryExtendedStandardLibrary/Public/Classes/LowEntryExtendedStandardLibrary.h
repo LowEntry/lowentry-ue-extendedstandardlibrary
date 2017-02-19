@@ -29,6 +29,8 @@
 #include "MediaTexture.h"
 #include "MediaSoundWave.h"
 
+#include "ImageUtils.h"
+
 #include "LowEntryExtendedStandardLibrary.generated.h"
 
 
@@ -675,6 +677,52 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Image", Keywords = "byte array binary", AdvancedDisplay = "2"))
 		static UTexture2D* BytesToImage(const TArray<uint8>& ByteArray, const ELowEntryImageFormat ImageFormat, int32 Index = 0, int32 Length = 0x7FFFFFFF);
 
+
+	/**
+	* Converts a Texture2D into a Byte Array (in PNG format).
+	*
+	* Returns an empty Byte Array if it fails.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Image (Texture2D) To Bytes (PNG)", Keywords = "byte array binary"))
+		static TArray<uint8> Texture2DToBytesPng(UTexture2D* Texture2D);
+
+
+	/**
+	* Converts a SceneCapture2D into a Byte Array (in PNG format).
+	* 
+	* To get the best results:
+	*  1) Set the TextureRenderTarget2D settings to the default values, then turn HDR off, then choose a properly high Size X and Y (1000+ seems to be fine)
+	*  2) In the SceneCapture2D settings, change the [Capture Source] to [Final Color (LDR) in RGB], if you don't see this option, try converting your SceneCapture2D Actor to a blueprint Actor first
+	*  3) To get a brighter image, in the SceneCapture2D settings, play around with the Color Grading Contrast and Gamma (a Contrast and Gamma of X=1.0 Y=1.0 Z=1.0 W=2.0 looked quite good on my end)
+	*
+	* Returns an empty Byte Array if it fails.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Image (SceneCapture2D) To Bytes (PNG)", Keywords = "byte array binary"))
+		static TArray<uint8> SceneCapture2DToBytesPng(ASceneCapture2D* SceneCapture2D);
+
+	/**
+	* Converts a SceneCaptureComponent2D into a Byte Array (in PNG format).
+	* 
+	* To get the best results:
+	*  1) Set the TextureRenderTarget2D settings to the default values, then turn HDR off, then choose a properly high Size X and Y (1000+ seems to be fine)
+	*  2) In the SceneCaptureComponent2D settings, change the [Capture Source] to [Final Color (LDR) in RGB], if you don't see this option, try converting your SceneCaptureComponent2D's Actor to a blueprint Actor first
+	*  3) To get a brighter image, in the SceneCaptureComponent2D settings (not in the CameraActor settings, but in the SceneCaptureComponent2D settings), play around with the Color Grading Contrast and Gamma (a Contrast and Gamma of X=1.0 Y=1.0 Z=1.0 W=2.0 looked quite good on my end)
+	*
+	* Returns an empty Byte Array if it fails.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Image (SceneCaptureComponent2D) To Bytes (PNG)", Keywords = "byte array binary"))
+		static TArray<uint8> SceneCaptureComponent2DToBytesPng(USceneCaptureComponent2D* SceneCaptureComponent2D);
+
+	/**
+	* Converts a TextureRenderTarget2D into a Byte Array (in PNG format).
+	* 
+	* To get the best results:
+	*  1) Set the TextureRenderTarget2D settings to the default values, then turn HDR off, then choose a properly high Size X and Y (1000+ seems to be fine)
+	*
+	* Returns an empty Byte Array if it fails.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Image (TextureRenderTarget2D) To Bytes (PNG)", Keywords = "byte array binary"))
+		static TArray<uint8> TextureRenderTarget2DToBytesPng(UTextureRenderTarget2D* TextureRenderTarget2D);
 
 	
 	/**
