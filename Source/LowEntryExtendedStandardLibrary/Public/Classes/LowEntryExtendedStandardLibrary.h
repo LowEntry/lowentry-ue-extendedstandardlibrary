@@ -674,8 +674,20 @@ public:
 	* 
 	* Returns NULL if it fails.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Image", Keywords = "byte array binary", AdvancedDisplay = "2"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Image (Texture2D)", Keywords = "byte array binary", AdvancedDisplay = "2"))
 		static UTexture2D* BytesToImage(const TArray<uint8>& ByteArray, const ELowEntryImageFormat ImageFormat, int32 Index = 0, int32 Length = 0x7FFFFFFF);
+
+	/**
+	* Converts a Texture2D into a Byte Array.
+	*
+	* Some formats will not work (like BMP, ICO and ICNS).
+	* 
+	* The Compression Quality has to be 1-100, a value of 0 will use the default value for the given ImageFormat.
+	* 
+	* Returns an empty Byte Array if it fails.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Image To Bytes (Texture2D)", Keywords = "byte array binary", AdvancedDisplay = "3"))
+		static void Texture2DToBytes(UTexture2D* Texture2D, const ELowEntryImageFormat ImageFormat, TArray<uint8>& ByteArray, const int32 CompressionQuality = 0);
 
 
 	/**
@@ -700,24 +712,20 @@ public:
 
 
 	/**
-	* Converts a Texture2D into a Byte Array.
-	*
-	* Returns an empty Byte Array if it fails.
-	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Image (Texture2D) To Bytes", Keywords = "byte array binary", AdvancedDisplay = "3"))
-		static void Texture2DToBytes(UTexture2D* Texture2D, const ELowEntryImageFormat ImageFormat, TArray<uint8>& ByteArray, const int32 CompressionQuality = 0);
-
-	/**
 	* Converts a Texture2D into a Pixel Array.
-	* 
-	* Some formats will not work (like BMP, ICO and ICNS).
-	* 
-	* The Compression Quality has to be 1-100, a value of 0 will use the default value for the given ImageFormat.
 	*
 	* Returns an empty Pixel Array if it fails, the Width and the Height will also be 0 then.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Image|Get Pixels", Meta = (DisplayName = "Image (Texture2D) Get Pixels", Keywords = "array width height pixels colors"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Image|To Pixels", Meta = (DisplayName = "Image To Pixels (Texture2D)", Keywords = "array width height pixels colors"))
 		static void Texture2DToPixels(UTexture2D* Texture2D, int32& Width, int32& Height, TArray<FColor>& Pixels);
+
+	/**
+	* Converts a Pixel Array into an image (Texture2D).
+	*
+	* Returns NULL if it fails.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Image|From Pixels", Meta = (DisplayName = "Pixels To Image (Texture2D)", Keywords = "array width height pixels colors"))
+		static UTexture2D* PixelsToTexture2D(const int32 Width, const int32 Height, const TArray<FColor>& Pixels);
 
 
 	/**
@@ -734,7 +742,7 @@ public:
 	*
 	* Returns an empty Byte Array if it fails.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Image (SceneCapture2D) To Bytes", Keywords = "byte array binary", AdvancedDisplay = "3"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Image To Bytes (SceneCapture2D)", Keywords = "byte array binary", AdvancedDisplay = "3"))
 		static void SceneCapture2DToBytes(ASceneCapture2D* SceneCapture2D, const ELowEntryImageFormat ImageFormat, TArray<uint8>& ByteArray, const int32 CompressionQuality = 0);
 
 	/**
@@ -751,7 +759,7 @@ public:
 	*
 	* Returns an empty Byte Array if it fails.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Image (SceneCaptureComponent2D) To Bytes", Keywords = "byte array binary", AdvancedDisplay = "3"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Image To Bytes (SceneCaptureComponent2D)", Keywords = "byte array binary", AdvancedDisplay = "3"))
 		static void SceneCaptureComponent2DToBytes(USceneCaptureComponent2D* SceneCaptureComponent2D, const ELowEntryImageFormat ImageFormat, TArray<uint8>& ByteArray, const int32 CompressionQuality = 0);
 
 	/**
@@ -766,7 +774,7 @@ public:
 	*
 	* Returns an empty Byte Array if it fails.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Image (TextureRenderTarget2D) To Bytes", Keywords = "byte array binary", AdvancedDisplay = "3"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Image To Bytes (TextureRenderTarget2D)", Keywords = "byte array binary", AdvancedDisplay = "3"))
 		static void TextureRenderTarget2DToBytes(UTextureRenderTarget2D* TextureRenderTarget2D, const ELowEntryImageFormat ImageFormat, TArray<uint8>& ByteArray, const int32 CompressionQuality = 0);
 
 
@@ -780,7 +788,7 @@ public:
 	*
 	* Returns an empty Pixel Array if it fails, the Width and the Height will also be 0 then.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Image|Get Pixels", Meta = (DisplayName = "Image (SceneCapture2D) Get Pixels", Keywords = "array width height pixels colors"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Image|To Pixels", Meta = (DisplayName = "Image To Pixels (SceneCapture2D)", Keywords = "array width height pixels colors"))
 		static void SceneCapture2DToPixels(ASceneCapture2D* SceneCapture2D, int32& Width, int32& Height, TArray<FColor>& Pixels);
 
 	/**
@@ -793,7 +801,7 @@ public:
 	*
 	* Returns an empty Pixel Array if it fails, the Width and the Height will also be 0 then.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Image|Get Pixels", Meta = (DisplayName = "Image (SceneCaptureComponent2D) Get Pixels", Keywords = "bytearray width height pixels colors"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Image|To Pixels", Meta = (DisplayName = "Image To Pixels (SceneCaptureComponent2D)", Keywords = "bytearray width height pixels colors"))
 		static void SceneCaptureComponent2DToPixels(USceneCaptureComponent2D* SceneCaptureComponent2D, int32& Width, int32& Height, TArray<FColor>& Pixels);
 
 	/**
@@ -804,7 +812,7 @@ public:
 	*
 	* Returns an empty Pixel Array if it fails, the Width and the Height will also be 0 then.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Image|Get Pixels", Meta = (DisplayName = "Image (TextureRenderTarget2D) Get Pixels", Keywords = "array width height pixels colors"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Image|To Pixels", Meta = (DisplayName = "Image To Pixels (TextureRenderTarget2D)", Keywords = "array width height pixels colors"))
 		static void TextureRenderTarget2DToPixels(UTextureRenderTarget2D* TextureRenderTarget2D, int32& Width, int32& Height, TArray<FColor>& Pixels);
 
 	

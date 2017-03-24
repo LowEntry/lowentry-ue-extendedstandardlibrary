@@ -1436,6 +1436,80 @@ UTexture2D* ULowEntryExtendedStandardLibrary::BytesToImage(const TArray<uint8>& 
 	return LoadedT2D;
 }
 
+void ULowEntryExtendedStandardLibrary::Texture2DToBytes(UTexture2D* Texture2D, const ELowEntryImageFormat ImageFormat, TArray<uint8>& ByteArray, const int32 CompressionQuality)
+{
+	ByteArray = TArray<uint8>();
+
+	if(Texture2D == nullptr)
+	{
+		return;
+	}
+
+	bool ChangedTexture2D = false;
+	bool PreviousSRGB = Texture2D->SRGB;
+	TextureMipGenSettings PreviousMipGenSettings = Texture2D->MipGenSettings;
+	TextureCompressionSettings PreviousCompressionSettings = Texture2D->CompressionSettings;
+
+	if((PreviousSRGB != false) || (PreviousMipGenSettings != TMGS_NoMipmaps) || (PreviousCompressionSettings != TC_VectorDisplacementmap))
+	{
+		ChangedTexture2D = true;
+		Texture2D->SRGB = false;
+		Texture2D->MipGenSettings = TMGS_NoMipmaps;
+		Texture2D->CompressionSettings = TC_VectorDisplacementmap;
+		Texture2D->UpdateResource();
+	}
+
+	FTexture2DMipMap& Mip0 = Texture2D->PlatformData->Mips[0];
+	int32 Mip0Width = Mip0.SizeX;
+	int32 Mip0Height = Mip0.SizeY;
+
+	FByteBulkData* Mip0Data = &Mip0.BulkData;
+	if(Mip0Data == nullptr)
+	{
+		if(ChangedTexture2D)
+		{
+			Texture2D->SRGB = PreviousSRGB;
+			Texture2D->MipGenSettings = PreviousMipGenSettings;
+			Texture2D->CompressionSettings = PreviousCompressionSettings;
+			Texture2D->UpdateResource();
+		}
+		return;
+	}
+
+	FColor* Mip0Pixels = static_cast<FColor*>(Mip0Data->Lock(LOCK_READ_ONLY));
+	if(Mip0Pixels == nullptr)
+	{
+		Mip0Data->Unlock();
+		if(ChangedTexture2D)
+		{
+			Texture2D->SRGB = PreviousSRGB;
+			Texture2D->MipGenSettings = PreviousMipGenSettings;
+			Texture2D->CompressionSettings = PreviousCompressionSettings;
+			Texture2D->UpdateResource();
+		}
+		return;
+	}
+
+	TArray<FColor> Pixels;
+	int32 Total = Mip0Width * Mip0Height;
+	Pixels.SetNum(Total);
+	for(int32 i = 0; i < Total; i++)
+	{
+		Pixels[i] = Mip0Pixels[i];
+	}
+	Mip0Data->Unlock();
+
+	if(ChangedTexture2D)
+	{
+		Texture2D->SRGB = PreviousSRGB;
+		Texture2D->MipGenSettings = PreviousMipGenSettings;
+		Texture2D->CompressionSettings = PreviousCompressionSettings;
+		Texture2D->UpdateResource();
+	}
+
+	PixelsToBytes(Mip0Width, Mip0Height, Pixels, ImageFormat, ByteArray, CompressionQuality);
+}
+
 
 
 void ULowEntryExtendedStandardLibrary::BytesToPixels(const TArray<uint8>& ByteArray, const ELowEntryImageFormat ImageFormat, int32& Width, int32& Height, TArray<FColor>& Pixels, int32 Index, int32 Length)
@@ -1585,82 +1659,6 @@ void ULowEntryExtendedStandardLibrary::PixelsToBytes(const int32 Width, const in
 }
 
 
-
-void ULowEntryExtendedStandardLibrary::Texture2DToBytes(UTexture2D* Texture2D, const ELowEntryImageFormat ImageFormat, TArray<uint8>& ByteArray, const int32 CompressionQuality)
-{
-	ByteArray = TArray<uint8>();
-
-	if(Texture2D == nullptr)
-	{
-		return;
-	}
-
-	bool ChangedTexture2D = false;
-	bool PreviousSRGB = Texture2D->SRGB;
-	TextureMipGenSettings PreviousMipGenSettings = Texture2D->MipGenSettings;
-	TextureCompressionSettings PreviousCompressionSettings = Texture2D->CompressionSettings;
-
-	if((PreviousSRGB != false) || (PreviousMipGenSettings != TMGS_NoMipmaps) || (PreviousCompressionSettings != TC_VectorDisplacementmap))
-	{
-		ChangedTexture2D = true;
-		Texture2D->SRGB = false;
-		Texture2D->MipGenSettings = TMGS_NoMipmaps;
-		Texture2D->CompressionSettings = TC_VectorDisplacementmap;
-		Texture2D->UpdateResource();
-	}
-
-	FTexture2DMipMap& Mip0 = Texture2D->PlatformData->Mips[0];
-	int32 Mip0Width = Mip0.SizeX;
-	int32 Mip0Height = Mip0.SizeY;
-
-	FByteBulkData* Mip0Data = &Mip0.BulkData;
-	if(Mip0Data == nullptr)
-	{
-		if(ChangedTexture2D)
-		{
-			Texture2D->SRGB = PreviousSRGB;
-			Texture2D->MipGenSettings = PreviousMipGenSettings;
-			Texture2D->CompressionSettings = PreviousCompressionSettings;
-			Texture2D->UpdateResource();
-		}
-		return;
-	}
-
-	FColor* Mip0Pixels = static_cast<FColor*>(Mip0Data->Lock(LOCK_READ_ONLY));
-	if(Mip0Pixels == nullptr)
-	{
-		Mip0Data->Unlock();
-		if(ChangedTexture2D)
-		{
-			Texture2D->SRGB = PreviousSRGB;
-			Texture2D->MipGenSettings = PreviousMipGenSettings;
-			Texture2D->CompressionSettings = PreviousCompressionSettings;
-			Texture2D->UpdateResource();
-		}
-		return;
-	}
-
-	TArray<FColor> Pixels;
-	int32 Total = Mip0Width * Mip0Height;
-	Pixels.SetNum(Total);
-	for(int32 i = 0; i < Total; i++)
-	{
-		Pixels[i] = Mip0Pixels[i];
-	}
-	Mip0Data->Unlock();
-
-	if(ChangedTexture2D)
-	{
-		Texture2D->SRGB = PreviousSRGB;
-		Texture2D->MipGenSettings = PreviousMipGenSettings;
-		Texture2D->CompressionSettings = PreviousCompressionSettings;
-		Texture2D->UpdateResource();
-	}
-
-	PixelsToBytes(Mip0Width, Mip0Height, Pixels, ImageFormat, ByteArray, CompressionQuality);
-}
-
-
 void ULowEntryExtendedStandardLibrary::Texture2DToPixels(UTexture2D* Texture2D, int32& Width, int32& Height, TArray<FColor>& Pixels)
 {
 	Width = 0;
@@ -1734,6 +1732,27 @@ void ULowEntryExtendedStandardLibrary::Texture2DToPixels(UTexture2D* Texture2D, 
 		Texture2D->CompressionSettings = PreviousCompressionSettings;
 		Texture2D->UpdateResource();
 	}
+}
+
+UTexture2D* ULowEntryExtendedStandardLibrary::PixelsToTexture2D(const int32 Width, const int32 Height, const TArray<FColor>& Pixels)
+{
+	if((Pixels.Num() <= 0) || (Width <= 0) || (Height <= 0))
+	{
+		return NULL;
+	}
+
+	UTexture2D* LoadedT2D = UTexture2D::CreateTransient(Width, Height, EPixelFormat::PF_B8G8R8A8);
+	if(LoadedT2D == nullptr)
+	{
+		return NULL;
+	}
+
+	void* TextureData = LoadedT2D->PlatformData->Mips[0].BulkData.Lock(LOCK_READ_WRITE);
+	FMemory::Memcpy(TextureData, &Pixels[0], Pixels.Num() * sizeof(FColor));
+	LoadedT2D->PlatformData->Mips[0].BulkData.Unlock();
+
+	LoadedT2D->UpdateResource();
+	return LoadedT2D;
 }
 
 
