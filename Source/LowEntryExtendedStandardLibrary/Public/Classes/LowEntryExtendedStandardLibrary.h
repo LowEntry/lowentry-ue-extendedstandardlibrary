@@ -679,16 +679,53 @@ public:
 
 
 	/**
-	* Converts a Texture2D into a Byte Array (in PNG format).
+	* Converts a Byte Array into a Pixel Array.
+	*
+	* Returns an empty Pixel Array if it fails, the Width and the Height will also be 0 then.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Pixels", Keywords = "byte binary array width height pixels colors", AdvancedDisplay = "5"))
+		static void BytesToPixels(const TArray<uint8>& ByteArray, const ELowEntryImageFormat ImageFormat, int32& Width, int32& Height, TArray<FColor>& Pixels, int32 Index = 0, int32 Length = 0x7FFFFFFF);
+
+	/**
+	* Converts a Pixel Array into a Byte Array.
+	* 
+	* Some formats will not work (like BMP, ICO and ICNS).
+	* 
+	* The Compression Quality has to be 1-100, a value of 0 will use the default value for the given ImageFormat.
 	*
 	* Returns an empty Byte Array if it fails.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Image (Texture2D) To Bytes (PNG)", Keywords = "byte array binary"))
-		static TArray<uint8> Texture2DToBytesPng(UTexture2D* Texture2D);
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Pixels To Bytes", Keywords = "byte binary array width height pixels colors", AdvancedDisplay = "5"))
+		static void PixelsToBytes(const int32 Width, const int32 Height, const TArray<FColor>& Pixels, const ELowEntryImageFormat ImageFormat, TArray<uint8>& ByteArray, const int32 CompressionQuality = 0);
 
 
 	/**
-	* Converts a SceneCapture2D into a Byte Array (in PNG format).
+	* Converts a Texture2D into a Byte Array.
+	*
+	* Returns an empty Byte Array if it fails.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Image (Texture2D) To Bytes", Keywords = "byte array binary", AdvancedDisplay = "3"))
+		static void Texture2DToBytes(UTexture2D* Texture2D, const ELowEntryImageFormat ImageFormat, TArray<uint8>& ByteArray, const int32 CompressionQuality = 0);
+
+	/**
+	* Converts a Texture2D into a Pixel Array.
+	* 
+	* Some formats will not work (like BMP, ICO and ICNS).
+	* 
+	* The Compression Quality has to be 1-100, a value of 0 will use the default value for the given ImageFormat.
+	*
+	* Returns an empty Pixel Array if it fails, the Width and the Height will also be 0 then.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Image|Get Pixels", Meta = (DisplayName = "Image (Texture2D) Get Pixels", Keywords = "array width height pixels colors"))
+		static void Texture2DToPixels(UTexture2D* Texture2D, int32& Width, int32& Height, TArray<FColor>& Pixels);
+
+
+	/**
+	* Converts a SceneCapture2D into a Byte Array.
+	* 
+	* Some formats will not work (like BMP, ICO and ICNS).
+	* 
+	* The Compression Quality has to be 1-100, a value of 0 will use the default value for the given ImageFormat.
 	* 
 	* To get the best results:
 	*  1) Set the TextureRenderTarget2D settings to the default values, then turn HDR off, then choose a properly high Size X and Y (1000+ seems to be fine)
@@ -697,11 +734,15 @@ public:
 	*
 	* Returns an empty Byte Array if it fails.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Image (SceneCapture2D) To Bytes (PNG)", Keywords = "byte array binary"))
-		static TArray<uint8> SceneCapture2DToBytesPng(ASceneCapture2D* SceneCapture2D);
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Image (SceneCapture2D) To Bytes", Keywords = "byte array binary", AdvancedDisplay = "3"))
+		static void SceneCapture2DToBytes(ASceneCapture2D* SceneCapture2D, const ELowEntryImageFormat ImageFormat, TArray<uint8>& ByteArray, const int32 CompressionQuality = 0);
 
 	/**
-	* Converts a SceneCaptureComponent2D into a Byte Array (in PNG format).
+	* Converts a SceneCaptureComponent2D into a Byte Array.
+	* 
+	* Some formats will not work (like BMP, ICO and ICNS).
+	* 
+	* The Compression Quality has to be 1-100, a value of 0 will use the default value for the given ImageFormat.
 	* 
 	* To get the best results:
 	*  1) Set the TextureRenderTarget2D settings to the default values, then turn HDR off, then choose a properly high Size X and Y (1000+ seems to be fine)
@@ -710,19 +751,61 @@ public:
 	*
 	* Returns an empty Byte Array if it fails.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Image (SceneCaptureComponent2D) To Bytes (PNG)", Keywords = "byte array binary"))
-		static TArray<uint8> SceneCaptureComponent2DToBytesPng(USceneCaptureComponent2D* SceneCaptureComponent2D);
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Image (SceneCaptureComponent2D) To Bytes", Keywords = "byte array binary", AdvancedDisplay = "3"))
+		static void SceneCaptureComponent2DToBytes(USceneCaptureComponent2D* SceneCaptureComponent2D, const ELowEntryImageFormat ImageFormat, TArray<uint8>& ByteArray, const int32 CompressionQuality = 0);
 
 	/**
-	* Converts a TextureRenderTarget2D into a Byte Array (in PNG format).
+	* Converts a TextureRenderTarget2D into a Byte Array.
+	* 
+	* Some formats will not work (like BMP, ICO and ICNS).
+	* 
+	* The Compression Quality has to be 1-100, a value of 0 will use the default value for the given ImageFormat.
 	* 
 	* To get the best results:
 	*  1) Set the TextureRenderTarget2D settings to the default values, then turn HDR off, then choose a properly high Size X and Y (1000+ seems to be fine)
 	*
 	* Returns an empty Byte Array if it fails.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Image (TextureRenderTarget2D) To Bytes (PNG)", Keywords = "byte array binary"))
-		static TArray<uint8> TextureRenderTarget2DToBytesPng(UTextureRenderTarget2D* TextureRenderTarget2D);
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Image (TextureRenderTarget2D) To Bytes", Keywords = "byte array binary", AdvancedDisplay = "3"))
+		static void TextureRenderTarget2DToBytes(UTextureRenderTarget2D* TextureRenderTarget2D, const ELowEntryImageFormat ImageFormat, TArray<uint8>& ByteArray, const int32 CompressionQuality = 0);
+
+
+	/**
+	* Converts a SceneCapture2D into a Pixel Array.
+	*
+	* To get the best results:
+	*  1) Set the TextureRenderTarget2D settings to the default values, then turn HDR off, then choose a properly high Size X and Y (1000+ seems to be fine)
+	*  2) In the SceneCapture2D settings, change the [Capture Source] to [Final Color (LDR) in RGB], if you don't see this option, try converting your SceneCapture2D Actor to a blueprint Actor first
+	*  3) To get a brighter image, in the SceneCapture2D settings, play around with the Color Grading Contrast and Gamma (a Contrast and Gamma of X=1.0 Y=1.0 Z=1.0 W=2.0 looked quite good on my end)
+	*
+	* Returns an empty Pixel Array if it fails, the Width and the Height will also be 0 then.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Image|Get Pixels", Meta = (DisplayName = "Image (SceneCapture2D) Get Pixels", Keywords = "array width height pixels colors"))
+		static void SceneCapture2DToPixels(ASceneCapture2D* SceneCapture2D, int32& Width, int32& Height, TArray<FColor>& Pixels);
+
+	/**
+	* Converts a SceneCaptureComponent2D into a Pixel Array.
+	*
+	* To get the best results:
+	*  1) Set the TextureRenderTarget2D settings to the default values, then turn HDR off, then choose a properly high Size X and Y (1000+ seems to be fine)
+	*  2) In the SceneCaptureComponent2D settings, change the [Capture Source] to [Final Color (LDR) in RGB], if you don't see this option, try converting your SceneCaptureComponent2D's Actor to a blueprint Actor first
+	*  3) To get a brighter image, in the SceneCaptureComponent2D settings (not in the CameraActor settings, but in the SceneCaptureComponent2D settings), play around with the Color Grading Contrast and Gamma (a Contrast and Gamma of X=1.0 Y=1.0 Z=1.0 W=2.0 looked quite good on my end)
+	*
+	* Returns an empty Pixel Array if it fails, the Width and the Height will also be 0 then.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Image|Get Pixels", Meta = (DisplayName = "Image (SceneCaptureComponent2D) Get Pixels", Keywords = "bytearray width height pixels colors"))
+		static void SceneCaptureComponent2DToPixels(USceneCaptureComponent2D* SceneCaptureComponent2D, int32& Width, int32& Height, TArray<FColor>& Pixels);
+
+	/**
+	* Converts a TextureRenderTarget2D into a Pixel Array.
+	*
+	* To get the best results:
+	*  1) Set the TextureRenderTarget2D settings to the default values, then turn HDR off, then choose a properly high Size X and Y (1000+ seems to be fine)
+	*
+	* Returns an empty Pixel Array if it fails, the Width and the Height will also be 0 then.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Image|Get Pixels", Meta = (DisplayName = "Image (TextureRenderTarget2D) Get Pixels", Keywords = "array width height pixels colors"))
+		static void TextureRenderTarget2DToPixels(UTextureRenderTarget2D* TextureRenderTarget2D, int32& Width, int32& Height, TArray<FColor>& Pixels);
 
 	
 	/**

@@ -1438,23 +1438,173 @@ UTexture2D* ULowEntryExtendedStandardLibrary::BytesToImage(const TArray<uint8>& 
 
 
 
-TArray<uint8> ULowEntryExtendedStandardLibrary::Texture2DToBytesPng(UTexture2D* Texture2D)
+void ULowEntryExtendedStandardLibrary::BytesToPixels(const TArray<uint8>& ByteArray, const ELowEntryImageFormat ImageFormat, int32& Width, int32& Height, TArray<FColor>& Pixels, int32 Index, int32 Length)
 {
-	TArray<uint8> Bytes;
+	Width = 0;
+	Height = 0;
+	Pixels = TArray<FColor>();
+
+	//UTexture2D* Texture2D = ULowEntryExtendedStandardLibrary::BytesToImage(ByteArray, ImageFormat, Index, Length);
+	//if(Texture2D == nullptr)
+	//{
+	//	return;
+	//}
+	//
+	//ULowEntryExtendedStandardLibrary::Texture2DToPixels(Texture2D, Width, Height, Pixels);
+	//return;
+
+	if(ByteArray.Num() <= 0)
+	{
+		return;
+	}
+	if(Index < 0)
+	{
+		Length += Index;
+		Index = 0;
+	}
+	if(Length > ByteArray.Num() - Index)
+	{
+		Length = ByteArray.Num() - Index;
+	}
+	if(Length <= 0)
+	{
+		return;
+	}
+
+	IImageWrapperModule& ImageWrapperModule = FModuleManager::LoadModuleChecked<IImageWrapperModule>(FName("ImageWrapper"));
+	IImageWrapperPtr ImageWrapper = ImageWrapperModule.CreateImageWrapper(ELowEntryImageFormatToUE4(ImageFormat));
+	if(!ImageWrapper.IsValid() || !ImageWrapper->SetCompressed(ByteArray.GetData() + Index, Length))
+	{
+		return;
+	}
+
+	const TArray<uint8>* Uncompressed = NULL;
+	if(!ImageWrapper->GetRaw(ERGBFormat::BGRA, 8, Uncompressed))
+	{
+		return;
+	}
+
+	const void* Raw = Uncompressed->GetData();
+	const FColor* DataPixels = static_cast<const FColor*>(Raw);
+	int32 DataWidth = ImageWrapper->GetWidth();
+	int32 DataHeight = ImageWrapper->GetHeight();
+
+	int32 Total = DataWidth * DataHeight;
+	Pixels.SetNum(Total);
+	for(int32 i = 0; i < Total; i++)
+	{
+		Pixels[i] = DataPixels[i];
+	}
+	Width = DataWidth;
+	Height = DataHeight;
+}
+
+void ULowEntryExtendedStandardLibrary::PixelsToBytes(const int32 Width, const int32 Height, const TArray<FColor>& Pixels, const ELowEntryImageFormat ImageFormat, TArray<uint8>& ByteArray, const int32 CompressionQuality)
+{
+	ByteArray = TArray<uint8>();
+
+	//FImageUtils::CompressImageArray(Width, Height, Pixels, ByteArray);
+	//return;
+
+	if((Width <= 0) || (Height <= 0))
+	{
+		return;
+	}
+
+	if((CompressionQuality < 0) || (CompressionQuality > 100))
+	{
+		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in PixelsToBytes, an invalid CompressionQuality (%i) has been given, should be 1-100 or 0 for the default value"), CompressionQuality);
+		return;
+	}
+
+	int32 Total = Width * Height;
+	if(Total != Pixels.Num())
+	{
+		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in PixelsToBytes, the number of given Pixels (%i) don't match the given Width (%i) x Height (%i) (Width x Height: %i)"), Pixels.Num(), Width, Height, Total);
+		return;
+	}
+
+	if(ImageFormat == ELowEntryImageFormat::Invalid)
+	{
+		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in PixelsToBytes, Invalid compression is not supported"));
+		return;
+	}
+	if(ImageFormat == ELowEntryImageFormat::BMP)
+	{
+		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in PixelsToBytes, BMP compression is not supported"));
+		return;
+	}
+	if(ImageFormat == ELowEntryImageFormat::ICO)
+	{
+		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in PixelsToBytes, ICO compression is not supported"));
+		return;
+	}
+	if(ImageFormat == ELowEntryImageFormat::ICNS)
+	{
+		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in PixelsToBytes, ICNS compression is not supported"));
+		return;
+	}
+
+	if(ImageFormat == ELowEntryImageFormat::GrayscaleJPEG)
+	{
+		// Images are saved as RGBA but FColors are stored as Gray
+		TArray<uint8> MutablePixels;
+		for(int32 i = 0; i < Total; i++)
+		{
+			MutablePixels.Add((uint8) FMath::RoundToDouble((0.2125 * Pixels[i].R) + (0.7154 * Pixels[i].G) + (0.0721 * Pixels[i].B)));
+		}
+
+		IImageWrapperModule& ImageWrapperModule = FModuleManager::LoadModuleChecked<IImageWrapperModule>(FName("ImageWrapper"));
+		IImageWrapperPtr ImageWrapper = ImageWrapperModule.CreateImageWrapper(ELowEntryImageFormatToUE4(ImageFormat));
+		if(!ImageWrapper.IsValid() || !ImageWrapper->SetRaw(MutablePixels.GetData(), MutablePixels.Num(), Width, Height, ERGBFormat::Gray, 8))
+		{
+			return;
+		}
+
+		ByteArray = ImageWrapper->GetCompressed(CompressionQuality);
+	}
+	else
+	{
+		// Images are saved as RGBA but FColors are stored as BGRA
+		TArray<FColor> MutablePixels = Pixels;
+		for(int32 i = 0; i < Total; i++)
+		{
+			MutablePixels[i].R = Pixels[i].B;
+			MutablePixels[i].B = Pixels[i].R;
+		}
+
+		IImageWrapperModule& ImageWrapperModule = FModuleManager::LoadModuleChecked<IImageWrapperModule>(FName("ImageWrapper"));
+		IImageWrapperPtr ImageWrapper = ImageWrapperModule.CreateImageWrapper(ELowEntryImageFormatToUE4(ImageFormat));
+		if(!ImageWrapper.IsValid() || !ImageWrapper->SetRaw(&MutablePixels[0], MutablePixels.Num() * sizeof(FColor), Width, Height, ERGBFormat::RGBA, 8))
+		{
+			return;
+		}
+
+		ByteArray = ImageWrapper->GetCompressed(CompressionQuality);
+	}
+}
+
+
+
+void ULowEntryExtendedStandardLibrary::Texture2DToBytes(UTexture2D* Texture2D, const ELowEntryImageFormat ImageFormat, TArray<uint8>& ByteArray, const int32 CompressionQuality)
+{
+	ByteArray = TArray<uint8>();
 
 	if(Texture2D == nullptr)
 	{
-		return Bytes;
+		return;
 	}
 
 	bool ChangedTexture2D = false;
 	bool PreviousSRGB = Texture2D->SRGB;
+	TextureMipGenSettings PreviousMipGenSettings = Texture2D->MipGenSettings;
 	TextureCompressionSettings PreviousCompressionSettings = Texture2D->CompressionSettings;
 
-	if((PreviousSRGB != false) || (PreviousCompressionSettings != TC_VectorDisplacementmap))
+	if((PreviousSRGB != false) || (PreviousMipGenSettings != TMGS_NoMipmaps) || (PreviousCompressionSettings != TC_VectorDisplacementmap))
 	{
 		ChangedTexture2D = true;
 		Texture2D->SRGB = false;
+		Texture2D->MipGenSettings = TMGS_NoMipmaps;
 		Texture2D->CompressionSettings = TC_VectorDisplacementmap;
 		Texture2D->UpdateResource();
 	}
@@ -1466,87 +1616,238 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::Texture2DToBytesPng(UTexture2D* 
 	FByteBulkData* Mip0Data = &Mip0.BulkData;
 	if(Mip0Data == nullptr)
 	{
-		Texture2D->SRGB = PreviousSRGB;
-		Texture2D->CompressionSettings = PreviousCompressionSettings;
-		Texture2D->UpdateResource();
-		return Bytes;
+		if(ChangedTexture2D)
+		{
+			Texture2D->SRGB = PreviousSRGB;
+			Texture2D->MipGenSettings = PreviousMipGenSettings;
+			Texture2D->CompressionSettings = PreviousCompressionSettings;
+			Texture2D->UpdateResource();
+		}
+		return;
 	}
 
 	FColor* Mip0Pixels = static_cast<FColor*>(Mip0Data->Lock(LOCK_READ_ONLY));
-	TArray<FColor> Pixels;
-	Pixels.Reserve(Mip0Width * Mip0Height);
-	for(int32 x = 0; x < Mip0Width; x++)
+	if(Mip0Pixels == nullptr)
 	{
-		for(int32 y = 0; y < Mip0Height; y++)
+		Mip0Data->Unlock();
+		if(ChangedTexture2D)
 		{
-			Pixels.Add(Mip0Pixels[(y * Mip0Width) + x]);
+			Texture2D->SRGB = PreviousSRGB;
+			Texture2D->MipGenSettings = PreviousMipGenSettings;
+			Texture2D->CompressionSettings = PreviousCompressionSettings;
+			Texture2D->UpdateResource();
 		}
+		return;
+	}
+
+	TArray<FColor> Pixels;
+	int32 Total = Mip0Width * Mip0Height;
+	Pixels.SetNum(Total);
+	for(int32 i = 0; i < Total; i++)
+	{
+		Pixels[i] = Mip0Pixels[i];
 	}
 	Mip0Data->Unlock();
 
 	if(ChangedTexture2D)
 	{
 		Texture2D->SRGB = PreviousSRGB;
+		Texture2D->MipGenSettings = PreviousMipGenSettings;
 		Texture2D->CompressionSettings = PreviousCompressionSettings;
 		Texture2D->UpdateResource();
 	}
 
-	FImageUtils::CompressImageArray(Mip0Width, Mip0Height, Pixels, Bytes);
-	return Bytes;
+	PixelsToBytes(Mip0Width, Mip0Height, Pixels, ImageFormat, ByteArray, CompressionQuality);
 }
 
 
-
-TArray<uint8> ULowEntryExtendedStandardLibrary::SceneCapture2DToBytesPng(ASceneCapture2D* SceneCapture2D)
+void ULowEntryExtendedStandardLibrary::Texture2DToPixels(UTexture2D* Texture2D, int32& Width, int32& Height, TArray<FColor>& Pixels)
 {
-	if(SceneCapture2D == nullptr)
+	Width = 0;
+	Height = 0;
+	Pixels = TArray<FColor>();
+
+	if(Texture2D == nullptr)
 	{
-		return TArray<uint8>();
+		return;
 	}
-	return SceneCaptureComponent2DToBytesPng(SceneCapture2D->GetCaptureComponent2D());
-}
 
-TArray<uint8> ULowEntryExtendedStandardLibrary::SceneCaptureComponent2DToBytesPng(USceneCaptureComponent2D* SceneCaptureComponent2D)
-{
-	if(SceneCaptureComponent2D == nullptr)
+	bool ChangedTexture2D = false;
+	bool PreviousSRGB = Texture2D->SRGB;
+	TextureMipGenSettings PreviousMipGenSettings = Texture2D->MipGenSettings;
+	TextureCompressionSettings PreviousCompressionSettings = Texture2D->CompressionSettings;
+
+	if((PreviousSRGB != false) || (PreviousMipGenSettings != TMGS_NoMipmaps) || (PreviousCompressionSettings != TC_VectorDisplacementmap))
 	{
-		return TArray<uint8>();
+		ChangedTexture2D = true;
+		Texture2D->SRGB = false;
+		Texture2D->MipGenSettings = TMGS_NoMipmaps;
+		Texture2D->CompressionSettings = TC_VectorDisplacementmap;
+		Texture2D->UpdateResource();
 	}
-	return TextureRenderTarget2DToBytesPng(SceneCaptureComponent2D->TextureTarget);
+
+	FTexture2DMipMap& Mip0 = Texture2D->PlatformData->Mips[0];
+	int32 Mip0Width = Mip0.SizeX;
+	int32 Mip0Height = Mip0.SizeY;
+
+	FByteBulkData* Mip0Data = &Mip0.BulkData;
+	if(Mip0Data == nullptr)
+	{
+		if(ChangedTexture2D)
+		{
+			Texture2D->SRGB = PreviousSRGB;
+			Texture2D->MipGenSettings = PreviousMipGenSettings;
+			Texture2D->CompressionSettings = PreviousCompressionSettings;
+			Texture2D->UpdateResource();
+		}
+		return;
+	}
+
+	FColor* Mip0Pixels = static_cast<FColor*>(Mip0Data->Lock(LOCK_READ_ONLY));
+	if(Mip0Pixels == nullptr)
+	{
+		Mip0Data->Unlock();
+		if(ChangedTexture2D)
+		{
+			Texture2D->SRGB = PreviousSRGB;
+			Texture2D->MipGenSettings = PreviousMipGenSettings;
+			Texture2D->CompressionSettings = PreviousCompressionSettings;
+			Texture2D->UpdateResource();
+		}
+		return;
+	}
+
+	Width = Mip0Width;
+	Height = Mip0Height;
+	int32 Total = Mip0Width * Mip0Height;
+	Pixels.SetNum(Total);
+	for(int32 i = 0; i < Total; i++)
+	{
+		Pixels[i] = Mip0Pixels[i];
+	}
+	Mip0Data->Unlock();
+
+	if(ChangedTexture2D)
+	{
+		Texture2D->SRGB = PreviousSRGB;
+		Texture2D->MipGenSettings = PreviousMipGenSettings;
+		Texture2D->CompressionSettings = PreviousCompressionSettings;
+		Texture2D->UpdateResource();
+	}
 }
 
-TArray<uint8> ULowEntryExtendedStandardLibrary::TextureRenderTarget2DToBytesPng(UTextureRenderTarget2D* TextureRenderTarget2D)
+
+
+void ULowEntryExtendedStandardLibrary::SceneCapture2DToBytes(ASceneCapture2D* SceneCapture2D, const ELowEntryImageFormat ImageFormat, TArray<uint8>& ByteArray, const int32 CompressionQuality)
 {
-	TArray<uint8> Bytes;
+	ByteArray = TArray<uint8>();
+	if(SceneCapture2D != nullptr)
+	{
+		SceneCaptureComponent2DToBytes(SceneCapture2D->GetCaptureComponent2D(), ImageFormat, ByteArray, CompressionQuality);
+	}
+}
+
+void ULowEntryExtendedStandardLibrary::SceneCaptureComponent2DToBytes(USceneCaptureComponent2D* SceneCaptureComponent2D, const ELowEntryImageFormat ImageFormat, TArray<uint8>& ByteArray, const int32 CompressionQuality)
+{
+	ByteArray = TArray<uint8>();
+	if(SceneCaptureComponent2D != nullptr)
+	{
+		TextureRenderTarget2DToBytes(SceneCaptureComponent2D->TextureTarget, ImageFormat, ByteArray, CompressionQuality);
+	}
+}
+
+void ULowEntryExtendedStandardLibrary::TextureRenderTarget2DToBytes(UTextureRenderTarget2D* TextureRenderTarget2D, const ELowEntryImageFormat ImageFormat, TArray<uint8>& ByteArray, const int32 CompressionQuality)
+{
+	ByteArray = TArray<uint8>();
 
 	if(TextureRenderTarget2D == nullptr)
 	{
-		return Bytes;
+		return;
 	}
 	if(TextureRenderTarget2D->GetFormat() != PF_B8G8R8A8)
 	{
-		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in ImageToBytesPng, the TextureRenderTarget2D has an EPixelFormat of %i which is not supported, use 2 (PF_B8G8R8A8) instead: try using the default settings for the TextureRenderTarget2D and then turn HDR off"), ((uint8) TextureRenderTarget2D->GetFormat()));
-		return Bytes;
+		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in ImageToBytes, the TextureRenderTarget2D has an EPixelFormat of %i which is not supported, use 2 (PF_B8G8R8A8) instead: try using the default settings for the TextureRenderTarget2D and then turn HDR off"), ((uint8) TextureRenderTarget2D->GetFormat()));
+		return;
 	}
 
 	FRenderTarget* RenderTarget = TextureRenderTarget2D->GameThread_GetRenderTargetResource();
 	if(RenderTarget == nullptr)
 	{
-		return Bytes;
+		return;
 	}
 
 	TArray<FColor> Pixels;
 	if(!RenderTarget->ReadPixels(Pixels))
 	{
-		return Bytes;
+		return;
 	}
 	for(FColor& Pixel : Pixels)
 	{
 		Pixel.A = 255;
 	}
 
-	FImageUtils::CompressImageArray(TextureRenderTarget2D->SizeX, TextureRenderTarget2D->SizeY, Pixels, Bytes);
-	return Bytes;
+	PixelsToBytes(TextureRenderTarget2D->SizeX, TextureRenderTarget2D->SizeY, Pixels, ImageFormat, ByteArray, CompressionQuality);
+}
+
+
+void ULowEntryExtendedStandardLibrary::SceneCapture2DToPixels(ASceneCapture2D* SceneCapture2D, int32& Width, int32& Height, TArray<FColor>& Pixels)
+{
+	if(SceneCapture2D == nullptr)
+	{
+		Width = 0;
+		Height = 0;
+		Pixels = TArray<FColor>();
+		return;
+	}
+	SceneCaptureComponent2DToPixels(SceneCapture2D->GetCaptureComponent2D(), Width, Height, Pixels);
+}
+
+void ULowEntryExtendedStandardLibrary::SceneCaptureComponent2DToPixels(USceneCaptureComponent2D* SceneCaptureComponent2D, int32& Width, int32& Height, TArray<FColor>& Pixels)
+{
+	if(SceneCaptureComponent2D == nullptr)
+	{
+		Width = 0;
+		Height = 0;
+		Pixels = TArray<FColor>();
+		return;
+	}
+	TextureRenderTarget2DToPixels(SceneCaptureComponent2D->TextureTarget, Width, Height, Pixels);
+}
+
+void ULowEntryExtendedStandardLibrary::TextureRenderTarget2DToPixels(UTextureRenderTarget2D* TextureRenderTarget2D, int32& Width, int32& Height, TArray<FColor>& Pixels)
+{
+	Width = 0;
+	Height = 0;
+	Pixels = TArray<FColor>();
+
+	if(TextureRenderTarget2D == nullptr)
+	{
+		return;
+	}
+	if(TextureRenderTarget2D->GetFormat() != PF_B8G8R8A8)
+	{
+		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in ImageToBytesPng, the TextureRenderTarget2D has an EPixelFormat of %i which is not supported, use 2 (PF_B8G8R8A8) instead: try using the default settings for the TextureRenderTarget2D and then turn HDR off"), ((uint8) TextureRenderTarget2D->GetFormat()));
+		return;
+	}
+
+	FRenderTarget* RenderTarget = TextureRenderTarget2D->GameThread_GetRenderTargetResource();
+	if(RenderTarget == nullptr)
+	{
+		return;
+	}
+
+	if(!RenderTarget->ReadPixels(Pixels))
+	{
+		Pixels = TArray<FColor>();
+		return;
+	}
+	FIntPoint Size = RenderTarget->GetSizeXY();
+	Width = Size.X;
+	Height = Size.Y;
+	for(FColor& Pixel : Pixels)
+	{
+		Pixel.A = 255;
+	}
 }
 
 
