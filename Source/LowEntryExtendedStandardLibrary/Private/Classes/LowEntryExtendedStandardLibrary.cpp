@@ -1445,16 +1445,22 @@ void ULowEntryExtendedStandardLibrary::Texture2DToBytes(UTexture2D* Texture2D, c
 		return;
 	}
 
+#if WITH_EDITORONLY_DATA
+	if(Texture2D->MipGenSettings != TMGS_NoMipmaps)
+	{
+		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in Texture2DToBytes, the given Texture2D has to have MipGenSettings set to NoMipmaps, otherwise the blueprint will always fail"));
+		return;
+	}
+#endif
+
 	bool ChangedTexture2D = false;
 	bool PreviousSRGB = Texture2D->SRGB;
-	TextureMipGenSettings PreviousMipGenSettings = Texture2D->MipGenSettings;
 	TextureCompressionSettings PreviousCompressionSettings = Texture2D->CompressionSettings;
 
-	if((PreviousSRGB != false) || (PreviousMipGenSettings != TMGS_NoMipmaps) || (PreviousCompressionSettings != TC_VectorDisplacementmap))
+	if((PreviousSRGB != false) || (PreviousCompressionSettings != TC_VectorDisplacementmap))
 	{
 		ChangedTexture2D = true;
 		Texture2D->SRGB = false;
-		Texture2D->MipGenSettings = TMGS_NoMipmaps;
 		Texture2D->CompressionSettings = TC_VectorDisplacementmap;
 		Texture2D->UpdateResource();
 	}
@@ -1469,7 +1475,6 @@ void ULowEntryExtendedStandardLibrary::Texture2DToBytes(UTexture2D* Texture2D, c
 		if(ChangedTexture2D)
 		{
 			Texture2D->SRGB = PreviousSRGB;
-			Texture2D->MipGenSettings = PreviousMipGenSettings;
 			Texture2D->CompressionSettings = PreviousCompressionSettings;
 			Texture2D->UpdateResource();
 		}
@@ -1483,7 +1488,6 @@ void ULowEntryExtendedStandardLibrary::Texture2DToBytes(UTexture2D* Texture2D, c
 		if(ChangedTexture2D)
 		{
 			Texture2D->SRGB = PreviousSRGB;
-			Texture2D->MipGenSettings = PreviousMipGenSettings;
 			Texture2D->CompressionSettings = PreviousCompressionSettings;
 			Texture2D->UpdateResource();
 		}
@@ -1502,7 +1506,6 @@ void ULowEntryExtendedStandardLibrary::Texture2DToBytes(UTexture2D* Texture2D, c
 	if(ChangedTexture2D)
 	{
 		Texture2D->SRGB = PreviousSRGB;
-		Texture2D->MipGenSettings = PreviousMipGenSettings;
 		Texture2D->CompressionSettings = PreviousCompressionSettings;
 		Texture2D->UpdateResource();
 	}
@@ -1670,16 +1673,22 @@ void ULowEntryExtendedStandardLibrary::Texture2DToPixels(UTexture2D* Texture2D, 
 		return;
 	}
 
+#if WITH_EDITORONLY_DATA
+	if(Texture2D->MipGenSettings != TMGS_NoMipmaps)
+	{
+		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in Texture2DToPixels, the given Texture2D has to have MipGenSettings set to NoMipmaps, otherwise the blueprint will always fail"));
+		return;
+	}
+#endif
+
 	bool ChangedTexture2D = false;
 	bool PreviousSRGB = Texture2D->SRGB;
-	TextureMipGenSettings PreviousMipGenSettings = Texture2D->MipGenSettings;
 	TextureCompressionSettings PreviousCompressionSettings = Texture2D->CompressionSettings;
 
-	if((PreviousSRGB != false) || (PreviousMipGenSettings != TMGS_NoMipmaps) || (PreviousCompressionSettings != TC_VectorDisplacementmap))
+	if((PreviousSRGB != false) || (PreviousCompressionSettings != TC_VectorDisplacementmap))
 	{
 		ChangedTexture2D = true;
 		Texture2D->SRGB = false;
-		Texture2D->MipGenSettings = TMGS_NoMipmaps;
 		Texture2D->CompressionSettings = TC_VectorDisplacementmap;
 		Texture2D->UpdateResource();
 	}
@@ -1694,7 +1703,6 @@ void ULowEntryExtendedStandardLibrary::Texture2DToPixels(UTexture2D* Texture2D, 
 		if(ChangedTexture2D)
 		{
 			Texture2D->SRGB = PreviousSRGB;
-			Texture2D->MipGenSettings = PreviousMipGenSettings;
 			Texture2D->CompressionSettings = PreviousCompressionSettings;
 			Texture2D->UpdateResource();
 		}
@@ -1708,7 +1716,6 @@ void ULowEntryExtendedStandardLibrary::Texture2DToPixels(UTexture2D* Texture2D, 
 		if(ChangedTexture2D)
 		{
 			Texture2D->SRGB = PreviousSRGB;
-			Texture2D->MipGenSettings = PreviousMipGenSettings;
 			Texture2D->CompressionSettings = PreviousCompressionSettings;
 			Texture2D->UpdateResource();
 		}
@@ -1728,7 +1735,6 @@ void ULowEntryExtendedStandardLibrary::Texture2DToPixels(UTexture2D* Texture2D, 
 	if(ChangedTexture2D)
 	{
 		Texture2D->SRGB = PreviousSRGB;
-		Texture2D->MipGenSettings = PreviousMipGenSettings;
 		Texture2D->CompressionSettings = PreviousCompressionSettings;
 		Texture2D->UpdateResource();
 	}
