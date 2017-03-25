@@ -169,6 +169,32 @@ bool ULowEntryExtendedStandardLibrary::WindowsPlatform()
 #endif
 }
 
+bool ULowEntryExtendedStandardLibrary::Windows32Platform()
+{
+#if PLATFORM_WINDOWS
+	#ifdef _WIN64
+		return false;
+	#else
+		return true;
+	#endif
+#else
+	return false;
+#endif
+}
+
+bool ULowEntryExtendedStandardLibrary::Windows64Platform()
+{
+#if PLATFORM_WINDOWS
+	#ifdef _WIN64
+		return true;
+	#else
+		return false;
+	#endif
+#else
+	return false;
+#endif
+}
+
 bool ULowEntryExtendedStandardLibrary::WindowsRtPlatform()
 {
 #ifdef PLATFORM_WINRT

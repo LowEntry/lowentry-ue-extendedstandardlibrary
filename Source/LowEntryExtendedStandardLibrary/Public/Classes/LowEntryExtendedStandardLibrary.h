@@ -122,6 +122,18 @@ public:
 		static bool WindowsPlatform();
 
 	/**
+	* Returns true if this is the Windows platform running on 32 bit (PLATFORM_WINDOWS and not _WIN64), returns false otherwise.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Windows Platform (32 bit)", Keywords = "compile export mode version type build platform"))
+		static bool Windows32Platform();
+
+	/**
+	* Returns true if this is the Windows platform running on 64 bit (PLATFORM_WINDOWS and _WIN64), returns false otherwise.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Windows Platform (64 bit)", Keywords = "compile export mode version type build platform"))
+		static bool Windows64Platform();
+
+	/**
 	* Returns true if this is the Windows RT platform (PLATFORM_WINRT), returns false otherwise.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Windows Rt Platform", Keywords = "compile export mode version type build platform"))
