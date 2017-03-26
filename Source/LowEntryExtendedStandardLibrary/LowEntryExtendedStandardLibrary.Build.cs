@@ -3,8 +3,10 @@ namespace UnrealBuildTool.Rules
 	public class LowEntryExtendedStandardLibrary : ModuleRules
 	{
 		public LowEntryExtendedStandardLibrary(TargetInfo Target)
-		{
-			PublicIncludePaths.AddRange(
+        {
+            PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+
+            PublicIncludePaths.AddRange(
 				new string[] {
 					"LowEntryExtendedStandardLibrary/Public/Module",
 					"LowEntryExtendedStandardLibrary/Public/Classes",

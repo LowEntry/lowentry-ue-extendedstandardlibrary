@@ -1,9 +1,22 @@
 #pragma once
 
 
-#include "Engine.h"
-#include "Core.h"
+#include "CoreMinimal.h"
 #include "CoreUObject.h"
+
+#include "Engine/Engine.h"
+#include "Engine/SceneCapture2D.h"
+#include "Engine/TextureRenderTarget2D.h"
+#include "Engine/Texture2D.h"
+#include "Engine/LocalPlayer.h"
+#include "Engine/GameViewportClient.h"
+#include "Engine/World.h"
+#include "Components/SceneCaptureComponent2D.h"
+#include "GameFramework/PlayerController.h"
+#include "Kismet/GameplayStatics.h"
+#include "Slate/SceneViewport.h"
+#include "Widgets/SViewport.h"
+
 #include "Base64.h"
 #include "DelayAction.h"
 #include "Engine/LatentActionManager.h"

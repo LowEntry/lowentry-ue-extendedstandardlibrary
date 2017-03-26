@@ -1,4 +1,3 @@
-#include "LowEntryExtendedStandardLibraryPrivatePCH.h"
 #include "LowEntryDouble.h"
 
 

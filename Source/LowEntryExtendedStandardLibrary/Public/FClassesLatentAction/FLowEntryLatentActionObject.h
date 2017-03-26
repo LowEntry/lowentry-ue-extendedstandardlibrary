@@ -1,9 +1,8 @@
 #pragma once
 
 
-#include "Engine.h"
-#include "Core.h"
-#include "CoreUObject.h"
+#include "CoreMinimal.h"
+
 #include "LatentActions.h"
 
 #include "LowEntryLatentActionObject.h"

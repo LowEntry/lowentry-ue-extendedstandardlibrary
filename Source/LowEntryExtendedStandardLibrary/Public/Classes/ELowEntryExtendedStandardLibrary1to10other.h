@@ -1,8 +1,7 @@
 #pragma once
 
 
-#include "Engine.h"
-#include "Core.h"
+#include "CoreMinimal.h"
 
 #include "ELowEntryExtendedStandardLibrary1to10other.generated.h"
 

@@ -1,8 +1,7 @@
 #pragma once
 
 
-#include "Engine.h"
-#include "Core.h"
+#include "CoreMinimal.h"
 #include "CoreUObject.h"
 
 #include "LowEntryLong.h"

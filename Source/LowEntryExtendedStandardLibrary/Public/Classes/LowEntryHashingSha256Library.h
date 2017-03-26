@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "Engine.h"
+#include "CoreMinimal.h"
 
 
 class ULowEntryHashingSha256Library

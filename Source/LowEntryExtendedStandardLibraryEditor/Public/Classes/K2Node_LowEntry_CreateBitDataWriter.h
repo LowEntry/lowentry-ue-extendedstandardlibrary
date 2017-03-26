@@ -1,7 +1,8 @@
 #pragma once
 
 
-#include "Engine.h"
+#include "CoreMinimal.h"
+
 #include "K2Node.h"
 
 #include "Runtime/Launch/Resources/Version.h"
