@@ -2,8 +2,8 @@
 
 
 #include "CoreMinimal.h"
-#include "CoreUObject.h"
 
+#include "Kismet/BlueprintFunctionLibrary.h"
 #include "Engine/Engine.h"
 #include "Engine/SceneCapture2D.h"
 #include "Engine/TextureRenderTarget2D.h"
@@ -16,6 +16,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Slate/SceneViewport.h"
 #include "Widgets/SViewport.h"
+#include "Framework/Application/SlateApplication.h"
 
 #include "Base64.h"
 #include "DelayAction.h"
