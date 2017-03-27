@@ -1701,7 +1701,7 @@ void ULowEntryExtendedStandardLibrary::Texture2DToPixels(UTexture2D* Texture2D, 
 #if WITH_EDITORONLY_DATA
 	if(Texture2D->MipGenSettings != TMGS_NoMipmaps)
 	{
-		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in Texture2DToPixels, the given Texture2D has to have MipGenSettings set to NoMipmaps, otherwise the blueprint will always fail"));
+		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in ImageToPixels, the given Texture2D has to have MipGenSettings set to NoMipmaps, otherwise the blueprint will always fail"));
 		return;
 	}
 #endif
@@ -1876,7 +1876,7 @@ void ULowEntryExtendedStandardLibrary::TextureRenderTarget2DToPixels(UTextureRen
 	}
 	if(TextureRenderTarget2D->GetFormat() != PF_B8G8R8A8)
 	{
-		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in ImageToBytesPng, the TextureRenderTarget2D has an EPixelFormat of %i which is not supported, use 2 (PF_B8G8R8A8) instead: try using the default settings for the TextureRenderTarget2D and then turn HDR off"), ((uint8) TextureRenderTarget2D->GetFormat()));
+		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in ImageToPixels, the TextureRenderTarget2D has an EPixelFormat of %i which is not supported, use 2 (PF_B8G8R8A8) instead: try using the default settings for the TextureRenderTarget2D and then turn HDR off"), ((uint8) TextureRenderTarget2D->GetFormat()));
 		return;
 	}
 
