@@ -7,6 +7,10 @@
 
 #include "Runtime/Launch/Resources/Version.h"
 
+#if ENGINE_MINOR_VERSION > 12
+	#include "Textures/SlateIcon.h"
+#endif
+
 #include "K2Node_LowEntry_CreateByteDataWriter.generated.h"
 
 
