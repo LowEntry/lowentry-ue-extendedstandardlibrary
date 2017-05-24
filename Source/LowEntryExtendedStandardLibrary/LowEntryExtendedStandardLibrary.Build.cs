@@ -2,7 +2,7 @@ namespace UnrealBuildTool.Rules
 {
 	public class LowEntryExtendedStandardLibrary : ModuleRules
 	{
-		public LowEntryExtendedStandardLibrary(TargetInfo Target)
+		public LowEntryExtendedStandardLibrary(ReadOnlyTargetRules Target) : base(Target)
         {
             PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
