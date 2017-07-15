@@ -18,10 +18,8 @@
 #include "Widgets/SViewport.h"
 #include "Framework/Application/SlateApplication.h"
 
-#include "Base64.h"
 #include "DelayAction.h"
 #include "Engine/LatentActionManager.h"
-#include "Regex.h"
 
 #include "FLowEntryRegexMatch.h"
 

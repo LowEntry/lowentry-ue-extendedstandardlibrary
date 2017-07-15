@@ -39,6 +39,9 @@
 
 #include "GenericTeamAgentInterface.h"
 
+#include "Base64.h"
+#include "Regex.h"
+
 #include "Runtime/Launch/Resources/Version.h"
 
 
@@ -824,8 +827,8 @@ FString ULowEntryExtendedStandardLibrary::BytesToStringUtf8(const TArray<uint8>&
 TArray<uint8> ULowEntryExtendedStandardLibrary::Base64ToBytes(const FString& Base64)
 {
 	TArray<uint8> ByteArray;
-	bool success = FBase64::Decode(Base64, ByteArray);
-	if(!success)
+	bool Success = FBase64::Decode(Base64, ByteArray);
+	if(!Success)
 	{
 		return TArray<uint8>();
 	}
