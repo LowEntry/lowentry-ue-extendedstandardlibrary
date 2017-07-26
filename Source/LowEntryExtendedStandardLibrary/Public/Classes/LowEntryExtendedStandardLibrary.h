@@ -1460,7 +1460,8 @@ public:
 	* 
 	* To create the Comparator, do this:
 	*  - create a function that has 2 input parameters (Object and Object) and 1 output parameter (Boolean)
-	*  - in that function, return true if the first Object is smaller than the second Object, return false otherwise
+	*  - it is important that the parameters have the following names: ObjectA, ObjectB and Return
+	*  - in that function, return true if ObjectA is smaller than ObjectB, return false otherwise
 	*  - then, when using the Sort Object Array blueprint, use the Create Event blueprint and set its value as the function created earlier
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Object Array) (Copy)"))
@@ -1471,7 +1472,8 @@ public:
 	*
 	* To create the Comparator, do this:
 	*  - create a function that has 2 input parameters (Object and Object) and 1 output parameter (Boolean)
-	*  - in that function, return true if the first Object is smaller than the second Object, return false otherwise
+	*  - it is important that the parameters have the following names: ObjectA, ObjectB and Return
+	*  - in that function, return true if ObjectA is smaller than ObjectB, return false otherwise
 	*  - then, when using the Sort Object Array blueprint, use the Create Event blueprint and set its value as the function created earlier
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Object Array)"))
