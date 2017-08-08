@@ -170,22 +170,6 @@ bool UK2Node_LowEntry_LocalVariable::ArePinTypesEqual(const FEdGraphPinType& A, 
 	{
 		return false;
 	}
-	if(A.bIsArray != B.bIsArray)
-	{
-		return false;
-	}
-	if(A.bIsConst != B.bIsConst)
-	{
-		return false;
-	}
-	if(A.bIsReference != B.bIsReference)
-	{
-		return false;
-	}
-	if(A.bIsWeakPointer != B.bIsWeakPointer)
-	{
-		return false;
-	}
 	return true;
 }
 

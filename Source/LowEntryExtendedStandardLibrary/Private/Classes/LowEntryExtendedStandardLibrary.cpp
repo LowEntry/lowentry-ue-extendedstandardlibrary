@@ -58,7 +58,7 @@ void ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(UObject* W
 	FString Prefix;
 	if(GEngine != nullptr)
 	{
-		WorldContextObject = GEngine->GetWorldFromContextObject(WorldContextObject, false);
+		WorldContextObject = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::ReturnNull);
 		if(WorldContextObject)
 		{
 			UWorld *World = WorldContextObject->GetWorld();
@@ -2717,7 +2717,7 @@ void ULowEntryExtendedStandardLibrary::SortObjectArrayDirectly(UPARAM(ref) TArra
 
 void ULowEntryExtendedStandardLibrary::RandomDelay(UObject* WorldContextObject, float MinDuration, float MaxDuration, FLatentActionInfo LatentInfo)
 {
-	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject))
+	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
 	{
 		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
 		if(LatentActionManager.FindExistingAction<FDelayAction>(LatentInfo.CallbackTarget, LatentInfo.UUID) == NULL)
@@ -2729,7 +2729,7 @@ void ULowEntryExtendedStandardLibrary::RandomDelay(UObject* WorldContextObject, 
 
 void ULowEntryExtendedStandardLibrary::RetriggerableRandomDelay(UObject* WorldContextObject, float MinDuration, float MaxDuration, FLatentActionInfo LatentInfo)
 {
-	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject))
+	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
 	{
 		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
 		FDelayAction* Action = LatentActionManager.FindExistingAction<FDelayAction>(LatentInfo.CallbackTarget, LatentInfo.UUID);
@@ -2748,7 +2748,7 @@ void ULowEntryExtendedStandardLibrary::RetriggerableRandomDelay(UObject* WorldCo
 
 void ULowEntryExtendedStandardLibrary::DelayFrames(UObject* WorldContextObject, int32 Frames, FLatentActionInfo LatentInfo)
 {
-	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject))
+	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
 	{
 		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
 		if(LatentActionManager.FindExistingAction<FDelayFramesAction>(LatentInfo.CallbackTarget, LatentInfo.UUID) == NULL)
@@ -2760,7 +2760,7 @@ void ULowEntryExtendedStandardLibrary::DelayFrames(UObject* WorldContextObject, 
 
 void ULowEntryExtendedStandardLibrary::RetriggerableDelayFrames(UObject* WorldContextObject, int32 Frames, FLatentActionInfo LatentInfo)
 {
-	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject))
+	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
 	{
 		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
 		FDelayFramesAction* Action = LatentActionManager.FindExistingAction<FDelayFramesAction>(LatentInfo.CallbackTarget, LatentInfo.UUID);
@@ -2777,7 +2777,7 @@ void ULowEntryExtendedStandardLibrary::RetriggerableDelayFrames(UObject* WorldCo
 
 void ULowEntryExtendedStandardLibrary::RandomDelayFrames(UObject* WorldContextObject, int32 MinFrames, int32 MaxFrames, FLatentActionInfo LatentInfo)
 {
-	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject))
+	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
 	{
 		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
 		if(LatentActionManager.FindExistingAction<FDelayFramesAction>(LatentInfo.CallbackTarget, LatentInfo.UUID) == NULL)
@@ -2789,7 +2789,7 @@ void ULowEntryExtendedStandardLibrary::RandomDelayFrames(UObject* WorldContextOb
 
 void ULowEntryExtendedStandardLibrary::RetriggerableRandomDelayFrames(UObject* WorldContextObject, int32 MinFrames, int32 MaxFrames, FLatentActionInfo LatentInfo)
 {
-	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject))
+	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
 	{
 		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
 		FDelayFramesAction* Action = LatentActionManager.FindExistingAction<FDelayFramesAction>(LatentInfo.CallbackTarget, LatentInfo.UUID);
@@ -2808,7 +2808,7 @@ void ULowEntryExtendedStandardLibrary::RetriggerableRandomDelayFrames(UObject* W
 
 void ULowEntryExtendedStandardLibrary::QueueExecutions(UObject* WorldContextObject, ULowEntryExecutionQueue*& Queue, FLatentActionInfo LatentInfo)
 {
-	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject))
+	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
 	{
 		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
 		FExecutionQueueAction* Action = LatentActionManager.FindExistingAction<FExecutionQueueAction>(LatentInfo.CallbackTarget, LatentInfo.UUID);
@@ -3121,7 +3121,7 @@ void ULowEntryExtendedStandardLibrary::ChangeMap(UObject* WorldContextObject, co
 
 void ULowEntryExtendedStandardLibrary::TickFrames(UObject* WorldContextObject, FLatentActionInfo LatentInfo, const int32 Ticks, const int32 FramesInterval, int32& Tick)
 {
-	UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject);
+	UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull);
 	if(World == nullptr)
 	{
 		return;
@@ -3132,7 +3132,7 @@ void ULowEntryExtendedStandardLibrary::TickFrames(UObject* WorldContextObject, F
 
 void ULowEntryExtendedStandardLibrary::TickSeconds(UObject* WorldContextObject, FLatentActionInfo LatentInfo, const int32 Ticks, const float SecondsInterval, int32& Tick)
 {
-	UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject);
+	UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull);
 	if(World == nullptr)
 	{
 		return;
