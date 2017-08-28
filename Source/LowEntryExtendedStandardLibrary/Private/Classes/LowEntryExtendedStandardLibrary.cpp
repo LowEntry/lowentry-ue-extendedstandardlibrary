@@ -1819,7 +1819,7 @@ void ULowEntryExtendedStandardLibrary::TextureRenderTarget2DToBytes(UTextureRend
 	}
 	if(TextureRenderTarget2D->GetFormat() != PF_B8G8R8A8)
 	{
-		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in ImageToBytes, the TextureRenderTarget2D has an EPixelFormat of %i which is not supported, use 2 (PF_B8G8R8A8) instead: try using the default settings for the TextureRenderTarget2D and then turn HDR off"), ((uint8) TextureRenderTarget2D->GetFormat()));
+		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in ImageToBytes, the TextureRenderTarget2D has a [Render Target Format] that is not supported, use [RTF RGBA8] instead ([PF_B8G8R8A8] in C++)"));
 		return;
 	}
 
@@ -1879,7 +1879,7 @@ void ULowEntryExtendedStandardLibrary::TextureRenderTarget2DToPixels(UTextureRen
 	}
 	if(TextureRenderTarget2D->GetFormat() != PF_B8G8R8A8)
 	{
-		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in ImageToPixels, the TextureRenderTarget2D has an EPixelFormat of %i which is not supported, use 2 (PF_B8G8R8A8) instead: try using the default settings for the TextureRenderTarget2D and then turn HDR off"), ((uint8) TextureRenderTarget2D->GetFormat()));
+		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in ImageToPixels, the TextureRenderTarget2D has a [Render Target Format] that is not supported, use [RTF RGBA8] instead ([PF_B8G8R8A8] in C++)"));
 		return;
 	}
 
@@ -1946,6 +1946,29 @@ void ULowEntryExtendedStandardLibrary::TextureUpdateResource(UTexture* Texture)
 	{
 		Texture->UpdateResource();
 	}
+}
+
+
+
+void ULowEntryExtendedStandardLibrary::SceneCapture2D_GetFov(ASceneCapture2D* SceneCapture2D, float& Fov)
+{
+	Fov = SceneCapture2D->GetCaptureComponent2D()->FOVAngle;
+}
+
+void ULowEntryExtendedStandardLibrary::SceneCapture2D_SetFov(ASceneCapture2D* SceneCapture2D, const float Fov)
+{
+	SceneCapture2D->GetCaptureComponent2D()->FOVAngle = Fov;
+}
+
+
+void ULowEntryExtendedStandardLibrary::SceneCaptureComponent2D_GetFov(USceneCaptureComponent2D* SceneCaptureComponent2D, float& Fov)
+{
+	Fov = SceneCaptureComponent2D->FOVAngle;
+}
+
+void ULowEntryExtendedStandardLibrary::SceneCaptureComponent2D_SetFov(USceneCaptureComponent2D* SceneCaptureComponent2D, const float Fov)
+{
+	SceneCaptureComponent2D->FOVAngle = Fov;
 }
 
 

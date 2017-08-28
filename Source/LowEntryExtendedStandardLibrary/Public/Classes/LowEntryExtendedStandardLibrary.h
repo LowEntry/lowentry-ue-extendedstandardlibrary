@@ -760,8 +760,8 @@ public:
 	* The Compression Quality has to be 1-100, a value of 0 will use the default value for the given ImageFormat.
 	* 
 	* To get the best results:
-	*  1) Set the TextureRenderTarget2D settings to the default values, then turn HDR off, then choose a properly high Size X and Y (1000+ seems to be fine)
-	*  2) In the SceneCapture2D settings, change the [Capture Source] to [Final Color (LDR) in RGB], if you don't see this option, try converting your SceneCapture2D Actor to a blueprint Actor first
+	*  1) In the SceneCapture2D [Texture Target]'s settings, set [Render Target Format] to [RTF RGBA8] and choose a properly high Size X and Y (1000+ seems to be fine)
+	*  2) In the SceneCapture2D's settings, change the [Capture Source] to [Final Color (LDR) in RGB], if you don't see this option, try converting your SceneCapture2D Actor to a blueprint Actor first
 	*  3) To get a brighter image, in the SceneCapture2D settings, play around with the Color Grading Contrast and Gamma (a Contrast and Gamma of X=1.0 Y=1.0 Z=1.0 W=2.0 looked quite good on my end)
 	*
 	* Returns an empty Byte Array if it fails.
@@ -777,8 +777,8 @@ public:
 	* The Compression Quality has to be 1-100, a value of 0 will use the default value for the given ImageFormat.
 	* 
 	* To get the best results:
-	*  1) Set the TextureRenderTarget2D settings to the default values, then turn HDR off, then choose a properly high Size X and Y (1000+ seems to be fine)
-	*  2) In the SceneCaptureComponent2D settings, change the [Capture Source] to [Final Color (LDR) in RGB], if you don't see this option, try converting your SceneCaptureComponent2D's Actor to a blueprint Actor first
+	*  1) In the SceneCaptureComponent2D [Texture Target]'s settings, set [Render Target Format] to [RTF RGBA8] and choose a properly high Size X and Y (1000+ seems to be fine)
+	*  2) In the SceneCaptureComponent2D's settings, change the [Capture Source] to [Final Color (LDR) in RGB], if you don't see this option, try converting your SceneCaptureComponent2D's Actor to a blueprint Actor first
 	*  3) To get a brighter image, in the SceneCaptureComponent2D settings (not in the CameraActor settings, but in the SceneCaptureComponent2D settings), play around with the Color Grading Contrast and Gamma (a Contrast and Gamma of X=1.0 Y=1.0 Z=1.0 W=2.0 looked quite good on my end)
 	*
 	* Returns an empty Byte Array if it fails.
@@ -794,7 +794,7 @@ public:
 	* The Compression Quality has to be 1-100, a value of 0 will use the default value for the given ImageFormat.
 	* 
 	* To get the best results:
-	*  1) Set the TextureRenderTarget2D settings to the default values, then turn HDR off, then choose a properly high Size X and Y (1000+ seems to be fine)
+	*  1) In the Texture Target's settings, set [Render Target Format] to [RTF RGBA8] and choose a properly high Size X and Y (1000+ seems to be fine)
 	*
 	* Returns an empty Byte Array if it fails.
 	*/
@@ -806,8 +806,8 @@ public:
 	* Converts a SceneCapture2D into a Pixel Array.
 	*
 	* To get the best results:
-	*  1) Set the TextureRenderTarget2D settings to the default values, then turn HDR off, then choose a properly high Size X and Y (1000+ seems to be fine)
-	*  2) In the SceneCapture2D settings, change the [Capture Source] to [Final Color (LDR) in RGB], if you don't see this option, try converting your SceneCapture2D Actor to a blueprint Actor first
+	*  1) In the SceneCapture2D [Texture Target]'s settings, set [Render Target Format] to [RTF RGBA8] and choose a properly high Size X and Y (1000+ seems to be fine)
+	*  2) In the SceneCapture2D's settings, change the [Capture Source] to [Final Color (LDR) in RGB], if you don't see this option, try converting your SceneCapture2D Actor to a blueprint Actor first
 	*  3) To get a brighter image, in the SceneCapture2D settings, play around with the Color Grading Contrast and Gamma (a Contrast and Gamma of X=1.0 Y=1.0 Z=1.0 W=2.0 looked quite good on my end)
 	*
 	* Returns an empty Pixel Array if it fails, the Width and the Height will also be 0 then.
@@ -819,8 +819,8 @@ public:
 	* Converts a SceneCaptureComponent2D into a Pixel Array.
 	*
 	* To get the best results:
-	*  1) Set the TextureRenderTarget2D settings to the default values, then turn HDR off, then choose a properly high Size X and Y (1000+ seems to be fine)
-	*  2) In the SceneCaptureComponent2D settings, change the [Capture Source] to [Final Color (LDR) in RGB], if you don't see this option, try converting your SceneCaptureComponent2D's Actor to a blueprint Actor first
+	*  1) In the SceneCaptureComponent2D [Texture Target]'s settings, set [Render Target Format] to [RTF RGBA8] and choose a properly high Size X and Y (1000+ seems to be fine)
+	*  2) In the SceneCaptureComponent2D's settings, change the [Capture Source] to [Final Color (LDR) in RGB], if you don't see this option, try converting your SceneCaptureComponent2D's Actor to a blueprint Actor first
 	*  3) To get a brighter image, in the SceneCaptureComponent2D settings (not in the CameraActor settings, but in the SceneCaptureComponent2D settings), play around with the Color Grading Contrast and Gamma (a Contrast and Gamma of X=1.0 Y=1.0 Z=1.0 W=2.0 looked quite good on my end)
 	*
 	* Returns an empty Pixel Array if it fails, the Width and the Height will also be 0 then.
@@ -832,7 +832,7 @@ public:
 	* Converts a TextureRenderTarget2D into a Pixel Array.
 	*
 	* To get the best results:
-	*  1) Set the TextureRenderTarget2D settings to the default values, then turn HDR off, then choose a properly high Size X and Y (1000+ seems to be fine)
+	*  1) In the Texture Target's settings, set [Render Target Format] to [RTF RGBA8] and choose a properly high Size X and Y (1000+ seems to be fine)
 	*
 	* Returns an empty Pixel Array if it fails, the Width and the Height will also be 0 then.
 	*/
@@ -862,18 +862,45 @@ public:
 	* Additional tips:
 	* - this blueprint can also be used to load sound assets, just ignore the returned Texture in that case
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|External", Meta = (DisplayName = "Load Video", Keywords = "movie download audio sound"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Video", Meta = (DisplayName = "Load Video", Keywords = "movie download audio sound"))
 		static void LoadVideo(const FString& Url, bool& Success, UMediaPlayer*& Player, UMediaTexture*& Texture, UMediaSoundWave*& Sound, const bool PlayOnOpen = true, const bool Loop = true);
 
 
 
 	/**
 	* Calls Texture->UpdateResource() if the given Texture is valid.
-	* 
+	*
 	* Updating the resource of a texture might take several frames. During these frames, the texture will be blank.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Texture", Meta = (DisplayName = "Update Resource (Texture)", Keywords = ""))
 		static void TextureUpdateResource(UTexture* Texture);
+
+
+
+	/**
+	* Returns the FOV of the given SceneCapture2D's SceneCaptureComponent2D.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Get FOV (SceneCapture2D)"))
+		static void SceneCapture2D_GetFov(ASceneCapture2D* SceneCapture2D, float& Fov);
+
+	/**
+	* Sets the FOV of the given SceneCapture2D's SceneCaptureComponent2D.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Set FOV (SceneCapture2D)"))
+		static void SceneCapture2D_SetFov(ASceneCapture2D* SceneCapture2D, const float Fov);
+
+
+	/**
+	* Returns the FOV of the given SceneCaptureComponent2D.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Get FOV (SceneCaptureComponent2D)"))
+		static void SceneCaptureComponent2D_GetFov(USceneCaptureComponent2D* SceneCaptureComponent2D, float& Fov);
+
+	/**
+	* Sets the FOV of the given SceneCaptureComponent2D.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Set FOV (SceneCaptureComponent2D)"))
+		static void SceneCaptureComponent2D_SetFov(USceneCaptureComponent2D* SceneCaptureComponent2D, const float Fov);
 
 
 
