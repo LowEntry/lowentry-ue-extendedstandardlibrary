@@ -2048,6 +2048,89 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::BCrypt(const TArray<uint8>& Byte
 
 
 
+TArray<uint8> ULowEntryExtendedStandardLibrary::HMAC(const TArray<uint8>& ByteArray, const TArray<uint8>& Key, ELowEntryHmacAlgorithm Algorithm, int32 Index, int32 Length)
+{
+	if(Index < 0)
+	{
+		Length += Index;
+		Index = 0;
+	}
+	if(Length > ByteArray.Num() - Index)
+	{
+		Length = ByteArray.Num() - Index;
+	}
+
+	int32 BlockSize = HMAC_GetBlockSize(Algorithm);
+
+	TArray<uint8> KeyBytes = Key;
+	if(KeyBytes.Num() > BlockSize)
+	{
+		KeyBytes = HMAC_Hash(KeyBytes, Algorithm);// key = hash(key)
+	}
+	if(KeyBytes.Num() != BlockSize)
+	{
+		KeyBytes.SetNumZeroed(BlockSize);// key = key + 0x00 (till KeyBytes has BlockSize length)
+	}
+
+	TArray<uint8> ArrayO = KeyBytes;
+	TArray<uint8> ArrayI = KeyBytes;
+	for(int32 i = 0; i < KeyBytes.Num(); i++)
+	{
+		ArrayO[i] ^= 0x5c;// o_key_pad = 0x5c ^ key
+		ArrayI[i] ^= 0x36;// i_key_pad = 0x36 ^ key
+	}
+
+	if(Length > 0)// (i_key_pad + message)
+	{
+		ArrayI.Append(ByteArray.GetData() + Index, Length);
+	}
+	ArrayI = HMAC_Hash(ArrayI, Algorithm);// hash(i_key_pad + message)
+	ArrayO.Append(ArrayI.GetData(), ArrayI.Num());// (o_key_pad + hash(i_key_pad + message))
+	return HMAC_Hash(ArrayO, Algorithm);// hash(o_key_pad + hash(i_key_pad + message))
+}
+
+int32 ULowEntryExtendedStandardLibrary::HMAC_GetBlockSize(ELowEntryHmacAlgorithm Algorithm)
+{
+	switch(Algorithm)
+	{
+		case ELowEntryHmacAlgorithm::MD5:
+			return 64;
+		case ELowEntryHmacAlgorithm::SHA1:
+			return 64;
+		case ELowEntryHmacAlgorithm::SHA256:
+			return 64;
+		case ELowEntryHmacAlgorithm::SHA512:
+			return 128;
+		default:
+			UE_LOG(LogBlueprintUserMessages, Error, TEXT("Unsupported HMAC Algorithm, falls back to SHA-256"));
+			return 64;// defaults to SHA-256
+	}
+}
+
+TArray<uint8> ULowEntryExtendedStandardLibrary::HMAC_Hash(const TArray<uint8>& Array, ELowEntryHmacAlgorithm Algorithm)
+{
+	switch(Algorithm)
+	{
+		case ELowEntryHmacAlgorithm::MD5:
+			return Md5(Array);
+			break;
+		case ELowEntryHmacAlgorithm::SHA1:
+			return Sha1(Array);
+			break;
+		case ELowEntryHmacAlgorithm::SHA256:
+			return Sha256(Array);
+			break;
+		case ELowEntryHmacAlgorithm::SHA512:
+			return Sha512(Array);
+			break;
+		default:
+			UE_LOG(LogBlueprintUserMessages, Error, TEXT("Unsupported HMAC Algorithm, falls back to SHA-256"));
+			return Sha256(Array);// defaults to SHA-256
+	}
+}
+
+
+
 TArray<FString> ULowEntryExtendedStandardLibrary::HashcashArray(const TArray<FString>& Resources, const int32 Bits)
 {
 	return ULowEntryHashingHashcashLibrary::hashArray(Resources, Bits);

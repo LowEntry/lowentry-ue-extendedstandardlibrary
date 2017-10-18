@@ -35,6 +35,8 @@
 #include "ELowEntryImageFormat.h"
 #include "ELowEntryRGBFormat.h"
 
+#include "ELowEntryHmacAlgorithm.h"
+
 #include "IMediaModule.h"
 #include "IMediaPlayer.h"
 #include "MediaPlayer.h"
@@ -943,9 +945,26 @@ public:
 	* The given strength needs to be between 4 and 30, a strength between 10 and 12 is recommended.
 	* 
 	* If these conditions aren't met, this blueprint will return an empty byte array.
+	*
+	* PS: the Index and Length parameters refer to the Byte Array (see the "Get Bytes Sub Array" blueprint for more information).
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Hashes|Generate", Meta = (DisplayName = "Generate Hash (Bcrypt)", AdvancedDisplay = "3"))
 		static TArray<uint8> BCrypt(const TArray<uint8>& ByteArray, const TArray<uint8>& Salt, int32 Strength = 10, int32 Index = 0, int32 Length = 0x7FFFFFFF);
+
+
+
+	/**
+	* Generates a HMAC hash.
+	*
+	* PS: the Index and Length parameters refer to the Byte Array (see the "Get Bytes Sub Array" blueprint for more information).
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Hashes|Generate", Meta = (DisplayName = "Generate Hash (Hmac)", AdvancedDisplay = "3"))
+		static TArray<uint8> HMAC(const TArray<uint8>& ByteArray, const TArray<uint8>& Key, ELowEntryHmacAlgorithm Algorithm = ELowEntryHmacAlgorithm::SHA256, int32 Index = 0, int32 Length = 0x7FFFFFFF);
+
+private:
+	static int32 HMAC_GetBlockSize(ELowEntryHmacAlgorithm Algorithm);
+	static TArray<uint8> HMAC_Hash(const TArray<uint8>& Array, ELowEntryHmacAlgorithm Algorithm);
+public:
 
 
 
