@@ -864,6 +864,34 @@ FString ULowEntryExtendedStandardLibrary::BytesToBase64(const TArray<uint8>& Byt
 }
 
 
+FString ULowEntryExtendedStandardLibrary::Base64ToBase64Url(const FString& Base64)
+{
+	FString Fixed = Base64;
+	Fixed.ReplaceInline(TEXT("+"), TEXT("-"));
+	Fixed.ReplaceInline(TEXT("/"), TEXT("_"));
+	Fixed.ReplaceInline(TEXT("="), TEXT(""));
+	return Fixed;
+}
+
+FString ULowEntryExtendedStandardLibrary::Base64UrlToBase64(const FString& Base64Url)
+{
+	FString Fixed = Base64Url;
+	Fixed.ReplaceInline(TEXT("-"), TEXT("+"));
+	Fixed.ReplaceInline(TEXT("_"), TEXT("/"));
+	return Fixed;
+}
+
+TArray<uint8> ULowEntryExtendedStandardLibrary::Base64UrlToBytes(const FString& Base64Url)
+{
+	return Base64ToBytes(Base64UrlToBase64(Base64Url));
+}
+
+FString ULowEntryExtendedStandardLibrary::BytesToBase64Url(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
+{
+	return Base64ToBase64Url(BytesToBase64(ByteArray, Index, Length));
+}
+
+
 TArray<uint8> ULowEntryExtendedStandardLibrary::HexToBytes(const FString& Hex)
 {
 	FString String = Hex.Replace(TEXT(" "), TEXT(""));

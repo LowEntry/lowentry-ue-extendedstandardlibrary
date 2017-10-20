@@ -518,6 +518,31 @@ public:
 
 
 	/**
+	* Converts a Base64 string to a Base64Url string.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|Strings", Meta = (DisplayName = "Base64 To Base64Url", Keywords = "base64 url web"))
+		static FString Base64ToBase64Url(const FString& Base64);
+
+	/**
+	* Converts a Base64Url string to a Base64 string.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|Strings", Meta = (DisplayName = "Base64Url To Base64", Keywords = "base64 url web"))
+		static FString Base64UrlToBase64(const FString& Base64Url);
+
+	/**
+	* Tries to convert a Base64Url String into a Byte Array. Will return an empty Array on failure.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Base64Url To Bytes", Keywords = "byte array base64 url web"))
+		static TArray<uint8> Base64UrlToBytes(const FString& Base64Url);
+
+	/**
+	* Converts a Byte Array into a Base6 Url String.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Base64Url", Keywords = "byte array base64 url web", AdvancedDisplay = "1"))
+		static FString BytesToBase64Url(const TArray<uint8>& ByteArray, int32 Index = 0, int32 Length = 0x7FFFFFFF);
+
+
+	/**
 	* Tries to convert a Hexadecimal (Base16) String into a Byte Array. Will return an empty Array on failure.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Hex To Bytes", Keywords = "byte array hex hexadecimal base16"))
