@@ -3,7 +3,7 @@
 
 #include "CoreMinimal.h"
 
-#include "Interfaces/IImageWrapper.h"
+#include "IImageWrapper.h"
 
 #include "ELowEntryRGBFormat.generated.h"
 
@@ -18,42 +18,42 @@ enum class ELowEntryRGBFormat : uint8
 };
 
 
-static ERGBFormat::Type ELowEntryRGBFormatToUE4(ELowEntryRGBFormat Value)
+static ERGBFormat ELowEntryRGBFormatToUE4(ELowEntryRGBFormat Value)
 {
 	if(Value == ELowEntryRGBFormat::Invalid)
 	{
-		return ERGBFormat::Type::Invalid;
+		return ERGBFormat::Invalid;
 	}
 	if(Value == ELowEntryRGBFormat::RGBA)
 	{
-		return ERGBFormat::Type::RGBA;
+		return ERGBFormat::RGBA;
 	}
 	if(Value == ELowEntryRGBFormat::BGRA)
 	{
-		return ERGBFormat::Type::BGRA;
+		return ERGBFormat::BGRA;
 	}
 	if(Value == ELowEntryRGBFormat::Gray)
 	{
-		return ERGBFormat::Type::Gray;
+		return ERGBFormat::Gray;
 	}
-	return ERGBFormat::Type::Invalid;
+	return ERGBFormat::Invalid;
 }
 
-static ELowEntryRGBFormat ELowEntryRGBFormatFromUE4(ERGBFormat::Type Value)
+static ELowEntryRGBFormat ELowEntryRGBFormatFromUE4(ERGBFormat Value)
 {
-	if(Value == ERGBFormat::Type::Invalid)
+	if(Value == ERGBFormat::Invalid)
 	{
 		return ELowEntryRGBFormat::Invalid;
 	}
-	if(Value == ERGBFormat::Type::RGBA)
+	if(Value == ERGBFormat::RGBA)
 	{
 		return ELowEntryRGBFormat::RGBA;
 	}
-	if(Value == ERGBFormat::Type::BGRA)
+	if(Value == ERGBFormat::BGRA)
 	{
 		return ELowEntryRGBFormat::BGRA;
 	}
-	if(Value == ERGBFormat::Type::Gray)
+	if(Value == ERGBFormat::Gray)
 	{
 		return ELowEntryRGBFormat::Gray;
 	}

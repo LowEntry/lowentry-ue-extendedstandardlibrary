@@ -23,8 +23,8 @@
 
 #include "FLowEntryRegexMatch.h"
 
-#include "Interfaces/IImageWrapper.h"
-#include "Interfaces/IImageWrapperModule.h"
+#include "IImageWrapper.h"
+#include "IImageWrapperModule.h"
 
 #include "ELowEntryExtendedStandardLibrary0to9.h"
 #include "ELowEntryExtendedStandardLibrary1to10other.h"
@@ -41,7 +41,7 @@
 #include "IMediaPlayer.h"
 #include "MediaPlayer.h"
 #include "MediaTexture.h"
-#include "MediaSoundWave.h"
+#include "MediaSoundComponent.h"
 
 #include "ImageUtils.h"
 
@@ -871,7 +871,7 @@ public:
 	* Loads a video, returns a:
 	*  - MediaPlayer (to play/pause/etc the video)
 	*  - MediaTexture (to see the video)
-	*  - MediaSoundWave (to hear the video)
+	*  - MediaSoundComponent (to hear the video)
 	*
 	* This blueprint also returns a boolean called Success.
 	*  - true: every returned Object is valid
@@ -890,7 +890,7 @@ public:
 	* - this blueprint can also be used to load sound assets, just ignore the returned Texture in that case
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Video", Meta = (DisplayName = "Load Video", Keywords = "movie download audio sound"))
-		static void LoadVideo(const FString& Url, bool& Success, UMediaPlayer*& Player, UMediaTexture*& Texture, UMediaSoundWave*& Sound, const bool PlayOnOpen = true, const bool Loop = true);
+		static void LoadVideo(const FString& Url, bool& Success, UMediaPlayer*& Player, UMediaTexture*& Texture, UMediaSoundComponent*& Sound, const bool PlayOnOpen = true, const bool Loop = true);
 
 
 

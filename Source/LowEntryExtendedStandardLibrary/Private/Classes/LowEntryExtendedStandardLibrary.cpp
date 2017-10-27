@@ -42,6 +42,8 @@
 #include "Base64.h"
 #include "Regex.h"
 
+#include "GenericApplication.h"
+
 #include "Runtime/Launch/Resources/Version.h"
 
 
@@ -1466,7 +1468,7 @@ UTexture2D* ULowEntryExtendedStandardLibrary::BytesToImage(const TArray<uint8>& 
 		return NULL;
 	}
 
-	IImageWrapperPtr ImageWrapper = ImageWrapperModule->CreateImageWrapper(ELowEntryImageFormatToUE4(ImageFormat));
+	TSharedPtr<IImageWrapper> ImageWrapper = ImageWrapperModule->CreateImageWrapper(ELowEntryImageFormatToUE4(ImageFormat));
 	if(!ImageWrapper.IsValid() || !ImageWrapper->SetCompressed(ByteArray.GetData() + Index, Length))
 	{
 		return NULL;
@@ -1605,7 +1607,7 @@ void ULowEntryExtendedStandardLibrary::BytesToPixels(const TArray<uint8>& ByteAr
 	}
 
 	IImageWrapperModule& ImageWrapperModule = FModuleManager::LoadModuleChecked<IImageWrapperModule>(FName("ImageWrapper"));
-	IImageWrapperPtr ImageWrapper = ImageWrapperModule.CreateImageWrapper(ELowEntryImageFormatToUE4(ImageFormat));
+	TSharedPtr<IImageWrapper> ImageWrapper = ImageWrapperModule.CreateImageWrapper(ELowEntryImageFormatToUE4(ImageFormat));
 	if(!ImageWrapper.IsValid() || !ImageWrapper->SetCompressed(ByteArray.GetData() + Index, Length))
 	{
 		return;
@@ -1688,7 +1690,7 @@ void ULowEntryExtendedStandardLibrary::PixelsToBytes(const int32 Width, const in
 		}
 
 		IImageWrapperModule& ImageWrapperModule = FModuleManager::LoadModuleChecked<IImageWrapperModule>(FName("ImageWrapper"));
-		IImageWrapperPtr ImageWrapper = ImageWrapperModule.CreateImageWrapper(ELowEntryImageFormatToUE4(ImageFormat));
+		TSharedPtr<IImageWrapper> ImageWrapper = ImageWrapperModule.CreateImageWrapper(ELowEntryImageFormatToUE4(ImageFormat));
 		if(!ImageWrapper.IsValid() || !ImageWrapper->SetRaw(MutablePixels.GetData(), MutablePixels.Num(), Width, Height, ERGBFormat::Gray, 8))
 		{
 			return;
@@ -1707,7 +1709,7 @@ void ULowEntryExtendedStandardLibrary::PixelsToBytes(const int32 Width, const in
 		}
 
 		IImageWrapperModule& ImageWrapperModule = FModuleManager::LoadModuleChecked<IImageWrapperModule>(FName("ImageWrapper"));
-		IImageWrapperPtr ImageWrapper = ImageWrapperModule.CreateImageWrapper(ELowEntryImageFormatToUE4(ImageFormat));
+		TSharedPtr<IImageWrapper> ImageWrapper = ImageWrapperModule.CreateImageWrapper(ELowEntryImageFormatToUE4(ImageFormat));
 		if(!ImageWrapper.IsValid() || !ImageWrapper->SetRaw(&MutablePixels[0], MutablePixels.Num() * sizeof(FColor), Width, Height, ERGBFormat::RGBA, 8))
 		{
 			return;
@@ -1933,7 +1935,7 @@ void ULowEntryExtendedStandardLibrary::TextureRenderTarget2DToPixels(UTextureRen
 
 
 
-void ULowEntryExtendedStandardLibrary::LoadVideo(const FString& Url, bool& Success, UMediaPlayer*& Player, UMediaTexture*& Texture, UMediaSoundWave*& Sound, const bool PlayOnOpen, const bool Loop)
+void ULowEntryExtendedStandardLibrary::LoadVideo(const FString& Url, bool& Success, UMediaPlayer*& Player, UMediaTexture*& Texture, UMediaSoundComponent*& Sound, const bool PlayOnOpen, const bool Loop)
 {
 	Success = false;
 	Player = NULL;
@@ -1952,18 +1954,12 @@ void ULowEntryExtendedStandardLibrary::LoadVideo(const FString& Url, bool& Succe
 	Player->SetLooping(Loop);
 
 	Texture = NewObject<UMediaTexture>();
-	Sound = NewObject<UMediaSoundWave>();
+	Sound = NewObject<UMediaSoundComponent>();
 
-#if ENGINE_MINOR_VERSION <= 12
-	Texture->SetMediaPlayer(Player);
-	Sound->SetMediaPlayer(Player);
-#else
-	Sound->bVirtualizeWhenSilent = true;
 	Player->PlayOnOpen = PlayOnOpen;
-	Player->SetVideoTexture(Texture);
-	Player->SetSoundWave(Sound);
+	Texture->MediaPlayer = Player;
+	Sound->MediaPlayer = Player;
 	Texture->UpdateResource();
-#endif
 }
 
 

@@ -32,8 +32,9 @@ namespace UnrealBuildTool.Rules
 				new string[]
 				{
 					"Engine",
-					"Core",
-					"CoreUObject",
+                    "Core",
+                    "ApplicationCore",
+                    "CoreUObject",
                     "Slate",
                     "SlateCore",
                     "ImageWrapper",
