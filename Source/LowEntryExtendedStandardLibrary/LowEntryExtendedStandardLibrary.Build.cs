@@ -41,6 +41,7 @@ namespace UnrealBuildTool.Rules
                     "Media",
                     "MediaAssets",
                     "AIModule",
+                    "EngineSettings"
                 }
 			);
 

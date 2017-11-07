@@ -44,6 +44,8 @@
 
 #include "GenericApplication.h"
 
+#include "GameMapsSettings.h"
+
 #include "Runtime/Launch/Resources/Version.h"
 
 
@@ -4087,6 +4089,64 @@ void ULowEntryExtendedStandardLibrary::SetSplitScreenEnabled(const bool Enabled)
 
 	ViewportClient->SetDisableSplitscreenOverride(!Enabled);
 }
+
+void ULowEntryExtendedStandardLibrary::GetSplitScreenType(ELowEntrySplitScreenType& Type)
+{
+	Type = ELowEntrySplitScreenType::None;
+
+	if(GEngine == nullptr)
+	{
+		return;
+	}
+
+	UGameViewportClient* ViewportClient = GEngine->GameViewport;
+	if(ViewportClient == nullptr)
+	{
+		return;
+	}
+
+	Type = ELowEntrySplitScreenTypeFromUE4(ViewportClient->GetCurrentSplitscreenConfiguration());
+}
+
+void ULowEntryExtendedStandardLibrary::SetSplitScreenType_TwoPlayers(const ELowEntrySplitScreenTypeTwoPlayers Type)
+{
+	UGameMapsSettings* Settings = GetMutableDefault<UGameMapsSettings>();
+	Settings->TwoPlayerSplitscreenLayout = ELowEntrySplitScreenTypeTwoPlayersToUE4(Type);
+
+	if(GEngine == nullptr)
+	{
+		return;
+	}
+
+	UGameViewportClient* ViewportClient = GEngine->GameViewport;
+	if(ViewportClient == nullptr)
+	{
+		return;
+	}
+
+	ViewportClient->UpdateActiveSplitscreenType();
+}
+
+void ULowEntryExtendedStandardLibrary::SetSplitScreenType_ThreePlayers(const ELowEntrySplitScreenTypeThreePlayers Type)
+{
+	UGameMapsSettings* Settings = GetMutableDefault<UGameMapsSettings>();
+	Settings->ThreePlayerSplitscreenLayout = ELowEntrySplitScreenTypeThreePlayersToUE4(Type);
+
+	if(GEngine == nullptr)
+	{
+		return;
+	}
+
+	UGameViewportClient* ViewportClient = GEngine->GameViewport;
+	if(ViewportClient == nullptr)
+	{
+		return;
+	}
+
+	ViewportClient->UpdateActiveSplitscreenType();
+}
+
+
 
 void ULowEntryExtendedStandardLibrary::IsWorldRenderingEnabled(bool& Success, bool& Enabled)
 {

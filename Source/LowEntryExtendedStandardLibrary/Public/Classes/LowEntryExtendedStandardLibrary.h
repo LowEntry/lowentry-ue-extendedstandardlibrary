@@ -45,6 +45,10 @@
 
 #include "ImageUtils.h"
 
+#include "ELowEntrySplitScreenType.h"
+#include "ELowEntrySplitScreenTypeTwoPlayers.h"
+#include "ELowEntrySplitScreenTypeThreePlayers.h"
+
 #include "LowEntryExtendedStandardLibrary.generated.h"
 
 
@@ -2420,6 +2424,26 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Viewport", Meta = (DisplayName = "Set Split Screen Enabled", Keywords = "screen split multiplayer mode"))
 		static void SetSplitScreenEnabled(const bool Enabled);
+
+	/**
+	* Get the current split screen type, note that this value also depends on the number of players that are currently in the game.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Viewport", Meta = (DisplayName = "Get Split Screen Type", Keywords = "screen split multiplayer mode"))
+		static void GetSplitScreenType(ELowEntrySplitScreenType& Type);
+
+	/**
+	* Set the split screen type (for 2 players).
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Viewport", Meta = (DisplayName = "Set Split Screen Type (2 players)", Keywords = "screen split multiplayer mode"))
+		static void SetSplitScreenType_TwoPlayers(const ELowEntrySplitScreenTypeTwoPlayers Type);
+
+	/**
+	* Set the split screen type (for 3 players).
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Viewport", Meta = (DisplayName = "Set Split Screen Type (3 players)", Keywords = "screen split multiplayer mode"))
+		static void SetSplitScreenType_ThreePlayers(const ELowEntrySplitScreenTypeThreePlayers Type);
+
+
 
 	/**
 	* Retrieves whether world rendering is enabled.
