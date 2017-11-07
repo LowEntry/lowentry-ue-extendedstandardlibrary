@@ -3,7 +3,7 @@
 
 #include "CoreMinimal.h"
 
-#include "Viewports.h"
+#include "Engine/ViewportSplitScreen.h"
 
 #include "ELowEntrySplitScreenType.generated.h"
 
