@@ -1959,8 +1959,8 @@ void ULowEntryExtendedStandardLibrary::LoadVideo(const FString& Url, bool& Succe
 	Sound = NewObject<UMediaSoundComponent>();
 
 	Player->PlayOnOpen = PlayOnOpen;
-	Texture->MediaPlayer = Player;
-	Sound->MediaPlayer = Player;
+	Texture->SetMediaPlayer(Player);
+	Sound->SetMediaPlayer(Player);
 	Texture->UpdateResource();
 }
 

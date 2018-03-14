@@ -60,7 +60,7 @@ public:
 			UEdGraphPin* Pin = *PinIt;
 			if(Pin && (Pin->Direction == EGPD_Input) && (Pin->PinType.PinCategory != UEdGraphSchema_K2::PC_Exec))
 			{
-				UEdGraphPin* Pin2 = ArrayNode->GetPin(Pin->PinName + TEXT("2"));
+				UEdGraphPin* Pin2 = ArrayNode->GetPin(Pin->PinName.ToString() + TEXT("2"));
 				if(Pin2)
 				{
 					FBPTerminal* Pin2Term = Context.CreateLocalTerminalFromPinAutoChooseScope(Pin2, Context.NetNameMap->MakeValidName(Pin2) + TEXT("_Object"));
@@ -96,7 +96,7 @@ public:
 				FBPTerminal** InputTerm = Context.NetMap.Find(FEdGraphUtilities::GetNetFromPin(Pin));
 				if(InputTerm)
 				{
-					UEdGraphPin* Pin2 = ArrayNode->GetPin(Pin->PinName + TEXT("2"));
+					UEdGraphPin* Pin2 = ArrayNode->GetPin(Pin->PinName.ToString() + TEXT("2"));
 					if(Pin2)
 					{
 						FBPTerminal** Input2Term = Context.NetMap.Find(FEdGraphUtilities::GetNetFromPin(Pin2));
@@ -126,7 +126,7 @@ public:
 				FBPTerminal** InputTerm = Context.NetMap.Find(FEdGraphUtilities::GetNetFromPin(Pin));
 				if(InputTerm)
 				{
-					UEdGraphPin* Pin2 = ArrayNode->GetPin(Pin->PinName + TEXT("2"));
+					UEdGraphPin* Pin2 = ArrayNode->GetPin(Pin->PinName.ToString() + TEXT("2"));
 					if(Pin2)
 					{
 						FBPTerminal** Input2Term = Context.NetMap.Find(FEdGraphUtilities::GetNetFromPin(Pin2));
@@ -201,21 +201,24 @@ void UK2Node_LowEntry_MergeBytesPure::AllocateDefaultPins()
 {
 	if(!true)
 	{
-		CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Exec, TEXT(""), NULL, false, false, UEdGraphSchema_K2::PN_Execute);
-		CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Exec, TEXT(""), NULL, false, false, UEdGraphSchema_K2::PN_Then);
+		CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Exec, TEXT(""), NULL, UEdGraphSchema_K2::PN_Execute);
+		CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Exec, TEXT(""), NULL, UEdGraphSchema_K2::PN_Then);
 	}
 
 	// Create the output pins
-	UEdGraphPin* ObjectOutputPin = CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Byte, TEXT(""), NULL, true, false, TEXT("Bytes"));
-	UEdGraphPin* ArrayOutputPin = CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Object, TEXT(""), ULowEntryByteArray::StaticClass(), true, false, TEXT("TempByteArrays"));
+	FCreatePinParams ArrayOutputPinParams = FCreatePinParams();
+	ArrayOutputPinParams.ContainerType = EPinContainerType::Array;
+	
+	UEdGraphPin* ObjectOutputPin = CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Byte, TEXT(""), NULL, TEXT("Bytes"), ArrayOutputPinParams);
+	UEdGraphPin* ArrayOutputPin = CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Object, TEXT(""), ULowEntryByteArray::StaticClass(), TEXT("TempByteArrays"), ArrayOutputPinParams);
 
 	ArrayOutputPin->bHidden = true;
 
 	// Create the input pins to create the arrays from
 	for(int32 i = 0; i < NumInputs; ++i)
 	{
-		CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Byte, TEXT(""), NULL, true, false, *FString::Printf(TEXT("[%d]"), i));
-		CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Object, TEXT(""), ULowEntryByteArray::StaticClass(), false, false, *FString::Printf(TEXT("[%d]2"), i))->bHidden = true;
+		CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Byte, TEXT(""), NULL, *FString::Printf(TEXT("[%d]"), i), ArrayOutputPinParams);
+		CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Object, TEXT(""), ULowEntryByteArray::StaticClass(), *FString::Printf(TEXT("[%d]2"), i))->bHidden = true;
 	}
 }
 
@@ -261,8 +264,10 @@ void UK2Node_LowEntry_MergeBytesPure::NotifyPinConnectionListChanged(UEdGraphPin
 		Modify();
 
 		++NumInputs;
-		CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Byte, TEXT(""), NULL, true, false, *FString::Printf(TEXT("[%d]"), (NumInputs - 1)));
-		CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Object, TEXT(""), ULowEntryByteArray::StaticClass(), false, false, *FString::Printf(TEXT("[%d]2"), (NumInputs - 1)))->bHidden = true;
+		FCreatePinParams ArrayOutputPinParams = FCreatePinParams();
+		ArrayOutputPinParams.ContainerType = EPinContainerType::Array;
+		CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Byte, TEXT(""), NULL, *FString::Printf(TEXT("[%d]"), (NumInputs - 1)), ArrayOutputPinParams);
+		CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Object, TEXT(""), ULowEntryByteArray::StaticClass(), *FString::Printf(TEXT("[%d]2"), (NumInputs - 1)))->bHidden = true;
 		const bool bIsCompiling = GetBlueprint()->bBeingCompiled;
 		if(!bIsCompiling)
 		{
@@ -312,8 +317,10 @@ void UK2Node_LowEntry_MergeBytesPure::AddInputPin()
 
 	++NumInputs;
 	FEdGraphPinType OutputPinType = GetArrayOutputPin()->PinType;
-	CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Byte, TEXT(""), NULL, true, false, *FString::Printf(TEXT("[%d]"), (NumInputs - 1)));
-	CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Object, TEXT(""), ULowEntryByteArray::StaticClass(), false, false, *FString::Printf(TEXT("[%d]2"), (NumInputs - 1)))->bHidden = true;
+	FCreatePinParams ArrayOutputPinParams = FCreatePinParams();
+	ArrayOutputPinParams.ContainerType = EPinContainerType::Array;
+	CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Byte, TEXT(""), NULL, *FString::Printf(TEXT("[%d]"), (NumInputs - 1)), ArrayOutputPinParams);
+	CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Object, TEXT(""), ULowEntryByteArray::StaticClass(), *FString::Printf(TEXT("[%d]2"), (NumInputs - 1)))->bHidden = true;
 
 	const bool bIsCompiling = GetBlueprint()->bBeingCompiled;
 	if(!bIsCompiling)
@@ -335,15 +342,15 @@ void UK2Node_LowEntry_MergeBytesPure::RemoveInputPin(UEdGraphPin* Pin)
 		for(int32 PinIndex = PinRemovalIndex + 2; PinIndex < Pins.Num(); ++PinIndex)
 		{
 			Pins[PinIndex]->Modify();
-			Pins[PinIndex]->PinName = FString::Printf(TEXT("[%d]"), (PinIndex / 2) - 2); // -1 to shift back one, -1 to account for the output pin at the 0th position
+			Pins[PinIndex]->PinName = FName(*FString::Printf(TEXT("[%d]"), (PinIndex / 2) - 2)); // -1 to shift back one, -1 to account for the output pin at the 0th position
 
 			++PinIndex;
 
 			Pins[PinIndex]->Modify();
-			Pins[PinIndex]->PinName = FString::Printf(TEXT("[%d]2"), (PinIndex / 2) - 2); // -1 to shift back one, -1 to account for the output pin at the 0th position
+			Pins[PinIndex]->PinName = FName(*FString::Printf(TEXT("[%d]2"), (PinIndex / 2) - 2)); // -1 to shift back one, -1 to account for the output pin at the 0th position
 		}
 
-		UEdGraphPin* Pin2 = GetPin(Pin->PinName + TEXT("2"));
+		UEdGraphPin* Pin2 = GetPin(Pin->PinName.ToString() + TEXT("2"));
 		Pin2->Modify();
 		Pin2->BreakAllPinLinks();
 

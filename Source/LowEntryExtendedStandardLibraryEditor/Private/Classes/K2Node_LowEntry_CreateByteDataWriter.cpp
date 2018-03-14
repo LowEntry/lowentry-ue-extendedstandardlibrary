@@ -143,20 +143,22 @@ void UK2Node_LowEntry_CreateByteDataWriter::AllocateDefaultPins()
 {
 	if(!false)
 	{
-		CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Exec, TEXT(""), NULL, false, false, UEdGraphSchema_K2::PN_Execute);
-		CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Exec, TEXT(""), NULL, false, false, UEdGraphSchema_K2::PN_Then);
+		CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Exec, TEXT(""), NULL, UEdGraphSchema_K2::PN_Execute);
+		CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Exec, TEXT(""), NULL, UEdGraphSchema_K2::PN_Then);
 	}
 
 	// Create the output pins
-	UEdGraphPin* ObjectOutputPin = CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Object, TEXT(""), ULowEntryByteDataWriter::StaticClass(), false, false, TEXT("ByteDataWriter"));
-	UEdGraphPin* ArrayOutputPin = CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Object, TEXT(""), ULowEntryByteDataEntry::StaticClass(), true, false, TEXT("TempArray"));
+	UEdGraphPin* ObjectOutputPin = CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Object, TEXT(""), ULowEntryByteDataWriter::StaticClass(), TEXT("ByteDataWriter"));
+	FCreatePinParams ArrayOutputPinParams = FCreatePinParams();
+	ArrayOutputPinParams.ContainerType = EPinContainerType::Array;
+	UEdGraphPin* ArrayOutputPin = CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Object, TEXT(""), ULowEntryByteDataEntry::StaticClass(), TEXT("TempArray"), ArrayOutputPinParams);
 
 	ArrayOutputPin->bHidden = true;
 
 	// Create the input pins to create the arrays from
 	for(int32 i = 0; i < NumInputs; ++i)
 	{
-		CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Object, TEXT(""), ULowEntryByteDataEntry::StaticClass(), false, false, *FString::Printf(TEXT("[%d]"), i));
+		CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Object, TEXT(""), ULowEntryByteDataEntry::StaticClass(), *FString::Printf(TEXT("[%d]"), i));
 	}
 }
 
@@ -203,7 +205,7 @@ void UK2Node_LowEntry_CreateByteDataWriter::NotifyPinConnectionListChanged(UEdGr
 
 		++NumInputs;
 		FEdGraphPinType OutputPinType = GetArrayOutputPin()->PinType;
-		CreatePin(EGPD_Input, OutputPinType.PinCategory, OutputPinType.PinSubCategory, OutputPinType.PinSubCategoryObject.Get(), false, false, *FString::Printf(TEXT("[%d]"), (NumInputs - 1)));
+		CreatePin(EGPD_Input, OutputPinType.PinCategory, OutputPinType.PinSubCategory, OutputPinType.PinSubCategoryObject.Get(), *FString::Printf(TEXT("[%d]"), (NumInputs - 1)));
 		const bool bIsCompiling = GetBlueprint()->bBeingCompiled;
 		if(!bIsCompiling)
 		{
@@ -245,7 +247,7 @@ void UK2Node_LowEntry_CreateByteDataWriter::AddInputPin()
 
 	++NumInputs;
 	FEdGraphPinType OutputPinType = GetArrayOutputPin()->PinType;
-	CreatePin(EGPD_Input, OutputPinType.PinCategory, OutputPinType.PinSubCategory, OutputPinType.PinSubCategoryObject.Get(), false, false, *FString::Printf(TEXT("[%d]"), (NumInputs - 1)));
+	CreatePin(EGPD_Input, OutputPinType.PinCategory, OutputPinType.PinSubCategory, OutputPinType.PinSubCategoryObject.Get(), *FString::Printf(TEXT("[%d]"), (NumInputs - 1)));
 
 	const bool bIsCompiling = GetBlueprint()->bBeingCompiled;
 	if(!bIsCompiling)
@@ -267,7 +269,7 @@ void UK2Node_LowEntry_CreateByteDataWriter::RemoveInputPin(UEdGraphPin* Pin)
 		for(int32 PinIndex = PinRemovalIndex + 1; PinIndex < Pins.Num(); ++PinIndex)
 		{
 			Pins[PinIndex]->Modify();
-			Pins[PinIndex]->PinName = FString::Printf(TEXT("[%d]"), PinIndex - 2); // -1 to shift back one, -1 to account for the output pin at the 0th position
+			Pins[PinIndex]->PinName = FName(*FString::Printf(TEXT("[%d]"), PinIndex - 2)); // -1 to shift back one, -1 to account for the output pin at the 0th position
 		}
 
 		Pin->Modify();
