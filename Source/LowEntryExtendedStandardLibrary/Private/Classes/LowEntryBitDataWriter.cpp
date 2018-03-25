@@ -1,3 +1,5 @@
+// Copyright Low Entry. Apache License, Version 2.0.
+
 #include "LowEntryBitDataWriter.h"
 #include "LowEntryBitDataEntry.h"
 #include "LowEntryExtendedStandardLibrary.h"

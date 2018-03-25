@@ -14,12 +14,14 @@
         {
             "Name": "LowEntryExtendedStandardLibrary",
             "Type": "Runtime",
-			"LoadingPhase" : "PreDefault"
+			"LoadingPhase" : "PreDefault",
+            "BlacklistPlatforms": [ "IOS" ]
         },
 		{
 			"Name": "LowEntryExtendedStandardLibraryEditor",
 			"Type": "Developer",
-			"LoadingPhase" : "Default"
+			"LoadingPhase" : "Default",
+            "BlacklistPlatforms": [ "IOS" ]
 		}
     ],
 

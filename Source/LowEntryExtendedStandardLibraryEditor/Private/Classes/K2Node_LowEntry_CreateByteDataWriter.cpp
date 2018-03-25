@@ -1,3 +1,5 @@
+// Copyright Low Entry. Apache License, Version 2.0.
+
 #include "K2Node_LowEntry_CreateByteDataWriter.h"
 
 #include "LowEntryExtendedStandardLibrary.h"

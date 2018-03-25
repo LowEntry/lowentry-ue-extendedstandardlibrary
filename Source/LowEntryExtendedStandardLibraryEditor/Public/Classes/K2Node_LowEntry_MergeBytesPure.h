@@ -1,3 +1,5 @@
+// Copyright Low Entry. Apache License, Version 2.0.
+
 #pragma once
 
 
@@ -22,9 +24,9 @@ class UK2Node_LowEntry_MergeBytesPure : public UK2Node
 {
 	GENERATED_UCLASS_BODY()
 
-		/** The number of input pins to generate for this node */
-		UPROPERTY()
-		int32 NumInputs;
+	/** The number of input pins to generate for this node */
+	UPROPERTY()
+	int32 NumInputs;
 
 
 public:
