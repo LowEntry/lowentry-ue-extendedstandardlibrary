@@ -190,6 +190,12 @@ public:
 		static bool XboxOnePlatform();
 
 	/**
+	* Returns true if this is the Switch platform (PLATFORM_SWITCH), returns false otherwise.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Switch Platform", Keywords = "compile export mode version type build platform"))
+		static bool SwitchPlatform();
+
+	/**
 	* Returns true if this is the Android platform (PLATFORM_ANDROID), returns false otherwise.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Platform", Meta = (DisplayName = "Is Android Platform", Keywords = "compile export mode version type build platform"))
@@ -783,6 +789,9 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Image|From Pixels", Meta = (DisplayName = "Pixels To Image (Texture2D)", Keywords = "array width height pixels colors"))
 		static UTexture2D* PixelsToTexture2D(const int32 Width, const int32 Height, const TArray<FColor>& Pixels);
+
+
+	static UTexture2D* DataToTexture2D(int32 Width, int32 Height, const void* Src, SIZE_T Count);
 
 
 	/**

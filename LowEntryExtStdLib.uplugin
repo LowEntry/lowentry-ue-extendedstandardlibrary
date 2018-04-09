@@ -1,8 +1,8 @@
 {
     "FileVersion": 3,
     "FriendlyName": "Low Entry - Extended Standard Library",
-    "Version": 39,
-    "VersionName": "4.19.0 r0",
+    "Version": 40,
+    "VersionName": "4.19.0 r1",
     "CreatedBy": "Low Entry",
     "CreatedByURL": "https://lowentry.com",
     "EngineVersion": "4.19.0",
@@ -15,13 +15,13 @@
             "Name": "LowEntryExtendedStandardLibrary",
             "Type": "Runtime",
 			"LoadingPhase" : "PreDefault",
-            "BlacklistPlatforms": [ "IOS" ]
+            "BlacklistPlatforms": []
         },
 		{
 			"Name": "LowEntryExtendedStandardLibraryEditor",
 			"Type": "Developer",
 			"LoadingPhase" : "Default",
-            "BlacklistPlatforms": [ "IOS" ]
+            "BlacklistPlatforms": []
 		}
     ],
 

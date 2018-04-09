@@ -265,6 +265,15 @@ bool ULowEntryExtendedStandardLibrary::XboxOnePlatform()
 #endif
 }
 
+bool ULowEntryExtendedStandardLibrary::SwitchPlatform()
+{
+#if PLATFORM_SWITCH
+	return true;
+#else
+	return false;
+#endif
+}
+
 bool ULowEntryExtendedStandardLibrary::AndroidPlatform()
 {
 #if PLATFORM_ANDROID
@@ -1484,18 +1493,7 @@ UTexture2D* ULowEntryExtendedStandardLibrary::BytesToImage(const TArray<uint8>& 
 		return NULL;
 	}
 
-	UTexture2D* LoadedT2D = UTexture2D::CreateTransient(ImageWrapper->GetWidth(), ImageWrapper->GetHeight(), EPixelFormat::PF_B8G8R8A8);
-	if(LoadedT2D == nullptr)
-	{
-		return NULL;
-	}
-
-	void* TextureData = LoadedT2D->PlatformData->Mips[0].BulkData.Lock(LOCK_READ_WRITE);
-	FMemory::Memcpy(TextureData, Uncompressed->GetData(), Uncompressed->Num());
-	LoadedT2D->PlatformData->Mips[0].BulkData.Unlock();
-
-	LoadedT2D->UpdateResource();
-	return LoadedT2D;
+	return ULowEntryExtendedStandardLibrary::DataToTexture2D(ImageWrapper->GetWidth(), ImageWrapper->GetHeight(), Uncompressed->GetData(), Uncompressed->Num());
 }
 
 void ULowEntryExtendedStandardLibrary::Texture2DToBytes(UTexture2D* Texture2D, const ELowEntryImageFormat ImageFormat, TArray<uint8>& ByteArray, const int32 CompressionQuality)
@@ -1808,15 +1806,22 @@ UTexture2D* ULowEntryExtendedStandardLibrary::PixelsToTexture2D(const int32 Widt
 	{
 		return NULL;
 	}
+	return ULowEntryExtendedStandardLibrary::DataToTexture2D(Width, Height, &Pixels[0], Pixels.Num() * sizeof(FColor));
+}
 
+
+
+UTexture2D* ULowEntryExtendedStandardLibrary::DataToTexture2D(int32 Width, int32 Height, const void* Src, SIZE_T Count)
+{
 	UTexture2D* LoadedT2D = UTexture2D::CreateTransient(Width, Height, EPixelFormat::PF_B8G8R8A8);
 	if(LoadedT2D == nullptr)
 	{
 		return NULL;
 	}
+	LoadedT2D->bNoTiling = true;
 
 	void* TextureData = LoadedT2D->PlatformData->Mips[0].BulkData.Lock(LOCK_READ_WRITE);
-	FMemory::Memcpy(TextureData, &Pixels[0], Pixels.Num() * sizeof(FColor));
+	FMemory::Memcpy(TextureData, Src, Count);
 	LoadedT2D->PlatformData->Mips[0].BulkData.Unlock();
 
 	LoadedT2D->UpdateResource();
