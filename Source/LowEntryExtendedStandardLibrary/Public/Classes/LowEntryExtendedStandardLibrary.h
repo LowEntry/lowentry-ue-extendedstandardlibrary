@@ -883,29 +883,39 @@ public:
 
 	
 	/**
-	* Loads a video, returns a:
+	* Loads a video.
+	* 
+	* Requires a:
+	*  - MediaSoundComponent (to hear the video), this is created by using the "Add Media Sound Component" blueprint on an object on which you want to hear the sound on, also, don't forget to run the "Start" blueprint on the Media Sound Component, otherwise you won't hear anything
+	*  - URL (could be a HTTP/HTTPS URL, or a relative or absolute filepath, more on that below)
+	*  - PlayOnOpen (determines whether "Play" should be automatically called on the returned MediaPlayer, if this is false, the video/sound won't start until you call "Play" on the returned MediaPlayer yourself)
+	*  - Loop (determines whether the video/sound should keep playing, or whether it should just play one time and then stop)
+	* 
+	* Returns a:
 	*  - MediaPlayer (to play/pause/etc the video)
 	*  - MediaTexture (to see the video)
-	*  - MediaSoundComponent (to hear the video)
 	*
 	* This blueprint also returns a boolean called Success.
-	*  - true: every returned Object is valid
-	*  - false: every returned Object is NULL
+	*  - true, everything went well, every returned Object is valid
+	*  - false, something went wrong, every returned Object is NULL
 	*
 	* The URL is either:
-	* - a http/https URL, for example "http://public.lowentry.com/files/test_data/TestVideoMp4.mp4"
-	* - a relative filepath URL of a video located in "YourProject/Content/Movies/" formatted like "./Movies/YourVideo.mp4"
-	* - an absolute filepath URL of a video prefixed by "file://", for example "file://C:/Program Files/Epic Games/4.13/Engine/Binaries/Win64/YourVideo.mp4"
+	*  - a HTTP/HTTPS URL, for example "http://public.lowentry.com/files/test_data/TestVideoMp4.mp4"
+	*  - a relative filepath URL of a video located in "YourProject/Content/Movies/" formatted like "./Movies/YourVideo.mp4"
+	*  - an absolute filepath URL of a video prefixed by "file://", for example "file://C:/Program Files/Epic Games/4.13/Engine/Binaries/Win64/YourVideo.mp4"
 	*
 	* Some tips:
-	* - only MP4 (MPEG-4) can be played on every platform, so it's best to only use MP4 (MPEG-4) videos for now
-	* - don't forget to call Play Sound with the MediaSoundWave, otherwise you won't hear any sound
+	*  - only MP4 (MPEG-4) can be played on every platform, so it's best to only use MP4 (MPEG-4) videos for now
 	*
 	* Additional tips:
-	* - this blueprint can also be used to load sound assets, just ignore the returned Texture in that case
+	*  - this blueprint can also be used to load sound assets, just ignore the returned Texture in that case
+	*  - if no MediaSoundComponent is given, or if Start wasn't called on the MediaSoundComponent, you won't hear any sound
+	* 
+	* Screenshots:
+	*  - screenshots on how to use this blueprint correctly can be found at: https://public.lowentry.com/#files/LowEntryUE4/ue4/images/tutorials/load_video/
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Video", Meta = (DisplayName = "Load Video", Keywords = "movie download audio sound"))
-		static void LoadVideo(const FString& Url, bool& Success, UMediaPlayer*& Player, UMediaTexture*& Texture, UMediaSoundComponent*& Sound, const bool PlayOnOpen = true, const bool Loop = true);
+		static void LoadVideo(UMediaSoundComponent* MediaSoundComponent, const FString& Url, bool& Success, UMediaPlayer*& MediaPlayer, UMediaTexture*& MediaTexture, const bool PlayOnOpen = true, const bool Loop = true);
 
 
 

@@ -1944,12 +1944,11 @@ void ULowEntryExtendedStandardLibrary::TextureRenderTarget2DToPixels(UTextureRen
 
 
 
-void ULowEntryExtendedStandardLibrary::LoadVideo(const FString& Url, bool& Success, UMediaPlayer*& Player, UMediaTexture*& Texture, UMediaSoundComponent*& Sound, const bool PlayOnOpen, const bool Loop)
+void ULowEntryExtendedStandardLibrary::LoadVideo(UMediaSoundComponent* MediaSoundComponent, const FString& Url, bool& Success, UMediaPlayer*& Player, UMediaTexture*& Texture, const bool PlayOnOpen, const bool Loop)
 {
 	Success = false;
 	Player = NULL;
 	Texture = NULL;
-	Sound = NULL;
 
 	UMediaPlayer* LoadPlayer = NewObject<UMediaPlayer>();
 	if(!LoadPlayer->OpenUrl(Url))
@@ -1961,14 +1960,16 @@ void ULowEntryExtendedStandardLibrary::LoadVideo(const FString& Url, bool& Succe
 
 	Player = LoadPlayer;
 	Player->SetLooping(Loop);
+	Player->PlayOnOpen = PlayOnOpen;
 
 	Texture = NewObject<UMediaTexture>();
-	Sound = NewObject<UMediaSoundComponent>();
-
-	Player->PlayOnOpen = PlayOnOpen;
 	Texture->SetMediaPlayer(Player);
-	Sound->SetMediaPlayer(Player);
 	Texture->UpdateResource();
+
+	if(MediaSoundComponent != nullptr)
+	{
+		MediaSoundComponent->SetMediaPlayer(Player);
+	}
 }
 
 
