@@ -653,6 +653,12 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Long (bytes)", Keywords = "byte array long", AdvancedDisplay = "1"))
 		static ULowEntryLong* BytesToLongBytes(const TArray<uint8>& ByteArray, int32 Index = 0, int32 Length = 0x7FFFFFFF);
 
+	/**
+	* Parses a string into a long.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Types|Long (bytes)", Meta = (DisplayName = "Parse String Into Long (bytes)"))
+		static ULowEntryLong* ParseStringIntoLongBytes(const FString& String);
+
 
 	/**
 	* Converts a float into a Byte Array (4 bytes).
@@ -684,6 +690,12 @@ public:
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Double (bytes)", Keywords = "byte array double", AdvancedDisplay = "1"))
 		static ULowEntryDouble* BytesToDoubleBytes(const TArray<uint8>& ByteArray, int32 Index = 0, int32 Length = 0x7FFFFFFF);
+
+	/**
+	* Parses a string into a double.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Types|Double (bytes)", Meta = (DisplayName = "Parse String Into Double (bytes)"))
+		static ULowEntryDouble* ParseStringIntoDoubleBytes(const FString& String);
 
 
 	/**

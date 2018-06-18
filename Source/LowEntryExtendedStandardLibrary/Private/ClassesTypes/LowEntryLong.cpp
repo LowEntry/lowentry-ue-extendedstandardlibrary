@@ -1,6 +1,8 @@
 // Copyright Low Entry. Apache License, Version 2.0.
 
 #include "LowEntryLong.h"
+#include "LowEntryDouble.h"
+#include "LowEntryExtendedStandardLibrary.h"
 
 
 // init >>
@@ -66,4 +68,100 @@ void ULowEntryLong::SetBytes(const TArray<uint8>& ByteArray, int32 Index, int32 
 			Bytes[i] = ByteArray[Index + i];
 		}
 	}
+}
+
+
+int64 ULowEntryLong::GetLong()
+{
+	return ULowEntryExtendedStandardLibrary::BytesToLong(Bytes);
+}
+
+void ULowEntryLong::SetLong(const int64 Value)
+{
+	Bytes = ULowEntryExtendedStandardLibrary::LongToBytes(Value);
+}
+
+
+ULowEntryDouble* ULowEntryLong::CastToDoubleBytes()
+{
+	return ULowEntryExtendedStandardLibrary::BytesToDoubleBytes(ULowEntryExtendedStandardLibrary::DoubleToBytes((double) GetLong()));
+}
+
+FString ULowEntryLong::CastToString()
+{
+	return FString::Printf(TEXT("%lld"), GetLong());
+}
+
+
+void ULowEntryLong::Integer_Add(const int32 Value)
+{
+	SetLong(GetLong() + Value);
+}
+
+void ULowEntryLong::Integer_Subtract(const int32 Value)
+{
+	SetLong(GetLong() - Value);
+}
+
+
+bool ULowEntryLong::Integer_Equals(const int32 Value)
+{
+	return (GetLong() == Value);
+}
+
+bool ULowEntryLong::Integer_GreaterThan(const int32 Value)
+{
+	return (GetLong() > Value);
+}
+
+bool ULowEntryLong::Integer_LessThan(const int32 Value)
+{
+	return (GetLong() < Value);
+}
+
+bool ULowEntryLong::Float_GreaterThan(const float Value)
+{
+	return (GetLong() > Value);
+}
+
+bool ULowEntryLong::Float_LessThan(const float Value)
+{
+	return (GetLong() < Value);
+}
+
+
+void ULowEntryLong::LongBytes_Add(ULowEntryLong* Value)
+{
+	SetLong(GetLong() + ((Value == nullptr) ? 0 : Value->GetLong()));
+}
+
+void ULowEntryLong::LongBytes_Subtract(ULowEntryLong* Value)
+{
+	SetLong(GetLong() - ((Value == nullptr) ? 0 : Value->GetLong()));
+}
+
+
+bool ULowEntryLong::LongBytes_Equals(ULowEntryLong* Value)
+{
+	return (GetLong() == ((Value == nullptr) ? 0 : Value->GetLong()));
+}
+
+bool ULowEntryLong::LongBytes_GreaterThan(ULowEntryLong* Value)
+{
+	return (GetLong() > ((Value == nullptr) ? 0 : Value->GetLong()));
+}
+
+bool ULowEntryLong::LongBytes_LessThan(ULowEntryLong* Value)
+{
+	return (GetLong() < ((Value == nullptr) ? 0 : Value->GetLong()));
+}
+
+bool ULowEntryLong::DoubleBytes_GreaterThan(ULowEntryDouble* Value)
+{
+	return (GetLong() > ((Value == nullptr) ? 0 : Value->GetDouble()));
+}
+
+bool ULowEntryLong::DoubleBytes_LessThan(ULowEntryDouble* Value)
+{
+	return (GetLong() < ((Value == nullptr) ? 0 : Value->GetDouble()));
 }

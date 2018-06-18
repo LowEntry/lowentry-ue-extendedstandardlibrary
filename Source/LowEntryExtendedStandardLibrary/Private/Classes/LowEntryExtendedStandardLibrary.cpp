@@ -1320,6 +1320,11 @@ ULowEntryLong* ULowEntryExtendedStandardLibrary::BytesToLongBytes(const TArray<u
 	return ULowEntryLong::Create(ByteArray, Index, Length);
 }
 
+ULowEntryLong* ULowEntryExtendedStandardLibrary::ParseStringIntoLongBytes(const FString& String)
+{
+	return ULowEntryExtendedStandardLibrary::BytesToLongBytes(ULowEntryExtendedStandardLibrary::LongToBytes(FCString::Atoi64(*String)));
+}
+
 
 TArray<uint8> ULowEntryExtendedStandardLibrary::FloatToBytes(const float Value)
 {
@@ -1349,6 +1354,11 @@ double ULowEntryExtendedStandardLibrary::BytesToDouble(const TArray<uint8>& Byte
 ULowEntryDouble* ULowEntryExtendedStandardLibrary::BytesToDoubleBytes(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
 {
 	return ULowEntryDouble::Create(ByteArray, Index, Length);
+}
+
+ULowEntryDouble* ULowEntryExtendedStandardLibrary::ParseStringIntoDoubleBytes(const FString& String)
+{
+	return ULowEntryExtendedStandardLibrary::BytesToDoubleBytes(ULowEntryExtendedStandardLibrary::DoubleToBytes(FCString::Atod(*String)));
 }
 
 
