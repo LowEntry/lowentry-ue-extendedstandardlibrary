@@ -50,6 +50,12 @@ public:
 	/**
 	* Casts the long to a double.
 	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Types|Long (bytes)", Meta = (DisplayName = "Create Clone"))
+		ULowEntryLong* CreateClone();
+
+	/**
+	* Casts the long to a double.
+	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Types|Long (bytes)", Meta = (DisplayName = "Cast To Double (bytes)"))
 		ULowEntryDouble* CastToDoubleBytes();
 
