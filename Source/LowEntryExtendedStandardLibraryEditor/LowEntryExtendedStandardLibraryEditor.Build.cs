@@ -6,20 +6,6 @@ namespace UnrealBuildTool.Rules
         {
             PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-            PublicIncludePaths.AddRange(
-				new string[] {
-					"LowEntryExtendedStandardLibraryEditor/Public/Module",
-					"LowEntryExtendedStandardLibraryEditor/Public/Classes",
-				}
-			);
-
-			PrivateIncludePaths.AddRange(
-				new string[] {
-					"LowEntryExtendedStandardLibraryEditor/Private/Module",
-					"LowEntryExtendedStandardLibraryEditor/Private/Classes",
-				}
-			);
-
 			PublicDependencyModuleNames.AddRange(
 				new string[]
 				{
