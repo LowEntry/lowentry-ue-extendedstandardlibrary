@@ -1,3 +1,5 @@
+using System.IO;
+
 namespace UnrealBuildTool.Rules
 {
 	public class LowEntryExtendedStandardLibraryEditor : ModuleRules
@@ -5,6 +7,20 @@ namespace UnrealBuildTool.Rules
 		public LowEntryExtendedStandardLibraryEditor(ReadOnlyTargetRules Target) : base(Target)
         {
             PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+
+            PublicIncludePaths.AddRange(
+				new string[] {
+                    Path.Combine(ModuleDirectory, "Public/Module"),
+                    Path.Combine(ModuleDirectory, "Public/Classes"),
+				}
+			);
+
+			PrivateIncludePaths.AddRange(
+				new string[] {
+                    Path.Combine(ModuleDirectory, "Private/Module"),
+                    Path.Combine(ModuleDirectory, "Private/Classes"),
+				}
+			);
 
 			PublicDependencyModuleNames.AddRange(
 				new string[]
