@@ -7,11 +7,7 @@
 
 #include "K2Node.h"
 
-#include "Runtime/Launch/Resources/Version.h"
-
-#if ENGINE_MINOR_VERSION > 12
-	#include "Textures/SlateIcon.h"
-#endif
+#include "Textures/SlateIcon.h"
 
 #include "K2Node_LowEntry_CreateByteDataWriterPure.generated.h"
 
@@ -38,18 +34,11 @@ public:
 	virtual void AllocateDefaultPins() override;
 	virtual FText GetTooltipText() const override;
 
-#if ENGINE_MINOR_VERSION <= 12
-	virtual FName GetPaletteIcon(FLinearColor& OutColor) const override
-	{
-		return TEXT("GraphEditor.MakeArray_16x");
-	}
-#else
 	virtual FSlateIcon GetIconAndTint(FLinearColor& OutColor) const override
 	{
 		static FSlateIcon Icon("EditorStyle", "GraphEditor.MakeArray_16x");
 		return Icon;
 	}
-#endif
 	// End of UEdGraphNode interface
 
 	// UK2Node interface

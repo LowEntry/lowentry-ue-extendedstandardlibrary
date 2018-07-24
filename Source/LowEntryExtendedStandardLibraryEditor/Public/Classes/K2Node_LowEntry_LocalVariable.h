@@ -7,11 +7,7 @@
 
 #include "K2Node.h"
 
-#include "Runtime/Launch/Resources/Version.h"
-
-#if ENGINE_MINOR_VERSION > 12
-	#include "Textures/SlateIcon.h"
-#endif
+#include "Textures/SlateIcon.h"
 
 #include "K2Node_LowEntry_LocalVariable.generated.h"
 
@@ -33,18 +29,11 @@ public:
 	virtual FText GetTooltipText() const override;
 	virtual void ValidateNodeDuringCompilation(class FCompilerResultsLog& MessageLog) const override;
 
-#if ENGINE_MINOR_VERSION <= 12
-	virtual FName GetPaletteIcon(FLinearColor& OutColor) const override
-	{
-		return TEXT("Kismet.AllClasses.FunctionIcon");
-	}
-#else
 	virtual FSlateIcon GetIconAndTint(FLinearColor& OutColor) const override
 	{
 		static FSlateIcon Icon("EditorStyle", "Kismet.AllClasses.FunctionIcon");
 		return Icon;
 	}
-#endif
 	// End of UEdGraphNode interface
 
 	// UK2Node interface

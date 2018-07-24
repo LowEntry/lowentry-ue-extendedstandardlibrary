@@ -8,7 +8,7 @@
 #include "LowEntryExecutionQueue.h"
 
 
-class FExecutionQueueAction : public FPendingLatentAction
+class FLowEntryExecutionQueueAction : public FPendingLatentAction
 {
 public:
 	FName ExecutionFunction;
@@ -17,7 +17,7 @@ public:
 
 	ULowEntryExecutionQueue* Queue;
 
-	FExecutionQueueAction(ULowEntryExecutionQueue* Queue0, const FLatentActionInfo& LatentInfo)
+	FLowEntryExecutionQueueAction(ULowEntryExecutionQueue* Queue0, const FLatentActionInfo& LatentInfo)
 		: ExecutionFunction(LatentInfo.ExecutionFunction)
 		, OutputLink(LatentInfo.Linkage)
 		, CallbackTarget(LatentInfo.CallbackTarget)

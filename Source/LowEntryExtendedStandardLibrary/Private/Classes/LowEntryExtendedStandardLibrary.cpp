@@ -35,20 +35,17 @@
 #include "FLowEntryTickFrames.h"
 #include "FLowEntryTickSeconds.h"
 
-#include "FDelayFramesAction.h"
-
-#include "FExecutionQueueAction.h"
+#include "FLowEntryDelayFramesAction.h"
+#include "FLowEntryExecutionQueueAction.h"
 
 #include "GenericTeamAgentInterface.h"
 
-#include "Base64.h"
-#include "Regex.h"
+#include "Misc/Base64.h"
+#include "Internationalization/Regex.h"
 
-#include "GenericApplication.h"
+#include "GenericPlatform/GenericApplication.h"
 
 #include "GameMapsSettings.h"
-
-#include "Runtime/Launch/Resources/Version.h"
 
 
 // init >>
@@ -2901,9 +2898,9 @@ void ULowEntryExtendedStandardLibrary::DelayFrames(UObject* WorldContextObject, 
 	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
 	{
 		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
-		if(LatentActionManager.FindExistingAction<FDelayFramesAction>(LatentInfo.CallbackTarget, LatentInfo.UUID) == NULL)
+		if(LatentActionManager.FindExistingAction<FLowEntryDelayFramesAction>(LatentInfo.CallbackTarget, LatentInfo.UUID) == NULL)
 		{
-			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FDelayFramesAction(Frames, LatentInfo));
+			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FLowEntryDelayFramesAction(Frames, LatentInfo));
 		}
 	}
 }
@@ -2913,10 +2910,10 @@ void ULowEntryExtendedStandardLibrary::RetriggerableDelayFrames(UObject* WorldCo
 	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
 	{
 		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
-		FDelayFramesAction* Action = LatentActionManager.FindExistingAction<FDelayFramesAction>(LatentInfo.CallbackTarget, LatentInfo.UUID);
+		FLowEntryDelayFramesAction* Action = LatentActionManager.FindExistingAction<FLowEntryDelayFramesAction>(LatentInfo.CallbackTarget, LatentInfo.UUID);
 		if(Action == NULL)
 		{
-			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FDelayFramesAction(Frames, LatentInfo));
+			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FLowEntryDelayFramesAction(Frames, LatentInfo));
 		}
 		else
 		{
@@ -2930,9 +2927,9 @@ void ULowEntryExtendedStandardLibrary::RandomDelayFrames(UObject* WorldContextOb
 	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
 	{
 		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
-		if(LatentActionManager.FindExistingAction<FDelayFramesAction>(LatentInfo.CallbackTarget, LatentInfo.UUID) == NULL)
+		if(LatentActionManager.FindExistingAction<FLowEntryDelayFramesAction>(LatentInfo.CallbackTarget, LatentInfo.UUID) == NULL)
 		{
-			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FDelayFramesAction(FMath::RandRange(MinFrames, MaxFrames), LatentInfo));
+			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FLowEntryDelayFramesAction(FMath::RandRange(MinFrames, MaxFrames), LatentInfo));
 		}
 	}
 }
@@ -2942,10 +2939,10 @@ void ULowEntryExtendedStandardLibrary::RetriggerableRandomDelayFrames(UObject* W
 	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
 	{
 		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
-		FDelayFramesAction* Action = LatentActionManager.FindExistingAction<FDelayFramesAction>(LatentInfo.CallbackTarget, LatentInfo.UUID);
+		FLowEntryDelayFramesAction* Action = LatentActionManager.FindExistingAction<FLowEntryDelayFramesAction>(LatentInfo.CallbackTarget, LatentInfo.UUID);
 		if(Action == NULL)
 		{
-			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FDelayFramesAction(FMath::RandRange(MinFrames, MaxFrames), LatentInfo));
+			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FLowEntryDelayFramesAction(FMath::RandRange(MinFrames, MaxFrames), LatentInfo));
 		}
 		else
 		{
@@ -2961,11 +2958,11 @@ void ULowEntryExtendedStandardLibrary::QueueExecutions(UObject* WorldContextObje
 	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
 	{
 		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
-		FExecutionQueueAction* Action = LatentActionManager.FindExistingAction<FExecutionQueueAction>(LatentInfo.CallbackTarget, LatentInfo.UUID);
+		FLowEntryExecutionQueueAction* Action = LatentActionManager.FindExistingAction<FLowEntryExecutionQueueAction>(LatentInfo.CallbackTarget, LatentInfo.UUID);
 		if(Action == NULL)
 		{
 			Queue = ULowEntryExecutionQueue::Create(1, true);
-			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FExecutionQueueAction(Queue, LatentInfo));
+			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FLowEntryExecutionQueueAction(Queue, LatentInfo));
 		}
 		else
 		{

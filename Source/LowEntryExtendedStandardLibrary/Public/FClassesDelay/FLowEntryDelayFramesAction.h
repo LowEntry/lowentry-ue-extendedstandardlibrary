@@ -8,7 +8,7 @@
 #include "LatentActions.h"
 
 
-class FDelayFramesAction : public FPendingLatentAction
+class FLowEntryDelayFramesAction : public FPendingLatentAction
 {
 public:
 	FName ExecutionFunction;
@@ -17,7 +17,7 @@ public:
 
 	int32 FramesRemaining;
 
-	FDelayFramesAction(int32 Frames, const FLatentActionInfo& LatentInfo)
+	FLowEntryDelayFramesAction(int32 Frames, const FLatentActionInfo& LatentInfo)
 		: ExecutionFunction(LatentInfo.ExecutionFunction)
 		, OutputLink(LatentInfo.Linkage)
 		, CallbackTarget(LatentInfo.CallbackTarget)
