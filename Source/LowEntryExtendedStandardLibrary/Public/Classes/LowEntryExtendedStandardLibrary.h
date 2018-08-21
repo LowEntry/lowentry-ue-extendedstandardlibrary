@@ -2288,13 +2288,13 @@ public:
 
 
 	/**
-	* Sets the mouse position.
+	* Sets the mouse position (relative to the viewport).
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Mouse", Meta = (DisplayName = "Set Mouse Position"))
 		static void SetMousePosition(const int32 X, const int32 Y);
 
 	/**
-	* Returns the mouse position.
+	* Returns the mouse position (relative to the viewport), from 0 to the viewport width or height.
 	* 
 	* Returns Success=false, X=0 and Y=0 if the mouse position could not be determined, which happends when:
 	*  - GEngine is null
@@ -2307,7 +2307,7 @@ public:
 
 
 	/**
-	* Sets the mouse position in percentages, from 0.0 to 1.0.
+	* Sets the mouse position (relative to the viewport) in percentages, from 0.0 to 1.0.
 	* 
 	* X:  0.0 is left, 1.0 is right
 	* Y:  0.0 is top,  1.0 is bottom
@@ -2316,7 +2316,7 @@ public:
 		static void SetMousePositionInPercentages(const float X, const float Y);
 
 	/**
-	* Returns the mouse position in percentages, from 0.0 to 1.0.
+	* Returns the mouse position (relative to the viewport) in percentages, from 0.0 to 1.0.
 	* 
 	* X:  0.0 is left, 1.0 is right
 	* Y:  0.0 is top,  1.0 is bottom

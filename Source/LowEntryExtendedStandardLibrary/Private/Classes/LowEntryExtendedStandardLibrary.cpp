@@ -3648,6 +3648,16 @@ void ULowEntryExtendedStandardLibrary::GetMousePosition(bool& Success, int32& X,
 		return;
 	}
 
+	FIntPoint Size = Viewport->GetSizeXY();
+	if((Size.X <= 0) || (Size.Y <= 0))
+	{
+		return;
+	}
+	if((Size.X < MouseX) || (Size.Y < MouseY))
+	{
+		return;
+	}
+
 	Success = true;
 	X = MouseX;
 	Y = MouseY;
@@ -3709,6 +3719,10 @@ void ULowEntryExtendedStandardLibrary::GetMousePositionInPercentages(bool& Succe
 
 	FIntPoint Size = Viewport->GetSizeXY();
 	if((Size.X <= 0) || (Size.Y <= 0))
+	{
+		return;
+	}
+	if((Size.X < MouseX) || (Size.Y < MouseY))
 	{
 		return;
 	}
