@@ -4667,6 +4667,32 @@ void ULowEntryExtendedStandardLibrary::CaseSwitchObject(const int32 OnlyCheckFir
 
 
 
+void ULowEntryExtendedStandardLibrary::PlayerControllerGetLocalPlayer(APlayerController* PlayerController, bool& Success, ULocalPlayer*& LocalPlayer)
+{
+	Success = false;
+	LocalPlayer = NULL;
+	if(PlayerController == nullptr)
+	{
+		return;
+	}
+	if(PlayerController->Player == nullptr)
+	{
+		return;
+	}
+	if(!PlayerController->Player->GetClass()->IsChildOf(ULocalPlayer::StaticClass()))
+	{
+		return;
+	}
+	LocalPlayer = (ULocalPlayer*)PlayerController->Player;
+	if(LocalPlayer == nullptr)
+	{
+		return;
+	}
+	Success = true;
+}
+
+
+
 void ULowEntryExtendedStandardLibrary::SimpleKismetSystemLibraryPrintString(const FString& InString)
 {
 #if !(UE_BUILD_SHIPPING || UE_BUILD_TEST)
