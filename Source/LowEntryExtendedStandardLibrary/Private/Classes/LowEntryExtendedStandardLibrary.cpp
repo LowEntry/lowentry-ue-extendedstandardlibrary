@@ -1503,6 +1503,55 @@ UTexture2D* ULowEntryExtendedStandardLibrary::BytesToImage(const TArray<uint8>& 
 	return ULowEntryExtendedStandardLibrary::DataToTexture2D(ImageWrapper->GetWidth(), ImageWrapper->GetHeight(), Uncompressed->GetData(), Uncompressed->Num());
 }
 
+UTexture2D* ULowEntryExtendedStandardLibrary::BytesToExistingImage(bool& ReusedGivenTexture2D, UTexture2D* Texture2D, const TArray<uint8>& ByteArray, const ELowEntryImageFormat ImageFormat, int32 Index, int32 Length)
+{
+	ReusedGivenTexture2D = false;
+	if(ByteArray.Num() <= 0)
+	{
+		ReusedGivenTexture2D = (Texture2D == nullptr);
+		return NULL;
+	}
+	if(Index < 0)
+	{
+		Length += Index;
+		Index = 0;
+	}
+	if(Length > ByteArray.Num() - Index)
+	{
+		Length = ByteArray.Num() - Index;
+	}
+	if(Length <= 0)
+	{
+		ReusedGivenTexture2D = (Texture2D == nullptr);
+		return NULL;
+	}
+
+	IImageWrapperModule* ImageWrapperModule = FModuleManager::LoadModulePtr<IImageWrapperModule>("ImageWrapper");
+	if(ImageWrapperModule == nullptr)
+	{
+		ReusedGivenTexture2D = (Texture2D == nullptr);
+		return NULL;
+	}
+
+	TSharedPtr<IImageWrapper> ImageWrapper = ImageWrapperModule->CreateImageWrapper(ELowEntryImageFormatToUE4(ImageFormat));
+	if(!ImageWrapper.IsValid() || !ImageWrapper->SetCompressed(ByteArray.GetData() + Index, Length))
+	{
+		ReusedGivenTexture2D = (Texture2D == nullptr);
+		return NULL;
+	}
+
+	const TArray<uint8>* Uncompressed = NULL;
+	if(!ImageWrapper->GetRaw(ERGBFormat::BGRA, 8, Uncompressed))
+	{
+		ReusedGivenTexture2D = (Texture2D == nullptr);
+		return NULL;
+	}
+
+	UTexture2D* NewTexture2D = ULowEntryExtendedStandardLibrary::DataToExistingTexture2D(Texture2D, ImageWrapper->GetWidth(), ImageWrapper->GetHeight(), Uncompressed->GetData(), Uncompressed->Num());
+	ReusedGivenTexture2D = (Texture2D == NewTexture2D);
+	return NewTexture2D;
+}
+
 void ULowEntryExtendedStandardLibrary::Texture2DToBytes(UTexture2D* Texture2D, const ELowEntryImageFormat ImageFormat, TArray<uint8>& ByteArray, const int32 CompressionQuality)
 {
 	ByteArray = TArray<uint8>();
@@ -1816,23 +1865,56 @@ UTexture2D* ULowEntryExtendedStandardLibrary::PixelsToTexture2D(const int32 Widt
 	return ULowEntryExtendedStandardLibrary::DataToTexture2D(Width, Height, &Pixels[0], Pixels.Num() * sizeof(FColor));
 }
 
+UTexture2D* ULowEntryExtendedStandardLibrary::PixelsToExistingTexture2D(bool& ReusedGivenTexture2D, UTexture2D* Texture2D, const int32 Width, const int32 Height, const TArray<FColor>& Pixels)
+{
+	ReusedGivenTexture2D = false;
+	if((Pixels.Num() <= 0) || (Width <= 0) || (Height <= 0))
+	{
+		ReusedGivenTexture2D = (Texture2D == nullptr);
+		return NULL;
+	}
+	UTexture2D* NewTexture2D = ULowEntryExtendedStandardLibrary::DataToExistingTexture2D(Texture2D, Width, Height, &Pixels[0], Pixels.Num() * sizeof(FColor));
+	ReusedGivenTexture2D = (Texture2D == NewTexture2D);
+	return NewTexture2D;
+}
+
 
 
 UTexture2D* ULowEntryExtendedStandardLibrary::DataToTexture2D(int32 Width, int32 Height, const void* Src, SIZE_T Count)
 {
-	UTexture2D* LoadedT2D = UTexture2D::CreateTransient(Width, Height, EPixelFormat::PF_B8G8R8A8);
-	if(LoadedT2D == nullptr)
+	UTexture2D* Texture2D = UTexture2D::CreateTransient(Width, Height, EPixelFormat::PF_B8G8R8A8);
+	if(Texture2D == nullptr)
 	{
 		return NULL;
 	}
-	LoadedT2D->bNoTiling = true;
+	Texture2D->bNoTiling = true;
 
-	void* TextureData = LoadedT2D->PlatformData->Mips[0].BulkData.Lock(LOCK_READ_WRITE);
+	void* TextureData = Texture2D->PlatformData->Mips[0].BulkData.Lock(LOCK_READ_WRITE);
 	FMemory::Memcpy(TextureData, Src, Count);
-	LoadedT2D->PlatformData->Mips[0].BulkData.Unlock();
+	Texture2D->PlatformData->Mips[0].BulkData.Unlock();
 
-	LoadedT2D->UpdateResource();
-	return LoadedT2D;
+	Texture2D->UpdateResource();
+	return Texture2D;
+}
+
+UTexture2D* ULowEntryExtendedStandardLibrary::DataToExistingTexture2D(UTexture2D* Texture2D, int32 Width, int32 Height, const void* Src, SIZE_T Count)
+{
+	if((Texture2D == nullptr) || (Texture2D->GetSizeX() != Width) || (Texture2D->GetSizeY() != Height) || (Texture2D->GetPixelFormat() != EPixelFormat::PF_B8G8R8A8))
+	{
+		Texture2D = UTexture2D::CreateTransient(Width, Height, EPixelFormat::PF_B8G8R8A8);
+	}
+	if(Texture2D == nullptr)
+	{
+		return NULL;
+	}
+	Texture2D->bNoTiling = true;
+
+	void* TextureData = Texture2D->PlatformData->Mips[0].BulkData.Lock(LOCK_READ_WRITE);
+	FMemory::Memcpy(TextureData, Src, Count);
+	Texture2D->PlatformData->Mips[0].BulkData.Unlock();
+
+	Texture2D->UpdateResource();
+	return Texture2D;
 }
 
 

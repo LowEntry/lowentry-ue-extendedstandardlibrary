@@ -753,6 +753,16 @@ public:
 		static UTexture2D* BytesToImage(const TArray<uint8>& ByteArray, const ELowEntryImageFormat ImageFormat, int32 Index = 0, int32 Length = 0x7FFFFFFF);
 
 	/**
+	* Converts a Byte Array into an image (Texture2D).
+	*
+	* Returns NULL if it fails.
+	* 
+	* Will re-use the given Texture2D if possible, ReusedGivenTexture2D will be true if it was possible.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Existing Image (Texture2D)", Keywords = "byte array binary", AdvancedDisplay = "4"))
+		static UTexture2D* BytesToExistingImage(bool& ReusedGivenTexture2D, UTexture2D* Texture2D, const TArray<uint8>& ByteArray, const ELowEntryImageFormat ImageFormat, int32 Index = 0, int32 Length = 0x7FFFFFFF);
+
+	/**
 	* Converts a Texture2D into a Byte Array.
 	*
 	* Some formats will not work (like BMP, ICO and ICNS).
@@ -802,8 +812,19 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Image|From Pixels", Meta = (DisplayName = "Pixels To Image (Texture2D)", Keywords = "array width height pixels colors"))
 		static UTexture2D* PixelsToTexture2D(const int32 Width, const int32 Height, const TArray<FColor>& Pixels);
 
+	/**
+	* Converts a Pixel Array into an image (Texture2D).
+	*
+	* Returns NULL if it fails.
+	* 
+	* Will re-use the given Texture2D if possible, ReusedGivenTexture2D will be true if it was possible.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Image|From Pixels", Meta = (DisplayName = "Pixels To Existing Image (Texture2D)", Keywords = "array width height pixels colors"))
+		static UTexture2D* PixelsToExistingTexture2D(bool& ReusedGivenTexture2D, UTexture2D* Texture2D, const int32 Width, const int32 Height, const TArray<FColor>& Pixels);
+
 
 	static UTexture2D* DataToTexture2D(int32 Width, int32 Height, const void* Src, SIZE_T Count);
+	static UTexture2D* DataToExistingTexture2D(UTexture2D* Texture2D, int32 Width, int32 Height, const void* Src, SIZE_T Count);
 
 
 	/**
