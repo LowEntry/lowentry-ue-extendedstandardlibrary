@@ -3866,7 +3866,7 @@ void ULowEntryExtendedStandardLibrary::SetMouseLockedToViewport(const bool Locke
 void ULowEntryExtendedStandardLibrary::GetPrimaryMonitorResolution(int32& Width, int32& Height)
 {
 	FDisplayMetrics DisplayMetrics;
-	FDisplayMetrics::GetDisplayMetrics(DisplayMetrics);
+	FDisplayMetrics::RebuildDisplayMetrics(DisplayMetrics);
 
 	Width = DisplayMetrics.PrimaryDisplayWidth;
 	Height = DisplayMetrics.PrimaryDisplayHeight;
@@ -3875,7 +3875,7 @@ void ULowEntryExtendedStandardLibrary::GetPrimaryMonitorResolution(int32& Width,
 void ULowEntryExtendedStandardLibrary::GetPrimaryMonitorWorkArea(int32& X, int32& Y, int32& Width, int32& Height)
 {
 	FDisplayMetrics DisplayMetrics;
-	FDisplayMetrics::GetDisplayMetrics(DisplayMetrics);
+	FDisplayMetrics::RebuildDisplayMetrics(DisplayMetrics);
 
 	FPlatformRect Bounds = DisplayMetrics.PrimaryDisplayWorkAreaRect;
 	X = Bounds.Left;

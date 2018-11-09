@@ -18,7 +18,9 @@ enum class ELowEntrySplitScreenType : uint8
 	TwoPlayer_Vertical,
 	ThreePlayer_FavorTop,
 	ThreePlayer_FavorBottom,
-	FourPlayer
+	ThreePlayer_Vertical,
+	FourPlayer_Grid,
+	FourPlayer_Vertical
 };
 
 
@@ -44,9 +46,17 @@ static ESplitScreenType::Type ELowEntrySplitScreenTypeToUE4(ELowEntrySplitScreen
 	{
 		return ESplitScreenType::Type::ThreePlayer_FavorBottom;
 	}
-	if(Value == ELowEntrySplitScreenType::FourPlayer)
+	if(Value == ELowEntrySplitScreenType::ThreePlayer_Vertical)
 	{
-		return ESplitScreenType::Type::FourPlayer;
+		return ESplitScreenType::Type::ThreePlayer_Vertical;
+	}
+	if(Value == ELowEntrySplitScreenType::FourPlayer_Grid)
+	{
+		return ESplitScreenType::Type::FourPlayer_Grid;
+	}
+	if(Value == ELowEntrySplitScreenType::FourPlayer_Vertical)
+	{
+		return ESplitScreenType::Type::FourPlayer_Vertical;
 	}
 	return ESplitScreenType::Type::None;
 }
@@ -73,9 +83,17 @@ static ELowEntrySplitScreenType ELowEntrySplitScreenTypeFromUE4(ESplitScreenType
 	{
 		return ELowEntrySplitScreenType::ThreePlayer_FavorBottom;
 	}
-	if(Value == ESplitScreenType::Type::FourPlayer)
+	if(Value == ESplitScreenType::Type::ThreePlayer_Vertical)
 	{
-		return ELowEntrySplitScreenType::FourPlayer;
+		return ELowEntrySplitScreenType::ThreePlayer_Vertical;
+	}
+	if(Value == ESplitScreenType::Type::FourPlayer_Grid)
+	{
+		return ELowEntrySplitScreenType::FourPlayer_Grid;
+	}
+	if(Value == ESplitScreenType::Type::FourPlayer_Vertical)
+	{
+		return ELowEntrySplitScreenType::FourPlayer_Vertical;
 	}
 	return ELowEntrySplitScreenType::None;
 }
