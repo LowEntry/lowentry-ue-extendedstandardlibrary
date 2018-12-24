@@ -956,11 +956,10 @@ FString ULowEntryExtendedStandardLibrary::BytesToHex(const TArray<uint8>& ByteAr
 	}
 	FString String;
 	String.Reserve((Hex.Len() / 2) * 3);
-	TArray<TCHAR> Chars = Hex.GetCharArray();
-	for(int32 i = 1; i <= Chars.Num(); i++)
+	for(int32 i = 1; i <= Hex.Len(); i++)
 	{
-		String.AppendChar(Chars[i - 1]);
-		if(((i % 2) == 0) && (i < (Chars.Num() - 1)))
+		String.AppendChar(Hex[i - 1]);
+		if(((i % 2) == 0) && (i < (Hex.Len() - 1)))
 		{
 			String.Append(TEXT(" "));
 		}
@@ -980,7 +979,6 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::BinaryToBytes(const FString& Bin
 	{
 		return TArray<uint8>();
 	}
-	TArray<TCHAR> Bits = String.GetCharArray();
 	TArray<uint8> Bytes;
 	Bytes.SetNum(String.Len() / 8);
 	int32 Index = 0;
@@ -989,11 +987,11 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::BinaryToBytes(const FString& Bin
 		uint8 b = 0;
 		for(int32 j = 0; j < 8; j++)
 		{
-			if(Bits[i + j] == '0')
+			if(String[i + j] == '0')
 			{
 				continue;
 			}
-			else if(Bits[i + j] == '1')
+			else if(String[i + j] == '1')
 			{
 				b += (1 << (7 - j));
 			}
@@ -1065,7 +1063,6 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::BitStringToBytes(const FString& 
 	{
 		return TArray<uint8>();
 	}
-	TArray<TCHAR> Bits = String.GetCharArray();
 	TArray<uint8> Bytes;
 	Bytes.SetNum(String.Len() / 8);
 	int32 Index = 0;
@@ -1074,11 +1071,11 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::BitStringToBytes(const FString& 
 		uint8 b = 0;
 		for(int32 j = 0; j < 8; j++)
 		{
-			if(Bits[i + j] == '0')
+			if(String[i + j] == '0')
 			{
 				continue;
 			}
-			else if(Bits[i + j] == '1')
+			else if(String[i + j] == '1')
 			{
 				b += (1 << j);
 			}
@@ -3268,7 +3265,6 @@ TArray<FLowEntryRegexMatch> ULowEntryExtendedStandardLibrary::RegexGetMatches(co
 
 FString ULowEntryExtendedStandardLibrary::RegexReplace(const FString& String, const FString& Pattern, const FString& Replacement)
 {
-	TArray<TCHAR> Characters = String.GetCharArray();
 	int32 Length = String.Len();
 
 	FString Result = TEXT("");
@@ -3283,7 +3279,7 @@ FString ULowEntryExtendedStandardLibrary::RegexReplace(const FString& String, co
 
 		for(int32 i = LastMatchEnding; i < b; i++)
 		{
-			Result += Characters[i];
+			Result += String[i];
 		}
 		Result += Replacement;
 
@@ -3292,7 +3288,7 @@ FString ULowEntryExtendedStandardLibrary::RegexReplace(const FString& String, co
 	}
 	for(int32 i = LastMatchEnding; i < Length; i++)
 	{
-		Result += Characters[i];
+		Result += String[i];
 	}
 	return Result;
 }
