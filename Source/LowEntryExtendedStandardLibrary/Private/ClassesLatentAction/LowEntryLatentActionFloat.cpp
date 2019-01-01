@@ -3,6 +3,8 @@
 #include "LowEntryLatentActionFloat.h"
 #include "FLowEntryLatentActionFloat.h"
 
+#include "Engine/Engine.h"
+
 
 // init >>
 	ULowEntryLatentActionFloat::ULowEntryLatentActionFloat(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
