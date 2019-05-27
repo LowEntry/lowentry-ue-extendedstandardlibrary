@@ -43,6 +43,8 @@
 #include "Misc/Base64.h"
 #include "Internationalization/Regex.h"
 
+#include "HAL/PlatformApplicationMisc.h"
+
 #include "GenericPlatform/GenericApplication.h"
 
 #include "GameMapsSettings.h"
@@ -4289,6 +4291,20 @@ void ULowEntryExtendedStandardLibrary::SetWorldRenderingEnabled(const bool Enabl
 	}
 
 	ViewportClient->bDisableWorldRendering = (Enabled ? 0 : 1);
+}
+
+
+
+FString ULowEntryExtendedStandardLibrary::ClipboardGet()
+{
+	FString Value = TEXT("");
+	FPlatformApplicationMisc::ClipboardPaste(Value);
+	return Value;
+}
+
+void ULowEntryExtendedStandardLibrary::ClipboardSet(const FString& Value)
+{
+	FPlatformApplicationMisc::ClipboardCopy(*Value);
 }
 
 

@@ -2518,6 +2518,20 @@ public:
 
 
 	/**
+	* Retrieves and returns the clipboard's content.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Clipboard", Meta = (DisplayName = "Clipboard Get", Keywords = "paste retrieve obtain access"))
+		static FString ClipboardGet();
+
+	/**
+	* Sets the given string as the clipboard's content.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Clipboard", Meta = (DisplayName = "Clipboard Set", Keywords = "copy put place"))
+		static void ClipboardSet(const FString& Value);
+
+
+
+	/**
 	* Finds a class.
 	* 
 	* The given ClassName has to be a specific path to your class/object, for example: /Game/Blueprints/GameMode.GameMode_C
