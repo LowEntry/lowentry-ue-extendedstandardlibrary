@@ -794,6 +794,23 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Pixels To Bytes", Keywords = "byte binary array width height pixels colors", AdvancedDisplay = "5"))
 		static void PixelsToBytes(const int32 Width, const int32 Height, const TArray<FColor>& Pixels, const ELowEntryImageFormat ImageFormat, TArray<uint8>& ByteArray, const int32 CompressionQuality = 0);
+	
+	
+	/**
+	* Converts the pixel to an accurate-looking gray pixel.
+	*
+	* The formula it uses:  brightness  =  21.25% red  +  71.54% green  +  7.21% blue
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Image|Other", Meta = (DisplayName = "Grayscale Pixel", Keywords = "to convert grey get"))
+		static FColor GrayscalePixel(const FColor& Pixel);
+
+	/**
+	* Converts the pixels to accurate-looking gray pixels.
+	*
+	* The formula it uses:  brightness  =  21.25% red  +  71.54% green  +  7.21% blue
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Image|Other", Meta = (DisplayName = "Grayscale Pixels", Keywords = "to convert grey get"))
+		static TArray<FColor> GrayscalePixels(const TArray<FColor>& Pixel);
 
 
 	/**

@@ -1777,6 +1777,23 @@ void ULowEntryExtendedStandardLibrary::PixelsToBytes(const int32 Width, const in
 }
 
 
+FColor ULowEntryExtendedStandardLibrary::GrayscalePixel(const FColor& Pixel)
+{
+	uint8 Gray = (uint8)FMath::RoundToDouble((0.2125 * Pixel.R) + (0.7154 * Pixel.G) + (0.0721 * Pixel.B));
+	return FColor(Gray, Gray, Gray, Pixel.A);
+}
+
+TArray<FColor> ULowEntryExtendedStandardLibrary::GrayscalePixels(const TArray<FColor>& Pixels)
+{
+	TArray<FColor> Result;
+	for(FColor Pixel : Pixels)
+	{
+		Result.Add(GrayscalePixel(Pixel));
+	}
+	return Result;
+}
+
+
 void ULowEntryExtendedStandardLibrary::Texture2DToPixels(UTexture2D* Texture2D, int32& Width, int32& Height, TArray<FColor>& Pixels)
 {
 	Width = 0;
