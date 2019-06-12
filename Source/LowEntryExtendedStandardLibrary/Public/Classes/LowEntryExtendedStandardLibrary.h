@@ -2461,6 +2461,20 @@ public:
 
 
 	/**
+	* Gets the window border size.
+	* Useful for when you want to set the window's position while still showing the border as well.
+	*
+	* Returns Success=false if the window bounds could not be determined, which happends when:
+	*  - GEngine is null
+	*  - GEngine's GameViewportClient is null
+	*  - GameViewportClient's Window is null
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Get Window Border Size", Keywords = "margin padding"))
+		static void GetWindowBorderSize(bool& Success, FMargin& Margin);
+
+
+
+	/**
 	* Returns the window mode. 
 	* 
 	* If Fullscreen is false then IsFullscreenWindowed will also be false.

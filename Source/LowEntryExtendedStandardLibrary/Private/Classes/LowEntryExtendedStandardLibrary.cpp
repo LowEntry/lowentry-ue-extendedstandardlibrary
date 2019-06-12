@@ -4116,6 +4116,36 @@ void ULowEntryExtendedStandardLibrary::SetWindowPositiomInPercentagesCentered(co
 
 
 
+void ULowEntryExtendedStandardLibrary::GetWindowBorderSize(bool& Success, FMargin& Margin)
+{
+	Success = false;
+	Margin = FMargin();
+
+	if(GEngine == nullptr)
+	{
+		return;
+	}
+
+	UGameViewportClient* ViewportClient = GEngine->GameViewport;
+	if(ViewportClient == nullptr)
+	{
+		return;
+	}
+
+	TSharedPtr<SWindow> Window = ViewportClient->GetWindow();
+	if(!Window.IsValid())
+	{
+		return;
+	}
+
+	FMargin BorderSize = Window->GetWindowBorderSize(true);
+
+	Success = true;
+	Margin = BorderSize;
+}
+
+
+
 void ULowEntryExtendedStandardLibrary::GetWindowMode(bool& Success, bool& Fullscreen, bool& IsFullscreenWindowed)
 {
 	Success = false;
