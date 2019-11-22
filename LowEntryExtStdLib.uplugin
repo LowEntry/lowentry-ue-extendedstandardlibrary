@@ -1,9 +1,9 @@
 {
     "FileVersion": 3,
     "FriendlyName": "Low Entry - Extended Standard Library",
-    "Version": 55,
-    "VersionName": "4.23.0 r1",
-    "EngineVersion": "4.23.0",
+    "Version": 56,
+    "VersionName": "4.24.0 r0",
+    "EngineVersion": "4.24.0",
     "CreatedBy": "Low Entry",
     "CreatedByURL": "https://lowentry.com",
     "MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/846c2ad08f164f45b0335ecebf85361e",
@@ -19,7 +19,7 @@
         },
 		{
 			"Name": "LowEntryExtendedStandardLibraryEditor",
-			"Type": "Developer",
+			"Type": "UncookedOnly",
 			"LoadingPhase" : "Default",
             "BlacklistPlatforms": []
 		}

@@ -48,6 +48,7 @@ namespace UnrealBuildTool.Rules
                     "Kismet",
                     "KismetWidgets",
                     "PropertyEditor",
+                    "ToolMenus",
                 }
 			);
 		}

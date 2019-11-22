@@ -160,7 +160,7 @@ bool ULowEntryExtendedStandardLibrary::WithEditor()
 
 bool ULowEntryExtendedStandardLibrary::Html5Platform()
 {
-#if PLATFORM_HTML5
+#if false/*PLATFORM_HTML5*/
 	return true;
 #else
 	return false;
@@ -4239,7 +4239,7 @@ void ULowEntryExtendedStandardLibrary::SetSplitScreenEnabled(const bool Enabled)
 		return;
 	}
 
-	ViewportClient->SetDisableSplitscreenOverride(!Enabled);
+	ViewportClient->SetForceDisableSplitscreen(!Enabled);
 }
 
 void ULowEntryExtendedStandardLibrary::GetSplitScreenType(ELowEntrySplitScreenType& Type)
