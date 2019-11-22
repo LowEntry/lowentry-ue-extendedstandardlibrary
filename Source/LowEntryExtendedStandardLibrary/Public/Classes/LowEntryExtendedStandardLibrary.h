@@ -1826,7 +1826,7 @@ public:
 	/**
 	* Creates a new Byte Data Writer.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Writer", Meta = (DisplayName = "Create Byte Data Writer (Byte Data Entry Array) (Callable)"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Writer", Meta = (DisplayName = "Create Byte Data Writer (Byte Data Entry Array) (Non-Pure)"))
 		static ULowEntryByteDataWriter* ByteDataWriter_CreateFromEntryArray(const TArray<ULowEntryByteDataEntry*>& Array);
 
 	/**
@@ -2024,7 +2024,7 @@ public:
 	*
 	* This allows you to create smaller results than you can with the Byte Data Writer, but it costs a little bit more processing power to write data with the Bit Data Writer, and it also costs a little bit more processing power to read data with the Bit Data Reader.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Bit Data|Writer", Meta = (DisplayName = "Create Bit Data Writer (Bit Data Entry Array) (Callable)"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Bit Data|Writer", Meta = (DisplayName = "Create Bit Data Writer (Bit Data Entry Array) (Non-Pure)"))
 		static ULowEntryBitDataWriter* BitDataWriter_CreateFromEntryArray(const TArray<ULowEntryBitDataEntry*>& Array);
 
 	/**
