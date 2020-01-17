@@ -75,5 +75,6 @@ public:
 	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API virtual void NotifyPinConnectionListChanged(UEdGraphPin* Pin) override;
 	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API virtual void ReallocatePinsDuringReconstruction(TArray<UEdGraphPin*>& OldPins) override;
 	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API virtual int32 GetNodeRefreshPriority() const override { return EBaseNodeRefreshPriority::Normal; }
+	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API virtual bool IsConnectionDisallowed(const UEdGraphPin* MyPin, const UEdGraphPin* OtherPin, FString& OutReason) const override;
 	// UK2Node_MakeContainer interface
 };

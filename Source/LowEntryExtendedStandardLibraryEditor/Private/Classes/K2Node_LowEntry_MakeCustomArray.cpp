@@ -232,4 +232,19 @@ FText UK2Node_LowEntry_MakeCustomArray::GetMenuCategory() const
 {
 	return FText::FromString(LowEntry_Category);
 }
+
+bool UK2Node_LowEntry_MakeCustomArray::IsConnectionDisallowed(const UEdGraphPin* MyPin, const UEdGraphPin* OtherPin, FString& OutReason) const
+{
+	if(Super::Super::IsConnectionDisallowed(MyPin, OtherPin, OutReason))
+	{
+		return true;
+	}
+
+	if(!ensure(OtherPin))
+	{
+		return true;
+	}
+
+	return false;
+}
 #undef LOCTEXT_NAMESPACE
