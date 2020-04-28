@@ -216,6 +216,20 @@ public:
 
 
 	/**
+	* Returns the project name from the project settings.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Config", Meta = (DisplayName = "Get Project Name", Keywords = "settings configuration parameters"))
+		static FString GetProjectName();
+
+	/**
+	* Returns the project version from the project settings.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Config", Meta = (DisplayName = "Get Project Version", Keywords = "settings configuration parameters"))
+		static FString GetProjectVersion();
+
+
+
+	/**
 	* Returns the battery state.
 	* 
 	* Currently only works on Android devices.

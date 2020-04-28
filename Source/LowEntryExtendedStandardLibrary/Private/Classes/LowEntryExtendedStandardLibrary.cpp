@@ -302,6 +302,32 @@ bool ULowEntryExtendedStandardLibrary::DesktopPlatform()
 
 
 
+FString ULowEntryExtendedStandardLibrary::GetProjectName()
+{
+	FString Result;
+	GConfig->GetString(
+		TEXT("/Script/EngineSettings.GeneralProjectSettings"),
+		TEXT("ProjectName"),
+		Result,
+		GGameIni
+	);
+	return Result;
+}
+
+FString ULowEntryExtendedStandardLibrary::GetProjectVersion()
+{
+	FString Result;
+	GConfig->GetString(
+		TEXT("/Script/EngineSettings.GeneralProjectSettings"),
+		TEXT("ProjectVersion"),
+		Result,
+		GGameIni
+	);
+	return Result;
+}
+
+
+
 void ULowEntryExtendedStandardLibrary::GetBatteryState(ELowEntryBatteryState& State, bool& Success)
 {
 #if PLATFORM_ANDROID
