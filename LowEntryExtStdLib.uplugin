@@ -1,9 +1,9 @@
 {
     "FileVersion": 3,
     "FriendlyName": "Low Entry - Extended Standard Library",
-    "Version": 58,
-    "VersionName": "4.24.0 r2",
-    "EngineVersion": "4.24.0",
+    "Version": 59,
+    "VersionName": "4.25.0 r0",
+    "EngineVersion": "4.25.0",
     "CreatedBy": "Low Entry",
     "CreatedByURL": "https://lowentry.com",
     "MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/846c2ad08f164f45b0335ecebf85361e",

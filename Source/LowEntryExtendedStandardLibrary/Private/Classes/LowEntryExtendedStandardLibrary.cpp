@@ -1519,13 +1519,13 @@ UTexture2D* ULowEntryExtendedStandardLibrary::BytesToImage(const TArray<uint8>& 
 		return NULL;
 	}
 
-	const TArray<uint8>* Uncompressed = NULL;
+	TArray<uint8> Uncompressed;
 	if(!ImageWrapper->GetRaw(ERGBFormat::BGRA, 8, Uncompressed))
 	{
 		return NULL;
 	}
 
-	return ULowEntryExtendedStandardLibrary::DataToTexture2D(ImageWrapper->GetWidth(), ImageWrapper->GetHeight(), Uncompressed->GetData(), Uncompressed->Num());
+	return ULowEntryExtendedStandardLibrary::DataToTexture2D(ImageWrapper->GetWidth(), ImageWrapper->GetHeight(), Uncompressed.GetData(), Uncompressed.Num());
 }
 
 UTexture2D* ULowEntryExtendedStandardLibrary::BytesToExistingImage(bool& ReusedGivenTexture2D, UTexture2D* Texture2D, const TArray<uint8>& ByteArray, const ELowEntryImageFormat ImageFormat, int32 Index, int32 Length)
@@ -1565,14 +1565,14 @@ UTexture2D* ULowEntryExtendedStandardLibrary::BytesToExistingImage(bool& ReusedG
 		return NULL;
 	}
 
-	const TArray<uint8>* Uncompressed = NULL;
+	TArray<uint8> Uncompressed;
 	if(!ImageWrapper->GetRaw(ERGBFormat::BGRA, 8, Uncompressed))
 	{
 		ReusedGivenTexture2D = (Texture2D == nullptr);
 		return NULL;
 	}
 
-	UTexture2D* NewTexture2D = ULowEntryExtendedStandardLibrary::DataToExistingTexture2D(Texture2D, ImageWrapper->GetWidth(), ImageWrapper->GetHeight(), Uncompressed->GetData(), Uncompressed->Num());
+	UTexture2D* NewTexture2D = ULowEntryExtendedStandardLibrary::DataToExistingTexture2D(Texture2D, ImageWrapper->GetWidth(), ImageWrapper->GetHeight(), Uncompressed.GetData(), Uncompressed.Num());
 	ReusedGivenTexture2D = (Texture2D == NewTexture2D);
 	return NewTexture2D;
 }
@@ -1696,13 +1696,13 @@ void ULowEntryExtendedStandardLibrary::BytesToPixels(const TArray<uint8>& ByteAr
 		return;
 	}
 
-	const TArray<uint8>* Uncompressed = NULL;
+	TArray<uint8> Uncompressed;
 	if(!ImageWrapper->GetRaw(ERGBFormat::BGRA, 8, Uncompressed))
 	{
 		return;
 	}
 
-	const void* Raw = Uncompressed->GetData();
+	const void* Raw = Uncompressed.GetData();
 	const FColor* DataPixels = static_cast<const FColor*>(Raw);
 	int32 DataWidth = ImageWrapper->GetWidth();
 	int32 DataHeight = ImageWrapper->GetHeight();
