@@ -80,7 +80,7 @@ public:
 		}
 
 
-		UFunction* ConvertFunctionPointer = FindField<UFunction>(ArrayNode->LowEntry_ConverterClass, ArrayNode->LowEntry_ConverterFunctionName);
+		UFunction* ConvertFunctionPointer = FindUField<UFunction>(ArrayNode->LowEntry_ConverterClass, ArrayNode->LowEntry_ConverterFunctionName);
 		check(ConvertFunctionPointer);
 
 		FBlueprintCompiledStatement& CreateConvertStatement = Context.AppendStatementForNode(Node);

@@ -1610,7 +1610,7 @@ void ULowEntryExtendedStandardLibrary::Texture2DToBytes(UTexture2D* Texture2D, c
 	int32 Mip0Width = Mip0.SizeX;
 	int32 Mip0Height = Mip0.SizeY;
 
-	FByteBulkData* Mip0Data = &Mip0.BulkData;
+	auto Mip0Data = &Mip0.BulkData;
 	if(Mip0Data == nullptr)
 	{
 		if(ChangedTexture2D)
@@ -1622,7 +1622,8 @@ void ULowEntryExtendedStandardLibrary::Texture2DToBytes(UTexture2D* Texture2D, c
 		return;
 	}
 
-	FColor* Mip0Pixels = static_cast<FColor*>(Mip0Data->Lock(LOCK_READ_ONLY));
+	void* Mip0Pixels_ = Mip0Data->Lock(LOCK_READ_ONLY);
+	FColor* Mip0Pixels = static_cast<FColor*>(Mip0Pixels_);
 	if(Mip0Pixels == nullptr)
 	{
 		Mip0Data->Unlock();
@@ -1855,7 +1856,7 @@ void ULowEntryExtendedStandardLibrary::Texture2DToPixels(UTexture2D* Texture2D, 
 	int32 Mip0Width = Mip0.SizeX;
 	int32 Mip0Height = Mip0.SizeY;
 
-	FByteBulkData* Mip0Data = &Mip0.BulkData;
+	auto Mip0Data = &Mip0.BulkData;
 	if(Mip0Data == nullptr)
 	{
 		if(ChangedTexture2D)
@@ -1867,7 +1868,8 @@ void ULowEntryExtendedStandardLibrary::Texture2DToPixels(UTexture2D* Texture2D, 
 		return;
 	}
 
-	FColor* Mip0Pixels = static_cast<FColor*>(Mip0Data->Lock(LOCK_READ_ONLY));
+	void* Mip0Pixels_ = Mip0Data->Lock(LOCK_READ_ONLY);
+	FColor* Mip0Pixels = static_cast<FColor*>(Mip0Pixels_);
 	if(Mip0Pixels == nullptr)
 	{
 		Mip0Data->Unlock();

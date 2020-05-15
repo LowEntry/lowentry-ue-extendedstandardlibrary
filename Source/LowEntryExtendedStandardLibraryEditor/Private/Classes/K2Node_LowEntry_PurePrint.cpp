@@ -71,7 +71,7 @@ public:
 
 
 		UClass* PrintFunctionClass = Cast<UClass>(ULowEntryExtendedStandardLibrary::StaticClass());
-		UFunction* PrintFunctionPointer = FindField<UFunction>(PrintFunctionClass, TEXT("SimpleKismetSystemLibraryPrintString"));
+		UFunction* PrintFunctionPointer = FindUField<UFunction>(PrintFunctionClass, TEXT("SimpleKismetSystemLibraryPrintString"));
 		check(PrintFunctionPointer);
 
 		FBlueprintCompiledStatement& CreatePrintStatement = Context.AppendStatementForNode(Node);

@@ -90,7 +90,7 @@ public:
 
 
 		UClass* ConvertFunctionClass2 = Cast<UClass>(ULowEntryExtendedStandardLibrary::StaticClass());
-		UFunction* ConvertFunctionPointer2 = FindField<UFunction>(ConvertFunctionClass2, TEXT("EncapsulateByteArray"));
+		UFunction* ConvertFunctionPointer2 = FindUField<UFunction>(ConvertFunctionClass2, TEXT("EncapsulateByteArray"));
 		check(ConvertFunctionPointer2);
 
 		for(auto PinIt = Node->Pins.CreateIterator(); PinIt; ++PinIt)
@@ -146,7 +146,7 @@ public:
 
 
 		UClass* ConvertFunctionClass = Cast<UClass>(ULowEntryExtendedStandardLibrary::StaticClass());
-		UFunction* ConvertFunctionPointer = FindField<UFunction>(ConvertFunctionClass, TEXT("MergeEncapsulatedByteArrays"));
+		UFunction* ConvertFunctionPointer = FindUField<UFunction>(ConvertFunctionClass, TEXT("MergeEncapsulatedByteArrays"));
 		check(ConvertFunctionPointer);
 
 		FBlueprintCompiledStatement& CreateConvertStatement = Context.AppendStatementForNode(Node);
