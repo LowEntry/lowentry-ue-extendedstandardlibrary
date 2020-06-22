@@ -179,6 +179,7 @@ void ULowEntryByteDataWriter::AddPositiveInteger2(const int32 Value)
 	if(Value <= 0)
 	{
 		AddRawByte(0);
+		AddRawByte(0);
 	}
 	else if(Value < 32768)
 	{
@@ -197,6 +198,8 @@ void ULowEntryByteDataWriter::AddPositiveInteger3(const int32 Value)
 {
 	if(Value <= 0)
 	{
+		AddRawByte(0);
+		AddRawByte(0);
 		AddRawByte(0);
 	}
 	else if(Value < 8388608)
