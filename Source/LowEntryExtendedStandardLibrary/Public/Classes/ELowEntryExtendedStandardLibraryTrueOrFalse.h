@@ -8,7 +8,7 @@
 #include "ELowEntryExtendedStandardLibraryTrueOrFalse.generated.h"
 
 
-UENUM()
+UENUM(BlueprintType)
 enum class ELowEntryExtendedStandardLibraryTrueOrFalse : uint8
 {
 	_True_,

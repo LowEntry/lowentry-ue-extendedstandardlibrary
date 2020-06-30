@@ -10,7 +10,7 @@
 #include "ELowEntryImageFormat.generated.h"
 
 
-UENUM()
+UENUM(BlueprintType)
 enum class ELowEntryImageFormat : uint8
 {
 	/** Invalid or unrecognized format */

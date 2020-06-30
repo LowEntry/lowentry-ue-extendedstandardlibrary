@@ -8,7 +8,7 @@
 #include "ELowEntryExtendedStandardLibrary0to9.generated.h"
 
 
-UENUM()
+UENUM(BlueprintType)
 enum class ELowEntryExtendedStandardLibrary0to9 : uint8
 {
 	_0_ = 0,

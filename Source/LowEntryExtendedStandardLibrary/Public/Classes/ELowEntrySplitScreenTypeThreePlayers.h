@@ -10,7 +10,7 @@
 #include "ELowEntrySplitScreenTypeThreePlayers.generated.h"
 
 
-UENUM()
+UENUM(BlueprintType)
 enum class ELowEntrySplitScreenTypeThreePlayers : uint8
 {
 	FavorTop,

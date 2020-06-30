@@ -8,7 +8,7 @@
 #include "ELowEntryBatteryState.generated.h"
 
 
-UENUM()
+UENUM(BlueprintType)
 enum class ELowEntryBatteryState : uint8
 {
 	Charging,

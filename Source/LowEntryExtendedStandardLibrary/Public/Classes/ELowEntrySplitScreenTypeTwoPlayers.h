@@ -10,7 +10,7 @@
 #include "ELowEntrySplitScreenTypeTwoPlayers.generated.h"
 
 
-UENUM()
+UENUM(BlueprintType)
 enum class ELowEntrySplitScreenTypeTwoPlayers : uint8
 {
 	Horizontal,

@@ -10,7 +10,7 @@
 #include "ELowEntrySplitScreenType.generated.h"
 
 
-UENUM()
+UENUM(BlueprintType)
 enum class ELowEntrySplitScreenType : uint8
 {
 	None,

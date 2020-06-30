@@ -8,7 +8,7 @@
 #include "ELowEntryHmacAlgorithm.generated.h"
 
 
-UENUM()
+UENUM(BlueprintType)
 enum class ELowEntryHmacAlgorithm : uint8
 {
 	MD5,

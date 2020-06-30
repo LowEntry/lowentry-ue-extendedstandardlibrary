@@ -10,7 +10,7 @@
 #include "ELowEntryRGBFormat.generated.h"
 
 
-UENUM()
+UENUM(BlueprintType)
 enum class ELowEntryRGBFormat : uint8
 {
 	Invalid,
