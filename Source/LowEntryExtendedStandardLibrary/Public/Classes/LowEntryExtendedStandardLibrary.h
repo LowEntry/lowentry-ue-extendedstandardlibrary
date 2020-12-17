@@ -533,77 +533,77 @@ public:
 	/**
 	* Tries to convert a Base64 String into a Byte Array. Will return an empty Array on failure.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Base64 To Bytes", Keywords = "byte array base64"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "String To Bytes (Base64)", Keywords = "byte array base64 string"))
 		static TArray<uint8> Base64ToBytes(const FString& Base64);
 
 	/**
 	* Converts a Byte Array into a Base64 String.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Base64", Keywords = "byte array base64", AdvancedDisplay = "1"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To String (Base64)", Keywords = "byte array base64 string", AdvancedDisplay = "1"))
 		static FString BytesToBase64(const TArray<uint8>& ByteArray, int32 Index = 0, int32 Length = 0x7FFFFFFF);
 
 
 	/**
 	* Converts a Base64 string to a Base64Url string.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|Strings", Meta = (DisplayName = "Base64 To Base64Url", Keywords = "base64 url web"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|Strings", Meta = (DisplayName = "Base64 To Base64Url", Keywords = "base64 url web string"))
 		static FString Base64ToBase64Url(const FString& Base64);
 
 	/**
 	* Converts a Base64Url string to a Base64 string.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|Strings", Meta = (DisplayName = "Base64Url To Base64", Keywords = "base64 url web"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|Strings", Meta = (DisplayName = "Base64Url To Base64", Keywords = "base64 url web string"))
 		static FString Base64UrlToBase64(const FString& Base64Url);
 
 	/**
 	* Tries to convert a Base64Url String into a Byte Array. Will return an empty Array on failure.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Base64Url To Bytes", Keywords = "byte array base64 url web"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "String To Bytes (Base64Url)", Keywords = "byte array base64 url web string"))
 		static TArray<uint8> Base64UrlToBytes(const FString& Base64Url);
 
 	/**
 	* Converts a Byte Array into a Base6 Url String.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Base64Url", Keywords = "byte array base64 url web", AdvancedDisplay = "1"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To String (Base64Url)", Keywords = "byte array base64 url web string", AdvancedDisplay = "1"))
 		static FString BytesToBase64Url(const TArray<uint8>& ByteArray, int32 Index = 0, int32 Length = 0x7FFFFFFF);
 
 
 	/**
 	* Tries to convert a Hexadecimal (Base16) String into a Byte Array. Will return an empty Array on failure.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Hex To Bytes", Keywords = "byte array hex hexadecimal base16"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "String To Bytes (Hex)", Keywords = "byte array hex hexadecimal base16 string"))
 		static TArray<uint8> HexToBytes(const FString& Hex);
 
 	/**
 	* Converts a Byte Array into a Hexadecimal (Base16) String.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Hex", Keywords = "byte array hex hexadecimal base16", AdvancedDisplay = "2"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To String (Hex)", Keywords = "byte array hex hexadecimal base16 string", AdvancedDisplay = "2"))
 		static FString BytesToHex(const TArray<uint8>& ByteArray, const bool AddSpaces = false, int32 Index = 0, int32 Length = 0x7FFFFFFF);
 
 
 	/**
 	* Tries to convert a Binary (Base2) String into a Byte Array. Will return an empty Array on failure.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Binary To Bytes", Keywords = "byte array binary base2"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "String To Bytes (Binary)", Keywords = "byte array binary base2 string"))
 		static TArray<uint8> BinaryToBytes(const FString& Binary);
 
 	/**
 	* Converts a Byte Array into a Binary (Base2) String.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Binary", Keywords = "byte array binary base2", AdvancedDisplay = "2"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To String (Binary)", Keywords = "byte array binary base2 string", AdvancedDisplay = "2"))
 		static FString BytesToBinary(const TArray<uint8>& ByteArray, const bool AddSpaces = false, int32 Index = 0, int32 Length = 0x7FFFFFFF);
 
 
 	/**
 	* Tries to convert a Binary (Base2) String (with each byte reversed) into a Byte Array. Will return an empty Array on failure.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Bit String To Bytes", Keywords = "byte array binary base2 bits reversed"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "String To Bytes (Bits)", Keywords = "byte array binary base2 bits reversed string"))
 		static TArray<uint8> BitStringToBytes(const FString& Bits);
 
 	/**
 	* Converts a Byte Array into a Bit (Base2) String, with each byte reversed.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Bit String", Keywords = "byte array binary base2 bits reversed", AdvancedDisplay = "2"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To String (Bits)", Keywords = "byte array binary base2 bits reversed string", AdvancedDisplay = "2"))
 		static FString BytesToBitString(const TArray<uint8>& ByteArray, const bool AddSpaces = false, int32 Index = 0, int32 Length = 0x7FFFFFFF);
 
 
