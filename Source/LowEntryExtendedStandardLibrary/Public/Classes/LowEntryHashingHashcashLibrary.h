@@ -16,7 +16,7 @@ private:
 
 	const static FString DATE_FORMAT_STRING;
 
-	const static TArray<TArray<uint8>> BASE_64_CACHE;
+	static TArray<TArray<uint8>> BASE_64_CACHE;
 
 
 public:

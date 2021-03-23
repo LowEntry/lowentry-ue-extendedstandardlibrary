@@ -6,7 +6,7 @@
 
 const FString ULowEntryHashingHashcashLibrary::DATE_FORMAT_STRING = TEXT("%y%m%d%H%M%S");
 
-const TArray<TArray<uint8>> ULowEntryHashingHashcashLibrary::BASE_64_CACHE = ULowEntryHashingHashcashLibrary::GenerateBase64Cache();
+TArray<TArray<uint8>> ULowEntryHashingHashcashLibrary::BASE_64_CACHE = TArray<TArray<uint8>>();
 
 
 const TArray<TArray<uint8>> ULowEntryHashingHashcashLibrary::GenerateBase64Cache()
@@ -29,7 +29,7 @@ TArray<FString> ULowEntryHashingHashcashLibrary::hashArrayCustomCreationDate(con
 {
 	TArray<FString> result;
 	result.SetNum(resources.Num());
-	for(int32 i = 0; i < resources.Num(); i++)
+	for(int64 i = 0; i < resources.Num(); i++)
 	{
 		result[i] = hashCustomCreationDate(resources[i], date, bits);
 	}
@@ -63,6 +63,10 @@ FString ULowEntryHashingHashcashLibrary::hashCustomCreationDate(const FString& r
 		ULowEntryExtendedStandardLibrary::GenerateRandomBytes(12, randomBytes);
 		buffer.Append(ULowEntryExtendedStandardLibrary::StringToBytesUtf8(ULowEntryExtendedStandardLibrary::BytesToBase64(randomBytes) + TEXT(":")));
 
+		if(BASE_64_CACHE.Num() <= 0)
+		{
+			BASE_64_CACHE = ULowEntryHashingHashcashLibrary::GenerateBase64Cache();
+		}
 		for(TArray<uint8> base64counter : BASE_64_CACHE)
 		{
 			hasher.Reset();
@@ -86,7 +90,7 @@ TArray<ULowEntryParsedHashcash*> ULowEntryHashingHashcashLibrary::parseArray(con
 {
 	TArray<ULowEntryParsedHashcash*> result;
 	result.SetNum(Hashcashes.Num());
-	for(int32 i = 0; i < Hashcashes.Num(); i++)
+	for(int64 i = 0; i < Hashcashes.Num(); i++)
 	{
 		result[i] = parse(Hashcashes[i]);
 	}

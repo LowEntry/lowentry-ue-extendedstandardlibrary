@@ -26,7 +26,7 @@ TArray<uint8> ULowEntryHashingPearsonLibrary::Hash(const TArray<uint8>& Bytes, i
 		Length += Index;
 		Index = 0;
 	}
-	if(Length >(Bytes.Num() - Index))
+	if(Length > (Bytes.Num() - Index))
 	{
 		Length = Bytes.Num() - Index;
 	}
@@ -37,7 +37,7 @@ TArray<uint8> ULowEntryHashingPearsonLibrary::Hash(const TArray<uint8>& Bytes, i
 
 	for(int32 j = 0; j < HashLength; j++)
 	{
-		uint8 h = pearson[((Bytes[Index] + j) & 0xff) % 256];
+		uint8 h = pearson[(Bytes[Index] + j) & 0xff];
 		for(int32 i = 1; i < Length; i++)
 		{
 			h = pearson[(h ^ Bytes[(Index + i) & 0xff]) & 0xff];

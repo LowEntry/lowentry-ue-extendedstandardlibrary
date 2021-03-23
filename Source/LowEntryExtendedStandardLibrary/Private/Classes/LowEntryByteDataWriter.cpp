@@ -17,7 +17,7 @@
 	ULowEntryByteDataWriter* ULowEntryByteDataWriter::CreateFromEntryArray(const TArray<ULowEntryByteDataEntry*>& Array)
 	{
 		ULowEntryByteDataWriter* Instance = NewObject<ULowEntryByteDataWriter>();
-		for(int32 i = 0; i < Array.Num(); i++)
+		for(int64 i = 0; i < Array.Num(); i++)
 		{
 			ULowEntryByteDataEntry* Item = Array[i];
 			if(Item != nullptr)
@@ -261,12 +261,23 @@ void ULowEntryByteDataWriter::AddStringUtf8(const FString& Value)
 
 void ULowEntryByteDataWriter::AddByteArray(const TArray<uint8>& Value)
 {
-	AddUinteger(Value.Num());
+	int64 Size = Value.Num();
+	if((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
+	AddUinteger(Size);
 	AddRawBytes(Value);
 }
 void ULowEntryByteDataWriter::AddIntegerArray(const TArray<int32>& Value)
 {
-	AddUinteger(Value.Num());
+	int64 Size = Value.Num();
+	if((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
 	for(int32 V : Value)
 	{
 		AddInteger(V);
@@ -274,7 +285,12 @@ void ULowEntryByteDataWriter::AddIntegerArray(const TArray<int32>& Value)
 }
 void ULowEntryByteDataWriter::AddPositiveInteger1Array(const TArray<int32>& Value)
 {
-	AddUinteger(Value.Num());
+	int64 Size = Value.Num();
+	if((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
 	for(int32 V : Value)
 	{
 		AddPositiveInteger1(V);
@@ -282,7 +298,12 @@ void ULowEntryByteDataWriter::AddPositiveInteger1Array(const TArray<int32>& Valu
 }
 void ULowEntryByteDataWriter::AddPositiveInteger2Array(const TArray<int32>& Value)
 {
-	AddUinteger(Value.Num());
+	int64 Size = Value.Num();
+	if((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
 	for(int32 V : Value)
 	{
 		AddPositiveInteger2(V);
@@ -290,7 +311,12 @@ void ULowEntryByteDataWriter::AddPositiveInteger2Array(const TArray<int32>& Valu
 }
 void ULowEntryByteDataWriter::AddPositiveInteger3Array(const TArray<int32>& Value)
 {
-	AddUinteger(Value.Num());
+	int64 Size = Value.Num();
+	if((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
 	for(int32 V : Value)
 	{
 		AddPositiveInteger3(V);
@@ -298,7 +324,12 @@ void ULowEntryByteDataWriter::AddPositiveInteger3Array(const TArray<int32>& Valu
 }
 void ULowEntryByteDataWriter::AddLongBytesArray(const TArray<ULowEntryLong*>& Value)
 {
-	AddUinteger(Value.Num());
+	int64 Size = Value.Num();
+	if((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
 	for(ULowEntryLong* V : Value)
 	{
 		AddLongBytes(V);
@@ -306,7 +337,12 @@ void ULowEntryByteDataWriter::AddLongBytesArray(const TArray<ULowEntryLong*>& Va
 }
 void ULowEntryByteDataWriter::AddFloatArray(const TArray<float>& Value)
 {
-	AddUinteger(Value.Num());
+	int64 Size = Value.Num();
+	if((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
 	for(float V : Value)
 	{
 		AddFloat(V);
@@ -314,7 +350,12 @@ void ULowEntryByteDataWriter::AddFloatArray(const TArray<float>& Value)
 }
 void ULowEntryByteDataWriter::AddDoubleBytesArray(const TArray<ULowEntryDouble*>& Value)
 {
-	AddUinteger(Value.Num());
+	int64 Size = Value.Num();
+	if((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
 	for(ULowEntryDouble* V : Value)
 	{
 		AddDoubleBytes(V);
@@ -322,7 +363,12 @@ void ULowEntryByteDataWriter::AddDoubleBytesArray(const TArray<ULowEntryDouble*>
 }
 void ULowEntryByteDataWriter::AddBooleanArray(const TArray<bool>& Value)
 {
-	AddUinteger(Value.Num());
+	int64 Size = Value.Num();
+	if((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
 	uint8 B = 0;
 	int32 BIndex = 0;
 	for(bool V : Value)
@@ -346,7 +392,12 @@ void ULowEntryByteDataWriter::AddBooleanArray(const TArray<bool>& Value)
 }
 void ULowEntryByteDataWriter::AddStringUtf8Array(const TArray<FString>& Value)
 {
-	AddUinteger(Value.Num());
+	int64 Size = Value.Num();
+	if((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
 	for(FString V : Value)
 	{
 		AddStringUtf8(V);

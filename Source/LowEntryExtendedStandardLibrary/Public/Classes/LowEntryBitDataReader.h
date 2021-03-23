@@ -59,7 +59,7 @@ public:
 	/**
 	* Returns the current position.
 	*
-	* Because this data writer works with bits, this blueprint will only work correctly till 268.435.455 bytes (256 MB), beyond that, please use the Get Clone blueprint to rollback the position instead.
+	* Because this data writer works with bits, this blueprint will only work correctly till 268.435.455 bytes (256 MB).
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Reader (Meta)", Meta = (DisplayName = "Get Position"))
 		int32 GetPosition();
@@ -67,7 +67,7 @@ public:
 	/**
 	* Sets the current position.
 	*
-	* Because this data writer works with bits, this blueprint will only work correctly till 268.435.455 bytes (256 MB), beyond that, please use the Get Clone blueprint to rollback the position instead.
+	* Because this data writer works with bits, this blueprint will only work correctly till 268.435.455 bytes (256 MB).
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Bit Data|Reader (Meta)", Meta = (DisplayName = "Set Position"))
 		void SetPosition(const int32 Position_);

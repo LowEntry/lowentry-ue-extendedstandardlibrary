@@ -25,17 +25,17 @@ private:
 	int32			h6 = 0x1f83d9ab;
 	int32			h7 = 0x5be0cd19;
 
-	int32			count = 0;
+	int64			count = 0;
 	TArray<uint8>	buffer;
 
 
 private:
 	void initialize();
-	void update(const TArray<uint8>& b, const int32 offset, const int32 len);
+	void update(const TArray<uint8>& b, const int64 offset, const int64 len);
 	TArray<uint8> digest();
 	TArray<uint8> padBuffer();
 	TArray<uint8> getResult();
-	void sha(const TArray<uint8>& in, int32 offset);
+	void sha(const TArray<uint8>& in, int64 offset);
 	FORCEINLINE static int32 s(const int32 a, const int32 b);
 
 

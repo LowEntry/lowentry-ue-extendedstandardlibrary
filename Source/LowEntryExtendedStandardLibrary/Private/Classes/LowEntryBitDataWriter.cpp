@@ -20,7 +20,7 @@ const uint8 ULowEntryBitDataWriter::mask[9] = {((uint8) 0x00), ((uint8) 0x01), (
 	ULowEntryBitDataWriter* ULowEntryBitDataWriter::CreateFromEntryArray(const TArray<ULowEntryBitDataEntry*>& Array)
 	{
 		ULowEntryBitDataWriter* Instance = NewObject<ULowEntryBitDataWriter>();
-		for(int32 i = 0; i < Array.Num(); i++)
+		for(int64 i = 0; i < Array.Num(); i++)
 		{
 			ULowEntryBitDataEntry* Item = Array[i];
 			if(Item != nullptr)
@@ -471,7 +471,13 @@ void ULowEntryBitDataWriter::AddStringUtf8(const FString& Value)
 
 void ULowEntryBitDataWriter::AddBitArray(const TArray<bool>& Value)
 {
-	AddUinteger(Value.Num());
+	int64 Size = Value.Num();
+	if((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
+	AddUinteger(Size);
 	for(bool V : Value)
 	{
 		AddBit(V);
@@ -479,7 +485,13 @@ void ULowEntryBitDataWriter::AddBitArray(const TArray<bool>& Value)
 }
 void ULowEntryBitDataWriter::AddByteArrayLeastSignificantBits(const TArray<uint8>& Value, const int32 BitCount)
 {
-	AddUinteger(Value.Num());
+	int64 Size = Value.Num();
+	if((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
+	AddUinteger(Size);
 	for(uint8 V : Value)
 	{
 		AddByteLeastSignificantBits(V, BitCount);
@@ -487,7 +499,13 @@ void ULowEntryBitDataWriter::AddByteArrayLeastSignificantBits(const TArray<uint8
 }
 void ULowEntryBitDataWriter::AddByteArrayMostSignificantBits(const TArray<uint8>& Value, const int32 BitCount)
 {
-	AddUinteger(Value.Num());
+	int64 Size = Value.Num();
+	if((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
+	AddUinteger(Size);
 	for(uint8 V : Value)
 	{
 		AddByteMostSignificantBits(V, BitCount);
@@ -495,7 +513,13 @@ void ULowEntryBitDataWriter::AddByteArrayMostSignificantBits(const TArray<uint8>
 }
 void ULowEntryBitDataWriter::AddIntegerArrayLeastSignificantBits(const TArray<int32>& Value, const int32 BitCount)
 {
-	AddUinteger(Value.Num());
+	int64 Size = Value.Num();
+	if((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
+	AddUinteger(Size);
 	for(int32 V : Value)
 	{
 		AddIntegerLeastSignificantBits(V, BitCount);
@@ -503,7 +527,13 @@ void ULowEntryBitDataWriter::AddIntegerArrayLeastSignificantBits(const TArray<in
 }
 void ULowEntryBitDataWriter::AddIntegerArrayMostSignificantBits(const TArray<int32>& Value, const int32 BitCount)
 {
-	AddUinteger(Value.Num());
+	int64 Size = Value.Num();
+	if((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
+	AddUinteger(Size);
 	for(int32 V : Value)
 	{
 		AddIntegerMostSignificantBits(V, BitCount);
@@ -511,12 +541,24 @@ void ULowEntryBitDataWriter::AddIntegerArrayMostSignificantBits(const TArray<int
 }
 void ULowEntryBitDataWriter::AddByteArray(const TArray<uint8>& Value)
 {
-	AddUinteger(Value.Num());
+	int64 Size = Value.Num();
+	if((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
+	AddUinteger(Size);
 	AddRawBytes(Value);
 }
 void ULowEntryBitDataWriter::AddIntegerArray(const TArray<int32>& Value)
 {
-	AddUinteger(Value.Num());
+	int64 Size = Value.Num();
+	if((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
+	AddUinteger(Size);
 	for(int32 V : Value)
 	{
 		AddInteger(V);
@@ -524,7 +566,13 @@ void ULowEntryBitDataWriter::AddIntegerArray(const TArray<int32>& Value)
 }
 void ULowEntryBitDataWriter::AddPositiveInteger1Array(const TArray<int32>& Value)
 {
-	AddUinteger(Value.Num());
+	int64 Size = Value.Num();
+	if((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
+	AddUinteger(Size);
 	for(int32 V : Value)
 	{
 		AddPositiveInteger1(V);
@@ -532,7 +580,13 @@ void ULowEntryBitDataWriter::AddPositiveInteger1Array(const TArray<int32>& Value
 }
 void ULowEntryBitDataWriter::AddPositiveInteger2Array(const TArray<int32>& Value)
 {
-	AddUinteger(Value.Num());
+	int64 Size = Value.Num();
+	if((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
+	AddUinteger(Size);
 	for(int32 V : Value)
 	{
 		AddPositiveInteger2(V);
@@ -540,7 +594,13 @@ void ULowEntryBitDataWriter::AddPositiveInteger2Array(const TArray<int32>& Value
 }
 void ULowEntryBitDataWriter::AddPositiveInteger3Array(const TArray<int32>& Value)
 {
-	AddUinteger(Value.Num());
+	int64 Size = Value.Num();
+	if((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
+	AddUinteger(Size);
 	for(int32 V : Value)
 	{
 		AddPositiveInteger3(V);
@@ -548,7 +608,13 @@ void ULowEntryBitDataWriter::AddPositiveInteger3Array(const TArray<int32>& Value
 }
 void ULowEntryBitDataWriter::AddLongBytesArray(const TArray<ULowEntryLong*>& Value)
 {
-	AddUinteger(Value.Num());
+	int64 Size = Value.Num();
+	if((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
+	AddUinteger(Size);
 	for(ULowEntryLong* V : Value)
 	{
 		AddLongBytes(V);
@@ -556,7 +622,13 @@ void ULowEntryBitDataWriter::AddLongBytesArray(const TArray<ULowEntryLong*>& Val
 }
 void ULowEntryBitDataWriter::AddFloatArray(const TArray<float>& Value)
 {
-	AddUinteger(Value.Num());
+	int64 Size = Value.Num();
+	if((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
+	AddUinteger(Size);
 	for(float V : Value)
 	{
 		AddFloat(V);
@@ -564,7 +636,13 @@ void ULowEntryBitDataWriter::AddFloatArray(const TArray<float>& Value)
 }
 void ULowEntryBitDataWriter::AddDoubleBytesArray(const TArray<ULowEntryDouble*>& Value)
 {
-	AddUinteger(Value.Num());
+	int64 Size = Value.Num();
+	if((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
+	AddUinteger(Size);
 	for(ULowEntryDouble* V : Value)
 	{
 		AddDoubleBytes(V);
@@ -572,7 +650,13 @@ void ULowEntryBitDataWriter::AddDoubleBytesArray(const TArray<ULowEntryDouble*>&
 }
 void ULowEntryBitDataWriter::AddBooleanArray(const TArray<bool>& Value)
 {
-	AddUinteger(Value.Num());
+	int64 Size = Value.Num();
+	if((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
+	AddUinteger(Size);
 	for(bool V : Value)
 	{
 		AddBoolean(V);
@@ -580,7 +664,13 @@ void ULowEntryBitDataWriter::AddBooleanArray(const TArray<bool>& Value)
 }
 void ULowEntryBitDataWriter::AddStringUtf8Array(const TArray<FString>& Value)
 {
-	AddUinteger(Value.Num());
+	int64 Size = Value.Num();
+	if((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
+	AddUinteger(Size);
 	for(FString V : Value)
 	{
 		AddStringUtf8(V);

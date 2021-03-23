@@ -763,7 +763,7 @@ void ULowEntryExtendedStandardLibrary::GenerateRandomBytes(const int32 Length, T
 	ByteArray.SetNum(Length);
 	for(int32 i = 0; i < Length; i++)
 	{
-		int32 RandomByte = FMath::Rand() % 256;
+		int32 RandomByte = FMath::Rand() & 0xff;
 		ByteArray[i] = RandomByte;
 	}
 }
@@ -816,7 +816,7 @@ void ULowEntryExtendedStandardLibrary::GenerateRandomBytesRandomLength(int32 Min
 	ByteArray.SetNum(Length);
 	for(int32 i = 0; i < Length; i++)
 	{
-		int32 RandomByte = FMath::Rand() % 256;
+		int32 RandomByte = FMath::Rand() & 0xff;
 		ByteArray[i] = RandomByte;
 	}
 }

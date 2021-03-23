@@ -12,12 +12,12 @@ void ULowEntryHashingSha512Library::initialize()
 	buffer.SetNum(128);
 }
 
-void ULowEntryHashingSha512Library::update(const TArray<uint8>& b, const int32 offset, const int32 len)
+void ULowEntryHashingSha512Library::update(const TArray<uint8>& b, const int64 offset, const int64 len)
 {
 	int32 n = count % BLOCK_SIZE;
 	count += len;
-	int32 partLen = BLOCK_SIZE - n;
-	int32 i = 0;
+	int64 partLen = BLOCK_SIZE - n;
+	int64 i = 0;
 
 	if(len >= partLen)
 	{
@@ -66,7 +66,6 @@ TArray<uint8> ULowEntryHashingSha512Library::padBuffer()
 	result[padding + 5] = (uint8) (bits >> 16);
 	result[padding + 6] = (uint8) (bits >> 8);
 	result[padding + 7] = (uint8) bits;
-	padding += 8;
 	return result;
 }
 
@@ -150,7 +149,7 @@ TArray<uint8> ULowEntryHashingSha512Library::getResult()
 	return result;
 }
 
-void ULowEntryHashingSha512Library::sha(const TArray<uint8>& in, int32 offset)
+void ULowEntryHashingSha512Library::sha(const TArray<uint8>& in, int64 offset)
 {
 	int64 A = h0;
 	int64 B = h1;
