@@ -4,7 +4,6 @@
 
 
 #include "CoreMinimal.h"
-#include "CoreUObject.h"
 
 #include "LowEntryDouble.generated.h"
 

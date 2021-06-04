@@ -4,7 +4,6 @@
 
 
 #include "CoreMinimal.h"
-#include "CoreUObject.h"
 
 #include "LowEntryByteArray.generated.h"
 
