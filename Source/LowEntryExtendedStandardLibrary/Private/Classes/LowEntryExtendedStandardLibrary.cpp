@@ -4386,8 +4386,12 @@ void ULowEntryExtendedStandardLibrary::GetClassWithName(const FString& ClassName
 	Success = false;
 
 	FSoftObjectPath Reference(ClassName);
-	Class_ = Cast<UClass>(Reference.TryLoad());
-	Success = !!Class_;
+	UClass* Class__ = Cast<UClass>(Reference.TryLoad());
+	if(Class__ != nullptr)
+	{
+		Class_ = Class__;
+		Success = true;
+	}
 }
 
 
