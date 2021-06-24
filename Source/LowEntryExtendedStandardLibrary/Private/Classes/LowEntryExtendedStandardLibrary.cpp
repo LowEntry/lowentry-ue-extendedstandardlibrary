@@ -1933,6 +1933,10 @@ UTexture2D* ULowEntryExtendedStandardLibrary::DataToTexture2D(int32 Width, int32
 	}
 	Texture2D->bNoTiling = true;
 
+#if WITH_EDITORONLY_DATA
+	Texture2D->MipGenSettings = TMGS_NoMipmaps;
+#endif
+
 	void* TextureData = Texture2D->PlatformData->Mips[0].BulkData.Lock(LOCK_READ_WRITE);
 	FMemory::Memcpy(TextureData, Src, Count);
 	Texture2D->PlatformData->Mips[0].BulkData.Unlock();
@@ -1952,6 +1956,10 @@ UTexture2D* ULowEntryExtendedStandardLibrary::DataToExistingTexture2D(UTexture2D
 		return NULL;
 	}
 	Texture2D->bNoTiling = true;
+
+#if WITH_EDITORONLY_DATA
+	Texture2D->MipGenSettings = TMGS_NoMipmaps;
+#endif
 
 	void* TextureData = Texture2D->PlatformData->Mips[0].BulkData.Lock(LOCK_READ_WRITE);
 	FMemory::Memcpy(TextureData, Src, Count);
@@ -4385,13 +4393,40 @@ void ULowEntryExtendedStandardLibrary::GetClassWithName(const FString& ClassName
 	Class_ = NULL;
 	Success = false;
 
-	FSoftObjectPath Reference(ClassName);
-	UClass* Class__ = Cast<UClass>(Reference.TryLoad());
-	if(Class__ != nullptr)
-	{
-		Class_ = Class__;
-		Success = true;
-	}
+	{// load class >>
+		FSoftObjectPath Reference(ClassName);
+		UClass* FoundClass = Cast<UClass>(Reference.TryLoad());
+		if(FoundClass != nullptr)
+		{
+			Class_ = FoundClass;
+			Success = true;
+			return;
+		}
+	}// load class <<
+
+	{// get class >>
+		UClass* FoundClass = FindObject<UClass>(ANY_PACKAGE, *ClassName);
+		if(FoundClass != nullptr)
+		{
+			Class_ = FoundClass;
+			Success = true;
+			return;
+		}
+	}// get class <<
+
+	{// get class through redirector >>
+		UObjectRedirector* RenamedClassRedirector = FindObject<UObjectRedirector>(ANY_PACKAGE, *ClassName);
+		if((RenamedClassRedirector != nullptr) && (RenamedClassRedirector->DestinationObject != nullptr))
+		{
+			UClass* FoundClass = CastChecked<UClass>(RenamedClassRedirector->DestinationObject);
+			if(FoundClass != nullptr)
+			{
+				Class_ = FoundClass;
+				Success = true;
+				return;
+			}
+		}
+	}// get class through redirector <<
 }
 
 
