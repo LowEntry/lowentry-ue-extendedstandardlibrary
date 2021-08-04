@@ -671,7 +671,7 @@ void ULowEntryBitDataWriter::AddStringUtf8Array(const TArray<FString>& Value)
 		return;
 	}
 	AddUinteger(Size);
-	for(FString V : Value)
+	for(const FString& V : Value)
 	{
 		AddStringUtf8(V);
 	}

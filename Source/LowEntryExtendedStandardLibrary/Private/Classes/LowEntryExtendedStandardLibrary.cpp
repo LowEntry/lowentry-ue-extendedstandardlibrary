@@ -940,7 +940,7 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::HexToBytes(const FString& Hex)
 		return TArray<uint8>();
 	}
 
-	for(TCHAR c : String)
+	for(const TCHAR c : String)
 	{
 		if(!::CheckTCharIsHex(c))
 		{
@@ -1813,7 +1813,7 @@ FColor ULowEntryExtendedStandardLibrary::GrayscalePixel(const FColor& Pixel)
 TArray<FColor> ULowEntryExtendedStandardLibrary::GrayscalePixels(const TArray<FColor>& Pixels)
 {
 	TArray<FColor> Result;
-	for(FColor Pixel : Pixels)
+	for(const FColor& Pixel : Pixels)
 	{
 		Result.Add(GrayscalePixel(Pixel));
 	}
@@ -3163,7 +3163,7 @@ FString ULowEntryExtendedStandardLibrary::RemoveCharactersExcept(const FString& 
 	FString NewString;
 	NewString.Reserve(String.Len());
 
-	for(TCHAR Char : String)
+	for(const TCHAR Char : String)
 	{
 		if(KeepLowercaseAZ && (Char >= 'a') && (Char <= 'z'))
 		{
@@ -3181,7 +3181,7 @@ FString ULowEntryExtendedStandardLibrary::RemoveCharactersExcept(const FString& 
 			continue;
 		}
 
-		for(TCHAR KeepChar : OtherCharactersToKeep)
+		for(const TCHAR KeepChar : OtherCharactersToKeep)
 		{
 			if(Char == KeepChar)
 			{
@@ -3204,7 +3204,7 @@ FString ULowEntryExtendedStandardLibrary::ReplaceCharactersExcept(const FString&
 	FString NewString;
 	NewString.Reserve(FMath::Max(String.Len(), (ReplacementCharacter.Len() * String.Len())));
 
-	for(TCHAR Char : String)
+	for(const TCHAR Char : String)
 	{
 		if(KeepLowercaseAZ && (Char >= 'a') && (Char <= 'z'))
 		{
@@ -3223,7 +3223,7 @@ FString ULowEntryExtendedStandardLibrary::ReplaceCharactersExcept(const FString&
 		}
 
 		bool Keep = false;
-		for(TCHAR KeepChar : OtherCharactersToKeep)
+		for(const TCHAR KeepChar : OtherCharactersToKeep)
 		{
 			if(Char == KeepChar)
 			{

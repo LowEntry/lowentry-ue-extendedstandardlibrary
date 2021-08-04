@@ -67,7 +67,7 @@ FString ULowEntryHashingHashcashLibrary::hashCustomCreationDate(const FString& r
 		{
 			BASE_64_CACHE = ULowEntryHashingHashcashLibrary::GenerateBase64Cache();
 		}
-		for(TArray<uint8> base64counter : BASE_64_CACHE)
+		for(const TArray<uint8>& base64counter : BASE_64_CACHE)
 		{
 			hasher.Reset();
 			hasher.Update(buffer.GetData(), buffer.Num());
