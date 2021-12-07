@@ -104,6 +104,12 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Reader", Meta = (DisplayName = "Get Positive Integer 3"))
 		int32 GetPositiveInteger3();
+
+	/**
+	* Gets a long (int64).
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Reader", Meta = (DisplayName = "Get Long", Keywords = "int64 integer64"))
+		int64 GetLong();
 	
 	/**
 	* Gets a long (bytes).
@@ -165,6 +171,12 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Reader", Meta = (DisplayName = "Get Positive Integer 3 Array"))
 		TArray<int32> GetPositiveInteger3Array();
+
+	/**
+	* Gets a long (int64) array.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Reader", Meta = (DisplayName = "Get Long Array", Keywords = "int64 integer64"))
+		TArray<int64> GetLongArray();
 
 	/**
 	* Gets a long (bytes) array.

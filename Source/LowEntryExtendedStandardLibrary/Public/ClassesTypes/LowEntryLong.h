@@ -42,8 +42,17 @@ public:
 		void SetBytes(const TArray<uint8>& ByteArray, int32 Index = 0, int32 Length = 0x7FFFFFFF);
 
 
-	int64 GetLong();
-	void SetLong(const int64 Value);
+	/**
+	* Returns the value.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Types|Long (bytes)", Meta = (DisplayName = "Get Value", Keywords = "int64 integer64"))
+		int64 GetLong();
+	
+	/**
+	* Sets the value.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Types|Long (bytes)", Meta = (DisplayName = "Set Value", Keywords = "int64 integer64"))
+		void SetLong(const int64 Value);
 
 
 	/**

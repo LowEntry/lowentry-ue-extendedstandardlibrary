@@ -87,6 +87,12 @@ public:
 		void AddPositiveInteger3(const int32 Value);
 
 	/**
+	* Adds a long (int64).
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Writer", Meta = (DisplayName = "Add Long", Keywords = "int64 integer64"))
+		void AddLong(const int64 Value);
+
+	/**
 	* Adds a long (bytes).
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Writer", Meta = (DisplayName = "Add Long (Bytes)"))
@@ -158,6 +164,12 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Writer", Meta = (DisplayName = "Add Positive Integer 3 Array"))
 		void AddPositiveInteger3Array(const TArray<int32>& Value);
+	
+	/**
+	* Adds a long (int64) array.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Byte Data|Writer", Meta = (DisplayName = "Add Long Array", Keywords = "int64 integer64"))
+		void AddLongArray(const TArray<int64>& Value);
 
 	/**
 	* Adds a long (bytes) array.

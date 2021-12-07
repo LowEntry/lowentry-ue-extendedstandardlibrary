@@ -1342,6 +1342,11 @@ ULowEntryLong* ULowEntryExtendedStandardLibrary::BytesToLongBytes(const TArray<u
 	return ULowEntryLong::Create(ByteArray, Index, Length);
 }
 
+int64 ULowEntryExtendedStandardLibrary::ParseStringIntoLong(const FString& String)
+{
+	return FCString::Atoi64(*String);
+}
+
 ULowEntryLong* ULowEntryExtendedStandardLibrary::ParseStringIntoLongBytes(const FString& String)
 {
 	return ULowEntryExtendedStandardLibrary::BytesToLongBytes(ULowEntryExtendedStandardLibrary::LongToBytes(FCString::Atoi64(*String)));
@@ -3472,6 +3477,10 @@ ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFr
 {
 	return ULowEntryByteDataEntry::CreateFromPositiveInteger3(Value);
 }
+ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromLong(const int64 Value)
+{
+	return ULowEntryByteDataEntry::CreateFromLong(Value);
+}
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromLongBytes(ULowEntryLong* Value)
 {
 	return ULowEntryByteDataEntry::CreateFromLongBytes(Value);
@@ -3515,6 +3524,10 @@ ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFr
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromPositiveInteger3Array(const TArray<int32>& Value)
 {
 	return ULowEntryByteDataEntry::CreateFromPositiveInteger3Array(Value);
+}
+ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromLongArray(const TArray<int64>& Value)
+{
+	return ULowEntryByteDataEntry::CreateFromLongArray(Value);
 }
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromLongBytesArray(const TArray<ULowEntryLong*>& Value)
 {
@@ -3611,6 +3624,10 @@ ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFrom
 {
 	return ULowEntryBitDataEntry::CreateFromPositiveInteger3(Value);
 }
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromLong(const int64 Value)
+{
+	return ULowEntryBitDataEntry::CreateFromLong(Value);
+}
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromLongBytes(ULowEntryLong* Value)
 {
 	return ULowEntryBitDataEntry::CreateFromLongBytes(Value);
@@ -3675,6 +3692,10 @@ ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFrom
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromPositiveInteger3Array(const TArray<int32>& Value)
 {
 	return ULowEntryBitDataEntry::CreateFromPositiveInteger3Array(Value);
+}
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromLongArray(const TArray<int64>& Value)
+{
+	return ULowEntryBitDataEntry::CreateFromLongArray(Value);
 }
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromLongBytesArray(const TArray<ULowEntryLong*>& Value)
 {

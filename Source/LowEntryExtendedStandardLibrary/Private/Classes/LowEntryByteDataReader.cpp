@@ -213,6 +213,16 @@ int32 ULowEntryByteDataReader::GetPositiveInteger3()
 	return Value;
 }
 
+int64 ULowEntryByteDataReader::GetLong()
+{
+	int32 Pos = GetAndIncreasePosition(8);
+	if(Bytes.Num() <= Pos)
+	{
+		return 0;
+	}
+	return ULowEntryExtendedStandardLibrary::BytesToLong(Bytes, Pos, 8);
+}
+
 ULowEntryLong* ULowEntryByteDataReader::GetLongBytes()
 {
 	int32 Pos = GetAndIncreasePosition(8);
@@ -348,6 +358,23 @@ TArray<int32> ULowEntryByteDataReader::GetPositiveInteger3Array()
 	for(int32 i = 0; i < Length; i++)
 	{
 		Array[i] = GetPositiveInteger3();
+	}
+	return Array;
+}
+
+TArray<int64> ULowEntryByteDataReader::GetLongArray()
+{
+	int32 Length = GetUinteger();
+	Length = FMath::Min(Length, MaxElementsRemaining(8));
+	if(Length <= 0)
+	{
+		return TArray<int64>();
+	}
+	TArray<int64> Array;
+	Array.SetNum(Length);
+	for(int32 i = 0; i < Length; i++)
+	{
+		Array[i] = GetLong();
 	}
 	return Array;
 }

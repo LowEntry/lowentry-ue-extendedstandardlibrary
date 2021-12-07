@@ -42,6 +42,10 @@
 				{
 					Instance->AddPositiveInteger3(Item->GetPositiveInteger3());
 				}
+				else if(Item->IsLong())
+				{
+					Instance->AddLong(Item->GetLong());
+				}
 				else if(Item->IsLongBytes())
 				{
 					Instance->AddLongBytes(Item->GetLongBytes());
@@ -82,6 +86,10 @@
 				else if(Item->IsPositiveInteger3Array())
 				{
 					Instance->AddPositiveInteger3Array(Item->GetPositiveInteger3Array());
+				}
+				else if(Item->IsLongArray())
+				{
+					Instance->AddLongArray(Item->GetLongArray());
 				}
 				else if(Item->IsLongBytesArray())
 				{
@@ -216,6 +224,17 @@ void ULowEntryByteDataWriter::AddPositiveInteger3(const int32 Value)
 		AddRawByte(Value);
 	}
 }
+void ULowEntryByteDataWriter::AddLong(const int64 Value)
+{
+	AddRawByte(Value >> 56);
+	AddRawByte(Value >> 48);
+	AddRawByte(Value >> 40);
+	AddRawByte(Value >> 32);
+	AddRawByte(Value >> 24);
+	AddRawByte(Value >> 16);
+	AddRawByte(Value >> 8);
+	AddRawByte(Value);
+}
 void ULowEntryByteDataWriter::AddLongBytes(ULowEntryLong* Value)
 {
 	if(Value != nullptr)
@@ -278,6 +297,7 @@ void ULowEntryByteDataWriter::AddIntegerArray(const TArray<int32>& Value)
 		AddUinteger(0);
 		return;
 	}
+	AddUinteger(Size);
 	for(int32 V : Value)
 	{
 		AddInteger(V);
@@ -291,6 +311,7 @@ void ULowEntryByteDataWriter::AddPositiveInteger1Array(const TArray<int32>& Valu
 		AddUinteger(0);
 		return;
 	}
+	AddUinteger(Size);
 	for(int32 V : Value)
 	{
 		AddPositiveInteger1(V);
@@ -304,6 +325,7 @@ void ULowEntryByteDataWriter::AddPositiveInteger2Array(const TArray<int32>& Valu
 		AddUinteger(0);
 		return;
 	}
+	AddUinteger(Size);
 	for(int32 V : Value)
 	{
 		AddPositiveInteger2(V);
@@ -317,9 +339,24 @@ void ULowEntryByteDataWriter::AddPositiveInteger3Array(const TArray<int32>& Valu
 		AddUinteger(0);
 		return;
 	}
+	AddUinteger(Size);
 	for(int32 V : Value)
 	{
 		AddPositiveInteger3(V);
+	}
+}
+void ULowEntryByteDataWriter::AddLongArray(const TArray<int64>& Value)
+{
+	int64 Size = Value.Num();
+	if((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
+	AddUinteger(Size);
+	for(int64 V : Value)
+	{
+		AddLong(V);
 	}
 }
 void ULowEntryByteDataWriter::AddLongBytesArray(const TArray<ULowEntryLong*>& Value)
@@ -330,6 +367,7 @@ void ULowEntryByteDataWriter::AddLongBytesArray(const TArray<ULowEntryLong*>& Va
 		AddUinteger(0);
 		return;
 	}
+	AddUinteger(Size);
 	for(ULowEntryLong* V : Value)
 	{
 		AddLongBytes(V);
@@ -343,6 +381,7 @@ void ULowEntryByteDataWriter::AddFloatArray(const TArray<float>& Value)
 		AddUinteger(0);
 		return;
 	}
+	AddUinteger(Size);
 	for(float V : Value)
 	{
 		AddFloat(V);
@@ -356,6 +395,7 @@ void ULowEntryByteDataWriter::AddDoubleBytesArray(const TArray<ULowEntryDouble*>
 		AddUinteger(0);
 		return;
 	}
+	AddUinteger(Size);
 	for(ULowEntryDouble* V : Value)
 	{
 		AddDoubleBytes(V);
@@ -369,6 +409,7 @@ void ULowEntryByteDataWriter::AddBooleanArray(const TArray<bool>& Value)
 		AddUinteger(0);
 		return;
 	}
+	AddUinteger(Size);
 	uint8 B = 0;
 	int32 BIndex = 0;
 	for(bool V : Value)
@@ -398,6 +439,7 @@ void ULowEntryByteDataWriter::AddStringUtf8Array(const TArray<FString>& Value)
 		AddUinteger(0);
 		return;
 	}
+	AddUinteger(Size);
 	for(const FString& V : Value)
 	{
 		AddStringUtf8(V);

@@ -65,6 +65,10 @@ const uint8 ULowEntryBitDataWriter::mask[9] = {((uint8) 0x00), ((uint8) 0x01), (
 				{
 					Instance->AddPositiveInteger3(Item->GetPositiveInteger3());
 				}
+				else if(Item->IsLong())
+				{
+					Instance->AddLong(Item->GetLong());
+				}
 				else if(Item->IsLongBytes())
 				{
 					Instance->AddLongBytes(Item->GetLongBytes());
@@ -125,6 +129,10 @@ const uint8 ULowEntryBitDataWriter::mask[9] = {((uint8) 0x00), ((uint8) 0x01), (
 				else if(Item->IsPositiveInteger3Array())
 				{
 					Instance->AddPositiveInteger3Array(Item->GetPositiveInteger3Array());
+				}
+				else if(Item->IsLongArray())
+				{
+					Instance->AddLongArray(Item->GetLongArray());
 				}
 				else if(Item->IsLongBytesArray())
 				{
@@ -433,6 +441,17 @@ void ULowEntryBitDataWriter::AddPositiveInteger3(const int32 Value)
 		AddRawByte(Value);
 	}
 }
+void ULowEntryBitDataWriter::AddLong(const int64 Value)
+{
+	AddRawByte(Value >> 56);
+	AddRawByte(Value >> 48);
+	AddRawByte(Value >> 40);
+	AddRawByte(Value >> 32);
+	AddRawByte(Value >> 24);
+	AddRawByte(Value >> 16);
+	AddRawByte(Value >> 8);
+	AddRawByte(Value);
+}
 void ULowEntryBitDataWriter::AddLongBytes(ULowEntryLong* Value)
 {
 	if(Value != nullptr)
@@ -604,6 +623,20 @@ void ULowEntryBitDataWriter::AddPositiveInteger3Array(const TArray<int32>& Value
 	for(int32 V : Value)
 	{
 		AddPositiveInteger3(V);
+	}
+}
+void ULowEntryBitDataWriter::AddLongArray(const TArray<int64>& Value)
+{
+	int64 Size = Value.Num();
+	if((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
+	AddUinteger(Size);
+	for(int64 V : Value)
+	{
+		AddLong(V);
 	}
 }
 void ULowEntryBitDataWriter::AddLongBytesArray(const TArray<ULowEntryLong*>& Value)

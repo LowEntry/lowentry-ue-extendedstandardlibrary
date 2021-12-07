@@ -23,6 +23,7 @@ public:
 	static ULowEntryByteDataEntry* CreateFromPositiveInteger1(const int32 Value);
 	static ULowEntryByteDataEntry* CreateFromPositiveInteger2(const int32 Value);
 	static ULowEntryByteDataEntry* CreateFromPositiveInteger3(const int32 Value);
+	static ULowEntryByteDataEntry* CreateFromLong(const int64 Value);
 	static ULowEntryByteDataEntry* CreateFromLongBytes(ULowEntryLong* Value);
 
 	static ULowEntryByteDataEntry* CreateFromFloat(const float Value);
@@ -37,6 +38,7 @@ public:
 	static ULowEntryByteDataEntry* CreateFromPositiveInteger1Array(const TArray<int32>& Value);
 	static ULowEntryByteDataEntry* CreateFromPositiveInteger2Array(const TArray<int32>& Value);
 	static ULowEntryByteDataEntry* CreateFromPositiveInteger3Array(const TArray<int32>& Value);
+	static ULowEntryByteDataEntry* CreateFromLongArray(const TArray<int64>& Value);
 	static ULowEntryByteDataEntry* CreateFromLongBytesArray(const TArray<ULowEntryLong*>& Value);
 
 	static ULowEntryByteDataEntry* CreateFromFloatArray(const TArray<float>& Value);
@@ -56,6 +58,8 @@ public:
 	UPROPERTY()
 	int32 IntegerValue;
 	UPROPERTY()
+	int64 LongValue;
+	UPROPERTY()
 	ULowEntryLong* LongBytesValue = NULL;
 
 	UPROPERTY()
@@ -73,6 +77,8 @@ public:
 	TArray<uint8> ByteArrayValue;
 	UPROPERTY()
 	TArray<int32> IntegerArrayValue;
+	UPROPERTY()
+	TArray<int64> LongArrayValue;
 	UPROPERTY()
 	TArray<ULowEntryLong*> LongBytesArrayValue;
 
@@ -107,6 +113,10 @@ public:
 	bool IsPositiveInteger3();
 	void SetPositiveInteger3(const int32 Value);
 	int32 GetPositiveInteger3();
+
+	bool IsLong();
+	void SetLong(const int64 Value);
+	int64 GetLong();
 
 	bool IsLongBytes();
 	void SetLongBytes(ULowEntryLong* Value);
@@ -151,6 +161,10 @@ public:
 	bool IsPositiveInteger3Array();
 	void SetPositiveInteger3Array(const TArray<int32>& Value);
 	TArray<int32> GetPositiveInteger3Array();
+
+	bool IsLongArray();
+	void SetLongArray(const TArray<int64>& Value);
+	TArray<int64> GetLongArray();
 
 	bool IsLongBytesArray();
 	void SetLongBytesArray(const TArray<ULowEntryLong*>& Value);

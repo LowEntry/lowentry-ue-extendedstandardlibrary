@@ -38,6 +38,12 @@
 		Instance->SetPositiveInteger3(Value);
 		return Instance;
 	}
+	ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromLong(const int64 Value)
+	{
+		ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
+		Instance->SetLong(Value);
+		return Instance;
+	}
 	ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromLongBytes(ULowEntryLong* Value)
 	{
 		ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
@@ -100,6 +106,12 @@
 	{
 		ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
 		Instance->SetPositiveInteger3Array(Value);
+		return Instance;
+	}
+	ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromLongArray(const TArray<int64>& Value)
+	{
+		ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
+		Instance->SetLongArray(Value);
 		return Instance;
 	}
 	ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromLongBytesArray(const TArray<ULowEntryLong*>& Value)
@@ -205,6 +217,20 @@ void ULowEntryByteDataEntry::SetPositiveInteger3(const int32 Value)
 int32 ULowEntryByteDataEntry::GetPositiveInteger3()
 {
 	return IntegerValue;
+}
+
+bool ULowEntryByteDataEntry::IsLong()
+{
+	return (Type == 11);
+};
+void ULowEntryByteDataEntry::SetLong(const int64 Value)
+{
+	Type = 11;
+	LongValue = Value;
+};
+int64 ULowEntryByteDataEntry::GetLong()
+{
+	return LongValue;
 }
 
 bool ULowEntryByteDataEntry::IsLongBytes()
@@ -349,6 +375,20 @@ void ULowEntryByteDataEntry::SetPositiveInteger3Array(const TArray<int32>& Value
 TArray<int32> ULowEntryByteDataEntry::GetPositiveInteger3Array()
 {
 	return IntegerArrayValue;
+}
+
+bool ULowEntryByteDataEntry::IsLongArray()
+{
+	return (Type == 111);
+};
+void ULowEntryByteDataEntry::SetLongArray(const TArray<int64>& Value)
+{
+	Type = 111;
+	LongArrayValue = Value;
+};
+TArray<int64> ULowEntryByteDataEntry::GetLongArray()
+{
+	return LongArrayValue;
 }
 
 bool ULowEntryByteDataEntry::IsLongBytesArray()

@@ -513,6 +513,79 @@ int32 ULowEntryBitDataReader::GetPositiveInteger3()
 	return Value;
 }
 
+int64 ULowEntryBitDataReader::GetLong()
+{
+	int32 RemainingCount = Remaining();
+	if(RemainingCount >= 8)
+	{
+		int64 b1 = GetRawByte();
+		int64 b2 = GetRawByte();
+		int64 b3 = GetRawByte();
+		int64 b4 = GetRawByte();
+		int64 b5 = GetRawByte();
+		int64 b6 = GetRawByte();
+		int64 b7 = GetRawByte();
+		int64 b8 = GetRawByte();
+		return (b1 << 56) | (b2 << 48) | (b3 << 40) | (b4 << 32) | (b5 << 24) | (b6 << 16) | (b7 << 8) | b8;
+	}
+	if(RemainingCount >= 7)
+	{
+		int64 b1 = GetRawByte();
+		int64 b2 = GetRawByte();
+		int64 b3 = GetRawByte();
+		int64 b4 = GetRawByte();
+		int64 b5 = GetRawByte();
+		int64 b6 = GetRawByte();
+		int64 b7 = GetRawByte();
+		return (b1 << 48) | (b2 << 40) | (b3 << 32) | (b4 << 24) | (b5 << 16) | (b6 << 8) | b7;
+	}
+	if(RemainingCount >= 6)
+	{
+		int64 b1 = GetRawByte();
+		int64 b2 = GetRawByte();
+		int64 b3 = GetRawByte();
+		int64 b4 = GetRawByte();
+		int64 b5 = GetRawByte();
+		int64 b6 = GetRawByte();
+		return (b1 << 40) | (b2 << 32) | (b3 << 24) | (b4 << 16) | (b5 << 8) | b6;
+	}
+	if(RemainingCount >= 5)
+	{
+		int64 b1 = GetRawByte();
+		int64 b2 = GetRawByte();
+		int64 b3 = GetRawByte();
+		int64 b4 = GetRawByte();
+		int64 b5 = GetRawByte();
+		return (b1 << 32) | (b2 << 24) | (b3 << 16) | (b4 << 8) | b5;
+	}
+	if(RemainingCount >= 4)
+	{
+		int64 b1 = GetRawByte();
+		int64 b2 = GetRawByte();
+		int64 b3 = GetRawByte();
+		int64 b4 = GetRawByte();
+		return (b1 << 24) | (b2 << 16) | (b3 << 8) | b4;
+	}
+	if(RemainingCount == 3)
+	{
+		int64 b1 = GetRawByte();
+		int64 b2 = GetRawByte();
+		int64 b3 = GetRawByte();
+		return (b1 << 16) | (b2 << 8) | b3;
+	}
+	if(RemainingCount == 2)
+	{
+		int64 b1 = GetRawByte();
+		int64 b2 = GetRawByte();
+		return (b1 << 8) | b2;
+	}
+	if(RemainingCount == 1)
+	{
+		return GetRawByte();
+	}
+	return 0;
+}
+
 ULowEntryLong* ULowEntryBitDataReader::GetLongBytes()
 {
 	TArray<uint8> Data;
@@ -868,6 +941,23 @@ TArray<int32> ULowEntryBitDataReader::GetPositiveInteger3Array()
 	for(int32 i = 0; i < Length; i++)
 	{
 		Array[i] = GetPositiveInteger3();
+	}
+	return Array;
+}
+
+TArray<int64> ULowEntryBitDataReader::GetLongArray()
+{
+	int32 Length = GetUinteger();
+	Length = FMath::Min(Length, MaxElementsRemaining(8));
+	if(Length <= 0)
+	{
+		return TArray<int64>();
+	}
+	TArray<int64> Array;
+	Array.SetNum(Length);
+	for(int32 i = 0; i < Length; i++)
+	{
+		Array[i] = GetLong();
 	}
 	return Array;
 }

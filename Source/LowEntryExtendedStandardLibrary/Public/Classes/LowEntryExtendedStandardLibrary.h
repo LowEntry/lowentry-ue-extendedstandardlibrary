@@ -653,9 +653,21 @@ public:
 		static int32 BytesToInteger(const TArray<uint8>& ByteArray, int32 Index = 0, int32 Length = 0x7FFFFFFF);
 
 
-	static TArray<uint8> LongToBytes(const int64 Value);
+	/**
+	* Converts a signed long (int64) into a Byte Array (4 bytes).
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Integer64 To Bytes", Keywords = "byte array int integer long int64 integer64"))
+		static TArray<uint8> LongToBytes(const int64 Value);
 
-	static int64 BytesToLong(const TArray<uint8>& ByteArray, int32 Index = 0, int32 Length = 0x7FFFFFFF);
+	/**
+	* Converts a Byte Array into a signed long (int64).
+	*
+	* If there are more than 8 bytes given, it will only convert the first 8 bytes to an integer.
+	* If there are less than 8 bytes given, it will prefix the bytes with 0 value bytes (so 01010101 01010101 01010101 turns into 00000000 00000000 00000000 00000000 00000000 01010101 01010101 01010101).
+	* If there are no bytes given, it will return 0.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Integer64", Keywords = "byte array int integer long int64 integer64", AdvancedDisplay = "1"))
+		static int64 BytesToLong(const TArray<uint8>& ByteArray, int32 Index = 0, int32 Length = 0x7FFFFFFF);
 
 	/**
 	* Converts a Byte Array into a signed long (int64) (bytes).
@@ -664,13 +676,19 @@ public:
 	* If there are less than 8 bytes given, it will prefix the bytes with 0 value bytes (so 01010101 01010101 01010101 turns into 00000000 00000000 00000000 00000000 00000000 01010101 01010101 01010101).
 	* If there are no bytes given, it will return 0.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Long (bytes)", Keywords = "byte array long", AdvancedDisplay = "1"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Long (bytes)", Keywords = "byte array long int64 integer64", AdvancedDisplay = "1"))
 		static ULowEntryLong* BytesToLongBytes(const TArray<uint8>& ByteArray, int32 Index = 0, int32 Length = 0x7FFFFFFF);
+
+	/**
+	* Parses a string into an int64.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (DisplayName = "String To Int64", CompactNodeTitle = "->", BlueprintAutocast, Keywords = "int64 integer64"))
+		static int64 ParseStringIntoLong(const FString& String);
 
 	/**
 	* Parses a string into a long.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Types|Long (bytes)", Meta = (DisplayName = "Parse String Into Long (bytes)"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Types|Long (bytes)", Meta = (DisplayName = "Parse String Into Long (bytes)", Keywords = "int64 integer64"))
 		static ULowEntryLong* ParseStringIntoLongBytes(const FString& String);
 
 
@@ -1900,6 +1918,12 @@ public:
 		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromPositiveInteger3(const int32 Value);
 
 	/**
+	* Creates a new Byte Data Entry with the value of a long (int64).
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Long", Keywords = "int64 integer64"))
+		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromLong(const int64 Value);
+
+	/**
 	* Creates a new Byte Data Entry with the value of a long (bytes).
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Long (bytes)"))
@@ -1974,6 +1998,12 @@ public:
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Positive Integer 3 Array"))
 		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromPositiveInteger3Array(const TArray<int32>& Value);
+
+	/**
+	* Creates a new Byte Data Entry with the value of a long (int64) array.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Long Array", Keywords = "int64 integer64"))
+		static ULowEntryByteDataEntry* ByteDataEntry_CreateFromLongArray(const TArray<int64>& Value);
 
 	/**
 	* Creates a new Byte Data Entry with the value of a long (bytes) array.
@@ -2154,6 +2184,12 @@ public:
 		static ULowEntryBitDataEntry* BitDataEntry_CreateFromPositiveInteger3(const int32 Value);
 
 	/**
+	* Creates a new Bit Data Entry with the value of a long (int64).
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Long", Keywords = "int64 integer64"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromLong(const int64 Value);
+
+	/**
 	* Creates a new Bit Data Entry with the value of a long (bytes).
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Long (bytes)"))
@@ -2278,6 +2314,12 @@ public:
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Positive Integer 3 Array"))
 		static ULowEntryBitDataEntry* BitDataEntry_CreateFromPositiveInteger3Array(const TArray<int32>& Value);
+
+	/**
+	* Creates a new Bit Data Entry with the value of a long (int64) array.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Long Array", Keywords = "int64 integer64"))
+		static ULowEntryBitDataEntry* BitDataEntry_CreateFromLongArray(const TArray<int64>& Value);
 
 	/**
 	* Creates a new Bit Data Entry with the value of a long (bytes) array.
