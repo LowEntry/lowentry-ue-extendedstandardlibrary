@@ -18,19 +18,19 @@ struct LOWENTRYEXTENDEDSTANDARDLIBRARY_API FLowEntryRegexCaptureGroup
 	* This is the number of the capture group, starting with 1.
 	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Low Entry|Extended Standard Library|Utilities|String")
-		int32 CaptureGroupNumber;
+		int32 CaptureGroupNumber = 0;
 
 	/**
 	* This is the start index of the capture group match.
 	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Low Entry|Extended Standard Library|Utilities|String")
-		int32 BeginIndex;
+		int32 BeginIndex = 0;
 
 	/**
 	* This is the end index of the capture group match.
 	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Low Entry|Extended Standard Library|Utilities|String")
-		int32 EndIndex;
+		int32 EndIndex = 0;
 
 	/**
 	* This is the text of the capture group match.
