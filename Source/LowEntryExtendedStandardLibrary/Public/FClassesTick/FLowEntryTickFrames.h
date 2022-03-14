@@ -32,7 +32,7 @@ public:
 		Tick0 = 0;
 	}
 
-	void UpdateOperation(FLatentResponse& Response)
+	virtual void UpdateOperation(FLatentResponse& Response) override
 	{
 		if(Tick >= Ticks)
 		{

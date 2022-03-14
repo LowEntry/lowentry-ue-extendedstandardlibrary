@@ -178,15 +178,15 @@ void UK2Node_LowEntry_MergeBytesPure::AllocateDefaultPins()
 {
 	if(!true)
 	{
-		CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Exec, TEXT(""), NULL, UEdGraphSchema_K2::PN_Execute);
-		CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Exec, TEXT(""), NULL, UEdGraphSchema_K2::PN_Then);
+		CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Exec, TEXT(""), nullptr, UEdGraphSchema_K2::PN_Execute);
+		CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Exec, TEXT(""), nullptr, UEdGraphSchema_K2::PN_Then);
 	}
 
 	// Create the output pins
 	FCreatePinParams ArrayOutputPinParams = FCreatePinParams();
 	ArrayOutputPinParams.ContainerType = EPinContainerType::Array;
 	
-	UEdGraphPin* ObjectOutputPin = CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Byte, TEXT(""), NULL, LowEntry_ResultPinName, ArrayOutputPinParams);
+	UEdGraphPin* ObjectOutputPin = CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Byte, TEXT(""), nullptr, LowEntry_ResultPinName, ArrayOutputPinParams);
 	UEdGraphPin* ArrayOutputPin = CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Object, TEXT(""), ULowEntryByteArray::StaticClass(), GetOutputPinName(), ArrayOutputPinParams);
 
 	ArrayOutputPin->bHidden = true;
@@ -194,7 +194,7 @@ void UK2Node_LowEntry_MergeBytesPure::AllocateDefaultPins()
 	// Create the input pins to create the arrays from
 	for(int32 i = 0; i < NumInputs; ++i)
 	{
-		CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Byte, TEXT(""), NULL, *FString::Printf(TEXT("[%d]"), i), ArrayOutputPinParams);
+		CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Byte, TEXT(""), nullptr, *FString::Printf(TEXT("[%d]"), i), ArrayOutputPinParams);
 		CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Object, TEXT(""), ULowEntryByteArray::StaticClass(), *FString::Printf(TEXT("[%d]2"), i))->bHidden = true;
 	}
 }
@@ -207,7 +207,7 @@ void UK2Node_LowEntry_MergeBytesPure::AddInputPin()
 	FEdGraphPinType OutputPinType = GetArrayOutputPin()->PinType;
 	FCreatePinParams ArrayOutputPinParams = FCreatePinParams();
 	ArrayOutputPinParams.ContainerType = EPinContainerType::Array;
-	CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Byte, TEXT(""), NULL, *FString::Printf(TEXT("[%d]"), (NumInputs - 1)), ArrayOutputPinParams);
+	CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Byte, TEXT(""), nullptr, *FString::Printf(TEXT("[%d]"), (NumInputs - 1)), ArrayOutputPinParams);
 	CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Object, TEXT(""), ULowEntryByteArray::StaticClass(), *FString::Printf(TEXT("[%d]2"), (NumInputs - 1)))->bHidden = true;
 
 	const bool bIsCompiling = GetBlueprint()->bBeingCompiled;

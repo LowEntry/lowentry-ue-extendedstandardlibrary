@@ -60,12 +60,12 @@ public:
 	UPROPERTY()
 	int64 LongValue;
 	UPROPERTY()
-	ULowEntryLong* LongBytesValue = NULL;
+	ULowEntryLong* LongBytesValue = nullptr;
 
 	UPROPERTY()
 	float FloatValue;
 	UPROPERTY()
-	ULowEntryDouble* DoubleBytesValue = NULL;
+	ULowEntryDouble* DoubleBytesValue = nullptr;
 
 	UPROPERTY()
 	bool BooleanValue;

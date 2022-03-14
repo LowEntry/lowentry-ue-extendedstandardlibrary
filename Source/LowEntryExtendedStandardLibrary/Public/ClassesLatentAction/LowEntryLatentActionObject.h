@@ -24,7 +24,7 @@ public:
 	UPROPERTY()
 	bool Finished = false;
 	UPROPERTY()
-	UObject* Result = NULL;
+	UObject* Result = nullptr;
 
 	UPROPERTY()
 	int32 KeepAliveCount = 0;

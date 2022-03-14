@@ -27,7 +27,7 @@ public:
 
 	virtual void UpdateOperation(FLatentResponse& Response) override
 	{
-		if((Queue == nullptr) || !Queue->IsValidLowLevel() || Queue->IsPendingKill() || (Queue->Count <= 0))
+		if(!IsValid(Queue))
 		{
             Response.DoneIf(true);
             return;
@@ -42,7 +42,7 @@ public:
 
 	ULowEntryExecutionQueue* GetOrCreateQueueAndIncreaseCount()
 	{
-		if((Queue == nullptr) || !Queue->IsValidLowLevel() || Queue->IsPendingKill())
+		if(!IsValid(Queue))
 		{
 			Queue = ULowEntryExecutionQueue::Create(1, true);
 			return Queue;
@@ -55,7 +55,7 @@ public:
 	// Returns a human readable description of the latent operation's current state
 	virtual FString GetDescription() const override
 	{
-		if((Queue == nullptr) || !Queue->IsValidLowLevel() || Queue->IsPendingKill() || (Queue->Count <= 0))
+		if(!IsValid(Queue))
 		{
 			return FString::Printf(TEXT("Queued (0 executions remaining)"));
 		}

@@ -37,16 +37,16 @@ public:
 	FName LowEntry_InputType = UEdGraphSchema_K2::PC_Object;
 
 	UPROPERTY()
-	UClass* LowEntry_InputClass = NULL;
+	UClass* LowEntry_InputClass = nullptr;
 
 	UPROPERTY()
 	FName LowEntry_OutputType = UEdGraphSchema_K2::PC_Object;
 
 	UPROPERTY()
-	UClass* LowEntry_OutputClass = NULL;
+	UClass* LowEntry_OutputClass = nullptr;
 
 	UPROPERTY()
-	UClass* LowEntry_ConverterClass = NULL;
+	UClass* LowEntry_ConverterClass = nullptr;
 
 	UPROPERTY()
 	FName LowEntry_ConverterFunctionName = TEXT("");

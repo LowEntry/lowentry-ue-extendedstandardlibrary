@@ -568,7 +568,7 @@ void UK2Node_LowEntry_MakeContainer::RemoveInputPin(UEdGraphPin* Pin)
 		if(Pins.Find(PinToRemove, PinRemovalIndex))
 		{
 			Pins.RemoveAt(PinRemovalIndex);
-			PinToRemove->MarkPendingKill();
+			PinToRemove->MarkAsGarbage();
 		}
 	};
 

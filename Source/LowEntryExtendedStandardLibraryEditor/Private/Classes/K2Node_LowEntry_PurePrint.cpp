@@ -129,13 +129,13 @@ void UK2Node_LowEntry_PurePrint::AllocateDefaultPins()
 {
 	if(!true)
 	{
-		CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Exec, TEXT(""), NULL, UEdGraphSchema_K2::PN_Execute);
-		CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Exec, TEXT(""), NULL, UEdGraphSchema_K2::PN_Then);
+		CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Exec, TEXT(""), nullptr, UEdGraphSchema_K2::PN_Execute);
+		CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Exec, TEXT(""), nullptr, UEdGraphSchema_K2::PN_Then);
 	}
 
-	UEdGraphPin* InputPin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Wildcard, TEXT(""), NULL, TEXT("Value"));
-	UEdGraphPin* StringInputPin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_String, TEXT(""), NULL, TEXT("Message"));
-	UEdGraphPin* OutputPin = CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Wildcard, TEXT(""), NULL, TEXT("Value "));
+	UEdGraphPin* InputPin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Wildcard, TEXT(""), nullptr, TEXT("Value"));
+	UEdGraphPin* StringInputPin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_String, TEXT(""), nullptr, TEXT("Message"));
+	UEdGraphPin* OutputPin = CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Wildcard, TEXT(""), nullptr, TEXT("Value "));
 }
 
 void UK2Node_LowEntry_PurePrint::NotifyPinConnectionListChanged(UEdGraphPin* Pin)
@@ -166,13 +166,13 @@ void UK2Node_LowEntry_PurePrint::PropagatePinType()
 	{
 		InputPin->PinType.PinCategory = UEdGraphSchema_K2::PC_Wildcard;
 		InputPin->PinType.PinSubCategory = TEXT("");
-		InputPin->PinType.PinSubCategoryObject = NULL;
+		InputPin->PinType.PinSubCategoryObject = nullptr;
 	}
 
 	if(!ArePinTypesEqual(InputPin->PinType, OutputPin->PinType))
 	{
 		OutputPin->PinType = InputPin->PinType;
-		if((OutputPin->GetOwningNode() != NULL) && (OutputPin->GetOwningNode()->GetGraph() != NULL))
+		if((OutputPin->GetOwningNode() != nullptr) && (OutputPin->GetOwningNode()->GetGraph() != nullptr))
 		{
 			OutputPin->GetOwningNode()->GetGraph()->NotifyGraphChanged();
 		}

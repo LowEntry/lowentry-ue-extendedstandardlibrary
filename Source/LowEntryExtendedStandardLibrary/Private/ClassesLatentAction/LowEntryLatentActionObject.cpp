@@ -27,7 +27,7 @@ void ULowEntryLatentActionObject::WaitTillDone(UObject* WorldContextObject, FLat
 	{
 		return;
 	}
-	if(World->GetLatentActionManager().FindExistingAction<FLowEntryLatentActionObject>(LatentInfo.CallbackTarget, LatentInfo.UUID) != NULL)
+	if(World->GetLatentActionManager().FindExistingAction<FLowEntryLatentActionObject>(LatentInfo.CallbackTarget, LatentInfo.UUID) != nullptr)
 	{
 		return;
 	}

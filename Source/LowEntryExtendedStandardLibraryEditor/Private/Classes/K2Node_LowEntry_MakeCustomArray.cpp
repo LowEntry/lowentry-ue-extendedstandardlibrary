@@ -151,8 +151,8 @@ void UK2Node_LowEntry_MakeCustomArray::AllocateDefaultPins()
 {
 	if(!LowEntry_IsNodePure)
 	{
-		CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Exec, NULL, UEdGraphSchema_K2::PN_Execute);
-		CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Exec, NULL, UEdGraphSchema_K2::PN_Then);
+		CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Exec, nullptr, UEdGraphSchema_K2::PN_Execute);
+		CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Exec, nullptr, UEdGraphSchema_K2::PN_Then);
 	}
 
 	// Create the output pins
@@ -188,7 +188,7 @@ void UK2Node_LowEntry_MakeCustomArray::GetNodeContextMenuActions(UToolMenu* Menu
 	{
 		FToolMenuSection& Section = Menu->AddSection("K2NodeMakeArray", FText::FromString("Low Entry"));
 
-		if(Context->Pin != NULL)
+		if(Context->Pin != nullptr)
 		{
 			if((Context->Pin->Direction == EGPD_Input) && (Context->Pin->ParentPin == nullptr) && (Context->Pin->PinType.PinCategory != UEdGraphSchema_K2::PC_Exec))
 			{

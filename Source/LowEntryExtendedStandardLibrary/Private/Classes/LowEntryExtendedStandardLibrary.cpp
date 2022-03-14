@@ -1611,7 +1611,7 @@ void ULowEntryExtendedStandardLibrary::Texture2DToBytes(UTexture2D* Texture2D, c
 		Texture2D->UpdateResource();
 	}
 
-	FTexture2DMipMap& Mip0 = Texture2D->PlatformData->Mips[0];
+	FTexture2DMipMap& Mip0 = Texture2D->GetPlatformData()->Mips[0];
 	int32 Mip0Width = Mip0.SizeX;
 	int32 Mip0Height = Mip0.SizeY;
 
@@ -1857,7 +1857,7 @@ void ULowEntryExtendedStandardLibrary::Texture2DToPixels(UTexture2D* Texture2D, 
 		Texture2D->UpdateResource();
 	}
 
-	FTexture2DMipMap& Mip0 = Texture2D->PlatformData->Mips[0];
+	FTexture2DMipMap& Mip0 = Texture2D->GetPlatformData()->Mips[0];
 	int32 Mip0Width = Mip0.SizeX;
 	int32 Mip0Height = Mip0.SizeY;
 
@@ -1942,9 +1942,9 @@ UTexture2D* ULowEntryExtendedStandardLibrary::DataToTexture2D(int32 Width, int32
 	Texture2D->MipGenSettings = TMGS_NoMipmaps;
 #endif
 
-	void* TextureData = Texture2D->PlatformData->Mips[0].BulkData.Lock(LOCK_READ_WRITE);
+	void* TextureData = Texture2D->GetPlatformData()->Mips[0].BulkData.Lock(LOCK_READ_WRITE);
 	FMemory::Memcpy(TextureData, Src, Count);
-	Texture2D->PlatformData->Mips[0].BulkData.Unlock();
+	Texture2D->GetPlatformData()->Mips[0].BulkData.Unlock();
 
 	Texture2D->UpdateResource();
 	return Texture2D;
@@ -1966,9 +1966,9 @@ UTexture2D* ULowEntryExtendedStandardLibrary::DataToExistingTexture2D(UTexture2D
 	Texture2D->MipGenSettings = TMGS_NoMipmaps;
 #endif
 
-	void* TextureData = Texture2D->PlatformData->Mips[0].BulkData.Lock(LOCK_READ_WRITE);
+	void* TextureData = Texture2D->GetPlatformData()->Mips[0].BulkData.Lock(LOCK_READ_WRITE);
 	FMemory::Memcpy(TextureData, Src, Count);
-	Texture2D->PlatformData->Mips[0].BulkData.Unlock();
+	Texture2D->GetPlatformData()->Mips[0].BulkData.Unlock();
 
 	Texture2D->UpdateResource();
 	return Texture2D;
@@ -3112,7 +3112,7 @@ void ULowEntryExtendedStandardLibrary::QueueExecutions(UObject* WorldContextObje
 
 void ULowEntryExtendedStandardLibrary::NextQueueExecution(ULowEntryExecutionQueue* Queue)
 {
-	if((Queue != nullptr) && Queue->IsValidLowLevel() && !Queue->IsPendingKill())
+	if(IsValid(Queue))
 	{
 		Queue->Next = true;
 	}
