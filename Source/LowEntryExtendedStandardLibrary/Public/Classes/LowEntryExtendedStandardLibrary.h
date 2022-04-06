@@ -2427,6 +2427,7 @@ public:
 	static void GetWindowPositionInPercentagesCentered(bool& Success, float& X, float& Y);
 
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Get Window Position (Percentages)", DeprecatedFunction, DeprecationMessage = "Use GetWindowPositionInPercentagesCentered instead"))
+	// ReSharper disable once IdentifierTypo
 	static void GetWindowPositiomInPercentagesCentered(bool& Success, float& X, float& Y) { GetWindowPositionInPercentagesCentered(Success, X, Y); }
 
 
@@ -2451,6 +2452,7 @@ public:
 	static void SetWindowPositionInPercentagesCentered(const float X, const float Y);
 
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Set Window Position (Percentages)", DeprecatedFunction, DeprecationMessage = "Use SetWindowPositionInPercentagesCentered instead"))
+	// ReSharper disable once IdentifierTypo
 	static void SetWindowPositiomInPercentagesCentered(const float X, const float Y) { SetWindowPositionInPercentagesCentered(X, Y); }
 
 
