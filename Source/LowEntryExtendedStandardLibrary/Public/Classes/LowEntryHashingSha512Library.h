@@ -10,7 +10,7 @@ class ULowEntryHashingSha512Library
 {
 private:
 	const static int64 k[80];
-	const static int32 BLOCK_SIZE = 128;
+	constexpr static int32 BLOCK_SIZE = 128;
 
 
 private:

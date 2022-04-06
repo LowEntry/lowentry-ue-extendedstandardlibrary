@@ -9,13 +9,13 @@
 class ULowEntryHashingBCryptLibrary
 {
 private:
-	const static int32 BCRYPT_SALT_LEN = 16;
+	constexpr static int32 BCRYPT_SALT_LEN = 16;
 
-	const static int32 BLOWFISH_NUM_ROUNDS = 16;
+	constexpr static int32 BLOWFISH_NUM_ROUNDS = 16;
 
-	const static int32 P_len = 18;
-	const static int32 S_len = 1024;
-	const static int32 bf_crypt_ciphertext_len = 6;
+	constexpr static int32 P_len = 18;
+	constexpr static int32 S_len = 1024;
+	constexpr static int32 bf_crypt_ciphertext_len = 6;
 
 	const static int32 P_orig[18];
 	const static int32 S_orig[1024];
@@ -23,12 +23,12 @@ private:
 
 
 private:
-	int32 P[18];
-	int32 S[1024];
+	int32 P[18] = {};
+	int32 S[1024] = {};
 
-	int32					nk = 0;
-	int32					nr = 0;
-	TArray<TArray<uint8>>	w;
+	int32 nk = 0;
+	int32 nr = 0;
+	TArray<TArray<uint8>> w;
 
 
 private:

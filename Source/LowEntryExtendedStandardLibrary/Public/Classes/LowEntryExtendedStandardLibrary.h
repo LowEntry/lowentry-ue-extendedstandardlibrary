@@ -6,19 +6,11 @@
 #include "CoreMinimal.h"
 
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include "Engine/Engine.h"
 #include "Engine/SceneCapture2D.h"
-#include "Engine/TextureRenderTarget2D.h"
-#include "Engine/Texture2D.h"
-#include "Engine/LocalPlayer.h"
-#include "Engine/GameViewportClient.h"
 #include "Engine/World.h"
-#include "Components/SceneCaptureComponent2D.h"
 #include "GameFramework/PlayerController.h"
 #include "Kismet/GameplayStatics.h"
 #include "Slate/SceneViewport.h"
-#include "Widgets/SViewport.h"
-#include "Framework/Application/SlateApplication.h"
 
 #include "DelayAction.h"
 #include "Engine/LatentActionManager.h"
@@ -26,7 +18,6 @@
 #include "FLowEntryRegexMatch.h"
 
 #include "IImageWrapper.h"
-#include "IImageWrapperModule.h"
 
 #include "ELowEntryExtendedStandardLibrary0to9.h"
 #include "ELowEntryExtendedStandardLibrary1to10other.h"
@@ -35,7 +26,6 @@
 #include "ELowEntryBatteryState.h"
 
 #include "ELowEntryImageFormat.h"
-#include "ELowEntryRGBFormat.h"
 
 #include "ELowEntryHmacAlgorithm.h"
 
@@ -44,8 +34,6 @@
 #include "MediaPlayer.h"
 #include "MediaTexture.h"
 #include "MediaSoundComponent.h"
-
-#include "ImageUtils.h"
 
 #include "ELowEntrySplitScreenType.h"
 #include "ELowEntrySplitScreenTypeTwoPlayers.h"
@@ -280,7 +268,7 @@ public:
 	/**
 	* Returns the Android device make, returns an empty string if it failed.
 	*
-	* This will always only ever work on Android devices, other systems will always return an emptry string.
+	* This will always only ever work on Android devices, other systems will always return an empty string.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Android", Meta = (DisplayName = "Get Android Device Make", Keywords = "android system name make type"))
 		static FString GetAndroidDeviceMake();
@@ -288,7 +276,7 @@ public:
 	/**
 	* Returns the Android device model, returns an empty string if it failed.
 	*
-	* This will always only ever work on Android devices, other systems will always return an emptry string.
+	* This will always only ever work on Android devices, other systems will always return an empty string.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Android", Meta = (DisplayName = "Get Android Device Model", Keywords = "android system name model type"))
 		static FString GetAndroidDeviceModel();
@@ -296,7 +284,7 @@ public:
 	/**
 	* Returns the Android version, returns an empty string if it failed.
 	*
-	* This will always only ever work on Android devices, other systems will always return an emptry string.
+	* This will always only ever work on Android devices, other systems will always return an empty string.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Android", Meta = (DisplayName = "Get Android Version", Keywords = "android system"))
 		static FString GetAndroidVersion();
@@ -304,7 +292,7 @@ public:
 	/**
 	* Returns the Android OS language, returns an empty string if it failed.
 	*
-	* This will always only ever work on Android devices, other systems will always return an emptry string.
+	* This will always only ever work on Android devices, other systems will always return an empty string.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Android", Meta = (DisplayName = "Get Android OS Language", Keywords = "android system locale language"))
 		static FString GetAndroidOsLanguage();
@@ -312,7 +300,7 @@ public:
 	/**
 	* Returns the Android default locale, returns an empty string if it failed.
 	*
-	* This will always only ever work on Android devices, other systems will always return an emptry string.
+	* This will always only ever work on Android devices, other systems will always return an empty string.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Android", Meta = (DisplayName = "Get Android Default Locale", Keywords = "android system locale language"))
 		static FString GetAndroidDefaultLocale();
@@ -320,7 +308,7 @@ public:
 	/**
 	* Returns the Android GPU family, returns an empty string if it failed.
 	*
-	* This will always only ever work on Android devices, other systems will always return an emptry string.
+	* This will always only ever work on Android devices, other systems will always return an empty string.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Android", Meta = (DisplayName = "Get Android GPU Family", Keywords = "android system"))
 		static FString GetAndroidGpuFamily();
@@ -328,7 +316,7 @@ public:
 	/**
 	* Returns the Android GL version, returns an empty string if it failed.
 	*
-	* This will always only ever work on Android devices, other systems will always return an emptry string.
+	* This will always only ever work on Android devices, other systems will always return an empty string.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Android", Meta = (DisplayName = "Get Android GL Version", Keywords = "android system"))
 		static FString GetAndroidGlVersion();
@@ -779,7 +767,7 @@ public:
 	/**
 	* Converts a Byte Array into an image (Texture2D).
 	* 
-	* Returns NULL if it fails.
+	* Returns nullptr if it fails.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Image (Texture2D)", Keywords = "byte array binary", AdvancedDisplay = "2"))
 		static UTexture2D* BytesToImage(const TArray<uint8>& ByteArray, const ELowEntryImageFormat ImageFormat, int32 Index = 0, int32 Length = 0x7FFFFFFF);
@@ -787,7 +775,7 @@ public:
 	/**
 	* Converts a Byte Array into an image (Texture2D).
 	*
-	* Returns NULL if it fails.
+	* Returns nullptr if it fails.
 	* 
 	* Will re-use the given Texture2D if possible, ReusedGivenTexture2D will be true if it was possible.
 	*/
@@ -856,7 +844,7 @@ public:
 	/**
 	* Converts a Pixel Array into an image (Texture2D).
 	*
-	* Returns NULL if it fails.
+	* Returns nullptr if it fails.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Image|From Pixels", Meta = (DisplayName = "Pixels To Image (Texture2D)", Keywords = "array width height pixels colors"))
 		static UTexture2D* PixelsToTexture2D(const int32 Width, const int32 Height, const TArray<FColor>& Pixels);
@@ -864,7 +852,7 @@ public:
 	/**
 	* Converts a Pixel Array into an image (Texture2D).
 	*
-	* Returns NULL if it fails.
+	* Returns nullptr if it fails.
 	* 
 	* Will re-use the given Texture2D if possible, ReusedGivenTexture2D will be true if it was possible.
 	*/
@@ -1662,7 +1650,7 @@ public:
 	/**
 	* Perform a latent action with a random delay (specified in seconds).  Calling again while it is counting down will be ignored.
 	*
-	* @param WorldContext	World context.
+	* @param WorldContextObject	World context.
 	* @param MinDuration 	minimum length of delay (in seconds).
 	* @param MaxDuration 	maximum length of delay (in seconds).
 	* @param LatentInfo 	The latent action.
@@ -1673,7 +1661,7 @@ public:
 	/**
 	* Perform a latent action with a retriggerable random delay (specified in seconds).  Calling again while it is counting down will reset the countdown to a new random Duration.
 	*
-	* @param WorldContext	World context.
+	* @param WorldContextObject	World context.
 	* @param MinDuration 	minimum length of delay (in seconds).
 	* @param MaxDuration 	maximum length of delay (in seconds).
 	* @param LatentInfo 	The latent action.
@@ -1686,7 +1674,7 @@ public:
 	/**
 	* Perform a latent action with a delay (specified in frames).  Calling again while it is counting down will be ignored.
 	*
-	* @param WorldContext	World context.
+	* @param WorldContextObject	World context.
 	* @param Frames			frames of delay.
 	* @param LatentInfo 	The latent action.
 	*/
@@ -1696,7 +1684,7 @@ public:
 	/**
 	* Perform a latent action with a retriggerable delay (specified in frames).  Calling again while it is counting down will reset the countdown to the given Frames.
 	*
-	* @param WorldContext	World context.
+	* @param WorldContextObject	World context.
 	* @param Frames			frames of delay.
 	* @param LatentInfo 	The latent action.
 	*/
@@ -1706,7 +1694,7 @@ public:
 	/**
 	* Perform a latent action with a random delay (specified in frames).  Calling again while it is counting down will be ignored.
 	*
-	* @param WorldContext	World context.
+	* @param WorldContextObject	World context.
 	* @param MinFrames		minimum frames of delay.
 	* @param MaxFrames 		maximum frames of delay.
 	* @param LatentInfo 	The latent action.
@@ -1717,7 +1705,7 @@ public:
 	/**
 	* Perform a latent action with a retriggerable random delay (specified in frames).  Calling again while it is counting down will reset the countdown to a new random Frames.
 	*
-	* @param WorldContext	World context.
+	* @param WorldContextObject	World context.
 	* @param MinFrames	 	minimum frames of delay.
 	* @param MaxFrames	 	maximum frames of delay.
 	* @param LatentInfo 	The latent action.
@@ -1730,7 +1718,7 @@ public:
 	/**
 	* Queues up executions, will run a pending execution when Next() is called.
 	*
-	* @param WorldContext	World context.
+	* @param WorldContextObject	World context.
 	* @param Queue 			the queue in which the executions are stored.
 	* @param LatentInfo 	The latent action.
 	*/
@@ -1805,25 +1793,25 @@ public:
 	* Hosts a game.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Game", meta = (WorldContext = "WorldContextObject", DisplayName = "Host Game"))
-		static void HostGame(UObject* WorldContextObject, const FString& Map, const FString& Args, class APlayerController* SpecificPlayer = NULL);
+		static void HostGame(UObject* WorldContextObject, const FString& Map, const FString& Args, APlayerController* SpecificPlayer = nullptr);
 
 	/**
 	* Joins a game.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Game", meta = (WorldContext = "WorldContextObject", DisplayName = "Join Game"))
-		static void JoinGame(UObject* WorldContextObject, const FString& ServerAddress, const FString& Args, class APlayerController* SpecificPlayer = NULL);
+		static void JoinGame(UObject* WorldContextObject, const FString& ServerAddress, const FString& Args, APlayerController* SpecificPlayer = nullptr);
 
 	/**
 	* Changes the map of the server, and with that, everyone that is playing on the server. 
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Game", meta = (WorldContext = "WorldContextObject", DisplayName = "Change Map (Server)"))
-		static void ServerChangeMap(UObject* WorldContextObject, const FString& Map, const FString& Args, class APlayerController* SpecificPlayer = NULL);
+		static void ServerChangeMap(UObject* WorldContextObject, const FString& Map, const FString& Args, APlayerController* SpecificPlayer = nullptr);
 
 	/**
 	* Changes the map.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Game", meta = (WorldContext = "WorldContextObject", DisplayName = "Change Map"))
-		static void ChangeMap(UObject* WorldContextObject, const FString& Map, const FString& Args, class APlayerController* SpecificPlayer = NULL);
+		static void ChangeMap(UObject* WorldContextObject, const FString& Map, const FString& Args, APlayerController* SpecificPlayer = nullptr);
 
 
 
@@ -2390,7 +2378,7 @@ public:
 	/**
 	* Returns the mouse position (relative to the viewport), from 0 to the viewport width or height.
 	* 
-	* Returns Success=false, X=0 and Y=0 if the mouse position could not be determined, which happends when:
+	* Returns Success=false, X=0 and Y=0 if the mouse position could not be determined, which happens when:
 	*  - GEngine is null
 	*  - GEngine's GameViewportClient is null
 	*  - GameViewportClient's Viewport is null
@@ -2415,7 +2403,7 @@ public:
 	* X:  0.0 is left, 1.0 is right
 	* Y:  0.0 is top,  1.0 is bottom
 	*
-	* Returns Success=false, X=0.0 and Y=0.0 if the mouse position could not be determined, which happends when:
+	* Returns Success=false, X=0.0 and Y=0.0 if the mouse position could not be determined, which happens when:
 	*  - GEngine is null
 	*  - GEngine's GameViewportClient is null
 	*  - GameViewportClient's Viewport is null
@@ -2450,7 +2438,7 @@ public:
 	/**
 	* Returns the windows bounds in screen space.
 	*
-	* Returns Success=false, X=0, Y=0, Width=0 and Height=0 if the window bounds could not be determined, which happends when:
+	* Returns Success=false, X=0, Y=0, Width=0 and Height=0 if the window bounds could not be determined, which happens when:
 	*  - GEngine is null
 	*  - GEngine's GameViewportClient is null
 	*  - GameViewportClient's Window is null
@@ -2461,7 +2449,7 @@ public:
 	/**
 	* Gets the window position in screen space.
 	*
-	* Returns Success=false, X=0 and Y=0 if the window bounds could not be determined, which happends when:
+	* Returns Success=false, X=0 and Y=0 if the window bounds could not be determined, which happens when:
 	*  - GEngine is null
 	*  - GEngine's GameViewportClient is null
 	*  - GameViewportClient's Window is null
@@ -2472,7 +2460,7 @@ public:
 	/**
 	* Gets the window size in screen pixels.
 	*
-	* Returns Success=false, Width=0 and Height=0 if the window bounds could not be determined, which happends when:
+	* Returns Success=false, Width=0 and Height=0 if the window bounds could not be determined, which happens when:
 	*  - GEngine is null
 	*  - GEngine's GameViewportClient is null
 	*  - GameViewportClient's Window is null
@@ -2485,13 +2473,16 @@ public:
 	*
 	* This will take the window size in account, meaning that X=0.5 and Y=0.5 will cause the window to be centered in the primary screen work area.
 	*
-	* Returns Success=false, X=0.0 and Y=0.0 if the window bounds could not be determined, which happends when:
+	* Returns Success=false, X=0.0 and Y=0.0 if the window bounds could not be determined, which happens when:
 	*  - GEngine is null
 	*  - GEngine's GameViewportClient is null
 	*  - GameViewportClient's Window is null
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Get Window Position (Percentages)"))
-		static void GetWindowPositiomInPercentagesCentered(bool& Success, float& X, float& Y);
+		static void GetWindowPositionInPercentagesCentered(bool& Success, float& X, float& Y);
+
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Get Window Position (Percentages)", DeprecatedFunction, DeprecationMessage = "Use GetWindowPositionInPercentagesCentered instead"))
+		static void GetWindowPositiomInPercentagesCentered(bool& Success, float& X, float& Y) { GetWindowPositionInPercentagesCentered(Success, X, Y); }
 
 
 	/**
@@ -2512,7 +2503,10 @@ public:
 	* This will take the window size in account, meaning that X=0.5 and Y=0.5 will cause the window to be centered in the primary screen work area.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Set Window Position (Percentages)"))
-		static void SetWindowPositiomInPercentagesCentered(const float X, const float Y);
+		static void SetWindowPositionInPercentagesCentered(const float X, const float Y);
+
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Set Window Position (Percentages)", DeprecatedFunction, DeprecationMessage = "Use SetWindowPositionInPercentagesCentered instead"))
+		static void SetWindowPositiomInPercentagesCentered(const float X, const float Y) { SetWindowPositionInPercentagesCentered(X, Y); }
 
 
 
@@ -2520,7 +2514,7 @@ public:
 	* Gets the window border size.
 	* Useful for when you want to set the window's position while still showing the border as well.
 	*
-	* Returns Success=false if the window bounds could not be determined, which happends when:
+	* Returns Success=false if the window bounds could not be determined, which happens when:
 	*  - GEngine is null
 	*  - GEngine's GameViewportClient is null
 	*  - GameViewportClient's Window is null
@@ -2535,7 +2529,7 @@ public:
 	* 
 	* If Fullscreen is false then IsFullscreenWindowed will also be false.
 	* 
-	* Returns Success=false, Fullscreen=false and Windowed=false if the window mode could not be determined, which happends when:
+	* Returns Success=false, Fullscreen=false and Windowed=false if the window mode could not be determined, which happens when:
 	*  - GEngine is null
 	*  - GEngine's GameViewportClient is null
 	*  - GameViewportClient's Window is null
@@ -2589,7 +2583,7 @@ public:
 	/**
 	* Retrieves whether world rendering is enabled.
 	* 
-	* Returns Success=false and Enabled=false if the world rendering enabled value could not be determined, which happends when:
+	* Returns Success=false and Enabled=false if the world rendering enabled value could not be determined, which happens when:
 	*  - GEngine is null
 	*  - GEngine's GameViewportClient is null
 	*/

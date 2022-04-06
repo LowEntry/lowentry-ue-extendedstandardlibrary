@@ -84,12 +84,12 @@ void ULowEntryLong::SetLong(const int64 Value)
 
 ULowEntryLong* ULowEntryLong::CreateClone()
 {
-	return ULowEntryLong::Create(Bytes);
+	return Create(Bytes);
 }
 
 ULowEntryDouble* ULowEntryLong::CastToDoubleBytes()
 {
-	return ULowEntryExtendedStandardLibrary::BytesToDoubleBytes(ULowEntryExtendedStandardLibrary::DoubleToBytes((double) GetLong()));
+	return ULowEntryExtendedStandardLibrary::BytesToDoubleBytes(ULowEntryExtendedStandardLibrary::DoubleToBytes(static_cast<double>(GetLong())));
 }
 
 FString ULowEntryLong::CastToString()

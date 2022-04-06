@@ -4,8 +4,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/ObjectMacros.h"
-#include "Textures/SlateIcon.h"
 #include "K2Node.h"
 #include "K2Node_AddPinInterface.h"
 #include "KismetCompilerMisc.h"
@@ -19,8 +17,7 @@ class FKCHandler_LowEntry_MakeContainer : public FNodeHandlingFunctor
 public:
 	FKCHandler_LowEntry_MakeContainer(FKismetCompilerContext& InCompilerContext)
 		: FNodeHandlingFunctor(InCompilerContext)
-	{
-	}
+		, CompiledStatementType(KCST_Nop) { }
 
 	virtual void RegisterNets(FKismetFunctionContext& Context, UEdGraphNode* Node) override;
 	virtual void Compile(FKismetFunctionContext& Context, UEdGraphNode* Node) override;
@@ -40,7 +37,7 @@ class UK2Node_LowEntry_MakeContainer : public UK2Node, public IK2Node_AddPinInte
 	int32 NumInputs;
 
 public:
-	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API virtual void RemoveInputPin(UEdGraphPin* Pin);
+	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API virtual void RemoveInputPin(UEdGraphPin* Pin) override;
 
 	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API UEdGraphPin* GetOutputPin() const;
 
@@ -58,10 +55,10 @@ public:
 	// UK2Node interface
 	virtual bool IsNodePure() const override { return true; }
 	virtual void NotifyPinConnectionListChanged(UEdGraphPin* Pin) override;
-	virtual class FNodeHandlingFunctor* CreateNodeHandler(class FKismetCompilerContext& CompilerContext) const override PURE_VIRTUAL(UK2Node_LowEntry_MakeContainer::CreateNodeHandler, return nullptr;);
+	virtual FNodeHandlingFunctor* CreateNodeHandler(FKismetCompilerContext& CompilerContext) const override PURE_VIRTUAL(UK2Node_LowEntry_MakeContainer::CreateNodeHandler, return nullptr;);
 	virtual void GetMenuActions(FBlueprintActionDatabaseRegistrar& ActionRegistrar) const override;
-	virtual int32 GetNodeRefreshPriority() const override { return EBaseNodeRefreshPriority::Low_UsesDependentWildcard; }
-	virtual void ReallocatePinsDuringReconstruction(TArray<UEdGraphPin*>& OldPins);
+	virtual int32 GetNodeRefreshPriority() const override { return Low_UsesDependentWildcard; }
+	virtual void ReallocatePinsDuringReconstruction(TArray<UEdGraphPin*>& OldPins) override;
 	virtual bool IsConnectionDisallowed(const UEdGraphPin* MyPin, const UEdGraphPin* OtherPin, FString& OutReason) const override;
 	// End of UK2Node interface
 

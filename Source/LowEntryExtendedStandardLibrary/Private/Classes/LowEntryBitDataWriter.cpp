@@ -5,7 +5,7 @@
 #include "LowEntryExtendedStandardLibrary.h"
 
 
-const uint8 ULowEntryBitDataWriter::mask[9] = {((uint8) 0x00), ((uint8) 0x01), ((uint8) 0x03), ((uint8) 0x07), ((uint8) 0x0F), ((uint8) 0x1F), ((uint8) 0x3F), ((uint8) 0x7F), ((uint8) 0xFF)};
+constexpr uint8 ULowEntryBitDataWriter::mask[9] = {static_cast<uint8>(0x00), static_cast<uint8>(0x01), static_cast<uint8>(0x03), static_cast<uint8>(0x07), static_cast<uint8>(0x0F), static_cast<uint8>(0x1F), static_cast<uint8>(0x3F), static_cast<uint8>(0x7F), static_cast<uint8>(0xFF)};
 
 
 // init >>
@@ -190,7 +190,7 @@ void ULowEntryBitDataWriter::AddRawByte(const uint8 Value)
 	{
 		CurrentByte |= (Value << CurrentBytePosition);
 		Bytes.Add(CurrentByte);
-		CurrentByte = (uint8) ((Value >> (8 - CurrentBytePosition)) & mask[CurrentBytePosition]);
+		CurrentByte = static_cast<uint8>((Value >> (8 - CurrentBytePosition)) & mask[CurrentBytePosition]);
 	}
 }
 
@@ -227,7 +227,7 @@ void ULowEntryBitDataWriter::AddPartialRawByte(uint8 Value, int32 Bits)
 		}
 		else
 		{
-			CurrentByte = (uint8) (Value >> (Bits - CurrentBytePosition)); // b is already masked
+			CurrentByte = static_cast<uint8>(Value >> (Bits - CurrentBytePosition)); // b is already masked
 		}
 	}
 }
@@ -254,12 +254,9 @@ TArray<uint8> ULowEntryBitDataWriter::GetBytes()
 	{
 		return Bytes;
 	}
-	else
-	{
-		TArray<uint8> Data = Bytes;
-		Data.Add(CurrentByte);
-		return Data;
-	}
+	TArray<uint8> Data = Bytes;
+	Data.Add(CurrentByte);
+	return Data;
 }
 
 

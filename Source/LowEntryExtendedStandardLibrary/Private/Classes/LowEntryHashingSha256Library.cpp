@@ -3,7 +3,7 @@
 #include "LowEntryHashingSha256Library.h"
 
 
-const int32 ULowEntryHashingSha256Library::k[64] = {((int32) 0x428a2f98), ((int32) 0x71374491), ((int32) 0xb5c0fbcf), ((int32) 0xe9b5dba5), ((int32) 0x3956c25b), ((int32) 0x59f111f1), ((int32) 0x923f82a4), ((int32) 0xab1c5ed5), ((int32) 0xd807aa98), ((int32) 0x12835b01), ((int32) 0x243185be), ((int32) 0x550c7dc3), ((int32) 0x72be5d74), ((int32) 0x80deb1fe), ((int32) 0x9bdc06a7), ((int32) 0xc19bf174), ((int32) 0xe49b69c1), ((int32) 0xefbe4786), ((int32) 0x0fc19dc6), ((int32) 0x240ca1cc), ((int32) 0x2de92c6f), ((int32) 0x4a7484aa), ((int32) 0x5cb0a9dc), ((int32) 0x76f988da), ((int32) 0x983e5152), ((int32) 0xa831c66d), ((int32) 0xb00327c8), ((int32) 0xbf597fc7), ((int32) 0xc6e00bf3), ((int32) 0xd5a79147), ((int32) 0x06ca6351), ((int32) 0x14292967), ((int32) 0x27b70a85), ((int32) 0x2e1b2138), ((int32) 0x4d2c6dfc), ((int32) 0x53380d13), ((int32) 0x650a7354), ((int32) 0x766a0abb), ((int32) 0x81c2c92e), ((int32) 0x92722c85), ((int32) 0xa2bfe8a1), ((int32) 0xa81a664b), ((int32) 0xc24b8b70), ((int32) 0xc76c51a3), ((int32) 0xd192e819), ((int32) 0xd6990624), ((int32) 0xf40e3585), ((int32) 0x106aa070), ((int32) 0x19a4c116), ((int32) 0x1e376c08), ((int32) 0x2748774c), ((int32) 0x34b0bcb5), ((int32) 0x391c0cb3), ((int32) 0x4ed8aa4a), ((int32) 0x5b9cca4f), ((int32) 0x682e6ff3), ((int32) 0x748f82ee), ((int32) 0x78a5636f), ((int32) 0x84c87814), ((int32) 0x8cc70208), ((int32) 0x90befffa), ((int32) 0xa4506ceb), ((int32) 0xbef9a3f7), ((int32) 0xc67178f2)};
+constexpr int32 ULowEntryHashingSha256Library::k[64] = {0x428a2f98, 0x71374491, static_cast<int32>(0xb5c0fbcf), static_cast<int32>(0xe9b5dba5), 0x3956c25b, 0x59f111f1, static_cast<int32>(0x923f82a4), static_cast<int32>(0xab1c5ed5), static_cast<int32>(0xd807aa98), 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, static_cast<int32>(0x80deb1fe), static_cast<int32>(0x9bdc06a7), static_cast<int32>(0xc19bf174), static_cast<int32>(0xe49b69c1), static_cast<int32>(0xefbe4786), 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da, static_cast<int32>(0x983e5152), static_cast<int32>(0xa831c66d), static_cast<int32>(0xb00327c8), static_cast<int32>(0xbf597fc7), static_cast<int32>(0xc6e00bf3), static_cast<int32>(0xd5a79147), 0x06ca6351, 0x14292967, 0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, static_cast<int32>(0x81c2c92e), static_cast<int32>(0x92722c85), static_cast<int32>(0xa2bfe8a1), static_cast<int32>(0xa81a664b), static_cast<int32>(0xc24b8b70), static_cast<int32>(0xc76c51a3), static_cast<int32>(0xd192e819), static_cast<int32>(0xd6990624), static_cast<int32>(0xf40e3585), 0x106aa070, 0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3, 0x748f82ee, 0x78a5636f, static_cast<int32>(0x84c87814), static_cast<int32>(0x8cc70208), static_cast<int32>(0x90befffa), static_cast<int32>(0xa4506ceb), static_cast<int32>(0xbef9a3f7), static_cast<int32>(0xc67178f2)};
 
 
 void ULowEntryHashingSha256Library::initialize()
@@ -55,16 +55,16 @@ TArray<uint8> ULowEntryHashingSha256Library::padBuffer()
 	int32 padding = (n < 56) ? (56 - n) : (120 - n);
 	TArray<uint8> result;
 	result.SetNum(padding + 8);
-	result[0] = (uint8) 0x80;
+	result[0] = static_cast<uint8>(0x80);
 	int64 bits = count << 3;
-	result[padding + 0] = (uint8) (bits >> 56);
-	result[padding + 1] = (uint8) (bits >> 48);
-	result[padding + 2] = (uint8) (bits >> 40);
-	result[padding + 3] = (uint8) (bits >> 32);
-	result[padding + 4] = (uint8) (bits >> 24);
-	result[padding + 5] = (uint8) (bits >> 16);
-	result[padding + 6] = (uint8) (bits >> 8);
-	result[padding + 7] = (uint8) bits;
+	result[padding + 0] = static_cast<uint8>(bits >> 56);
+	result[padding + 1] = static_cast<uint8>(bits >> 48);
+	result[padding + 2] = static_cast<uint8>(bits >> 40);
+	result[padding + 3] = static_cast<uint8>(bits >> 32);
+	result[padding + 4] = static_cast<uint8>(bits >> 24);
+	result[padding + 5] = static_cast<uint8>(bits >> 16);
+	result[padding + 6] = static_cast<uint8>(bits >> 8);
+	result[padding + 7] = static_cast<uint8>(bits);
 	return result;
 }
 
@@ -73,45 +73,45 @@ TArray<uint8> ULowEntryHashingSha256Library::getResult()
 	TArray<uint8> result;
 	result.SetNum(32);
 
-	result[0] = (uint8) (h0 >> 24);
-	result[1] = (uint8) (h0 >> 16);
-	result[2] = (uint8) (h0 >> 8);
-	result[3] = (uint8) (h0);
+	result[0] = static_cast<uint8>(h0 >> 24);
+	result[1] = static_cast<uint8>(h0 >> 16);
+	result[2] = static_cast<uint8>(h0 >> 8);
+	result[3] = static_cast<uint8>(h0);
 
-	result[4] = (uint8) (h1 >> 24);
-	result[5] = (uint8) (h1 >> 16);
-	result[6] = (uint8) (h1 >> 8);
-	result[7] = (uint8) (h1);
+	result[4] = static_cast<uint8>(h1 >> 24);
+	result[5] = static_cast<uint8>(h1 >> 16);
+	result[6] = static_cast<uint8>(h1 >> 8);
+	result[7] = static_cast<uint8>(h1);
 
-	result[8] = (uint8) (h2 >> 24);
-	result[9] = (uint8) (h2 >> 16);
-	result[10] = (uint8) (h2 >> 8);
-	result[11] = (uint8) (h2);
+	result[8] = static_cast<uint8>(h2 >> 24);
+	result[9] = static_cast<uint8>(h2 >> 16);
+	result[10] = static_cast<uint8>(h2 >> 8);
+	result[11] = static_cast<uint8>(h2);
 
-	result[12] = (uint8) (h3 >> 24);
-	result[13] = (uint8) (h3 >> 16);
-	result[14] = (uint8) (h3 >> 8);
-	result[15] = (uint8) (h3);
+	result[12] = static_cast<uint8>(h3 >> 24);
+	result[13] = static_cast<uint8>(h3 >> 16);
+	result[14] = static_cast<uint8>(h3 >> 8);
+	result[15] = static_cast<uint8>(h3);
 
-	result[16] = (uint8) (h4 >> 24);
-	result[17] = (uint8) (h4 >> 16);
-	result[18] = (uint8) (h4 >> 8);
-	result[19] = (uint8) (h4);
+	result[16] = static_cast<uint8>(h4 >> 24);
+	result[17] = static_cast<uint8>(h4 >> 16);
+	result[18] = static_cast<uint8>(h4 >> 8);
+	result[19] = static_cast<uint8>(h4);
 
-	result[20] = (uint8) (h5 >> 24);
-	result[21] = (uint8) (h5 >> 16);
-	result[22] = (uint8) (h5 >> 8);
-	result[23] = (uint8) (h5);
+	result[20] = static_cast<uint8>(h5 >> 24);
+	result[21] = static_cast<uint8>(h5 >> 16);
+	result[22] = static_cast<uint8>(h5 >> 8);
+	result[23] = static_cast<uint8>(h5);
 
-	result[24] = (uint8) (h6 >> 24);
-	result[25] = (uint8) (h6 >> 16);
-	result[26] = (uint8) (h6 >> 8);
-	result[27] = (uint8) (h6);
+	result[24] = static_cast<uint8>(h6 >> 24);
+	result[25] = static_cast<uint8>(h6 >> 16);
+	result[26] = static_cast<uint8>(h6 >> 8);
+	result[27] = static_cast<uint8>(h6);
 
-	result[28] = (uint8) (h7 >> 24);
-	result[29] = (uint8) (h7 >> 16);
-	result[30] = (uint8) (h7 >> 8);
-	result[31] = (uint8) (h7);
+	result[28] = static_cast<uint8>(h7 >> 24);
+	result[29] = static_cast<uint8>(h7 >> 16);
+	result[30] = static_cast<uint8>(h7 >> 8);
+	result[31] = static_cast<uint8>(h7);
 
 	return result;
 }

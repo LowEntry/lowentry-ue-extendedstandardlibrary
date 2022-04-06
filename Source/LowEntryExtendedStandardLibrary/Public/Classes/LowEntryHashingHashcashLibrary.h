@@ -11,8 +11,8 @@
 class ULowEntryHashingHashcashLibrary
 {
 private:
-	const static int32 VERSION = 1;
-	const static int32 MAX_COUNTER = 1048576;
+	constexpr static int32 VERSION = 1;
+	constexpr static int32 MAX_COUNTER = 1048576;
 
 	const static FString DATE_FORMAT_STRING;
 
@@ -30,7 +30,7 @@ public:
 
 
 private:
-	static const TArray<TArray<uint8>> GenerateBase64Cache();
+	static TArray<TArray<uint8>> GenerateBase64Cache();
 	static TArray<uint8> base64WithoutLeadingZeroBytes(const int32 value);
 	static FString getDateString(const FDateTime& date);
 	static FDateTime parseDateString(const FString& date);

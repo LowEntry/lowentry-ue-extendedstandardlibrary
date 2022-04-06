@@ -7,19 +7,14 @@
 
 #include "EdGraph/EdGraphPin.h"
 #include "Engine/Blueprint.h"
-#include "Framework/Commands/UIAction.h"
-#include "Framework/MultiBox/MultiBoxBuilder.h"
 #include "EdGraphSchema_K2.h"
-#include "EdGraph/EdGraphNodeUtils.h"
 #include "Kismet2/BlueprintEditorUtils.h"
 
 #include "Kismet/KismetArrayLibrary.h"
-#include "ScopedTransaction.h"
 #include "EdGraphUtilities.h"
 #include "KismetCompiledFunctionContext.h"
 #include "KismetCompilerMisc.h"
 #include "BlueprintNodeSpawner.h"
-#include "EditorCategoryUtils.h"
 #include "BlueprintActionDatabaseRegistrar.h"
 
 
@@ -32,7 +27,7 @@
 class FKCHandler_LowEntry_PurePrint : public FNodeHandlingFunctor
 {
 public:
-	FKCHandler_LowEntry_PurePrint(FKismetCompilerContext& InCompilerContext) : FNodeHandlingFunctor(InCompilerContext)
+	explicit FKCHandler_LowEntry_PurePrint(FKismetCompilerContext& InCompilerContext) : FNodeHandlingFunctor(InCompilerContext)
 	{
 	}
 
@@ -80,7 +75,7 @@ public:
 		CreatePrintStatement.RHS.Add(*StringInputPinVariable);
 
 
-		if(!true)
+		if constexpr (!true)
 		{
 			GenerateSimpleThenGoto(Context, *Node);
 		}
@@ -127,7 +122,7 @@ bool UK2Node_LowEntry_PurePrint::IsNodePure() const
 
 void UK2Node_LowEntry_PurePrint::AllocateDefaultPins()
 {
-	if(!true)
+	if constexpr (!true)
 	{
 		CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Exec, TEXT(""), nullptr, UEdGraphSchema_K2::PN_Execute);
 		CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Exec, TEXT(""), nullptr, UEdGraphSchema_K2::PN_Then);
@@ -218,7 +213,7 @@ bool UK2Node_LowEntry_PurePrint::IsConnectionDisallowed(const UEdGraphPin* MyPin
 	return false;
 }
 
-void UK2Node_LowEntry_PurePrint::ValidateNodeDuringCompilation(class FCompilerResultsLog& MessageLog) const
+void UK2Node_LowEntry_PurePrint::ValidateNodeDuringCompilation(FCompilerResultsLog& MessageLog) const
 {
 	auto Schema = Cast<const UEdGraphSchema_K2>(GetSchema());
 	auto OutputPin = GetOutputPin();

@@ -3,10 +3,13 @@
 #include "LowEntryBitDataEntry.h"
 
 
-// init >>
-	ULowEntryBitDataEntry::ULowEntryBitDataEntry(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
-	{
-	}
+ULowEntryBitDataEntry::ULowEntryBitDataEntry(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
+	, ByteValue(0)
+	, IntegerValue(0)
+	, LongValue(0)
+	, FloatValue(0)
+	, BooleanValue(false) { }
 
 	ULowEntryBitDataEntry* ULowEntryBitDataEntry::CreateFromBit(const bool Value)
 	{
@@ -208,7 +211,6 @@
 		Instance->SetStringUtf8Array(Value);
 		return Instance;
 	}
-// init <<
 
 
 int32 ULowEntryBitDataEntry::GetBitCount()
@@ -366,12 +368,12 @@ int32 ULowEntryBitDataEntry::GetPositiveInteger3()
 bool ULowEntryBitDataEntry::IsLong()
 {
 	return (Type == 11);
-};
+}
 void ULowEntryBitDataEntry::SetLong(const int64 Value)
 {
 	Type = 11;
 	LongValue = Value;
-};
+}
 int64 ULowEntryBitDataEntry::GetLong()
 {
 	return LongValue;
@@ -599,12 +601,12 @@ TArray<int32> ULowEntryBitDataEntry::GetPositiveInteger3Array()
 bool ULowEntryBitDataEntry::IsLongArray()
 {
 	return (Type == 111);
-};
+}
 void ULowEntryBitDataEntry::SetLongArray(const TArray<int64>& Value)
 {
 	Type = 111;
 	LongArrayValue = Value;
-};
+}
 TArray<int64> ULowEntryBitDataEntry::GetLongArray()
 {
 	return LongArrayValue;

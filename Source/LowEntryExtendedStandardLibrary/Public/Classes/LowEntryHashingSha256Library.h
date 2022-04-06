@@ -10,7 +10,7 @@ class ULowEntryHashingSha256Library
 {
 private:
 	const static int32 k[64];
-	const static int32 BLOCK_SIZE = 64;
+	constexpr static int32 BLOCK_SIZE = 64;
 
 
 private:

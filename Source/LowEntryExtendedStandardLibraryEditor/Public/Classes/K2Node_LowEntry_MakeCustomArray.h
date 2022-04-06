@@ -60,13 +60,13 @@ public:
 	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API virtual FText GetNodeTitle(ENodeTitleType::Type TitleType) const override;
 	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API virtual FText GetTooltipText() const override;
 	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API virtual FSlateIcon GetIconAndTint(FLinearColor& OutColor) const override;
-	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API virtual void ValidateNodeDuringCompilation(class FCompilerResultsLog& MessageLog) const override;
+	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API virtual void ValidateNodeDuringCompilation(FCompilerResultsLog& MessageLog) const override;
 	// End of UEdGraphNode interface
 
 	// UK2Node interface
-	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API virtual void GetNodeContextMenuActions(class UToolMenu* Menu, class UGraphNodeContextMenuContext* Context) const override;
+	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API virtual void GetNodeContextMenuActions(UToolMenu* Menu, UGraphNodeContextMenuContext* Context) const override;
 	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API virtual bool IncludeParentNodeContextMenu() const override { return true; }
-	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API virtual class FNodeHandlingFunctor* CreateNodeHandler(class FKismetCompilerContext& CompilerContext) const override;
+	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API virtual FNodeHandlingFunctor* CreateNodeHandler(FKismetCompilerContext& CompilerContext) const override;
 	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API virtual FText GetMenuCategory() const override;
 	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API virtual FName GetOutputPinName() const override;
 	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API virtual bool IsNodePure() const override;
@@ -74,7 +74,7 @@ public:
 	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API virtual void PostReconstructNode() override;
 	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API virtual void NotifyPinConnectionListChanged(UEdGraphPin* Pin) override;
 	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API virtual void ReallocatePinsDuringReconstruction(TArray<UEdGraphPin*>& OldPins) override;
-	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API virtual int32 GetNodeRefreshPriority() const override { return EBaseNodeRefreshPriority::Normal; }
+	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API virtual int32 GetNodeRefreshPriority() const override { return Normal; }
 	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API virtual bool IsConnectionDisallowed(const UEdGraphPin* MyPin, const UEdGraphPin* OtherPin, FString& OutReason) const override;
 	// UK2Node_MakeContainer interface
 };

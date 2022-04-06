@@ -28,7 +28,7 @@ public:
 	virtual void AllocateDefaultPins() override;
 	virtual void PostReconstructNode() override;
 	virtual FText GetTooltipText() const override;
-	virtual void ValidateNodeDuringCompilation(class FCompilerResultsLog& MessageLog) const override;
+	virtual void ValidateNodeDuringCompilation(FCompilerResultsLog& MessageLog) const override;
 
 	virtual FSlateIcon GetIconAndTint(FLinearColor& OutColor) const override
 	{
@@ -40,11 +40,11 @@ public:
 	// UK2Node interface
 	virtual bool IsNodePure() const override;
 	virtual void NotifyPinConnectionListChanged(UEdGraphPin* Pin) override;
-	virtual class FNodeHandlingFunctor* CreateNodeHandler(class FKismetCompilerContext& CompilerContext) const override;
+	virtual FNodeHandlingFunctor* CreateNodeHandler(FKismetCompilerContext& CompilerContext) const override;
 	virtual bool IsConnectionDisallowed(const UEdGraphPin* MyPin, const UEdGraphPin* OtherPin, FString& OutReason) const override;
 	virtual void GetMenuActions(FBlueprintActionDatabaseRegistrar& ActionRegistrar) const override;
 	virtual FText GetMenuCategory() const override;
-	virtual int32 GetNodeRefreshPriority() const override { return EBaseNodeRefreshPriority::Low_UsesDependentWildcard; }
+	virtual int32 GetNodeRefreshPriority() const override { return Low_UsesDependentWildcard; }
 	// End of UK2Node interface
 
 

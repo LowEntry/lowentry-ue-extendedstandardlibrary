@@ -5,18 +5,13 @@
 #include "EdGraph/EdGraphPin.h"
 #include "Engine/Blueprint.h"
 #include "Framework/Commands/UIAction.h"
-#include "Framework/MultiBox/MultiBoxBuilder.h"
 #include "ToolMenus.h"
-#include "EdGraph/EdGraphNodeUtils.h"
 #include "Kismet2/BlueprintEditorUtils.h"
 
-#include "ScopedTransaction.h"
 #include "EdGraphUtilities.h"
 #include "KismetCompiledFunctionContext.h"
 #include "KismetCompilerMisc.h"
 #include "BlueprintNodeSpawner.h"
-#include "EditorCategoryUtils.h"
-#include "BlueprintActionDatabaseRegistrar.h"
 
 #define LOCTEXT_NAMESPACE "MakeArrayNode"
 
@@ -27,7 +22,7 @@
 class FKCHandler_LowEntry_MakeCustomArray : public FNodeHandlingFunctor
 {
 public:
-	FKCHandler_LowEntry_MakeCustomArray(FKismetCompilerContext& InCompilerContext) : FNodeHandlingFunctor(InCompilerContext)
+	explicit FKCHandler_LowEntry_MakeCustomArray(FKismetCompilerContext& InCompilerContext) : FNodeHandlingFunctor(InCompilerContext)
 	{
 	}
 
@@ -223,7 +218,7 @@ void UK2Node_LowEntry_MakeCustomArray::ReallocatePinsDuringReconstruction(TArray
 	Super::Super::ReallocatePinsDuringReconstruction(OldPins);
 }
 
-void UK2Node_LowEntry_MakeCustomArray::ValidateNodeDuringCompilation(class FCompilerResultsLog& MessageLog) const
+void UK2Node_LowEntry_MakeCustomArray::ValidateNodeDuringCompilation(FCompilerResultsLog& MessageLog) const
 {
 	Super::Super::ValidateNodeDuringCompilation(MessageLog);
 }

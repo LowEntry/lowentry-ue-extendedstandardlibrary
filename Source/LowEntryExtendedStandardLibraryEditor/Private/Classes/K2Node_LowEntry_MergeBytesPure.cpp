@@ -6,11 +6,8 @@
 
 #include "EdGraph/EdGraphPin.h"
 #include "Engine/Blueprint.h"
-#include "Framework/Commands/UIAction.h"
-#include "Framework/MultiBox/MultiBoxBuilder.h"
 #include "ToolMenus.h"
 #include "EdGraphSchema_K2.h"
-#include "EdGraph/EdGraphNodeUtils.h"
 #include "Kismet2/BlueprintEditorUtils.h"
 
 #include "ScopedTransaction.h"
@@ -18,8 +15,6 @@
 #include "KismetCompiledFunctionContext.h"
 #include "KismetCompilerMisc.h"
 #include "BlueprintNodeSpawner.h"
-#include "EditorCategoryUtils.h"
-#include "BlueprintActionDatabaseRegistrar.h"
 
 #define LOCTEXT_NAMESPACE "MakeArrayNode"
 
@@ -37,7 +32,7 @@ UK2Node_LowEntry_MergeBytesPure::UK2Node_LowEntry_MergeBytesPure(const FObjectIn
 class FKCHandler_LowEntry_MergeBytesPure : public FNodeHandlingFunctor
 {
 public:
-	FKCHandler_LowEntry_MergeBytesPure(FKismetCompilerContext& InCompilerContext) : FNodeHandlingFunctor(InCompilerContext)
+	explicit FKCHandler_LowEntry_MergeBytesPure(FKismetCompilerContext& InCompilerContext) : FNodeHandlingFunctor(InCompilerContext)
 	{
 	}
 
@@ -176,7 +171,7 @@ UEdGraphPin* UK2Node_LowEntry_MergeBytesPure::GetPin(const FString& PinName) con
 
 void UK2Node_LowEntry_MergeBytesPure::AllocateDefaultPins()
 {
-	if(!true)
+	if constexpr (!true)
 	{
 		CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Exec, TEXT(""), nullptr, UEdGraphSchema_K2::PN_Execute);
 		CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Exec, TEXT(""), nullptr, UEdGraphSchema_K2::PN_Then);

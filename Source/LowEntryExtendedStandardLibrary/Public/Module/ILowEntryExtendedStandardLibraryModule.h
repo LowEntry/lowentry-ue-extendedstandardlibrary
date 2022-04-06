@@ -15,7 +15,7 @@ public:
 	 *
 	 * @return Returns singleton instance, loading the module on demand if needed
 	 */
-	static inline ILowEntryExtendedStandardLibraryModule& Get()
+	static ILowEntryExtendedStandardLibraryModule& Get()
 	{
 		return FModuleManager::LoadModuleChecked<ILowEntryExtendedStandardLibraryModule>("LowEntryExtendedStandardLibrary");
 	}
@@ -25,7 +25,7 @@ public:
 	 *
 	 * @return True if the module is loaded and ready to use
 	 */
-	static inline bool IsAvailable()
+	static bool IsAvailable()
 	{
 		return FModuleManager::Get().IsModuleLoaded("LowEntryExtendedStandardLibrary");
 	}

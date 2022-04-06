@@ -57,10 +57,10 @@ int32 ULowEntryByteDataReader::MaxElementsRemaining(const int32 MinimumSizePerEl
 
 ULowEntryByteDataReader* ULowEntryByteDataReader::GetClone()
 {
-	return ULowEntryByteDataReader::CreateClone(Bytes, Position);
+	return CreateClone(Bytes, Position);
 }
 
-int32 ULowEntryByteDataReader::ULowEntryByteDataReader::GetPosition()
+int32 ULowEntryByteDataReader::GetPosition()
 {
 	return Position;
 }
@@ -476,7 +476,7 @@ TArray<FString> ULowEntryByteDataReader::GetStringUtf8Array()
 
 int32 ULowEntryByteDataReader::SafeMultiply(const int32 A, const int32 B)
 {
-	int64 Result = (int64) A * (int64) B;
+	int64 Result = static_cast<int64>(A) * static_cast<int64>(B);
 	int32 Max = 2147483647;
 	int32 Min = (-2147483647 - 1);
 	if(Result >= Max)
@@ -487,5 +487,5 @@ int32 ULowEntryByteDataReader::SafeMultiply(const int32 A, const int32 B)
 	{
 		return Min;
 	}
-	return (int32) Result;
+	return static_cast<int32>(Result);
 }

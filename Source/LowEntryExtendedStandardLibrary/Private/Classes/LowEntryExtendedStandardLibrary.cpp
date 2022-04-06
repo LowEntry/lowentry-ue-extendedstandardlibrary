@@ -48,6 +48,13 @@
 #include "GenericPlatform/GenericApplication.h"
 
 #include "GameMapsSettings.h"
+#include "IImageWrapperModule.h"
+#include "Components/SceneCaptureComponent2D.h"
+#include "Engine/TextureRenderTarget2D.h"
+
+#include "Engine/GameViewportClient.h"
+#include "Engine/Engine.h"
+#include "Widgets/SViewport.h"
 
 
 // init >>
@@ -66,7 +73,7 @@ void ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(UObject* W
 		WorldContextObject = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::ReturnNull);
 		if(WorldContextObject)
 		{
-			UWorld *World = WorldContextObject->GetWorld();
+			UWorld* World = WorldContextObject->GetWorld();
 			if(World->WorldType == EWorldType::PIE)
 			{
 				switch(World->GetNetMode())
@@ -77,6 +84,8 @@ void ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(UObject* W
 					case NM_DedicatedServer:
 					case NM_ListenServer:
 						Prefix = FString::Printf(TEXT("Server: "));
+						break;
+					default: 
 						break;
 				}
 			}
@@ -100,7 +109,7 @@ void ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(UObject* W
 		{
 			if(GEngine != nullptr)
 			{
-				GEngine->AddOnScreenDebugMessage((uint64) -1, ScreenDurationTime, TextColor.ToFColor(true), FinalString);
+				GEngine->AddOnScreenDebugMessage(INDEX_NONE, ScreenDurationTime, TextColor.ToFColor(true), FinalString);
 			}
 		}
 	}
@@ -389,7 +398,7 @@ void ULowEntryExtendedStandardLibrary::GetCurrentVolumePercentage(float& Percent
 {
 #if PLATFORM_ANDROID
 	Success = true;
-	Percentage = (FAndroidMisc::GetVolumeState(NULL) / 15.0f);
+	Percentage = (FAndroidMisc::GetVolumeState(nullptr) / 15.0f);
 #else
 	Success = false;
 	Percentage = 0;
@@ -401,7 +410,7 @@ void ULowEntryExtendedStandardLibrary::GetCurrentVolumePercentage(float& Percent
 void ULowEntryExtendedStandardLibrary::GetAndroidVolume(int& Volume)
 {
 #if PLATFORM_ANDROID
-	Volume = FAndroidMisc::GetVolumeState(NULL);
+	Volume = FAndroidMisc::GetVolumeState(nullptr);
 #else
 	Volume = 0;
 #endif
@@ -524,14 +533,14 @@ void ULowEntryExtendedStandardLibrary::GetMaximumVolume(int32& Volume, bool& Suc
 
 void ULowEntryExtendedStandardLibrary::CreateObject(TSubclassOf<UObject> Class, UObject*& Object)
 {
-	Object = NewObject<UObject>((UObject*) GetTransientPackage(), Class);
+	Object = NewObject<UObject>(GetTransientPackage(), Class);
 }
 
 
 
 void ULowEntryExtendedStandardLibrary::GetGenericTeamId(AActor* Target, uint8& TeamID)
 {
-	IGenericTeamAgentInterface* TeamAgentInterface = NULL;
+	IGenericTeamAgentInterface* TeamAgentInterface = nullptr;
 	if(Target != nullptr)
 	{
 		TeamAgentInterface = Cast<IGenericTeamAgentInterface>(Target);
@@ -832,7 +841,7 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::StringToBytesUtf8(const FString&
 
 	TArray<uint8> ByteArray;
 	FTCHARToUTF8 Src = FTCHARToUTF8(String.GetCharArray().GetData());
-	ByteArray.Append((uint8*) Src.Get(), Src.Length());
+	ByteArray.Append((uint8*)Src.Get(), Src.Length());
 	return ByteArray;
 }
 
@@ -858,7 +867,7 @@ FString ULowEntryExtendedStandardLibrary::BytesToStringUtf8(const TArray<uint8>&
 	}
 
 	FString String = TEXT("");
-	FUTF8ToTCHAR Src = FUTF8ToTCHAR((const ANSICHAR*) (ByteArray.GetData() + Index), Length);
+	FUTF8ToTCHAR Src = FUTF8ToTCHAR(reinterpret_cast<const ANSICHAR*>(ByteArray.GetData() + Index), Length);
 	String.AppendChars(Src.Get(), Src.Length());
 	return String;
 }
@@ -942,7 +951,7 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::HexToBytes(const FString& Hex)
 
 	for(const TCHAR c : String)
 	{
-		if(!::CheckTCharIsHex(c))
+		if(!CheckTCharIsHex(c))
 		{
 			return TArray<uint8>();
 		}
@@ -1019,7 +1028,7 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::BinaryToBytes(const FString& Bin
 			{
 				continue;
 			}
-			else if(String[i + j] == '1')
+			if(String[i + j] == '1')
 			{
 				b += (1 << (7 - j));
 			}
@@ -1103,7 +1112,7 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::BitStringToBytes(const FString& 
 			{
 				continue;
 			}
-			else if(String[i + j] == '1')
+			if(String[i + j] == '1')
 			{
 				b += (1 << j);
 			}
@@ -1210,10 +1219,7 @@ uint8 ULowEntryExtendedStandardLibrary::BooleanToByte(const bool Value)
 	{
 		return 0x01;
 	}
-	else
-	{
-		return 0x00;
-	}
+	return 0x00;
 }
 
 bool ULowEntryExtendedStandardLibrary::ByteToBoolean(const uint8 Byte)
@@ -1308,33 +1314,33 @@ int64 ULowEntryExtendedStandardLibrary::BytesToLong(const TArray<uint8>& ByteArr
 
 	if(Length <= 1)
 	{
-		return ((int64) ByteArray[Index + 0]);
+		return ByteArray[Index + 0];
 	}
 	if(Length <= 2)
 	{
-		return (((int64) ByteArray[Index + 0]) << 8) | ((int64) ByteArray[Index + 1]);
+		return (static_cast<int64>(ByteArray[Index + 0]) << 8) | static_cast<int64>(ByteArray[Index + 1]);
 	}
 	if(Length <= 3)
 	{
-		return (((int64) ByteArray[Index + 0]) << 16) | (((int64) ByteArray[Index + 1]) << 8) | ((int64) ByteArray[Index + 2]);
+		return (static_cast<int64>(ByteArray[Index + 0]) << 16) | (static_cast<int64>(ByteArray[Index + 1]) << 8) | static_cast<int64>(ByteArray[Index + 2]);
 	}
 	if(Length <= 4)
 	{
-		return (((int64) ByteArray[Index + 0]) << 24) | (((int64) ByteArray[Index + 1]) << 16) | (((int64) ByteArray[Index + 2]) << 8) | ((int64) ByteArray[Index + 3]);
+		return (static_cast<int64>(ByteArray[Index + 0]) << 24) | (static_cast<int64>(ByteArray[Index + 1]) << 16) | (static_cast<int64>(ByteArray[Index + 2]) << 8) | static_cast<int64>(ByteArray[Index + 3]);
 	}
 	if(Length <= 5)
 	{
-		return (((int64) ByteArray[Index + 0]) << 32) | (((int64) ByteArray[Index + 1]) << 24) | (((int64) ByteArray[Index + 2]) << 16) | (((int64) ByteArray[Index + 3]) << 8) | ((int64) ByteArray[Index + 4]);
+		return (static_cast<int64>(ByteArray[Index + 0]) << 32) | (static_cast<int64>(ByteArray[Index + 1]) << 24) | (static_cast<int64>(ByteArray[Index + 2]) << 16) | (static_cast<int64>(ByteArray[Index + 3]) << 8) | static_cast<int64>(ByteArray[Index + 4]);
 	}
 	if(Length <= 6)
 	{
-		return (((int64) ByteArray[Index + 0]) << 40) | (((int64) ByteArray[Index + 1]) << 32) | (((int64) ByteArray[Index + 2]) << 24) | (((int64) ByteArray[Index + 3]) << 16) | (((int64) ByteArray[Index + 4]) << 8) | ((int64) ByteArray[Index + 5]);
+		return (static_cast<int64>(ByteArray[Index + 0]) << 40) | (static_cast<int64>(ByteArray[Index + 1]) << 32) | (static_cast<int64>(ByteArray[Index + 2]) << 24) | (static_cast<int64>(ByteArray[Index + 3]) << 16) | (static_cast<int64>(ByteArray[Index + 4]) << 8) | static_cast<int64>(ByteArray[Index + 5]);
 	}
 	if(Length <= 7)
 	{
-		return (((int64) ByteArray[Index + 0]) << 48) | (((int64) ByteArray[Index + 1]) << 40) | (((int64) ByteArray[Index + 2]) << 32) | (((int64) ByteArray[Index + 3]) << 24) | (((int64) ByteArray[Index + 4]) << 16) | (((int64) ByteArray[Index + 5]) << 8) | ((int64) ByteArray[Index + 6]);
+		return (static_cast<int64>(ByteArray[Index + 0]) << 48) | (static_cast<int64>(ByteArray[Index + 1]) << 40) | (static_cast<int64>(ByteArray[Index + 2]) << 32) | (static_cast<int64>(ByteArray[Index + 3]) << 24) | (static_cast<int64>(ByteArray[Index + 4]) << 16) | (static_cast<int64>(ByteArray[Index + 5]) << 8) | static_cast<int64>(ByteArray[Index + 6]);
 	}
-	return (((int64) ByteArray[Index + 0]) << 56) | (((int64) ByteArray[Index + 1]) << 48) | (((int64) ByteArray[Index + 2]) << 40) | (((int64) ByteArray[Index + 3]) << 32) | (((int64) ByteArray[Index + 4]) << 24) | (((int64) ByteArray[Index + 5]) << 16) | (((int64) ByteArray[Index + 6]) << 8) | ((int64) ByteArray[Index + 7]);
+	return (static_cast<int64>(ByteArray[Index + 0]) << 56) | (static_cast<int64>(ByteArray[Index + 1]) << 48) | (static_cast<int64>(ByteArray[Index + 2]) << 40) | (static_cast<int64>(ByteArray[Index + 3]) << 32) | (static_cast<int64>(ByteArray[Index + 4]) << 24) | (static_cast<int64>(ByteArray[Index + 5]) << 16) | (static_cast<int64>(ByteArray[Index + 6]) << 8) | static_cast<int64>(ByteArray[Index + 7]);
 }
 
 ULowEntryLong* ULowEntryExtendedStandardLibrary::BytesToLongBytes(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
@@ -1349,33 +1355,33 @@ int64 ULowEntryExtendedStandardLibrary::ParseStringIntoLong(const FString& Strin
 
 ULowEntryLong* ULowEntryExtendedStandardLibrary::ParseStringIntoLongBytes(const FString& String)
 {
-	return ULowEntryExtendedStandardLibrary::BytesToLongBytes(ULowEntryExtendedStandardLibrary::LongToBytes(FCString::Atoi64(*String)));
+	return BytesToLongBytes(LongToBytes(FCString::Atoi64(*String)));
 }
 
 
 TArray<uint8> ULowEntryExtendedStandardLibrary::FloatToBytes(const float Value)
 {
 	int32 IntValue = *((int32*) (&Value));
-	return ULowEntryExtendedStandardLibrary::IntegerToBytes(IntValue);
+	return IntegerToBytes(IntValue);
 }
 
 float ULowEntryExtendedStandardLibrary::BytesToFloat(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
 {
-	int32 IntValue = ULowEntryExtendedStandardLibrary::BytesToInteger(ByteArray, Index, Length);
-	return *((float*) (&IntValue));
+	int32 IntValue = BytesToInteger(ByteArray, Index, Length);
+	return *reinterpret_cast<float*>(&IntValue);
 }
 
 
 TArray<uint8> ULowEntryExtendedStandardLibrary::DoubleToBytes(const double Value)
 {
 	int64 LongValue = *((int64*) (&Value));
-	return ULowEntryExtendedStandardLibrary::LongToBytes(LongValue);
+	return LongToBytes(LongValue);
 }
 
 double ULowEntryExtendedStandardLibrary::BytesToDouble(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
 {
-	int64 LongValue = ULowEntryExtendedStandardLibrary::BytesToLong(ByteArray, Index, Length);
-	return *((double*) (&LongValue));
+	int64 LongValue = BytesToLong(ByteArray, Index, Length);
+	return *reinterpret_cast<double*>(&LongValue);
 }
 
 ULowEntryDouble* ULowEntryExtendedStandardLibrary::BytesToDoubleBytes(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
@@ -1385,7 +1391,7 @@ ULowEntryDouble* ULowEntryExtendedStandardLibrary::BytesToDoubleBytes(const TArr
 
 ULowEntryDouble* ULowEntryExtendedStandardLibrary::ParseStringIntoDoubleBytes(const FString& String)
 {
-	return ULowEntryExtendedStandardLibrary::BytesToDoubleBytes(ULowEntryExtendedStandardLibrary::DoubleToBytes(FCString::Atod(*String)));
+	return BytesToDoubleBytes(DoubleToBytes(FCString::Atod(*String)));
 }
 
 
@@ -1484,10 +1490,7 @@ uint8 ULowEntryExtendedStandardLibrary::GetByteWithBitSet(const uint8 Byte, cons
 	{
 		return Byte | (1 << (Bit - 1));
 	}
-	else
-	{
-		return Byte & ~(1 << (Bit - 1));
-	}
+	return Byte & ~(1 << (Bit - 1));
 }
 
 
@@ -1496,7 +1499,7 @@ UTexture2D* ULowEntryExtendedStandardLibrary::BytesToImage(const TArray<uint8>& 
 {
 	if(ByteArray.Num() <= 0)
 	{
-		return NULL;
+		return nullptr;
 	}
 	if(Index < 0)
 	{
@@ -1509,28 +1512,28 @@ UTexture2D* ULowEntryExtendedStandardLibrary::BytesToImage(const TArray<uint8>& 
 	}
 	if(Length <= 0)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	IImageWrapperModule* ImageWrapperModule = FModuleManager::LoadModulePtr<IImageWrapperModule>("ImageWrapper");
 	if(ImageWrapperModule == nullptr)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	TSharedPtr<IImageWrapper> ImageWrapper = ImageWrapperModule->CreateImageWrapper(ELowEntryImageFormatToUE4(ImageFormat));
 	if(!ImageWrapper.IsValid() || !ImageWrapper->SetCompressed(ByteArray.GetData() + Index, Length))
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	TArray<uint8> Uncompressed;
 	if(!ImageWrapper->GetRaw(ERGBFormat::BGRA, 8, Uncompressed))
 	{
-		return NULL;
+		return nullptr;
 	}
 
-	return ULowEntryExtendedStandardLibrary::DataToTexture2D(ImageWrapper->GetWidth(), ImageWrapper->GetHeight(), Uncompressed.GetData(), Uncompressed.Num());
+	return DataToTexture2D(ImageWrapper->GetWidth(), ImageWrapper->GetHeight(), Uncompressed.GetData(), Uncompressed.Num());
 }
 
 UTexture2D* ULowEntryExtendedStandardLibrary::BytesToExistingImage(bool& ReusedGivenTexture2D, UTexture2D* Texture2D, const TArray<uint8>& ByteArray, const ELowEntryImageFormat ImageFormat, int32 Index, int32 Length)
@@ -1539,7 +1542,7 @@ UTexture2D* ULowEntryExtendedStandardLibrary::BytesToExistingImage(bool& ReusedG
 	if(ByteArray.Num() <= 0)
 	{
 		ReusedGivenTexture2D = (Texture2D == nullptr);
-		return NULL;
+		return nullptr;
 	}
 	if(Index < 0)
 	{
@@ -1553,31 +1556,31 @@ UTexture2D* ULowEntryExtendedStandardLibrary::BytesToExistingImage(bool& ReusedG
 	if(Length <= 0)
 	{
 		ReusedGivenTexture2D = (Texture2D == nullptr);
-		return NULL;
+		return nullptr;
 	}
 
 	IImageWrapperModule* ImageWrapperModule = FModuleManager::LoadModulePtr<IImageWrapperModule>("ImageWrapper");
 	if(ImageWrapperModule == nullptr)
 	{
 		ReusedGivenTexture2D = (Texture2D == nullptr);
-		return NULL;
+		return nullptr;
 	}
 
 	TSharedPtr<IImageWrapper> ImageWrapper = ImageWrapperModule->CreateImageWrapper(ELowEntryImageFormatToUE4(ImageFormat));
 	if(!ImageWrapper.IsValid() || !ImageWrapper->SetCompressed(ByteArray.GetData() + Index, Length))
 	{
 		ReusedGivenTexture2D = (Texture2D == nullptr);
-		return NULL;
+		return nullptr;
 	}
 
 	TArray<uint8> Uncompressed;
 	if(!ImageWrapper->GetRaw(ERGBFormat::BGRA, 8, Uncompressed))
 	{
 		ReusedGivenTexture2D = (Texture2D == nullptr);
-		return NULL;
+		return nullptr;
 	}
 
-	UTexture2D* NewTexture2D = ULowEntryExtendedStandardLibrary::DataToExistingTexture2D(Texture2D, ImageWrapper->GetWidth(), ImageWrapper->GetHeight(), Uncompressed.GetData(), Uncompressed.Num());
+	UTexture2D* NewTexture2D = DataToExistingTexture2D(Texture2D, ImageWrapper->GetWidth(), ImageWrapper->GetHeight(), Uncompressed.GetData(), Uncompressed.Num());
 	ReusedGivenTexture2D = (Texture2D == NewTexture2D);
 	return NewTexture2D;
 }
@@ -1775,7 +1778,7 @@ void ULowEntryExtendedStandardLibrary::PixelsToBytes(const int32 Width, const in
 		TArray<uint8> MutablePixels;
 		for(int32 i = 0; i < Total; i++)
 		{
-			MutablePixels.Add((uint8) FMath::RoundToDouble((0.2125 * Pixels[i].R) + (0.7154 * Pixels[i].G) + (0.0721 * Pixels[i].B)));
+			MutablePixels.Add(static_cast<uint8>(FMath::RoundToDouble((0.2125 * Pixels[i].R) + (0.7154 * Pixels[i].G) + (0.0721 * Pixels[i].B))));
 		}
 
 		IImageWrapperModule& ImageWrapperModule = FModuleManager::LoadModuleChecked<IImageWrapperModule>(FName("ImageWrapper"));
@@ -1811,7 +1814,7 @@ void ULowEntryExtendedStandardLibrary::PixelsToBytes(const int32 Width, const in
 
 FColor ULowEntryExtendedStandardLibrary::GrayscalePixel(const FColor& Pixel)
 {
-	uint8 Gray = (uint8)FMath::RoundToDouble((0.2125 * Pixel.R) + (0.7154 * Pixel.G) + (0.0721 * Pixel.B));
+	uint8 Gray = static_cast<uint8>(FMath::RoundToDouble((0.2125 * Pixel.R) + (0.7154 * Pixel.G) + (0.0721 * Pixel.B)));
 	return FColor(Gray, Gray, Gray, Pixel.A);
 }
 
@@ -1909,9 +1912,9 @@ UTexture2D* ULowEntryExtendedStandardLibrary::PixelsToTexture2D(const int32 Widt
 {
 	if((Pixels.Num() <= 0) || (Width <= 0) || (Height <= 0))
 	{
-		return NULL;
+		return nullptr;
 	}
-	return ULowEntryExtendedStandardLibrary::DataToTexture2D(Width, Height, &Pixels[0], Pixels.Num() * sizeof(FColor));
+	return DataToTexture2D(Width, Height, &Pixels[0], Pixels.Num() * sizeof(FColor));
 }
 
 UTexture2D* ULowEntryExtendedStandardLibrary::PixelsToExistingTexture2D(bool& ReusedGivenTexture2D, UTexture2D* Texture2D, const int32 Width, const int32 Height, const TArray<FColor>& Pixels)
@@ -1920,9 +1923,9 @@ UTexture2D* ULowEntryExtendedStandardLibrary::PixelsToExistingTexture2D(bool& Re
 	if((Pixels.Num() <= 0) || (Width <= 0) || (Height <= 0))
 	{
 		ReusedGivenTexture2D = (Texture2D == nullptr);
-		return NULL;
+		return nullptr;
 	}
-	UTexture2D* NewTexture2D = ULowEntryExtendedStandardLibrary::DataToExistingTexture2D(Texture2D, Width, Height, &Pixels[0], Pixels.Num() * sizeof(FColor));
+	UTexture2D* NewTexture2D = DataToExistingTexture2D(Texture2D, Width, Height, &Pixels[0], Pixels.Num() * sizeof(FColor));
 	ReusedGivenTexture2D = (Texture2D == NewTexture2D);
 	return NewTexture2D;
 }
@@ -1931,10 +1934,10 @@ UTexture2D* ULowEntryExtendedStandardLibrary::PixelsToExistingTexture2D(bool& Re
 
 UTexture2D* ULowEntryExtendedStandardLibrary::DataToTexture2D(int32 Width, int32 Height, const void* Src, SIZE_T Count)
 {
-	UTexture2D* Texture2D = UTexture2D::CreateTransient(Width, Height, EPixelFormat::PF_B8G8R8A8);
+	UTexture2D* Texture2D = UTexture2D::CreateTransient(Width, Height, PF_B8G8R8A8);
 	if(Texture2D == nullptr)
 	{
-		return NULL;
+		return nullptr;
 	}
 	Texture2D->bNoTiling = true;
 
@@ -1952,13 +1955,13 @@ UTexture2D* ULowEntryExtendedStandardLibrary::DataToTexture2D(int32 Width, int32
 
 UTexture2D* ULowEntryExtendedStandardLibrary::DataToExistingTexture2D(UTexture2D* Texture2D, int32 Width, int32 Height, const void* Src, SIZE_T Count)
 {
-	if((Texture2D == nullptr) || (Texture2D->GetSizeX() != Width) || (Texture2D->GetSizeY() != Height) || (Texture2D->GetPixelFormat() != EPixelFormat::PF_B8G8R8A8))
+	if((Texture2D == nullptr) || (Texture2D->GetSizeX() != Width) || (Texture2D->GetSizeY() != Height) || (Texture2D->GetPixelFormat() != PF_B8G8R8A8))
 	{
-		Texture2D = UTexture2D::CreateTransient(Width, Height, EPixelFormat::PF_B8G8R8A8);
+		Texture2D = UTexture2D::CreateTransient(Width, Height, PF_B8G8R8A8);
 	}
 	if(Texture2D == nullptr)
 	{
-		return NULL;
+		return nullptr;
 	}
 	Texture2D->bNoTiling = true;
 
@@ -2093,8 +2096,8 @@ void ULowEntryExtendedStandardLibrary::TextureRenderTarget2DToPixels(UTextureRen
 void ULowEntryExtendedStandardLibrary::LoadVideo(UMediaSoundComponent* MediaSoundComponent, const FString& Url, bool& Success, UMediaPlayer*& Player, UMediaTexture*& Texture, const bool PlayOnOpen, const bool Loop)
 {
 	Success = false;
-	Player = NULL;
-	Texture = NULL;
+	Player = nullptr;
+	Texture = nullptr;
 
 	UMediaPlayer* LoadPlayer = NewObject<UMediaPlayer>();
 	if(!LoadPlayer->OpenUrl(Url))
@@ -2174,7 +2177,7 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::Md5(const TArray<uint8>& ByteArr
 	if(Length > 0)
 	{
 		const uint8* Bytes = ByteArray.GetData();
-		Hasher.Update((uint8*) Bytes + Index, Length);
+		Hasher.Update(const_cast<uint8*>(Bytes) + Index, Length);
 	}
 
 	uint8 DigestBytes[16];
@@ -2200,7 +2203,7 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::Sha1(const TArray<uint8>& ByteAr
 	if(Length > 0)
 	{
 		const uint8* Bytes = ByteArray.GetData();
-		Hasher.Update((uint8*) Bytes + Index, Length);
+		Hasher.Update(const_cast<uint8*>(Bytes) + Index, Length);
 	}
 
 	uint8 DigestBytes[FSHA1::DigestSize];
@@ -2293,16 +2296,12 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::HMAC_Hash(const TArray<uint8>& A
 	{
 		case ELowEntryHmacAlgorithm::MD5:
 			return Md5(Array);
-			break;
 		case ELowEntryHmacAlgorithm::SHA1:
 			return Sha1(Array);
-			break;
 		case ELowEntryHmacAlgorithm::SHA256:
 			return Sha256(Array);
-			break;
 		case ELowEntryHmacAlgorithm::SHA512:
 			return Sha512(Array);
-			break;
 		default:
 			UE_LOG(LogBlueprintUserMessages, Error, TEXT("Unsupported HMAC Algorithm, falls back to SHA-256"));
 			return Sha256(Array);// defaults to SHA-256
@@ -2382,10 +2381,7 @@ FString ULowEntryExtendedStandardLibrary::MinString(FString A, FString B)
 	{
 		return B;
 	}
-	else
-	{
-		return A;
-	}
+	return A;
 }
 
 FString ULowEntryExtendedStandardLibrary::MaxString(FString A, FString B)
@@ -2394,10 +2390,7 @@ FString ULowEntryExtendedStandardLibrary::MaxString(FString A, FString B)
 	{
 		return A;
 	}
-	else
-	{
-		return B;
-	}
+	return B;
 }
 
 bool ULowEntryExtendedStandardLibrary::LessStringString(const FString& A, const FString& B)
@@ -2562,7 +2555,7 @@ float ULowEntryExtendedStandardLibrary::RoundDecimals(float Number, int32 Decima
 		{
 			Multiplier *= 10;
 		}
-		float MultiplierFloat = (float) Multiplier;
+		float MultiplierFloat = static_cast<float>(Multiplier);
 		return FMath::RoundToFloat(Number * MultiplierFloat) / MultiplierFloat;
 	}
 	if(Decimals < 0)
@@ -2572,7 +2565,7 @@ float ULowEntryExtendedStandardLibrary::RoundDecimals(float Number, int32 Decima
 		{
 			Divider *= 10;
 		}
-		float DividerFloat = (float) Divider;
+		float DividerFloat = static_cast<float>(Divider);
 		return FMath::RoundToFloat(Number / DividerFloat) * DividerFloat;
 	}
 	return FMath::RoundToFloat(Number);
@@ -2591,7 +2584,7 @@ float ULowEntryExtendedStandardLibrary::CeilDecimals(float Number, int32 Decimal
 		{
 			Multiplier *= 10;
 		}
-		float MultiplierFloat = (float) Multiplier;
+		float MultiplierFloat = static_cast<float>(Multiplier);
 		return FMath::CeilToFloat(Number * MultiplierFloat) / MultiplierFloat;
 	}
 	if(Decimals < 0)
@@ -2601,7 +2594,7 @@ float ULowEntryExtendedStandardLibrary::CeilDecimals(float Number, int32 Decimal
 		{
 			Divider *= 10;
 		}
-		float DividerFloat = (float) Divider;
+		float DividerFloat = static_cast<float>(Divider);
 		return FMath::CeilToFloat(Number / DividerFloat) * DividerFloat;
 	}
 	return FMath::CeilToFloat(Number);
@@ -2620,7 +2613,7 @@ float ULowEntryExtendedStandardLibrary::FloorDecimals(float Number, int32 Decima
 		{
 			Multiplier *= 10;
 		}
-		float MultiplierFloat = (float) Multiplier;
+		float MultiplierFloat = static_cast<float>(Multiplier);
 		return FMath::FloorToFloat(Number * MultiplierFloat) / MultiplierFloat;
 	}
 	if(Decimals < 0)
@@ -2630,7 +2623,7 @@ float ULowEntryExtendedStandardLibrary::FloorDecimals(float Number, int32 Decima
 		{
 			Divider *= 10;
 		}
-		float DividerFloat = (float) Divider;
+		float DividerFloat = static_cast<float>(Divider);
 		return FMath::FloorToFloat(Number / DividerFloat) * DividerFloat;
 	}
 	return FMath::FloorToFloat(Number);
@@ -2683,7 +2676,7 @@ void ULowEntryExtendedStandardLibrary::DateTime_ToString(const FDateTime& DateTi
 void ULowEntryExtendedStandardLibrary::DateTime_ToUnixTimestamp(const FDateTime& DateTime, ULowEntryLong*& Timestamp)
 {
 	FTimespan Time = DateTime - FDateTime::FromUnixTimestamp(0);
-	Timestamp = ULowEntryLong::Create(ULowEntryExtendedStandardLibrary::LongToBytes((int64) Time.GetTotalMilliseconds()));
+	Timestamp = ULowEntryLong::Create(LongToBytes(static_cast<int64>(Time.GetTotalMilliseconds())));
 
 	// ignores milliseconds:
 	//  Timestamp = ULowEntryLong::Create(ULowEntryExtendedStandardLibrary::LongToBytes(DateTime.ToUnixTimestamp() * 1000));
@@ -2697,7 +2690,7 @@ void ULowEntryExtendedStandardLibrary::DateTime_FromUnixTimestamp(ULowEntryLong*
 	}
 	else
 	{
-		int64 Millis = ULowEntryExtendedStandardLibrary::BytesToLong(Timestamp->GetBytes());
+		int64 Millis = BytesToLong(Timestamp->GetBytes());
 		DateTime = FDateTime::FromUnixTimestamp(0) + FTimespan(Millis * (ETimespan::TicksPerSecond / 1000));
 
 		//ignored milliseconds:
@@ -3006,7 +2999,7 @@ void ULowEntryExtendedStandardLibrary::RandomDelay(UObject* WorldContextObject, 
 	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
 	{
 		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
-		if(LatentActionManager.FindExistingAction<FDelayAction>(LatentInfo.CallbackTarget, LatentInfo.UUID) == NULL)
+		if(LatentActionManager.FindExistingAction<FDelayAction>(LatentInfo.CallbackTarget, LatentInfo.UUID) == nullptr)
 		{
 			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FDelayAction(FMath::FRandRange(MinDuration, MaxDuration), LatentInfo));
 		}
@@ -3019,7 +3012,7 @@ void ULowEntryExtendedStandardLibrary::RetriggerableRandomDelay(UObject* WorldCo
 	{
 		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
 		FDelayAction* Action = LatentActionManager.FindExistingAction<FDelayAction>(LatentInfo.CallbackTarget, LatentInfo.UUID);
-		if(Action == NULL)
+		if(Action == nullptr)
 		{
 			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FDelayAction(FMath::FRandRange(MinDuration, MaxDuration), LatentInfo));
 		}
@@ -3037,7 +3030,7 @@ void ULowEntryExtendedStandardLibrary::DelayFrames(UObject* WorldContextObject, 
 	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
 	{
 		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
-		if(LatentActionManager.FindExistingAction<FLowEntryDelayFramesAction>(LatentInfo.CallbackTarget, LatentInfo.UUID) == NULL)
+		if(LatentActionManager.FindExistingAction<FLowEntryDelayFramesAction>(LatentInfo.CallbackTarget, LatentInfo.UUID) == nullptr)
 		{
 			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FLowEntryDelayFramesAction(Frames, LatentInfo));
 		}
@@ -3050,7 +3043,7 @@ void ULowEntryExtendedStandardLibrary::RetriggerableDelayFrames(UObject* WorldCo
 	{
 		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
 		FLowEntryDelayFramesAction* Action = LatentActionManager.FindExistingAction<FLowEntryDelayFramesAction>(LatentInfo.CallbackTarget, LatentInfo.UUID);
-		if(Action == NULL)
+		if(Action == nullptr)
 		{
 			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FLowEntryDelayFramesAction(Frames, LatentInfo));
 		}
@@ -3066,7 +3059,7 @@ void ULowEntryExtendedStandardLibrary::RandomDelayFrames(UObject* WorldContextOb
 	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
 	{
 		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
-		if(LatentActionManager.FindExistingAction<FLowEntryDelayFramesAction>(LatentInfo.CallbackTarget, LatentInfo.UUID) == NULL)
+		if(LatentActionManager.FindExistingAction<FLowEntryDelayFramesAction>(LatentInfo.CallbackTarget, LatentInfo.UUID) == nullptr)
 		{
 			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FLowEntryDelayFramesAction(FMath::RandRange(MinFrames, MaxFrames), LatentInfo));
 		}
@@ -3079,7 +3072,7 @@ void ULowEntryExtendedStandardLibrary::RetriggerableRandomDelayFrames(UObject* W
 	{
 		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
 		FLowEntryDelayFramesAction* Action = LatentActionManager.FindExistingAction<FLowEntryDelayFramesAction>(LatentInfo.CallbackTarget, LatentInfo.UUID);
-		if(Action == NULL)
+		if(Action == nullptr)
 		{
 			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FLowEntryDelayFramesAction(FMath::RandRange(MinFrames, MaxFrames), LatentInfo));
 		}
@@ -3098,7 +3091,7 @@ void ULowEntryExtendedStandardLibrary::QueueExecutions(UObject* WorldContextObje
 	{
 		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
 		FLowEntryExecutionQueueAction* Action = LatentActionManager.FindExistingAction<FLowEntryExecutionQueueAction>(LatentInfo.CallbackTarget, LatentInfo.UUID);
-		if(Action == NULL)
+		if(Action == nullptr)
 		{
 			Queue = ULowEntryExecutionQueue::Create(1, true);
 			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FLowEntryExecutionQueueAction(Queue, LatentInfo));
@@ -3366,36 +3359,36 @@ void ULowEntryExtendedStandardLibrary::Crash()
 
 
 
-void ULowEntryExtendedStandardLibrary::HostGame(UObject* WorldContextObject, const FString& Map, const FString& Args, APlayerController* Player)
+void ULowEntryExtendedStandardLibrary::HostGame(UObject* WorldContextObject, const FString& Map, const FString& Args, APlayerController* SpecificPlayer)
 {
-	APlayerController* TargetPC = Player ? Player : UGameplayStatics::GetPlayerController(WorldContextObject, 0);
+	APlayerController* TargetPC = SpecificPlayer ? SpecificPlayer : UGameplayStatics::GetPlayerController(WorldContextObject, 0);
 	if(TargetPC)
 	{
 		TargetPC->ConsoleCommand(TEXT("open ") + Map + TEXT("?listen") + Args, true);
 	}
 }
 
-void ULowEntryExtendedStandardLibrary::JoinGame(UObject* WorldContextObject, const FString& ServerAddress, const FString& Args, APlayerController* Player)
+void ULowEntryExtendedStandardLibrary::JoinGame(UObject* WorldContextObject, const FString& ServerAddress, const FString& Args, APlayerController* SpecificPlayer)
 {
-	APlayerController* TargetPC = Player ? Player : UGameplayStatics::GetPlayerController(WorldContextObject, 0);
+	APlayerController* TargetPC = SpecificPlayer ? SpecificPlayer : UGameplayStatics::GetPlayerController(WorldContextObject, 0);
 	if(TargetPC)
 	{
 		TargetPC->ConsoleCommand(TEXT("open ") + ServerAddress + Args, true);
 	}
 }
 
-void ULowEntryExtendedStandardLibrary::ServerChangeMap(UObject* WorldContextObject, const FString& Map, const FString& Args, APlayerController* Player)
+void ULowEntryExtendedStandardLibrary::ServerChangeMap(UObject* WorldContextObject, const FString& Map, const FString& Args, APlayerController* SpecificPlayer)
 {
-	APlayerController* TargetPC = Player ? Player : UGameplayStatics::GetPlayerController(WorldContextObject, 0);
+	APlayerController* TargetPC = SpecificPlayer ? SpecificPlayer : UGameplayStatics::GetPlayerController(WorldContextObject, 0);
 	if(TargetPC)
 	{
 		TargetPC->ConsoleCommand(TEXT("servertravel ") + Map + Args, true);
 	}
 }
 
-void ULowEntryExtendedStandardLibrary::ChangeMap(UObject* WorldContextObject, const FString& Map, const FString& Args, APlayerController* Player)
+void ULowEntryExtendedStandardLibrary::ChangeMap(UObject* WorldContextObject, const FString& Map, const FString& Args, APlayerController* SpecificPlayer)
 {
-	APlayerController* TargetPC = Player ? Player : UGameplayStatics::GetPlayerController(WorldContextObject, 0);
+	APlayerController* TargetPC = SpecificPlayer ? SpecificPlayer : UGameplayStatics::GetPlayerController(WorldContextObject, 0);
 	if(TargetPC)
 	{
 		TargetPC->ConsoleCommand(TEXT("open ") + Map + Args, true);
@@ -3882,8 +3875,8 @@ void ULowEntryExtendedStandardLibrary::GetMousePositionInPercentages(bool& Succe
 	}
 
 	Success = true;
-	X = MouseX / (float) Size.X;
-	Y = MouseY / (float) Size.Y;
+	X = MouseX / static_cast<float>(Size.X);
+	Y = MouseY / static_cast<float>(Size.Y);
 }
 
 
@@ -4053,7 +4046,7 @@ void ULowEntryExtendedStandardLibrary::GetWindowSize(bool& Success, int32& Width
 	Height = Size.Y;
 }
 
-void ULowEntryExtendedStandardLibrary::GetWindowPositiomInPercentagesCentered(bool& Success, float& X, float& Y)
+void ULowEntryExtendedStandardLibrary::GetWindowPositionInPercentagesCentered(bool& Success, float& X, float& Y)
 {
 	Success = false;
 	X = 0;
@@ -4113,7 +4106,7 @@ void ULowEntryExtendedStandardLibrary::SetWindowPosition(const int32 X, const in
 		return;
 	}
 
-	Window->MoveWindowTo(FVector2D((float) X, (float) Y));
+	Window->MoveWindowTo(FVector2D(static_cast<float>(X), static_cast<float>(Y)));
 }
 
 void ULowEntryExtendedStandardLibrary::SetWindowSize(const int32 Width, const int32 Height)
@@ -4138,7 +4131,7 @@ void ULowEntryExtendedStandardLibrary::SetWindowSize(const int32 Width, const in
 	Window->Resize(FVector2D(Width, Height));
 }
 
-void ULowEntryExtendedStandardLibrary::SetWindowPositiomInPercentagesCentered(const float X, const float Y)
+void ULowEntryExtendedStandardLibrary::SetWindowPositionInPercentagesCentered(const float X, const float Y)
 {
 	if(GEngine == nullptr)
 	{
@@ -4411,7 +4404,7 @@ void ULowEntryExtendedStandardLibrary::ClipboardSet(const FString& Value)
 
 void ULowEntryExtendedStandardLibrary::GetClassWithName(const FString& ClassName, UClass*& Class_, bool& Success)
 {
-	Class_ = NULL;
+	Class_ = nullptr;
 	Success = false;
 
 	{// load class >>
@@ -4444,7 +4437,6 @@ void ULowEntryExtendedStandardLibrary::GetClassWithName(const FString& ClassName
 			{
 				Class_ = FoundClass;
 				Success = true;
-				return;
 			}
 		}
 	}// get class through redirector <<
@@ -4545,12 +4537,12 @@ void ULowEntryExtendedStandardLibrary::ExecToBoolean(const ELowEntryExtendedStan
 
 void ULowEntryExtendedStandardLibrary::ExecToInteger(const ELowEntryExtendedStandardLibrary0to9 Branch, int32& Value)
 {
-	Value = (int32) Branch;
+	Value = static_cast<int32>(Branch);
 }
 
 void ULowEntryExtendedStandardLibrary::ExecToByte(const ELowEntryExtendedStandardLibrary0to9 Branch, uint8& Value)
 {
-	Value = (uint8) Branch;
+	Value = static_cast<uint8>(Branch);
 }
 
 
@@ -4656,7 +4648,6 @@ void ULowEntryExtendedStandardLibrary::CaseSwitchInteger(const int32 OnlyCheckFi
 	if(Value == _10__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_10_;
-		return;
 	}
 }
 
@@ -4761,7 +4752,6 @@ void ULowEntryExtendedStandardLibrary::CaseSwitchByte(const int32 OnlyCheckFirst
 	if(Value == _10__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_10_;
-		return;
 	}
 }
 
@@ -4866,7 +4856,6 @@ void ULowEntryExtendedStandardLibrary::CaseSwitchObject(const int32 OnlyCheckFir
 	if(Value == _10__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_10_;
-		return;
 	}
 }
 
@@ -4875,7 +4864,7 @@ void ULowEntryExtendedStandardLibrary::CaseSwitchObject(const int32 OnlyCheckFir
 void ULowEntryExtendedStandardLibrary::PlayerControllerGetLocalPlayer(APlayerController* PlayerController, bool& Success, ULocalPlayer*& LocalPlayer)
 {
 	Success = false;
-	LocalPlayer = NULL;
+	LocalPlayer = nullptr;
 	if(PlayerController == nullptr)
 	{
 		return;
@@ -4888,7 +4877,7 @@ void ULowEntryExtendedStandardLibrary::PlayerControllerGetLocalPlayer(APlayerCon
 	{
 		return;
 	}
-	LocalPlayer = (ULocalPlayer*)PlayerController->Player;
+	LocalPlayer = static_cast<ULocalPlayer*>(PlayerController->Player);
 	if(LocalPlayer == nullptr)
 	{
 		return;
@@ -4910,7 +4899,7 @@ void ULowEntryExtendedStandardLibrary::SimpleKismetSystemLibraryPrintString(cons
 	{
 		if(GEngine != nullptr)
 		{
-			GEngine->AddOnScreenDebugMessage((uint64) -1, ScreenDurationTime, TextColor.ToFColor(true), InString);
+			GEngine->AddOnScreenDebugMessage(INDEX_NONE, ScreenDurationTime, TextColor.ToFColor(true), InString);
 		}
 	}
 #endif

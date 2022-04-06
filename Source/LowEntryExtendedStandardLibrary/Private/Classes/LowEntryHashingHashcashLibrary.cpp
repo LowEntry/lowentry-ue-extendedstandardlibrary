@@ -9,13 +9,13 @@ const FString ULowEntryHashingHashcashLibrary::DATE_FORMAT_STRING = TEXT("%y%m%d
 TArray<TArray<uint8>> ULowEntryHashingHashcashLibrary::BASE_64_CACHE = TArray<TArray<uint8>>();
 
 
-const TArray<TArray<uint8>> ULowEntryHashingHashcashLibrary::GenerateBase64Cache()
+TArray<TArray<uint8>> ULowEntryHashingHashcashLibrary::GenerateBase64Cache()
 {
 	TArray<TArray<uint8>> Array;
-	Array.SetNum(ULowEntryHashingHashcashLibrary::MAX_COUNTER);
+	Array.SetNum(MAX_COUNTER);
 	for(int32 i = 0; i < Array.Num(); i++)
 	{
-		Array[i] = ULowEntryHashingHashcashLibrary::base64WithoutLeadingZeroBytes(i);
+		Array[i] = base64WithoutLeadingZeroBytes(i);
 	}
 	return Array;
 }
@@ -65,7 +65,7 @@ FString ULowEntryHashingHashcashLibrary::hashCustomCreationDate(const FString& r
 
 		if(BASE_64_CACHE.Num() <= 0)
 		{
-			BASE_64_CACHE = ULowEntryHashingHashcashLibrary::GenerateBase64Cache();
+			BASE_64_CACHE = GenerateBase64Cache();
 		}
 		for(const TArray<uint8>& base64counter : BASE_64_CACHE)
 		{
@@ -149,36 +149,36 @@ TArray<uint8> ULowEntryHashingHashcashLibrary::base64WithoutLeadingZeroBytes(con
 	if(value < 0)
 	{
 		bytes.SetNum(4);
-		bytes[0] = (uint8) (value >> 24);
-		bytes[1] = (uint8) (value >> 16);
-		bytes[2] = (uint8) (value >> 8);
-		bytes[3] = (uint8) (value);
+		bytes[0] = static_cast<uint8>(value >> 24);
+		bytes[1] = static_cast<uint8>(value >> 16);
+		bytes[2] = static_cast<uint8>(value >> 8);
+		bytes[3] = static_cast<uint8>(value);
 	}
 	else if(value < 256)
 	{
 		bytes.SetNum(1);
-		bytes[0] = (uint8) (value);
+		bytes[0] = static_cast<uint8>(value);
 	}
 	else if(value < 65536)
 	{
 		bytes.SetNum(2);
-		bytes[0] = (uint8) (value >> 8);
-		bytes[1] = (uint8) (value);
+		bytes[0] = static_cast<uint8>(value >> 8);
+		bytes[1] = static_cast<uint8>(value);
 	}
 	else if(value < 16777216)
 	{
 		bytes.SetNum(3);
-		bytes[0] = (uint8) (value >> 16);
-		bytes[1] = (uint8) (value >> 8);
-		bytes[2] = (uint8) (value);
+		bytes[0] = static_cast<uint8>(value >> 16);
+		bytes[1] = static_cast<uint8>(value >> 8);
+		bytes[2] = static_cast<uint8>(value);
 	}
 	else
 	{
 		bytes.SetNum(4);
-		bytes[0] = (uint8) (value >> 24);
-		bytes[1] = (uint8) (value >> 16);
-		bytes[2] = (uint8) (value >> 8);
-		bytes[3] = (uint8) (value);
+		bytes[0] = static_cast<uint8>(value >> 24);
+		bytes[1] = static_cast<uint8>(value >> 16);
+		bytes[2] = static_cast<uint8>(value >> 8);
+		bytes[3] = static_cast<uint8>(value);
 	}
 	return ULowEntryExtendedStandardLibrary::StringToBytesUtf8(ULowEntryExtendedStandardLibrary::BytesToBase64(bytes));
 }
@@ -186,7 +186,7 @@ TArray<uint8> ULowEntryHashingHashcashLibrary::base64WithoutLeadingZeroBytes(con
 
 FString ULowEntryHashingHashcashLibrary::getDateString(const FDateTime& date)
 {
-	return date.ToString(*ULowEntryHashingHashcashLibrary::DATE_FORMAT_STRING);
+	return date.ToString(*DATE_FORMAT_STRING);
 }
 
 FDateTime ULowEntryHashingHashcashLibrary::parseDateString(const FString& date)

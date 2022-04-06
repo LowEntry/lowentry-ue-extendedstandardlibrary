@@ -4,10 +4,7 @@
 
 #include "EdGraph/EdGraphPin.h"
 #include "Engine/Blueprint.h"
-#include "Framework/Commands/UIAction.h"
-#include "Framework/MultiBox/MultiBoxBuilder.h"
 #include "EdGraphSchema_K2.h"
-#include "EdGraph/EdGraphNodeUtils.h"
 #include "Kismet2/BlueprintEditorUtils.h"
 
 #include "ScopedTransaction.h"
@@ -15,7 +12,6 @@
 #include "KismetCompiledFunctionContext.h"
 #include "KismetCompilerMisc.h"
 #include "BlueprintNodeSpawner.h"
-#include "EditorCategoryUtils.h"
 #include "BlueprintActionDatabaseRegistrar.h"
 
 #define LOCTEXT_NAMESPACE "MakeArrayNode"
@@ -64,6 +60,7 @@ void FKCHandler_LowEntry_MakeContainer::Compile(FKismetFunctionContext& Context,
 
 UK2Node_LowEntry_MakeContainer::UK2Node_LowEntry_MakeContainer(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
+	, ContainerType(EPinContainerType::None)
 {
 	NumInputs = 1;
 }
@@ -101,7 +98,7 @@ void UK2Node_LowEntry_MakeContainer::ReallocatePinsDuringReconstruction(TArray<U
 void UK2Node_LowEntry_MakeContainer::AllocateDefaultPins()
 {
 	// Create the output pin
-	UEdGraphNode::FCreatePinParams PinParams;
+	FCreatePinParams PinParams;
 	PinParams.ContainerType = ContainerType;
 	CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Wildcard, GetOutputPinName(), PinParams);
 
@@ -237,7 +234,7 @@ void UK2Node_LowEntry_MakeContainer::NotifyPinConnectionListChanged(UEdGraphPin*
 	else if(OutputPin->LinkedTo.Num() == 0)
 	{
 		// Return to wildcard if theres nothing in any of the input pins
-		TFunction<bool(TArray<UEdGraphPin*>&)> PinsInUse = [this, &PinsInUse](TArray<UEdGraphPin*>& PinsToConsider)
+		TFunction<bool(TArray<UEdGraphPin*>&)> PinsInUse = [this](TArray<UEdGraphPin*>& PinsToConsider)
 		{
 			bool bPinInUse = false;
 			for(UEdGraphPin* CurrentPin : PinsToConsider)
@@ -355,7 +352,7 @@ void UK2Node_LowEntry_MakeContainer::PropagatePinType()
 				}
 			}
 		}
-		// If we have a valid graph we should refresh it now to refelect any changes we made
+		// If we have a valid graph we should refresh it now to reflect any changes we made
 		if(UEdGraphNode* OwningNode = OutputPin->GetOwningNode())
 		{
 			if(UEdGraph* Graph = OwningNode->GetGraph())

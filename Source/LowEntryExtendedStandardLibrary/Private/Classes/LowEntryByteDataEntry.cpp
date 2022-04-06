@@ -3,10 +3,13 @@
 #include "LowEntryByteDataEntry.h"
 
 
-// init >>
-	ULowEntryByteDataEntry::ULowEntryByteDataEntry(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
-	{
-	}
+ULowEntryByteDataEntry::ULowEntryByteDataEntry(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
+	, ByteValue(0)
+	, IntegerValue(0)
+	, LongValue(0)
+	, FloatValue(0)
+	, BooleanValue(false) { }
 
 	ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromByte(const uint8 Value)
 	{
@@ -146,18 +149,17 @@
 		Instance->SetStringUtf8Array(Value);
 		return Instance;
 	}
-// init <<
 
 
 bool ULowEntryByteDataEntry::IsByte()
 {
 	return (Type == 1);
-};
+}
 void ULowEntryByteDataEntry::SetByte(const uint8 Value)
 {
 	Type = 1;
 	ByteValue = Value;
-};
+}
 uint8 ULowEntryByteDataEntry::GetByte()
 {
 	return ByteValue;
@@ -166,12 +168,12 @@ uint8 ULowEntryByteDataEntry::GetByte()
 bool ULowEntryByteDataEntry::IsInteger()
 {
 	return (Type == 2);
-};
+}
 void ULowEntryByteDataEntry::SetInteger(const int32 Value)
 {
 	Type = 2;
 	IntegerValue = Value;
-};
+}
 int32 ULowEntryByteDataEntry::GetInteger()
 {
 	return IntegerValue;
@@ -180,12 +182,12 @@ int32 ULowEntryByteDataEntry::GetInteger()
 bool ULowEntryByteDataEntry::IsPositiveInteger1()
 {
 	return (Type == 8);
-};
+}
 void ULowEntryByteDataEntry::SetPositiveInteger1(const int32 Value)
 {
 	Type = 8;
 	IntegerValue = Value;
-};
+}
 int32 ULowEntryByteDataEntry::GetPositiveInteger1()
 {
 	return IntegerValue;
@@ -194,12 +196,12 @@ int32 ULowEntryByteDataEntry::GetPositiveInteger1()
 bool ULowEntryByteDataEntry::IsPositiveInteger2()
 {
 	return (Type == 9);
-};
+}
 void ULowEntryByteDataEntry::SetPositiveInteger2(const int32 Value)
 {
 	Type = 9;
 	IntegerValue = Value;
-};
+}
 int32 ULowEntryByteDataEntry::GetPositiveInteger2()
 {
 	return IntegerValue;
@@ -208,12 +210,12 @@ int32 ULowEntryByteDataEntry::GetPositiveInteger2()
 bool ULowEntryByteDataEntry::IsPositiveInteger3()
 {
 	return (Type == 10);
-};
+}
 void ULowEntryByteDataEntry::SetPositiveInteger3(const int32 Value)
 {
 	Type = 10;
 	IntegerValue = Value;
-};
+}
 int32 ULowEntryByteDataEntry::GetPositiveInteger3()
 {
 	return IntegerValue;
@@ -222,12 +224,12 @@ int32 ULowEntryByteDataEntry::GetPositiveInteger3()
 bool ULowEntryByteDataEntry::IsLong()
 {
 	return (Type == 11);
-};
+}
 void ULowEntryByteDataEntry::SetLong(const int64 Value)
 {
 	Type = 11;
 	LongValue = Value;
-};
+}
 int64 ULowEntryByteDataEntry::GetLong()
 {
 	return LongValue;
@@ -236,12 +238,12 @@ int64 ULowEntryByteDataEntry::GetLong()
 bool ULowEntryByteDataEntry::IsLongBytes()
 {
 	return (Type == 3);
-};
+}
 void ULowEntryByteDataEntry::SetLongBytes(ULowEntryLong* Value)
 {
 	Type = 3;
 	LongBytesValue = Value;
-};
+}
 ULowEntryLong* ULowEntryByteDataEntry::GetLongBytes()
 {
 	return LongBytesValue;
@@ -251,12 +253,12 @@ ULowEntryLong* ULowEntryByteDataEntry::GetLongBytes()
 bool ULowEntryByteDataEntry::IsFloat()
 {
 	return (Type == 4);
-};
+}
 void ULowEntryByteDataEntry::SetFloat(const float Value)
 {
 	Type = 4;
 	FloatValue = Value;
-};
+}
 float ULowEntryByteDataEntry::GetFloat()
 {
 	return FloatValue;
@@ -265,12 +267,12 @@ float ULowEntryByteDataEntry::GetFloat()
 bool ULowEntryByteDataEntry::IsDoubleBytes()
 {
 	return (Type == 5);
-};
+}
 void ULowEntryByteDataEntry::SetDoubleBytes(ULowEntryDouble* Value)
 {
 	Type = 5;
 	DoubleBytesValue = Value;
-};
+}
 ULowEntryDouble* ULowEntryByteDataEntry::GetDoubleBytes()
 {
 	return DoubleBytesValue;
@@ -280,12 +282,12 @@ ULowEntryDouble* ULowEntryByteDataEntry::GetDoubleBytes()
 bool ULowEntryByteDataEntry::IsBoolean()
 {
 	return (Type == 6);
-};
+}
 void ULowEntryByteDataEntry::SetBoolean(const bool Value)
 {
 	Type = 6;
 	BooleanValue = Value;
-};
+}
 bool ULowEntryByteDataEntry::GetBoolean()
 {
 	return BooleanValue;
@@ -294,12 +296,12 @@ bool ULowEntryByteDataEntry::GetBoolean()
 bool ULowEntryByteDataEntry::IsStringUtf8()
 {
 	return (Type == 7);
-};
+}
 void ULowEntryByteDataEntry::SetStringUtf8(const FString& Value)
 {
 	Type = 7;
 	StringUtf8Value = Value;
-};
+}
 FString ULowEntryByteDataEntry::GetStringUtf8()
 {
 	return StringUtf8Value;
@@ -310,12 +312,12 @@ FString ULowEntryByteDataEntry::GetStringUtf8()
 bool ULowEntryByteDataEntry::IsByteArray()
 {
 	return (Type == 101);
-};
+}
 void ULowEntryByteDataEntry::SetByteArray(const TArray<uint8>& Value)
 {
 	Type = 101;
 	ByteArrayValue = Value;
-};
+}
 TArray<uint8> ULowEntryByteDataEntry::GetByteArray()
 {
 	return ByteArrayValue;
@@ -324,12 +326,12 @@ TArray<uint8> ULowEntryByteDataEntry::GetByteArray()
 bool ULowEntryByteDataEntry::IsIntegerArray()
 {
 	return (Type == 102);
-};
+}
 void ULowEntryByteDataEntry::SetIntegerArray(const TArray<int32>& Value)
 {
 	Type = 102;
 	IntegerArrayValue = Value;
-};
+}
 TArray<int32> ULowEntryByteDataEntry::GetIntegerArray()
 {
 	return IntegerArrayValue;
@@ -338,12 +340,12 @@ TArray<int32> ULowEntryByteDataEntry::GetIntegerArray()
 bool ULowEntryByteDataEntry::IsPositiveInteger1Array()
 {
 	return (Type == 108);
-};
+}
 void ULowEntryByteDataEntry::SetPositiveInteger1Array(const TArray<int32>& Value)
 {
 	Type = 108;
 	IntegerArrayValue = Value;
-};
+}
 TArray<int32> ULowEntryByteDataEntry::GetPositiveInteger1Array()
 {
 	return IntegerArrayValue;
@@ -352,12 +354,12 @@ TArray<int32> ULowEntryByteDataEntry::GetPositiveInteger1Array()
 bool ULowEntryByteDataEntry::IsPositiveInteger2Array()
 {
 	return (Type == 109);
-};
+}
 void ULowEntryByteDataEntry::SetPositiveInteger2Array(const TArray<int32>& Value)
 {
 	Type = 109;
 	IntegerArrayValue = Value;
-};
+}
 TArray<int32> ULowEntryByteDataEntry::GetPositiveInteger2Array()
 {
 	return IntegerArrayValue;
@@ -366,12 +368,12 @@ TArray<int32> ULowEntryByteDataEntry::GetPositiveInteger2Array()
 bool ULowEntryByteDataEntry::IsPositiveInteger3Array()
 {
 	return (Type == 110);
-};
+}
 void ULowEntryByteDataEntry::SetPositiveInteger3Array(const TArray<int32>& Value)
 {
 	Type = 110;
 	IntegerArrayValue = Value;
-};
+}
 TArray<int32> ULowEntryByteDataEntry::GetPositiveInteger3Array()
 {
 	return IntegerArrayValue;
@@ -380,12 +382,12 @@ TArray<int32> ULowEntryByteDataEntry::GetPositiveInteger3Array()
 bool ULowEntryByteDataEntry::IsLongArray()
 {
 	return (Type == 111);
-};
+}
 void ULowEntryByteDataEntry::SetLongArray(const TArray<int64>& Value)
 {
 	Type = 111;
 	LongArrayValue = Value;
-};
+}
 TArray<int64> ULowEntryByteDataEntry::GetLongArray()
 {
 	return LongArrayValue;
@@ -394,12 +396,12 @@ TArray<int64> ULowEntryByteDataEntry::GetLongArray()
 bool ULowEntryByteDataEntry::IsLongBytesArray()
 {
 	return (Type == 103);
-};
+}
 void ULowEntryByteDataEntry::SetLongBytesArray(const TArray<ULowEntryLong*>& Value)
 {
 	Type = 103;
 	LongBytesArrayValue = Value;
-};
+}
 TArray<ULowEntryLong*> ULowEntryByteDataEntry::GetLongBytesArray()
 {
 	return LongBytesArrayValue;
@@ -409,12 +411,12 @@ TArray<ULowEntryLong*> ULowEntryByteDataEntry::GetLongBytesArray()
 bool ULowEntryByteDataEntry::IsFloatArray()
 {
 	return (Type == 104);
-};
+}
 void ULowEntryByteDataEntry::SetFloatArray(const TArray<float>& Value)
 {
 	Type = 104;
 	FloatArrayValue = Value;
-};
+}
 TArray<float> ULowEntryByteDataEntry::GetFloatArray()
 {
 	return FloatArrayValue;
@@ -423,12 +425,12 @@ TArray<float> ULowEntryByteDataEntry::GetFloatArray()
 bool ULowEntryByteDataEntry::IsDoubleBytesArray()
 {
 	return (Type == 105);
-};
+}
 void ULowEntryByteDataEntry::SetDoubleBytesArray(const TArray<ULowEntryDouble*>& Value)
 {
 	Type = 105;
 	DoubleBytesArrayValue = Value;
-};
+}
 TArray<ULowEntryDouble*> ULowEntryByteDataEntry::GetDoubleBytesArray()
 {
 	return DoubleBytesArrayValue;
@@ -438,12 +440,12 @@ TArray<ULowEntryDouble*> ULowEntryByteDataEntry::GetDoubleBytesArray()
 bool ULowEntryByteDataEntry::IsBooleanArray()
 {
 	return (Type == 106);
-};
+}
 void ULowEntryByteDataEntry::SetBooleanArray(const TArray<bool>& Value)
 {
 	Type = 106;
 	BooleanArrayValue = Value;
-};
+}
 TArray<bool> ULowEntryByteDataEntry::GetBooleanArray()
 {
 	return BooleanArrayValue;
@@ -452,12 +454,12 @@ TArray<bool> ULowEntryByteDataEntry::GetBooleanArray()
 bool ULowEntryByteDataEntry::IsStringUtf8Array()
 {
 	return (Type == 107);
-};
+}
 void ULowEntryByteDataEntry::SetStringUtf8Array(const TArray<FString>& Value)
 {
 	Type = 107;
 	StringUtf8ArrayValue = Value;
-};
+}
 TArray<FString> ULowEntryByteDataEntry::GetStringUtf8Array()
 {
 	return StringUtf8ArrayValue;
