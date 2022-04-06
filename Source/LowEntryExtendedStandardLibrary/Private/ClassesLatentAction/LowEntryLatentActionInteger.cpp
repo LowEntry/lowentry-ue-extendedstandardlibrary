@@ -6,35 +6,33 @@
 #include "Engine/Engine.h"
 
 
-// init >>
-	ULowEntryLatentActionInteger::ULowEntryLatentActionInteger(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
-	{
-		KeepAliveCount = 1;
-		AddToRoot();
-	}
+ULowEntryLatentActionInteger::ULowEntryLatentActionInteger(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+{
+	KeepAliveCount = 1;
+	AddToRoot();
+}
 
-	ULowEntryLatentActionInteger* ULowEntryLatentActionInteger::Create()
-	{
-		return NewObject<ULowEntryLatentActionInteger>();
-	}
-// init <<
+ULowEntryLatentActionInteger* ULowEntryLatentActionInteger::Create()
+{
+	return NewObject<ULowEntryLatentActionInteger>();
+}
 
 
 void ULowEntryLatentActionInteger::WaitTillDone(UObject* WorldContextObject, FLatentActionInfo LatentInfo, int32& Result_)
 {
 	UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull);
-	if(World == nullptr)
+	if (World == nullptr)
 	{
 		return;
 	}
-	if(World->GetLatentActionManager().FindExistingAction<FLowEntryLatentActionInteger>(LatentInfo.CallbackTarget, LatentInfo.UUID) != nullptr)
+	if (World->GetLatentActionManager().FindExistingAction<FLowEntryLatentActionInteger>(LatentInfo.CallbackTarget, LatentInfo.UUID) != nullptr)
 	{
 		return;
 	}
 	World->GetLatentActionManager().AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FLowEntryLatentActionInteger(LatentInfo, this, Result_));
 
 	KeepAliveCount++;
-	if(KeepAliveCount == 1)
+	if (KeepAliveCount == 1)
 	{
 		AddToRoot();
 	}
@@ -43,11 +41,11 @@ void ULowEntryLatentActionInteger::WaitTillDone(UObject* WorldContextObject, FLa
 void ULowEntryLatentActionInteger::LatentActionDone()
 {
 	KeepAliveCount--;
-	if(KeepAliveCount == 0)
+	if (KeepAliveCount == 0)
 	{
 		RemoveFromRoot();
 	}
-	if(KeepAliveCount < 0)
+	if (KeepAliveCount < 0)
 	{
 		KeepAliveCount = 0;
 	}
@@ -56,7 +54,7 @@ void ULowEntryLatentActionInteger::LatentActionDone()
 void ULowEntryLatentActionInteger::Done(int32 Result_)
 {
 	Result = Result_;
-	if(!Finished)
+	if (!Finished)
 	{
 		LatentActionDone(); // used to reduce KeepAliveCount by 1
 		Finished = true;

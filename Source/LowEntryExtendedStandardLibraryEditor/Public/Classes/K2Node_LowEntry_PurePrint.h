@@ -16,7 +16,6 @@ UCLASS(MinimalAPI)
 class UK2Node_LowEntry_PurePrint : public UK2Node
 {
 	GENERATED_UCLASS_BODY()
-
 public:
 	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API UEdGraphPin* GetInputPin() const;
 	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API UEdGraphPin* GetStringInputPin() const;

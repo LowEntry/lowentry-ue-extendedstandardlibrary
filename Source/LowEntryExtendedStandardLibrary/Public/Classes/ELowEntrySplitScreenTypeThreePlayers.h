@@ -20,11 +20,11 @@ enum class ELowEntrySplitScreenTypeThreePlayers : uint8
 
 static EThreePlayerSplitScreenType::Type ELowEntrySplitScreenTypeThreePlayersToUE4(ELowEntrySplitScreenTypeThreePlayers Value)
 {
-	if(Value == ELowEntrySplitScreenTypeThreePlayers::FavorTop)
+	if (Value == ELowEntrySplitScreenTypeThreePlayers::FavorTop)
 	{
 		return EThreePlayerSplitScreenType::Type::FavorTop;
 	}
-	if(Value == ELowEntrySplitScreenTypeThreePlayers::FavorBottom)
+	if (Value == ELowEntrySplitScreenTypeThreePlayers::FavorBottom)
 	{
 		return EThreePlayerSplitScreenType::Type::FavorBottom;
 	}
@@ -33,11 +33,11 @@ static EThreePlayerSplitScreenType::Type ELowEntrySplitScreenTypeThreePlayersToU
 
 static ELowEntrySplitScreenTypeThreePlayers ELowEntrySplitScreenTypeThreePlayersFromUE4(EThreePlayerSplitScreenType::Type Value)
 {
-	if(Value == EThreePlayerSplitScreenType::Type::FavorTop)
+	if (Value == EThreePlayerSplitScreenType::Type::FavorTop)
 	{
 		return ELowEntrySplitScreenTypeThreePlayers::FavorTop;
 	}
-	if(Value == EThreePlayerSplitScreenType::Type::FavorBottom)
+	if (Value == EThreePlayerSplitScreenType::Type::FavorBottom)
 	{
 		return ELowEntrySplitScreenTypeThreePlayers::FavorBottom;
 	}

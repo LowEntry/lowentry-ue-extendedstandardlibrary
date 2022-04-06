@@ -20,11 +20,11 @@ enum class ELowEntrySplitScreenTypeTwoPlayers : uint8
 
 static ETwoPlayerSplitScreenType::Type ELowEntrySplitScreenTypeTwoPlayersToUE4(ELowEntrySplitScreenTypeTwoPlayers Value)
 {
-	if(Value == ELowEntrySplitScreenTypeTwoPlayers::Horizontal)
+	if (Value == ELowEntrySplitScreenTypeTwoPlayers::Horizontal)
 	{
 		return ETwoPlayerSplitScreenType::Type::Horizontal;
 	}
-	if(Value == ELowEntrySplitScreenTypeTwoPlayers::Vertical)
+	if (Value == ELowEntrySplitScreenTypeTwoPlayers::Vertical)
 	{
 		return ETwoPlayerSplitScreenType::Type::Vertical;
 	}
@@ -33,11 +33,11 @@ static ETwoPlayerSplitScreenType::Type ELowEntrySplitScreenTypeTwoPlayersToUE4(E
 
 static ELowEntrySplitScreenTypeTwoPlayers ELowEntrySplitScreenTypeTwoPlayersFromUE4(ETwoPlayerSplitScreenType::Type Value)
 {
-	if(Value == ETwoPlayerSplitScreenType::Type::Horizontal)
+	if (Value == ETwoPlayerSplitScreenType::Type::Horizontal)
 	{
 		return ELowEntrySplitScreenTypeTwoPlayers::Horizontal;
 	}
-	if(Value == ETwoPlayerSplitScreenType::Type::Vertical)
+	if (Value == ETwoPlayerSplitScreenType::Type::Vertical)
 	{
 		return ELowEntrySplitScreenTypeTwoPlayers::Vertical;
 	}

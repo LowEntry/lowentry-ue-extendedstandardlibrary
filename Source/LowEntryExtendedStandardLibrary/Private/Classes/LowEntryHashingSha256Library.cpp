@@ -19,23 +19,23 @@ void ULowEntryHashingSha256Library::update(const TArray<uint8>& b, const int64 o
 	int64 partLen = BLOCK_SIZE - n;
 	int64 i = 0;
 
-	if(len >= partLen)
+	if (len >= partLen)
 	{
-		for(int32 index = 0; index < partLen; index++)
+		for (int32 index = 0; index < partLen; index++)
 		{
 			buffer[n + index] = b[offset + index];
 		}
 		sha(buffer, 0);
-		for(i = partLen; ((i + BLOCK_SIZE) - 1) < len; i += BLOCK_SIZE)
+		for (i = partLen; ((i + BLOCK_SIZE) - 1) < len; i += BLOCK_SIZE)
 		{
 			sha(b, offset + i);
 		}
 		n = 0;
 	}
 
-	if(i < len)
+	if (i < len)
 	{
-		for(int32 index = 0; index < len - i; index++)
+		for (int32 index = 0; index < len - i; index++)
 		{
 			buffer[n + index] = b[offset + i + index];
 		}
@@ -129,18 +129,18 @@ void ULowEntryHashingSha256Library::sha(const TArray<uint8>& in, int64 offset)
 	int32 T;
 	int32 T2;
 	int32 r;
-	for(r = 0; r < 16; r++)
+	for (r = 0; r < 16; r++)
 	{
 		w[r] = ((in[offset] << 24) | ((in[offset + 1] & 0xFF) << 16) | ((in[offset + 2] & 0xFF) << 8) | (in[offset + 3] & 0xFF));
 		offset += 4;
 	}
-	for(r = 16; r < 64; r++)
+	for (r = 16; r < 64; r++)
 	{
 		T = w[r - 2];
 		T2 = w[r - 15];
 		w[r] = (((s(T, 17) | (T << 15)) ^ (s(T, 19) | (T << 13)) ^ s(T, 10)) + w[r - 7] + ((s(T2, 7) | (T2 << 25)) ^ (s(T2, 18) | (T2 << 14)) ^ s(T2, 3)) + w[r - 16]);
 	}
-	for(r = 0; r < 64; r++)
+	for (r = 0; r < 64; r++)
 	{
 		T = (H + ((s(E, 6) | (E << 26)) ^ (s(E, 11) | (E << 21)) ^ (s(E, 25) | (E << 7))) + ((E & F) ^ (~E & G)) + k[r] + w[r]);
 		T2 = (((s(A, 2) | (A << 30)) ^ (s(A, 13) | (A << 19)) ^ (s(A, 22) | (A << 10))) + ((A & B) ^ (A & C) ^ (B & C)));
@@ -181,24 +181,24 @@ TArray<uint8> ULowEntryHashingSha256Library::Hash(const TArray<uint8>& Bytes)
 
 TArray<uint8> ULowEntryHashingSha256Library::Hash(const TArray<uint8>& Bytes, int32 Index, int32 Length)
 {
-	if(Bytes.Num() <= 0)
+	if (Bytes.Num() <= 0)
 	{
 		ULowEntryHashingSha256Library instance = ULowEntryHashingSha256Library();
 		instance.initialize();
 		return instance.digest();
 	}
 
-	if(Index < 0)
+	if (Index < 0)
 	{
 		Length += Index;
 		Index = 0;
 	}
-	if(Length > (Bytes.Num() - Index))
+	if (Length > (Bytes.Num() - Index))
 	{
 		Length = Bytes.Num() - Index;
 	}
 
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		ULowEntryHashingSha256Library instance = ULowEntryHashingSha256Library();
 		instance.initialize();

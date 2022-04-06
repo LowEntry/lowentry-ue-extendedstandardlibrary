@@ -34,14 +34,14 @@ public:
 
 	virtual void UpdateOperation(FLatentResponse& Response) override
 	{
-		if(Tick >= Ticks)
+		if (Tick >= Ticks)
 		{
 			Response.DoneIf(true);
 			return;
 		}
 
 		CurrentFramesInterval++;
-		if(CurrentFramesInterval >= FramesInterval)
+		if (CurrentFramesInterval >= FramesInterval)
 		{
 			CurrentFramesInterval = 0;
 			Tick++;

@@ -8,167 +8,163 @@
 constexpr uint8 ULowEntryBitDataWriter::mask[9] = {static_cast<uint8>(0x00), static_cast<uint8>(0x01), static_cast<uint8>(0x03), static_cast<uint8>(0x07), static_cast<uint8>(0x0F), static_cast<uint8>(0x1F), static_cast<uint8>(0x3F), static_cast<uint8>(0x7F), static_cast<uint8>(0xFF)};
 
 
-// init >>
-	ULowEntryBitDataWriter::ULowEntryBitDataWriter(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
-	{
-	}
+ULowEntryBitDataWriter::ULowEntryBitDataWriter(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) { }
 
-	ULowEntryBitDataWriter* ULowEntryBitDataWriter::Create()
+ULowEntryBitDataWriter* ULowEntryBitDataWriter::Create()
+{
+	return NewObject<ULowEntryBitDataWriter>();
+}
+ULowEntryBitDataWriter* ULowEntryBitDataWriter::CreateFromEntryArray(const TArray<ULowEntryBitDataEntry*>& Array)
+{
+	ULowEntryBitDataWriter* Instance = NewObject<ULowEntryBitDataWriter>();
+	for (int64 i = 0; i < Array.Num(); i++)
 	{
-		return NewObject<ULowEntryBitDataWriter>();
-	}
-	ULowEntryBitDataWriter* ULowEntryBitDataWriter::CreateFromEntryArray(const TArray<ULowEntryBitDataEntry*>& Array)
-	{
-		ULowEntryBitDataWriter* Instance = NewObject<ULowEntryBitDataWriter>();
-		for(int64 i = 0; i < Array.Num(); i++)
+		ULowEntryBitDataEntry* Item = Array[i];
+		if (Item != nullptr)
 		{
-			ULowEntryBitDataEntry* Item = Array[i];
-			if(Item != nullptr)
+			if (Item->IsBit())
 			{
-				if(Item->IsBit())
-				{
-					Instance->AddBit(Item->GetBit());
-				}
-				else if(Item->IsByteLeastSignificantBits())
-				{
-					Instance->AddByteLeastSignificantBits(Item->GetByteLeastSignificantBits(), Item->GetBitCount());
-				}
-				else if(Item->IsByteMostSignificantBits())
-				{
-					Instance->AddByteMostSignificantBits(Item->GetByteMostSignificantBits(), Item->GetBitCount());
-				}
-				else if(Item->IsIntegerLeastSignificantBits())
-				{
-					Instance->AddIntegerLeastSignificantBits(Item->GetIntegerLeastSignificantBits(), Item->GetBitCount());
-				}
-				else if(Item->IsIntegerMostSignificantBits())
-				{
-					Instance->AddIntegerMostSignificantBits(Item->GetIntegerMostSignificantBits(), Item->GetBitCount());
-				}
-				else if(Item->IsByte())
-				{
-					Instance->AddByte(Item->GetByte());
-				}
-				else if(Item->IsInteger())
-				{
-					Instance->AddInteger(Item->GetInteger());
-				}
-				else if(Item->IsPositiveInteger1())
-				{
-					Instance->AddPositiveInteger1(Item->GetPositiveInteger1());
-				}
-				else if(Item->IsPositiveInteger2())
-				{
-					Instance->AddPositiveInteger2(Item->GetPositiveInteger2());
-				}
-				else if(Item->IsPositiveInteger3())
-				{
-					Instance->AddPositiveInteger3(Item->GetPositiveInteger3());
-				}
-				else if(Item->IsLong())
-				{
-					Instance->AddLong(Item->GetLong());
-				}
-				else if(Item->IsLongBytes())
-				{
-					Instance->AddLongBytes(Item->GetLongBytes());
-				}
-				else if(Item->IsFloat())
-				{
-					Instance->AddFloat(Item->GetFloat());
-				}
-				else if(Item->IsDoubleBytes())
-				{
-					Instance->AddDoubleBytes(Item->GetDoubleBytes());
-				}
-				else if(Item->IsBoolean())
-				{
-					Instance->AddBoolean(Item->GetBoolean());
-				}
-				else if(Item->IsStringUtf8())
-				{
-					Instance->AddStringUtf8(Item->GetStringUtf8());
-				}
+				Instance->AddBit(Item->GetBit());
+			}
+			else if (Item->IsByteLeastSignificantBits())
+			{
+				Instance->AddByteLeastSignificantBits(Item->GetByteLeastSignificantBits(), Item->GetBitCount());
+			}
+			else if (Item->IsByteMostSignificantBits())
+			{
+				Instance->AddByteMostSignificantBits(Item->GetByteMostSignificantBits(), Item->GetBitCount());
+			}
+			else if (Item->IsIntegerLeastSignificantBits())
+			{
+				Instance->AddIntegerLeastSignificantBits(Item->GetIntegerLeastSignificantBits(), Item->GetBitCount());
+			}
+			else if (Item->IsIntegerMostSignificantBits())
+			{
+				Instance->AddIntegerMostSignificantBits(Item->GetIntegerMostSignificantBits(), Item->GetBitCount());
+			}
+			else if (Item->IsByte())
+			{
+				Instance->AddByte(Item->GetByte());
+			}
+			else if (Item->IsInteger())
+			{
+				Instance->AddInteger(Item->GetInteger());
+			}
+			else if (Item->IsPositiveInteger1())
+			{
+				Instance->AddPositiveInteger1(Item->GetPositiveInteger1());
+			}
+			else if (Item->IsPositiveInteger2())
+			{
+				Instance->AddPositiveInteger2(Item->GetPositiveInteger2());
+			}
+			else if (Item->IsPositiveInteger3())
+			{
+				Instance->AddPositiveInteger3(Item->GetPositiveInteger3());
+			}
+			else if (Item->IsLong())
+			{
+				Instance->AddLong(Item->GetLong());
+			}
+			else if (Item->IsLongBytes())
+			{
+				Instance->AddLongBytes(Item->GetLongBytes());
+			}
+			else if (Item->IsFloat())
+			{
+				Instance->AddFloat(Item->GetFloat());
+			}
+			else if (Item->IsDoubleBytes())
+			{
+				Instance->AddDoubleBytes(Item->GetDoubleBytes());
+			}
+			else if (Item->IsBoolean())
+			{
+				Instance->AddBoolean(Item->GetBoolean());
+			}
+			else if (Item->IsStringUtf8())
+			{
+				Instance->AddStringUtf8(Item->GetStringUtf8());
+			}
 
-				else if(Item->IsBitArray())
-				{
-					Instance->AddBitArray(Item->GetBitArray());
-				}
-				else if(Item->IsByteArrayLeastSignificantBits())
-				{
-					Instance->AddByteArrayLeastSignificantBits(Item->GetByteArrayLeastSignificantBits(), Item->GetBitCount());
-				}
-				else if(Item->IsByteArrayMostSignificantBits())
-				{
-					Instance->AddByteArrayMostSignificantBits(Item->GetByteArrayMostSignificantBits(), Item->GetBitCount());
-				}
-				else if(Item->IsIntegerArrayLeastSignificantBits())
-				{
-					Instance->AddIntegerArrayLeastSignificantBits(Item->GetIntegerArrayLeastSignificantBits(), Item->GetBitCount());
-				}
-				else if(Item->IsIntegerArrayMostSignificantBits())
-				{
-					Instance->AddIntegerArrayMostSignificantBits(Item->GetIntegerArrayMostSignificantBits(), Item->GetBitCount());
-				}
-				else if(Item->IsByteArray())
-				{
-					Instance->AddByteArray(Item->GetByteArray());
-				}
-				else if(Item->IsIntegerArray())
-				{
-					Instance->AddIntegerArray(Item->GetIntegerArray());
-				}
-				else if(Item->IsPositiveInteger1Array())
-				{
-					Instance->AddPositiveInteger1Array(Item->GetPositiveInteger1Array());
-				}
-				else if(Item->IsPositiveInteger2Array())
-				{
-					Instance->AddPositiveInteger2Array(Item->GetPositiveInteger2Array());
-				}
-				else if(Item->IsPositiveInteger3Array())
-				{
-					Instance->AddPositiveInteger3Array(Item->GetPositiveInteger3Array());
-				}
-				else if(Item->IsLongArray())
-				{
-					Instance->AddLongArray(Item->GetLongArray());
-				}
-				else if(Item->IsLongBytesArray())
-				{
-					Instance->AddLongBytesArray(Item->GetLongBytesArray());
-				}
-				else if(Item->IsFloatArray())
-				{
-					Instance->AddFloatArray(Item->GetFloatArray());
-				}
-				else if(Item->IsDoubleBytesArray())
-				{
-					Instance->AddDoubleBytesArray(Item->GetDoubleBytesArray());
-				}
-				else if(Item->IsBooleanArray())
-				{
-					Instance->AddBooleanArray(Item->GetBooleanArray());
-				}
-				else if(Item->IsStringUtf8Array())
-				{
-					Instance->AddStringUtf8Array(Item->GetStringUtf8Array());
-				}
+			else if (Item->IsBitArray())
+			{
+				Instance->AddBitArray(Item->GetBitArray());
+			}
+			else if (Item->IsByteArrayLeastSignificantBits())
+			{
+				Instance->AddByteArrayLeastSignificantBits(Item->GetByteArrayLeastSignificantBits(), Item->GetBitCount());
+			}
+			else if (Item->IsByteArrayMostSignificantBits())
+			{
+				Instance->AddByteArrayMostSignificantBits(Item->GetByteArrayMostSignificantBits(), Item->GetBitCount());
+			}
+			else if (Item->IsIntegerArrayLeastSignificantBits())
+			{
+				Instance->AddIntegerArrayLeastSignificantBits(Item->GetIntegerArrayLeastSignificantBits(), Item->GetBitCount());
+			}
+			else if (Item->IsIntegerArrayMostSignificantBits())
+			{
+				Instance->AddIntegerArrayMostSignificantBits(Item->GetIntegerArrayMostSignificantBits(), Item->GetBitCount());
+			}
+			else if (Item->IsByteArray())
+			{
+				Instance->AddByteArray(Item->GetByteArray());
+			}
+			else if (Item->IsIntegerArray())
+			{
+				Instance->AddIntegerArray(Item->GetIntegerArray());
+			}
+			else if (Item->IsPositiveInteger1Array())
+			{
+				Instance->AddPositiveInteger1Array(Item->GetPositiveInteger1Array());
+			}
+			else if (Item->IsPositiveInteger2Array())
+			{
+				Instance->AddPositiveInteger2Array(Item->GetPositiveInteger2Array());
+			}
+			else if (Item->IsPositiveInteger3Array())
+			{
+				Instance->AddPositiveInteger3Array(Item->GetPositiveInteger3Array());
+			}
+			else if (Item->IsLongArray())
+			{
+				Instance->AddLongArray(Item->GetLongArray());
+			}
+			else if (Item->IsLongBytesArray())
+			{
+				Instance->AddLongBytesArray(Item->GetLongBytesArray());
+			}
+			else if (Item->IsFloatArray())
+			{
+				Instance->AddFloatArray(Item->GetFloatArray());
+			}
+			else if (Item->IsDoubleBytesArray())
+			{
+				Instance->AddDoubleBytesArray(Item->GetDoubleBytesArray());
+			}
+			else if (Item->IsBooleanArray())
+			{
+				Instance->AddBooleanArray(Item->GetBooleanArray());
+			}
+			else if (Item->IsStringUtf8Array())
+			{
+				Instance->AddStringUtf8Array(Item->GetStringUtf8Array());
 			}
 		}
-		return Instance;
 	}
-// init <<
+	return Instance;
+}
 
 
 void ULowEntryBitDataWriter::AddRawBit(const bool Value)
 {
-	if(Value)
+	if (Value)
 	{
 		CurrentByte |= (1 << CurrentBytePosition);
 	}
 
-	if(CurrentBytePosition == 7)
+	if (CurrentBytePosition == 7)
 	{
 		Bytes.Add(CurrentByte);
 		CurrentByte = 0;
@@ -182,7 +178,7 @@ void ULowEntryBitDataWriter::AddRawBit(const bool Value)
 
 void ULowEntryBitDataWriter::AddRawByte(const uint8 Value)
 {
-	if(CurrentBytePosition == 0)
+	if (CurrentBytePosition == 0)
 	{
 		Bytes.Add(Value);
 	}
@@ -196,17 +192,17 @@ void ULowEntryBitDataWriter::AddRawByte(const uint8 Value)
 
 void ULowEntryBitDataWriter::AddPartialRawByte(uint8 Value, int32 Bits)
 {
-	if(Bits == 0)
+	if (Bits == 0)
 	{
 		return;
 	}
-	if((Bits >= 8) || (Bits <= -8))
+	if ((Bits >= 8) || (Bits <= -8))
 	{
 		AddRawByte(Value);
 		return;
 	}
 
-	if(Bits < 0)
+	if (Bits < 0)
 	{
 		Bits = -Bits;
 		Value >>= (8 - Bits);
@@ -217,11 +213,11 @@ void ULowEntryBitDataWriter::AddPartialRawByte(uint8 Value, int32 Bits)
 	CurrentByte |= (Value << CurrentBytePosition);
 	CurrentBytePosition += Bits;
 
-	if(CurrentBytePosition >= 8)
+	if (CurrentBytePosition >= 8)
 	{
 		Bytes.Add(CurrentByte);
 		CurrentBytePosition -= 8;
-		if(CurrentBytePosition == 0)
+		if (CurrentBytePosition == 0)
 		{
 			CurrentByte = 0;
 		}
@@ -234,13 +230,13 @@ void ULowEntryBitDataWriter::AddPartialRawByte(uint8 Value, int32 Bits)
 
 void ULowEntryBitDataWriter::AddRawBytes(const TArray<uint8>& Value)
 {
-	if(CurrentBytePosition == 0)
+	if (CurrentBytePosition == 0)
 	{
 		Bytes.Append(Value);
 	}
 	else
 	{
-		for(uint8 V : Value)
+		for (uint8 V : Value)
 		{
 			AddRawByte(V);
 		}
@@ -250,7 +246,7 @@ void ULowEntryBitDataWriter::AddRawBytes(const TArray<uint8>& Value)
 
 TArray<uint8> ULowEntryBitDataWriter::GetBytes()
 {
-	if(CurrentBytePosition == 0)
+	if (CurrentBytePosition == 0)
 	{
 		return Bytes;
 	}
@@ -266,43 +262,43 @@ void ULowEntryBitDataWriter::AddBit(const bool Value)
 }
 void ULowEntryBitDataWriter::AddByteLeastSignificantBits(const uint8 Value, const int32 BitCount)
 {
-	if(BitCount > 0)
+	if (BitCount > 0)
 	{
 		AddPartialRawByte(Value, BitCount);
 	}
 }
 void ULowEntryBitDataWriter::AddByteMostSignificantBits(const uint8 Value, const int32 BitCount)
 {
-	if(BitCount > 0)
+	if (BitCount > 0)
 	{
 		AddPartialRawByte(Value, -BitCount);
 	}
 }
 void ULowEntryBitDataWriter::AddIntegerLeastSignificantBits(const int32 Value, const int32 BitCount)
 {
-	if(BitCount > 0)
+	if (BitCount > 0)
 	{
-		if(BitCount >= 32)
+		if (BitCount >= 32)
 		{
 			AddRawByte(Value);
 			AddRawByte(Value >> 8);
 			AddRawByte(Value >> 16);
 			AddRawByte(Value >> 24);
 		}
-		else if(BitCount > 24)
+		else if (BitCount > 24)
 		{
 			AddRawByte(Value);
 			AddRawByte(Value >> 8);
 			AddRawByte(Value >> 16);
 			AddPartialRawByte((Value >> 24), (BitCount - 24));
 		}
-		else if(BitCount > 16)
+		else if (BitCount > 16)
 		{
 			AddRawByte(Value);
 			AddRawByte(Value >> 8);
 			AddPartialRawByte((Value >> 16), (BitCount - 16));
 		}
-		else if(BitCount > 8)
+		else if (BitCount > 8)
 		{
 			AddRawByte(Value);
 			AddPartialRawByte((Value >> 8), (BitCount - 8));
@@ -315,30 +311,30 @@ void ULowEntryBitDataWriter::AddIntegerLeastSignificantBits(const int32 Value, c
 }
 void ULowEntryBitDataWriter::AddIntegerMostSignificantBits(const int32 Value, int32 BitCount)
 {
-	if(BitCount > 0)
+	if (BitCount > 0)
 	{
 		BitCount = -BitCount;
-		if(BitCount <= -32)
+		if (BitCount <= -32)
 		{
 			AddRawByte(Value);
 			AddRawByte(Value >> 8);
 			AddRawByte(Value >> 16);
 			AddRawByte(Value >> 24);
 		}
-		else if(BitCount < -24)
+		else if (BitCount < -24)
 		{
 			AddPartialRawByte((Value), (BitCount + 24));
 			AddRawByte(Value >> 8);
 			AddRawByte(Value >> 16);
 			AddRawByte(Value >> 24);
 		}
-		else if(BitCount < -16)
+		else if (BitCount < -16)
 		{
 			AddPartialRawByte((Value >> 8), (BitCount + 16));
 			AddRawByte(Value >> 16);
 			AddRawByte(Value >> 24);
 		}
-		else if(BitCount < -8)
+		else if (BitCount < -8)
 		{
 			AddPartialRawByte((Value >> 16), (BitCount + 8));
 			AddRawByte(Value >> 24);
@@ -362,11 +358,11 @@ void ULowEntryBitDataWriter::AddInteger(const int32 Value)
 }
 void ULowEntryBitDataWriter::AddUinteger(const int32 Value)
 {
-	if(Value <= 0)
+	if (Value <= 0)
 	{
 		AddRawByte(0);
 	}
-	else if(Value < 128)
+	else if (Value < 128)
 	{
 		AddRawByte(Value);
 	}
@@ -380,11 +376,11 @@ void ULowEntryBitDataWriter::AddUinteger(const int32 Value)
 }
 void ULowEntryBitDataWriter::AddPositiveInteger1(const int32 Value)
 {
-	if(Value <= 0)
+	if (Value <= 0)
 	{
 		AddRawByte(0);
 	}
-	else if(Value < 128)
+	else if (Value < 128)
 	{
 		AddRawByte(Value);
 	}
@@ -398,12 +394,12 @@ void ULowEntryBitDataWriter::AddPositiveInteger1(const int32 Value)
 }
 void ULowEntryBitDataWriter::AddPositiveInteger2(const int32 Value)
 {
-	if(Value <= 0)
+	if (Value <= 0)
 	{
 		AddRawByte(0);
 		AddRawByte(0);
 	}
-	else if(Value < 32768)
+	else if (Value < 32768)
 	{
 		AddRawByte(Value >> 8);
 		AddRawByte(Value);
@@ -418,13 +414,13 @@ void ULowEntryBitDataWriter::AddPositiveInteger2(const int32 Value)
 }
 void ULowEntryBitDataWriter::AddPositiveInteger3(const int32 Value)
 {
-	if(Value <= 0)
+	if (Value <= 0)
 	{
 		AddRawByte(0);
 		AddRawByte(0);
 		AddRawByte(0);
 	}
-	else if(Value < 8388608)
+	else if (Value < 8388608)
 	{
 		AddRawByte(Value >> 16);
 		AddRawByte(Value >> 8);
@@ -451,7 +447,7 @@ void ULowEntryBitDataWriter::AddLong(const int64 Value)
 }
 void ULowEntryBitDataWriter::AddLongBytes(ULowEntryLong* Value)
 {
-	if(Value != nullptr)
+	if (Value != nullptr)
 	{
 		AddRawBytes(Value->Bytes);
 	}
@@ -466,7 +462,7 @@ void ULowEntryBitDataWriter::AddFloat(const float Value)
 }
 void ULowEntryBitDataWriter::AddDoubleBytes(ULowEntryDouble* Value)
 {
-	if(Value != nullptr)
+	if (Value != nullptr)
 	{
 		AddRawBytes(Value->Bytes);
 	}
@@ -488,13 +484,13 @@ void ULowEntryBitDataWriter::AddStringUtf8(const FString& Value)
 void ULowEntryBitDataWriter::AddBitArray(const TArray<bool>& Value)
 {
 	int64 Size = Value.Num();
-	if((Size <= 0) || (Size > 0x7fffffff))
+	if ((Size <= 0) || (Size > 0x7fffffff))
 	{
 		AddUinteger(0);
 		return;
 	}
 	AddUinteger(Size);
-	for(bool V : Value)
+	for (bool V : Value)
 	{
 		AddBit(V);
 	}
@@ -502,13 +498,13 @@ void ULowEntryBitDataWriter::AddBitArray(const TArray<bool>& Value)
 void ULowEntryBitDataWriter::AddByteArrayLeastSignificantBits(const TArray<uint8>& Value, const int32 BitCount)
 {
 	int64 Size = Value.Num();
-	if((Size <= 0) || (Size > 0x7fffffff))
+	if ((Size <= 0) || (Size > 0x7fffffff))
 	{
 		AddUinteger(0);
 		return;
 	}
 	AddUinteger(Size);
-	for(uint8 V : Value)
+	for (uint8 V : Value)
 	{
 		AddByteLeastSignificantBits(V, BitCount);
 	}
@@ -516,13 +512,13 @@ void ULowEntryBitDataWriter::AddByteArrayLeastSignificantBits(const TArray<uint8
 void ULowEntryBitDataWriter::AddByteArrayMostSignificantBits(const TArray<uint8>& Value, const int32 BitCount)
 {
 	int64 Size = Value.Num();
-	if((Size <= 0) || (Size > 0x7fffffff))
+	if ((Size <= 0) || (Size > 0x7fffffff))
 	{
 		AddUinteger(0);
 		return;
 	}
 	AddUinteger(Size);
-	for(uint8 V : Value)
+	for (uint8 V : Value)
 	{
 		AddByteMostSignificantBits(V, BitCount);
 	}
@@ -530,13 +526,13 @@ void ULowEntryBitDataWriter::AddByteArrayMostSignificantBits(const TArray<uint8>
 void ULowEntryBitDataWriter::AddIntegerArrayLeastSignificantBits(const TArray<int32>& Value, const int32 BitCount)
 {
 	int64 Size = Value.Num();
-	if((Size <= 0) || (Size > 0x7fffffff))
+	if ((Size <= 0) || (Size > 0x7fffffff))
 	{
 		AddUinteger(0);
 		return;
 	}
 	AddUinteger(Size);
-	for(int32 V : Value)
+	for (int32 V : Value)
 	{
 		AddIntegerLeastSignificantBits(V, BitCount);
 	}
@@ -544,13 +540,13 @@ void ULowEntryBitDataWriter::AddIntegerArrayLeastSignificantBits(const TArray<in
 void ULowEntryBitDataWriter::AddIntegerArrayMostSignificantBits(const TArray<int32>& Value, const int32 BitCount)
 {
 	int64 Size = Value.Num();
-	if((Size <= 0) || (Size > 0x7fffffff))
+	if ((Size <= 0) || (Size > 0x7fffffff))
 	{
 		AddUinteger(0);
 		return;
 	}
 	AddUinteger(Size);
-	for(int32 V : Value)
+	for (int32 V : Value)
 	{
 		AddIntegerMostSignificantBits(V, BitCount);
 	}
@@ -558,7 +554,7 @@ void ULowEntryBitDataWriter::AddIntegerArrayMostSignificantBits(const TArray<int
 void ULowEntryBitDataWriter::AddByteArray(const TArray<uint8>& Value)
 {
 	int64 Size = Value.Num();
-	if((Size <= 0) || (Size > 0x7fffffff))
+	if ((Size <= 0) || (Size > 0x7fffffff))
 	{
 		AddUinteger(0);
 		return;
@@ -569,13 +565,13 @@ void ULowEntryBitDataWriter::AddByteArray(const TArray<uint8>& Value)
 void ULowEntryBitDataWriter::AddIntegerArray(const TArray<int32>& Value)
 {
 	int64 Size = Value.Num();
-	if((Size <= 0) || (Size > 0x7fffffff))
+	if ((Size <= 0) || (Size > 0x7fffffff))
 	{
 		AddUinteger(0);
 		return;
 	}
 	AddUinteger(Size);
-	for(int32 V : Value)
+	for (int32 V : Value)
 	{
 		AddInteger(V);
 	}
@@ -583,13 +579,13 @@ void ULowEntryBitDataWriter::AddIntegerArray(const TArray<int32>& Value)
 void ULowEntryBitDataWriter::AddPositiveInteger1Array(const TArray<int32>& Value)
 {
 	int64 Size = Value.Num();
-	if((Size <= 0) || (Size > 0x7fffffff))
+	if ((Size <= 0) || (Size > 0x7fffffff))
 	{
 		AddUinteger(0);
 		return;
 	}
 	AddUinteger(Size);
-	for(int32 V : Value)
+	for (int32 V : Value)
 	{
 		AddPositiveInteger1(V);
 	}
@@ -597,13 +593,13 @@ void ULowEntryBitDataWriter::AddPositiveInteger1Array(const TArray<int32>& Value
 void ULowEntryBitDataWriter::AddPositiveInteger2Array(const TArray<int32>& Value)
 {
 	int64 Size = Value.Num();
-	if((Size <= 0) || (Size > 0x7fffffff))
+	if ((Size <= 0) || (Size > 0x7fffffff))
 	{
 		AddUinteger(0);
 		return;
 	}
 	AddUinteger(Size);
-	for(int32 V : Value)
+	for (int32 V : Value)
 	{
 		AddPositiveInteger2(V);
 	}
@@ -611,13 +607,13 @@ void ULowEntryBitDataWriter::AddPositiveInteger2Array(const TArray<int32>& Value
 void ULowEntryBitDataWriter::AddPositiveInteger3Array(const TArray<int32>& Value)
 {
 	int64 Size = Value.Num();
-	if((Size <= 0) || (Size > 0x7fffffff))
+	if ((Size <= 0) || (Size > 0x7fffffff))
 	{
 		AddUinteger(0);
 		return;
 	}
 	AddUinteger(Size);
-	for(int32 V : Value)
+	for (int32 V : Value)
 	{
 		AddPositiveInteger3(V);
 	}
@@ -625,13 +621,13 @@ void ULowEntryBitDataWriter::AddPositiveInteger3Array(const TArray<int32>& Value
 void ULowEntryBitDataWriter::AddLongArray(const TArray<int64>& Value)
 {
 	int64 Size = Value.Num();
-	if((Size <= 0) || (Size > 0x7fffffff))
+	if ((Size <= 0) || (Size > 0x7fffffff))
 	{
 		AddUinteger(0);
 		return;
 	}
 	AddUinteger(Size);
-	for(int64 V : Value)
+	for (int64 V : Value)
 	{
 		AddLong(V);
 	}
@@ -639,13 +635,13 @@ void ULowEntryBitDataWriter::AddLongArray(const TArray<int64>& Value)
 void ULowEntryBitDataWriter::AddLongBytesArray(const TArray<ULowEntryLong*>& Value)
 {
 	int64 Size = Value.Num();
-	if((Size <= 0) || (Size > 0x7fffffff))
+	if ((Size <= 0) || (Size > 0x7fffffff))
 	{
 		AddUinteger(0);
 		return;
 	}
 	AddUinteger(Size);
-	for(ULowEntryLong* V : Value)
+	for (ULowEntryLong* V : Value)
 	{
 		AddLongBytes(V);
 	}
@@ -653,13 +649,13 @@ void ULowEntryBitDataWriter::AddLongBytesArray(const TArray<ULowEntryLong*>& Val
 void ULowEntryBitDataWriter::AddFloatArray(const TArray<float>& Value)
 {
 	int64 Size = Value.Num();
-	if((Size <= 0) || (Size > 0x7fffffff))
+	if ((Size <= 0) || (Size > 0x7fffffff))
 	{
 		AddUinteger(0);
 		return;
 	}
 	AddUinteger(Size);
-	for(float V : Value)
+	for (float V : Value)
 	{
 		AddFloat(V);
 	}
@@ -667,13 +663,13 @@ void ULowEntryBitDataWriter::AddFloatArray(const TArray<float>& Value)
 void ULowEntryBitDataWriter::AddDoubleBytesArray(const TArray<ULowEntryDouble*>& Value)
 {
 	int64 Size = Value.Num();
-	if((Size <= 0) || (Size > 0x7fffffff))
+	if ((Size <= 0) || (Size > 0x7fffffff))
 	{
 		AddUinteger(0);
 		return;
 	}
 	AddUinteger(Size);
-	for(ULowEntryDouble* V : Value)
+	for (ULowEntryDouble* V : Value)
 	{
 		AddDoubleBytes(V);
 	}
@@ -681,13 +677,13 @@ void ULowEntryBitDataWriter::AddDoubleBytesArray(const TArray<ULowEntryDouble*>&
 void ULowEntryBitDataWriter::AddBooleanArray(const TArray<bool>& Value)
 {
 	int64 Size = Value.Num();
-	if((Size <= 0) || (Size > 0x7fffffff))
+	if ((Size <= 0) || (Size > 0x7fffffff))
 	{
 		AddUinteger(0);
 		return;
 	}
 	AddUinteger(Size);
-	for(bool V : Value)
+	for (bool V : Value)
 	{
 		AddBoolean(V);
 	}
@@ -695,13 +691,13 @@ void ULowEntryBitDataWriter::AddBooleanArray(const TArray<bool>& Value)
 void ULowEntryBitDataWriter::AddStringUtf8Array(const TArray<FString>& Value)
 {
 	int64 Size = Value.Num();
-	if((Size <= 0) || (Size > 0x7fffffff))
+	if ((Size <= 0) || (Size > 0x7fffffff))
 	{
 		AddUinteger(0);
 		return;
 	}
 	AddUinteger(Size);
-	for(const FString& V : Value)
+	for (const FString& V : Value)
 	{
 		AddStringUtf8(V);
 	}

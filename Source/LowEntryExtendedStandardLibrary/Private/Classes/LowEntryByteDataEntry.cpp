@@ -11,144 +11,144 @@ ULowEntryByteDataEntry::ULowEntryByteDataEntry(const FObjectInitializer& ObjectI
 	, FloatValue(0)
 	, BooleanValue(false) { }
 
-	ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromByte(const uint8 Value)
-	{
-		ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
-		Instance->SetByte(Value);
-		return Instance;
-	}
-	ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromInteger(const int32 Value)
-	{
-		ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
-		Instance->SetInteger(Value);
-		return Instance;
-	}
-	ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromPositiveInteger1(const int32 Value)
-	{
-		ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
-		Instance->SetPositiveInteger1(Value);
-		return Instance;
-	}
-	ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromPositiveInteger2(const int32 Value)
-	{
-		ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
-		Instance->SetPositiveInteger2(Value);
-		return Instance;
-	}
-	ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromPositiveInteger3(const int32 Value)
-	{
-		ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
-		Instance->SetPositiveInteger3(Value);
-		return Instance;
-	}
-	ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromLong(const int64 Value)
-	{
-		ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
-		Instance->SetLong(Value);
-		return Instance;
-	}
-	ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromLongBytes(ULowEntryLong* Value)
-	{
-		ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
-		Instance->SetLongBytes(Value);
-		return Instance;
-	}
+ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromByte(const uint8 Value)
+{
+	ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
+	Instance->SetByte(Value);
+	return Instance;
+}
+ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromInteger(const int32 Value)
+{
+	ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
+	Instance->SetInteger(Value);
+	return Instance;
+}
+ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromPositiveInteger1(const int32 Value)
+{
+	ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
+	Instance->SetPositiveInteger1(Value);
+	return Instance;
+}
+ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromPositiveInteger2(const int32 Value)
+{
+	ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
+	Instance->SetPositiveInteger2(Value);
+	return Instance;
+}
+ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromPositiveInteger3(const int32 Value)
+{
+	ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
+	Instance->SetPositiveInteger3(Value);
+	return Instance;
+}
+ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromLong(const int64 Value)
+{
+	ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
+	Instance->SetLong(Value);
+	return Instance;
+}
+ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromLongBytes(ULowEntryLong* Value)
+{
+	ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
+	Instance->SetLongBytes(Value);
+	return Instance;
+}
 
-	ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromFloat(const float Value)
-	{
-		ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
-		Instance->SetFloat(Value);
-		return Instance;
-	}
-	ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromDoubleBytes(ULowEntryDouble* Value)
-	{
-		ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
-		Instance->SetDoubleBytes(Value);
-		return Instance;
-	}
+ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromFloat(const float Value)
+{
+	ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
+	Instance->SetFloat(Value);
+	return Instance;
+}
+ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromDoubleBytes(ULowEntryDouble* Value)
+{
+	ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
+	Instance->SetDoubleBytes(Value);
+	return Instance;
+}
 
-	ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromBoolean(const bool Value)
-	{
-		ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
-		Instance->SetBoolean(Value);
-		return Instance;
-	}
-	ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromStringUtf8(const FString& Value)
-	{
-		ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
-		Instance->SetStringUtf8(Value);
-		return Instance;
-	}
+ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromBoolean(const bool Value)
+{
+	ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
+	Instance->SetBoolean(Value);
+	return Instance;
+}
+ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromStringUtf8(const FString& Value)
+{
+	ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
+	Instance->SetStringUtf8(Value);
+	return Instance;
+}
 
 
-	ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromByteArray(const TArray<uint8>& Value)
-	{
-		ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
-		Instance->SetByteArray(Value);
-		return Instance;
-	}
-	ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromIntegerArray(const TArray<int32>& Value)
-	{
-		ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
-		Instance->SetIntegerArray(Value);
-		return Instance;
-	}
-	ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromPositiveInteger1Array(const TArray<int32>& Value)
-	{
-		ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
-		Instance->SetPositiveInteger1Array(Value);
-		return Instance;
-	}
-	ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromPositiveInteger2Array(const TArray<int32>& Value)
-	{
-		ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
-		Instance->SetPositiveInteger2Array(Value);
-		return Instance;
-	}
-	ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromPositiveInteger3Array(const TArray<int32>& Value)
-	{
-		ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
-		Instance->SetPositiveInteger3Array(Value);
-		return Instance;
-	}
-	ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromLongArray(const TArray<int64>& Value)
-	{
-		ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
-		Instance->SetLongArray(Value);
-		return Instance;
-	}
-	ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromLongBytesArray(const TArray<ULowEntryLong*>& Value)
-	{
-		ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
-		Instance->SetLongBytesArray(Value);
-		return Instance;
-	}
+ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromByteArray(const TArray<uint8>& Value)
+{
+	ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
+	Instance->SetByteArray(Value);
+	return Instance;
+}
+ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromIntegerArray(const TArray<int32>& Value)
+{
+	ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
+	Instance->SetIntegerArray(Value);
+	return Instance;
+}
+ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromPositiveInteger1Array(const TArray<int32>& Value)
+{
+	ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
+	Instance->SetPositiveInteger1Array(Value);
+	return Instance;
+}
+ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromPositiveInteger2Array(const TArray<int32>& Value)
+{
+	ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
+	Instance->SetPositiveInteger2Array(Value);
+	return Instance;
+}
+ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromPositiveInteger3Array(const TArray<int32>& Value)
+{
+	ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
+	Instance->SetPositiveInteger3Array(Value);
+	return Instance;
+}
+ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromLongArray(const TArray<int64>& Value)
+{
+	ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
+	Instance->SetLongArray(Value);
+	return Instance;
+}
+ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromLongBytesArray(const TArray<ULowEntryLong*>& Value)
+{
+	ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
+	Instance->SetLongBytesArray(Value);
+	return Instance;
+}
 
-	ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromFloatArray(const TArray<float>& Value)
-	{
-		ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
-		Instance->SetFloatArray(Value);
-		return Instance;
-	}
-	ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromDoubleBytesArray(const TArray<ULowEntryDouble*>& Value)
-	{
-		ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
-		Instance->SetDoubleBytesArray(Value);
-		return Instance;
-	}
+ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromFloatArray(const TArray<float>& Value)
+{
+	ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
+	Instance->SetFloatArray(Value);
+	return Instance;
+}
+ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromDoubleBytesArray(const TArray<ULowEntryDouble*>& Value)
+{
+	ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
+	Instance->SetDoubleBytesArray(Value);
+	return Instance;
+}
 
-	ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromBooleanArray(const TArray<bool>& Value)
-	{
-		ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
-		Instance->SetBooleanArray(Value);
-		return Instance;
-	}
-	ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromStringUtf8Array(const TArray<FString>& Value)
-	{
-		ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
-		Instance->SetStringUtf8Array(Value);
-		return Instance;
-	}
+ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromBooleanArray(const TArray<bool>& Value)
+{
+	ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
+	Instance->SetBooleanArray(Value);
+	return Instance;
+}
+ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromStringUtf8Array(const TArray<FString>& Value)
+{
+	ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
+	Instance->SetStringUtf8Array(Value);
+	return Instance;
+}
 
 
 bool ULowEntryByteDataEntry::IsByte()
@@ -306,7 +306,6 @@ FString ULowEntryByteDataEntry::GetStringUtf8()
 {
 	return StringUtf8Value;
 }
-
 
 
 bool ULowEntryByteDataEntry::IsByteArray()

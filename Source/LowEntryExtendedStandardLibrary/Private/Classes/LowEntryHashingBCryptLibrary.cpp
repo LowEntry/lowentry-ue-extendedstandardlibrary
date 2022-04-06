@@ -13,7 +13,7 @@ void ULowEntryHashingBCryptLibrary::encipher(int32 lr[], const int32 off)
 	int32 i, n, l = lr[off], r = lr[off + 1];
 
 	l ^= P[0];
-	for(i = 0; i <= (BLOWFISH_NUM_ROUNDS - 2);)
+	for (i = 0; i <= (BLOWFISH_NUM_ROUNDS - 2);)
 	{
 		n = S[(l >> 24) & 0xff];
 		n += S[0x100 | ((l >> 16) & 0xff)];
@@ -37,7 +37,7 @@ int32 ULowEntryHashingBCryptLibrary::streamtoword(const TArray<uint8>& data, int
 	int32 word = 0;
 	int32 off = offp[0];
 
-	for(i = 0; i < 4; i++)
+	for (i = 0; i < 4; i++)
 	{
 		word = (word << 8) | (data[off] & 0xff);
 		off = (off + 1) % data.Num();
@@ -49,11 +49,11 @@ int32 ULowEntryHashingBCryptLibrary::streamtoword(const TArray<uint8>& data, int
 
 void ULowEntryHashingBCryptLibrary::init_key()
 {
-	for(int32 i = 0; i < P_len; i++)
+	for (int32 i = 0; i < P_len; i++)
 	{
 		P[i] = P_orig[i];
 	}
-	for(int32 i = 0; i < S_len; i++)
+	for (int32 i = 0; i < S_len; i++)
 	{
 		S[i] = S_orig[i];
 	}
@@ -66,19 +66,19 @@ void ULowEntryHashingBCryptLibrary::key(const TArray<uint8>& key)
 	int32 lr[] = {0, 0};
 	int32 plen = P_len, slen = S_len;
 
-	for(i = 0; i < plen; i++)
+	for (i = 0; i < plen; i++)
 	{
 		P[i] = P[i] ^ streamtoword(key, koffp);
 	}
 
-	for(i = 0; i < plen; i += 2)
+	for (i = 0; i < plen; i += 2)
 	{
 		encipher(lr, 0);
 		P[i] = lr[0];
 		P[i + 1] = lr[1];
 	}
 
-	for(i = 0; i < slen; i += 2)
+	for (i = 0; i < slen; i += 2)
 	{
 		encipher(lr, 0);
 		S[i] = lr[0];
@@ -93,12 +93,12 @@ void ULowEntryHashingBCryptLibrary::ekskey(const TArray<uint8>& data, const TArr
 	int32 lr[] = {0, 0};
 	int32 plen = P_len, slen = S_len;
 
-	for(i = 0; i < plen; i++)
+	for (i = 0; i < plen; i++)
 	{
 		P[i] = P[i] ^ streamtoword(key, koffp);
 	}
 
-	for(i = 0; i < plen; i += 2)
+	for (i = 0; i < plen; i += 2)
 	{
 		lr[0] ^= streamtoword(data, doffp);
 		lr[1] ^= streamtoword(data, doffp);
@@ -107,7 +107,7 @@ void ULowEntryHashingBCryptLibrary::ekskey(const TArray<uint8>& data, const TArr
 		P[i + 1] = lr[1];
 	}
 
-	for(i = 0; i < slen; i += 2)
+	for (i = 0; i < slen; i += 2)
 	{
 		lr[0] ^= streamtoword(data, doffp);
 		lr[1] ^= streamtoword(data, doffp);
@@ -119,7 +119,7 @@ void ULowEntryHashingBCryptLibrary::ekskey(const TArray<uint8>& data, const TArr
 
 TArray<uint8> ULowEntryHashingBCryptLibrary::crypt_raw(const TArray<uint8>& password, const TArray<uint8>& salt, const int32 log_rounds, int32 cdata[])
 {
-	if((password.Num() <= 0) || (salt.Num() != BCRYPT_SALT_LEN) || (log_rounds < 4) || (log_rounds > 30))
+	if ((password.Num() <= 0) || (salt.Num() != BCRYPT_SALT_LEN) || (log_rounds < 4) || (log_rounds > 30))
 	{
 		return TArray<uint8>();
 	}
@@ -132,15 +132,15 @@ TArray<uint8> ULowEntryHashingBCryptLibrary::crypt_raw(const TArray<uint8>& pass
 
 	init_key();
 	ekskey(salt, password);
-	for(i = 0; i != rounds; i++)
+	for (i = 0; i != rounds; i++)
 	{
 		key(password);
 		key(salt);
 	}
 
-	for(i = 0; i < 64; i++)
+	for (i = 0; i < 64; i++)
 	{
-		for(j = 0; j < (clen >> 1); j++)
+		for (j = 0; j < (clen >> 1); j++)
 		{
 			encipher(cdata, j << 1);
 		}
@@ -148,7 +148,7 @@ TArray<uint8> ULowEntryHashingBCryptLibrary::crypt_raw(const TArray<uint8>& pass
 
 	ret = TArray<uint8>();
 	ret.SetNum(clen * 4);
-	for(i = 0, j = 0; i < clen; i++)
+	for (i = 0, j = 0; i < clen; i++)
 	{
 		ret[j++] = static_cast<uint8>((cdata[i] >> 24) & 0xff);
 		ret[j++] = static_cast<uint8>((cdata[i] >> 16) & 0xff);
@@ -161,7 +161,7 @@ TArray<uint8> ULowEntryHashingBCryptLibrary::crypt_raw(const TArray<uint8>& pass
 TArray<uint8> ULowEntryHashingBCryptLibrary::crypt_raw(const TArray<uint8>& password, const TArray<uint8>& salt, const int32 log_rounds)
 {
 	int32 bf_crypt_ciphertext_clone[bf_crypt_ciphertext_len];
-	for(int32 i = 0; i < bf_crypt_ciphertext_len; i++)
+	for (int32 i = 0; i < bf_crypt_ciphertext_len; i++)
 	{
 		bf_crypt_ciphertext_clone[i] = bf_crypt_ciphertext[i];
 	}

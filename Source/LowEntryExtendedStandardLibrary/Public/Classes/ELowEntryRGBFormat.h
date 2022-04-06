@@ -22,19 +22,19 @@ enum class ELowEntryRGBFormat : uint8
 
 static ERGBFormat ELowEntryRGBFormatToUE4(ELowEntryRGBFormat Value)
 {
-	if(Value == ELowEntryRGBFormat::Invalid)
+	if (Value == ELowEntryRGBFormat::Invalid)
 	{
 		return ERGBFormat::Invalid;
 	}
-	if(Value == ELowEntryRGBFormat::RGBA)
+	if (Value == ELowEntryRGBFormat::RGBA)
 	{
 		return ERGBFormat::RGBA;
 	}
-	if(Value == ELowEntryRGBFormat::BGRA)
+	if (Value == ELowEntryRGBFormat::BGRA)
 	{
 		return ERGBFormat::BGRA;
 	}
-	if(Value == ELowEntryRGBFormat::Gray)
+	if (Value == ELowEntryRGBFormat::Gray)
 	{
 		return ERGBFormat::Gray;
 	}
@@ -43,19 +43,19 @@ static ERGBFormat ELowEntryRGBFormatToUE4(ELowEntryRGBFormat Value)
 
 static ELowEntryRGBFormat ELowEntryRGBFormatFromUE4(ERGBFormat Value)
 {
-	if(Value == ERGBFormat::Invalid)
+	if (Value == ERGBFormat::Invalid)
 	{
 		return ELowEntryRGBFormat::Invalid;
 	}
-	if(Value == ERGBFormat::RGBA)
+	if (Value == ERGBFormat::RGBA)
 	{
 		return ELowEntryRGBFormat::RGBA;
 	}
-	if(Value == ERGBFormat::BGRA)
+	if (Value == ERGBFormat::BGRA)
 	{
 		return ELowEntryRGBFormat::BGRA;
 	}
-	if(Value == ERGBFormat::Gray)
+	if (Value == ERGBFormat::Gray)
 	{
 		return ELowEntryRGBFormat::Gray;
 	}

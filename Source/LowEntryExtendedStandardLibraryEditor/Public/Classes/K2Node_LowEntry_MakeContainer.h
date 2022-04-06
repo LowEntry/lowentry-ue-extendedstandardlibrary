@@ -31,7 +31,6 @@ UCLASS(MinimalAPI, abstract)
 class UK2Node_LowEntry_MakeContainer : public UK2Node, public IK2Node_AddPinInterface
 {
 	GENERATED_UCLASS_BODY()
-
 	/** The number of input pins to generate for this node */
 	UPROPERTY()
 	int32 NumInputs;

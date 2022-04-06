@@ -13,7 +13,7 @@ TArray<TArray<uint8>> ULowEntryHashingHashcashLibrary::GenerateBase64Cache()
 {
 	TArray<TArray<uint8>> Array;
 	Array.SetNum(MAX_COUNTER);
-	for(int32 i = 0; i < Array.Num(); i++)
+	for (int32 i = 0; i < Array.Num(); i++)
 	{
 		Array[i] = base64WithoutLeadingZeroBytes(i);
 	}
@@ -29,7 +29,7 @@ TArray<FString> ULowEntryHashingHashcashLibrary::hashArrayCustomCreationDate(con
 {
 	TArray<FString> result;
 	result.SetNum(resources.Num());
-	for(int64 i = 0; i < resources.Num(); i++)
+	for (int64 i = 0; i < resources.Num(); i++)
 	{
 		result[i] = hashCustomCreationDate(resources[i], date, bits);
 	}
@@ -45,7 +45,7 @@ FString ULowEntryHashingHashcashLibrary::hashCustomCreationDate(const FString& r
 	FSHA1 hasher;
 	TArray<uint8> hashBuffer;
 	hashBuffer.SetNum(FSHA1::DigestSize);
-	
+
 	FString dataPrefix = FString::FromInt(VERSION) + TEXT(":") + FString::FromInt(bits) + TEXT(":") + getDateString(date) + TEXT(":") + resource + TEXT("::");
 	TArray<uint8> dataPrefixBytes = ULowEntryExtendedStandardLibrary::StringToBytesUtf8(dataPrefix);
 
@@ -55,19 +55,19 @@ FString ULowEntryHashingHashcashLibrary::hashCustomCreationDate(const FString& r
 
 	int32 prefixpos = buffer.Num();
 
-	while(true)
+	while (true)
 	{
 		buffer.SetNum(prefixpos, false);
-		
+
 		TArray<uint8> randomBytes;
 		ULowEntryExtendedStandardLibrary::GenerateRandomBytes(12, randomBytes);
 		buffer.Append(ULowEntryExtendedStandardLibrary::StringToBytesUtf8(ULowEntryExtendedStandardLibrary::BytesToBase64(randomBytes) + TEXT(":")));
 
-		if(BASE_64_CACHE.Num() <= 0)
+		if (BASE_64_CACHE.Num() <= 0)
 		{
 			BASE_64_CACHE = GenerateBase64Cache();
 		}
-		for(const TArray<uint8>& base64counter : BASE_64_CACHE)
+		for (const TArray<uint8>& base64counter : BASE_64_CACHE)
 		{
 			hasher.Reset();
 			hasher.Update(buffer.GetData(), buffer.Num());
@@ -76,7 +76,7 @@ FString ULowEntryHashingHashcashLibrary::hashCustomCreationDate(const FString& r
 			hasher.GetHash(hashBuffer.GetData());
 
 			int32 leadingZeroBits = countLeadingZeroBits(hashBuffer);
-			if(leadingZeroBits >= bits)
+			if (leadingZeroBits >= bits)
 			{
 				buffer.Append(base64counter);
 				return ULowEntryExtendedStandardLibrary::BytesToStringUtf8(buffer);
@@ -90,7 +90,7 @@ TArray<ULowEntryParsedHashcash*> ULowEntryHashingHashcashLibrary::parseArray(con
 {
 	TArray<ULowEntryParsedHashcash*> result;
 	result.SetNum(Hashcashes.Num());
-	for(int64 i = 0; i < Hashcashes.Num(); i++)
+	for (int64 i = 0; i < Hashcashes.Num(); i++)
 	{
 		result[i] = parse(Hashcashes[i]);
 	}
@@ -101,35 +101,35 @@ ULowEntryParsedHashcash* ULowEntryHashingHashcashLibrary::parse(const FString& H
 {
 	TArray<FString> parts;
 	Hashcash.ParseIntoArray(parts, TEXT(":"), false);
-	if(parts.Num() >= 6)
+	if (parts.Num() >= 6)
 	{
 		FString version = parts[0];
-		if(version.Equals(TEXT("0")))
+		if (version.Equals(TEXT("0")))
 		{
 			FDateTime date = parseDateString(parts[1]);
-			if(date.GetYear() > 1)
+			if (date.GetYear() > 1)
 			{
 				int32 bits = countLeadingZeroBits(ULowEntryExtendedStandardLibrary::Sha1(ULowEntryExtendedStandardLibrary::StringToBytesUtf8(Hashcash)));
 				FString resource = parts[2];
-				for(int32 i = 3; i < (parts.Num() - 3); i++)
+				for (int32 i = 3; i < (parts.Num() - 3); i++)
 				{
 					resource += TEXT(":") + parts[i];
 				}
 				return ULowEntryParsedHashcash::Create(true, resource, date, bits);
 			}
 		}
-		else if(version.Equals(TEXT("1")))
+		else if (version.Equals(TEXT("1")))
 		{
-			if(parts.Num() >= 7)
+			if (parts.Num() >= 7)
 			{
 				FDateTime date = parseDateString(parts[2]);
-				if(date.GetYear() > 1)
+				if (date.GetYear() > 1)
 				{
 					int32 bits = FCString::Atoi(*parts[1]);
-					if(countLeadingZeroBits(ULowEntryExtendedStandardLibrary::Sha1(ULowEntryExtendedStandardLibrary::StringToBytesUtf8(Hashcash))) >= bits)
+					if (countLeadingZeroBits(ULowEntryExtendedStandardLibrary::Sha1(ULowEntryExtendedStandardLibrary::StringToBytesUtf8(Hashcash))) >= bits)
 					{
 						FString resource = parts[3];
-						for(int32 i = 4; i < (parts.Num() - 3); i++)
+						for (int32 i = 4; i < (parts.Num() - 3); i++)
 						{
 							resource += TEXT(":") + parts[i];
 						}
@@ -146,7 +146,7 @@ ULowEntryParsedHashcash* ULowEntryHashingHashcashLibrary::parse(const FString& H
 TArray<uint8> ULowEntryHashingHashcashLibrary::base64WithoutLeadingZeroBytes(const int32 value)
 {
 	TArray<uint8> bytes;
-	if(value < 0)
+	if (value < 0)
 	{
 		bytes.SetNum(4);
 		bytes[0] = static_cast<uint8>(value >> 24);
@@ -154,18 +154,18 @@ TArray<uint8> ULowEntryHashingHashcashLibrary::base64WithoutLeadingZeroBytes(con
 		bytes[2] = static_cast<uint8>(value >> 8);
 		bytes[3] = static_cast<uint8>(value);
 	}
-	else if(value < 256)
+	else if (value < 256)
 	{
 		bytes.SetNum(1);
 		bytes[0] = static_cast<uint8>(value);
 	}
-	else if(value < 65536)
+	else if (value < 65536)
 	{
 		bytes.SetNum(2);
 		bytes[0] = static_cast<uint8>(value >> 8);
 		bytes[1] = static_cast<uint8>(value);
 	}
-	else if(value < 16777216)
+	else if (value < 16777216)
 	{
 		bytes.SetNum(3);
 		bytes[0] = static_cast<uint8>(value >> 16);
@@ -191,7 +191,7 @@ FString ULowEntryHashingHashcashLibrary::getDateString(const FDateTime& date)
 
 FDateTime ULowEntryHashingHashcashLibrary::parseDateString(const FString& date)
 {
-	if(date.Len() < 6)
+	if (date.Len() < 6)
 	{
 		return FDateTime(0);
 	}
@@ -199,35 +199,35 @@ FDateTime ULowEntryHashingHashcashLibrary::parseDateString(const FString& date)
 	int32 year = FCString::Atoi(*date.Mid(0, 2));
 	int32 month = FCString::Atoi(*date.Mid(2, 2));
 	int32 day = FCString::Atoi(*date.Mid(4, 2));
-	if((year < 0) || (month < 1) || (month > 12))
+	if ((year < 0) || (month < 1) || (month > 12))
 	{
 		return FDateTime(0);
 	}
 	year += ((FDateTime::Now().GetYear() / 100) * 100);
-	if((day < 1) || (day > FDateTime::DaysInMonth(year, month)))
+	if ((day < 1) || (day > FDateTime::DaysInMonth(year, month)))
 	{
 		return FDateTime(0);
 	}
 
-	if(date.Len() < 10)
+	if (date.Len() < 10)
 	{
 		return FDateTime(year, month, day);
 	}
 
 	int32 hour = FCString::Atoi(*date.Mid(6, 2));
 	int32 minutes = FCString::Atoi(*date.Mid(8, 2));
-	if((hour < 0) || (hour > 23) || (minutes < 0) || (minutes > 59))
+	if ((hour < 0) || (hour > 23) || (minutes < 0) || (minutes > 59))
 	{
 		return FDateTime(0);
 	}
 
-	if(date.Len() < 12)
+	if (date.Len() < 12)
 	{
 		return FDateTime(year, month, day, hour, minutes);
 	}
 
 	int32 seconds = FCString::Atoi(*date.Mid(10, 2));
-	if((seconds < 0) || (seconds > 59))
+	if ((seconds < 0) || (seconds > 59))
 	{
 		return FDateTime(0);
 	}
@@ -239,11 +239,11 @@ FDateTime ULowEntryHashingHashcashLibrary::parseDateString(const FString& date)
 int32 ULowEntryHashingHashcashLibrary::countLeadingZeroBits(const TArray<uint8>& values)
 {
 	int32 total = 0;
-	for(uint8 value : values)
+	for (uint8 value : values)
 	{
 		uint8 ofbyte = countLeadingZeroBits(value);
 		total += ofbyte;
-		if(ofbyte != 8)
+		if (ofbyte != 8)
 		{
 			break;
 		}
@@ -253,39 +253,39 @@ int32 ULowEntryHashingHashcashLibrary::countLeadingZeroBits(const TArray<uint8>&
 
 uint8 ULowEntryHashingHashcashLibrary::countLeadingZeroBits(const uint8 v)
 {
-	if(v < 0)
+	if (v < 0)
 	{
 		return 0;
 	}
-	if(v < 1)
+	if (v < 1)
 	{
 		return 8;
 	}
-	if(v < 2)
+	if (v < 2)
 	{
 		return 7;
 	}
-	if(v < 4)
+	if (v < 4)
 	{
 		return 6;
 	}
-	if(v < 8)
+	if (v < 8)
 	{
 		return 5;
 	}
-	if(v < 16)
+	if (v < 16)
 	{
 		return 4;
 	}
-	if(v < 32)
+	if (v < 32)
 	{
 		return 3;
 	}
-	if(v < 64)
+	if (v < 64)
 	{
 		return 2;
 	}
-	if(v < 128)
+	if (v < 128)
 	{
 		return 1;
 	}

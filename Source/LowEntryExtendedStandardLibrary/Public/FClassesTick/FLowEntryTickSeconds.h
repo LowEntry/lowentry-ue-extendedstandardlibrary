@@ -34,14 +34,14 @@ public:
 
 	virtual void UpdateOperation(FLatentResponse& Response) override
 	{
-		if(Tick >= Ticks)
+		if (Tick >= Ticks)
 		{
 			Response.DoneIf(true);
 			return;
 		}
 
 		CurrentSecondsInterval += Response.ElapsedTime();
-		if(CurrentSecondsInterval >= SecondsInterval)
+		if (CurrentSecondsInterval >= SecondsInterval)
 		{
 			CurrentSecondsInterval -= SecondsInterval;
 			Tick++;

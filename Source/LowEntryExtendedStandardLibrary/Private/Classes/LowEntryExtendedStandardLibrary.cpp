@@ -57,26 +57,22 @@
 #include "Widgets/SViewport.h"
 
 
-// init >>
-	ULowEntryExtendedStandardLibrary::ULowEntryExtendedStandardLibrary(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
-	{
-	}
-// init <<
+ULowEntryExtendedStandardLibrary::ULowEntryExtendedStandardLibrary(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) { }
 
 
 void ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(UObject* WorldContextObject, const FString& InString, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)
 {
 #if !(UE_BUILD_SHIPPING || UE_BUILD_TEST)
 	FString Prefix;
-	if(GEngine != nullptr)
+	if (GEngine != nullptr)
 	{
 		WorldContextObject = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::ReturnNull);
-		if(WorldContextObject)
+		if (WorldContextObject)
 		{
 			UWorld* World = WorldContextObject->GetWorld();
-			if(World->WorldType == EWorldType::PIE)
+			if (World->WorldType == EWorldType::PIE)
 			{
-				switch(World->GetNetMode())
+				switch (World->GetNetMode())
 				{
 					case NM_Client:
 						Prefix = FString::Printf(TEXT("Client %d: "), GPlayInEditorID - 1);
@@ -85,7 +81,7 @@ void ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(UObject* W
 					case NM_ListenServer:
 						Prefix = FString::Printf(TEXT("Server: "));
 						break;
-					default: 
+					default:
 						break;
 				}
 			}
@@ -94,7 +90,7 @@ void ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(UObject* W
 
 	const FString FinalString = Prefix + InString;
 
-	if(bPrintToLog)
+	if (bPrintToLog)
 	{
 		UE_LOG(LogBlueprintUserMessages, Log, TEXT("%s"), *FinalString);
 	}
@@ -103,11 +99,11 @@ void ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(UObject* W
 		UE_LOG(LogBlueprintUserMessages, Verbose, TEXT("%s"), *FinalString);
 	}
 
-	if(bPrintToScreen)
+	if (bPrintToScreen)
 	{
-		if(GAreScreenMessagesEnabled)
+		if (GAreScreenMessagesEnabled)
 		{
-			if(GEngine != nullptr)
+			if (GEngine != nullptr)
 			{
 				GEngine->AddOnScreenDebugMessage(INDEX_NONE, ScreenDurationTime, TextColor.ToFColor(true), FinalString);
 			}
@@ -115,7 +111,6 @@ void ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(UObject* W
 	}
 #endif
 }
-
 
 
 bool ULowEntryExtendedStandardLibrary::DebugBuild()
@@ -155,7 +150,6 @@ bool ULowEntryExtendedStandardLibrary::ShippingBuild()
 }
 
 
-
 bool ULowEntryExtendedStandardLibrary::WithEditor()
 {
 #if WITH_EDITOR
@@ -164,7 +158,6 @@ bool ULowEntryExtendedStandardLibrary::WithEditor()
 	return false;
 #endif
 }
-
 
 
 bool ULowEntryExtendedStandardLibrary::Html5Platform()
@@ -188,11 +181,11 @@ bool ULowEntryExtendedStandardLibrary::WindowsPlatform()
 bool ULowEntryExtendedStandardLibrary::Windows32Platform()
 {
 #if PLATFORM_WINDOWS
-	#ifdef _WIN64
-		return false;
-	#else
+#ifdef _WIN64
+	return false;
+#else
 		return true;
-	#endif
+#endif
 #else
 	return false;
 #endif
@@ -201,11 +194,11 @@ bool ULowEntryExtendedStandardLibrary::Windows32Platform()
 bool ULowEntryExtendedStandardLibrary::Windows64Platform()
 {
 #if PLATFORM_WINDOWS
-	#ifdef _WIN64
-		return true;
-	#else
+#ifdef _WIN64
+	return true;
+#else
 		return false;
-	#endif
+#endif
 #else
 	return false;
 #endif
@@ -214,11 +207,11 @@ bool ULowEntryExtendedStandardLibrary::Windows64Platform()
 bool ULowEntryExtendedStandardLibrary::WindowsRtPlatform()
 {
 #ifdef PLATFORM_WINRT
-	#if PLATFORM_WINRT
+#if PLATFORM_WINRT
 		return true;
-	#else
+#else
 		return false;
-	#endif
+#endif
 #else
 	return false;
 #endif
@@ -227,11 +220,11 @@ bool ULowEntryExtendedStandardLibrary::WindowsRtPlatform()
 bool ULowEntryExtendedStandardLibrary::WindowsRtArmPlatform()
 {
 #ifdef PLATFORM_WINRT_ARM
-	#if PLATFORM_WINRT_ARM
+#if PLATFORM_WINRT_ARM
 		return true;
-	#else
+#else
 		return false;
-	#endif
+#endif
 #else
 	return false;
 #endif
@@ -310,7 +303,6 @@ bool ULowEntryExtendedStandardLibrary::DesktopPlatform()
 }
 
 
-
 FString ULowEntryExtendedStandardLibrary::GetProjectName()
 {
 	FString Result;
@@ -334,7 +326,6 @@ FString ULowEntryExtendedStandardLibrary::GetProjectVersion()
 	);
 	return Result;
 }
-
 
 
 void ULowEntryExtendedStandardLibrary::GetBatteryState(ELowEntryBatteryState& State, bool& Success)
@@ -393,7 +384,6 @@ void ULowEntryExtendedStandardLibrary::GetBatteryTemperature(float& Celsius, boo
 }
 
 
-
 void ULowEntryExtendedStandardLibrary::GetCurrentVolumePercentage(float& Percentage, bool& Success)
 {
 #if PLATFORM_ANDROID
@@ -404,7 +394,6 @@ void ULowEntryExtendedStandardLibrary::GetCurrentVolumePercentage(float& Percent
 	Percentage = 0;
 #endif
 }
-
 
 
 void ULowEntryExtendedStandardLibrary::GetAndroidVolume(int& Volume)
@@ -516,7 +505,6 @@ bool ULowEntryExtendedStandardLibrary::AreAndroidHeadphonesPluggedIn()
 }
 
 
-
 void ULowEntryExtendedStandardLibrary::GetCurrentVolume(int32& Volume, bool& Success)
 {
 	Success = false;
@@ -530,22 +518,20 @@ void ULowEntryExtendedStandardLibrary::GetMaximumVolume(int32& Volume, bool& Suc
 }
 
 
-
 void ULowEntryExtendedStandardLibrary::CreateObject(TSubclassOf<UObject> Class, UObject*& Object)
 {
 	Object = NewObject<UObject>(GetTransientPackage(), Class);
 }
 
 
-
 void ULowEntryExtendedStandardLibrary::GetGenericTeamId(AActor* Target, uint8& TeamID)
 {
 	IGenericTeamAgentInterface* TeamAgentInterface = nullptr;
-	if(Target != nullptr)
+	if (Target != nullptr)
 	{
 		TeamAgentInterface = Cast<IGenericTeamAgentInterface>(Target);
 	}
-	if(TeamAgentInterface == nullptr)
+	if (TeamAgentInterface == nullptr)
 	{
 		TeamID = FGenericTeamId::NoTeam;
 	}
@@ -557,12 +543,12 @@ void ULowEntryExtendedStandardLibrary::GetGenericTeamId(AActor* Target, uint8& T
 
 void ULowEntryExtendedStandardLibrary::SetGenericTeamId(AActor* Target, const uint8 TeamID)
 {
-	if(Target == nullptr)
+	if (Target == nullptr)
 	{
 		return;
 	}
 	IGenericTeamAgentInterface* TeamAgentInterface = Cast<IGenericTeamAgentInterface>(Target);
-	if(TeamAgentInterface == nullptr)
+	if (TeamAgentInterface == nullptr)
 	{
 		return;
 	}
@@ -570,10 +556,9 @@ void ULowEntryExtendedStandardLibrary::SetGenericTeamId(AActor* Target, const ui
 }
 
 
-
 void ULowEntryExtendedStandardLibrary::SoundClass_SetVolume(USoundClass* SoundClass, const float Volume)
 {
-	if(SoundClass == nullptr)
+	if (SoundClass == nullptr)
 	{
 		return;
 	}
@@ -582,7 +567,7 @@ void ULowEntryExtendedStandardLibrary::SoundClass_SetVolume(USoundClass* SoundCl
 
 float ULowEntryExtendedStandardLibrary::SoundClass_GetVolume(USoundClass* SoundClass)
 {
-	if(SoundClass == nullptr)
+	if (SoundClass == nullptr)
 	{
 		return 0;
 	}
@@ -591,7 +576,7 @@ float ULowEntryExtendedStandardLibrary::SoundClass_GetVolume(USoundClass* SoundC
 
 void ULowEntryExtendedStandardLibrary::SoundClass_SetPitch(USoundClass* SoundClass, const float Pitch)
 {
-	if(SoundClass == nullptr)
+	if (SoundClass == nullptr)
 	{
 		return;
 	}
@@ -600,13 +585,12 @@ void ULowEntryExtendedStandardLibrary::SoundClass_SetPitch(USoundClass* SoundCla
 
 float ULowEntryExtendedStandardLibrary::SoundClass_GetPitch(USoundClass* SoundClass)
 {
-	if(SoundClass == nullptr)
+	if (SoundClass == nullptr)
 	{
 		return 0;
 	}
 	return SoundClass->Properties.Pitch;
 }
-
 
 
 void ULowEntryExtendedStandardLibrary::LatentAction_Create_Boolean(ULowEntryLatentActionBoolean*& LatentAction)
@@ -640,45 +624,44 @@ void ULowEntryExtendedStandardLibrary::LatentAction_Create_String(ULowEntryLaten
 }
 
 
-
 bool ULowEntryExtendedStandardLibrary::AreBytesEqual(const TArray<uint8>& A, const TArray<uint8>& B, int32 IndexA, int32 LengthA, int32 IndexB, int32 LengthB)
 {
-	if(IndexA < 0)
+	if (IndexA < 0)
 	{
 		LengthA += IndexA;
 		IndexA = 0;
 	}
-	if(LengthA > (A.Num() - IndexA))
+	if (LengthA > (A.Num() - IndexA))
 	{
 		LengthA = A.Num() - IndexA;
 	}
-	if(LengthA < 0)
+	if (LengthA < 0)
 	{
 		LengthA = 0;
 	}
 
-	if(IndexB < 0)
+	if (IndexB < 0)
 	{
 		LengthB += IndexB;
 		IndexB = 0;
 	}
-	if(LengthB > (B.Num() - IndexB))
+	if (LengthB > (B.Num() - IndexB))
 	{
 		LengthB = B.Num() - IndexB;
 	}
-	if(LengthB < 0)
+	if (LengthB < 0)
 	{
 		LengthB = 0;
 	}
 
-	if(LengthA != LengthB)
+	if (LengthA != LengthB)
 	{
 		return false;
 	}
 
-	for(int32 i = 0; i < LengthA; i++)
+	for (int32 i = 0; i < LengthA; i++)
 	{
-		if(A[IndexA + i] != B[IndexB + i])
+		if (A[IndexA + i] != B[IndexB + i])
 		{
 			return false;
 		}
@@ -687,16 +670,15 @@ bool ULowEntryExtendedStandardLibrary::AreBytesEqual(const TArray<uint8>& A, con
 }
 
 
-
 void ULowEntryExtendedStandardLibrary::SplitBytes(const TArray<uint8>& ByteArray, const int32 LengthA, TArray<uint8>& A, TArray<uint8>& B)
 {
-	if(LengthA <= 0)
+	if (LengthA <= 0)
 	{
 		A = TArray<uint8>();
 		B = ByteArray;
 		return;
 	}
-	if(LengthA >= ByteArray.Num())
+	if (LengthA >= ByteArray.Num())
 	{
 		A = ByteArray;
 		B = TArray<uint8>();
@@ -705,18 +687,18 @@ void ULowEntryExtendedStandardLibrary::SplitBytes(const TArray<uint8>& ByteArray
 
 	A = TArray<uint8>();
 	A.Append(ByteArray.GetData(), LengthA);
-	
+
 	B = TArray<uint8>();
 	B.Append(ByteArray.GetData() + LengthA, ByteArray.Num() - LengthA);
 }
 
 TArray<uint8> ULowEntryExtendedStandardLibrary::MergeBytes(TArray<uint8> A, TArray<uint8> B)
 {
-	if(A.Num() <= 0)
+	if (A.Num() <= 0)
 	{
 		return B;
 	}
-	if(B.Num() <= 0)
+	if (B.Num() <= 0)
 	{
 		return A;
 	}
@@ -731,26 +713,26 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::MergeBytes(TArray<uint8> A, TArr
 
 TArray<uint8> ULowEntryExtendedStandardLibrary::BytesSubArray(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
 {
-	if(ByteArray.Num() <= 0)
+	if (ByteArray.Num() <= 0)
 	{
 		return TArray<uint8>();
 	}
 
-	if(Index < 0)
+	if (Index < 0)
 	{
 		Length += Index;
 		Index = 0;
 	}
-	if(Length > ByteArray.Num() - Index)
+	if (Length > ByteArray.Num() - Index)
 	{
 		Length = ByteArray.Num() - Index;
 	}
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return TArray<uint8>();
 	}
 
-	if((Index == 0) && (Length == ByteArray.Num()))
+	if ((Index == 0) && (Length == ByteArray.Num()))
 	{
 		return ByteArray;
 	}
@@ -760,17 +742,16 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::BytesSubArray(const TArray<uint8
 }
 
 
-
 void ULowEntryExtendedStandardLibrary::GenerateRandomBytes(const int32 Length, TArray<uint8>& ByteArray)
 {
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		ByteArray.SetNum(0);
 		return;
 	}
 
 	ByteArray.SetNum(Length);
-	for(int32 i = 0; i < Length; i++)
+	for (int32 i = 0; i < Length; i++)
 	{
 		int32 RandomByte = FMath::Rand() & 0xff;
 		ByteArray[i] = RandomByte;
@@ -779,18 +760,18 @@ void ULowEntryExtendedStandardLibrary::GenerateRandomBytes(const int32 Length, T
 
 void ULowEntryExtendedStandardLibrary::GenerateRandomBytesRandomLength(int32 MinLength, int32 MaxLength, TArray<uint8>& ByteArray)
 {
-	if(MinLength < 0)
+	if (MinLength < 0)
 	{
 		MinLength = 0;
 	}
-	if(MaxLength < 0)
+	if (MaxLength < 0)
 	{
 		MaxLength = 0;
 	}
 
 	int32 Diff = 0;
 	int32 Min = 0;
-	if(MaxLength >= MinLength)
+	if (MaxLength >= MinLength)
 	{
 		Diff = MaxLength - MinLength;
 		Min = MinLength;
@@ -800,30 +781,30 @@ void ULowEntryExtendedStandardLibrary::GenerateRandomBytesRandomLength(int32 Min
 		Diff = MinLength - MaxLength;
 		Min = MaxLength;
 	}
-	if(Min < 0)
+	if (Min < 0)
 	{
 		Min = 0;
 	}
-	if(Diff < 0)
+	if (Diff < 0)
 	{
 		Diff = 0;
 	}
 
-	if((Min == 0) && (Diff == 0))
+	if ((Min == 0) && (Diff == 0))
 	{
 		ByteArray.SetNum(0);
 		return;
 	}
 
 	int32 Length = (FMath::Rand() % (Diff + 1)) + Min;
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		ByteArray.SetNum(0);
 		return;
 	}
 
 	ByteArray.SetNum(Length);
-	for(int32 i = 0; i < Length; i++)
+	for (int32 i = 0; i < Length; i++)
 	{
 		int32 RandomByte = FMath::Rand() & 0xff;
 		ByteArray[i] = RandomByte;
@@ -831,10 +812,9 @@ void ULowEntryExtendedStandardLibrary::GenerateRandomBytesRandomLength(int32 Min
 }
 
 
-
 TArray<uint8> ULowEntryExtendedStandardLibrary::StringToBytesUtf8(const FString& String)
 {
-	if(String.Len() <= 0)
+	if (String.Len() <= 0)
 	{
 		return TArray<uint8>();
 	}
@@ -847,21 +827,21 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::StringToBytesUtf8(const FString&
 
 FString ULowEntryExtendedStandardLibrary::BytesToStringUtf8(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
 {
-	if(ByteArray.Num() <= 0)
+	if (ByteArray.Num() <= 0)
 	{
 		return TEXT("");
 	}
 
-	if(Index < 0)
+	if (Index < 0)
 	{
 		Length += Index;
 		Index = 0;
 	}
-	if(Length > ByteArray.Num() - Index)
+	if (Length > ByteArray.Num() - Index)
 	{
 		Length = ByteArray.Num() - Index;
 	}
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return TEXT("");
 	}
@@ -877,7 +857,7 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::Base64ToBytes(const FString& Bas
 {
 	TArray<uint8> ByteArray;
 	bool Success = FBase64::Decode(Base64, ByteArray);
-	if(!Success)
+	if (!Success)
 	{
 		return TArray<uint8>();
 	}
@@ -886,26 +866,26 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::Base64ToBytes(const FString& Bas
 
 FString ULowEntryExtendedStandardLibrary::BytesToBase64(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
 {
-	if(ByteArray.Num() <= 0)
+	if (ByteArray.Num() <= 0)
 	{
 		return TEXT("");
 	}
 
-	if(Index < 0)
+	if (Index < 0)
 	{
 		Length += Index;
 		Index = 0;
 	}
-	if(Length > ByteArray.Num() - Index)
+	if (Length > ByteArray.Num() - Index)
 	{
 		Length = ByteArray.Num() - Index;
 	}
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return TEXT("");
 	}
 
-	if((Index == 0) && (Length == ByteArray.Num()))
+	if ((Index == 0) && (Length == ByteArray.Num()))
 	{
 		return FBase64::Encode(ByteArray);
 	}
@@ -944,14 +924,14 @@ FString ULowEntryExtendedStandardLibrary::BytesToBase64Url(const TArray<uint8>& 
 TArray<uint8> ULowEntryExtendedStandardLibrary::HexToBytes(const FString& Hex)
 {
 	FString String = Hex.Replace(TEXT(" "), TEXT(""));
-	if(String.Len() <= 0)
+	if (String.Len() <= 0)
 	{
 		return TArray<uint8>();
 	}
 
-	for(const TCHAR c : String)
+	for (const TCHAR c : String)
 	{
-		if(!CheckTCharIsHex(c))
+		if (!CheckTCharIsHex(c))
 		{
 			return TArray<uint8>();
 		}
@@ -967,36 +947,36 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::HexToBytes(const FString& Hex)
 
 FString ULowEntryExtendedStandardLibrary::BytesToHex(const TArray<uint8>& ByteArray, const bool AddSpaces, int32 Index, int32 Length)
 {
-	if(ByteArray.Num() <= 0)
+	if (ByteArray.Num() <= 0)
 	{
 		return TEXT("");
 	}
 
-	if(Index < 0)
+	if (Index < 0)
 	{
 		Length += Index;
 		Index = 0;
 	}
-	if(Length > ByteArray.Num() - Index)
+	if (Length > ByteArray.Num() - Index)
 	{
 		Length = ByteArray.Num() - Index;
 	}
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return TEXT("");
 	}
 
 	FString Hex = ::BytesToHex(ByteArray.GetData() + Index, Length);
-	if(!AddSpaces)
+	if (!AddSpaces)
 	{
 		return Hex;
 	}
 	FString String;
 	String.Reserve((Hex.Len() / 2) * 3);
-	for(int32 i = 1; i <= Hex.Len(); i++)
+	for (int32 i = 1; i <= Hex.Len(); i++)
 	{
 		String.AppendChar(Hex[i - 1]);
-		if(((i % 2) == 0) && (i < (Hex.Len() - 1)))
+		if (((i % 2) == 0) && (i < (Hex.Len() - 1)))
 		{
 			String.Append(TEXT(" "));
 		}
@@ -1007,28 +987,28 @@ FString ULowEntryExtendedStandardLibrary::BytesToHex(const TArray<uint8>& ByteAr
 
 TArray<uint8> ULowEntryExtendedStandardLibrary::BinaryToBytes(const FString& Binary)
 {
-	if(Binary.Len() <= 0)
+	if (Binary.Len() <= 0)
 	{
 		return TArray<uint8>();
 	}
 	FString String = Binary.Replace(TEXT(" "), TEXT(""));
-	if((String.Len() <= 0) || ((String.Len() % 8) != 0))
+	if ((String.Len() <= 0) || ((String.Len() % 8) != 0))
 	{
 		return TArray<uint8>();
 	}
 	TArray<uint8> Bytes;
 	Bytes.SetNum(String.Len() / 8);
 	int32 Index = 0;
-	for(int32 i = 0; i < String.Len(); i += 8)
+	for (int32 i = 0; i < String.Len(); i += 8)
 	{
 		uint8 b = 0;
-		for(int32 j = 0; j < 8; j++)
+		for (int32 j = 0; j < 8; j++)
 		{
-			if(String[i + j] == '0')
+			if (String[i + j] == '0')
 			{
 				continue;
 			}
-			if(String[i + j] == '1')
+			if (String[i + j] == '1')
 			{
 				b += (1 << (7 - j));
 			}
@@ -1046,32 +1026,32 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::BinaryToBytes(const FString& Bin
 
 FString ULowEntryExtendedStandardLibrary::BytesToBinary(const TArray<uint8>& ByteArray, const bool AddSpaces, int32 Index, int32 Length)
 {
-	if(ByteArray.Num() <= 0)
+	if (ByteArray.Num() <= 0)
 	{
 		return TEXT("");
 	}
 
-	if(Index < 0)
+	if (Index < 0)
 	{
 		Length += Index;
 		Index = 0;
 	}
-	if(Length > ByteArray.Num() - Index)
+	if (Length > ByteArray.Num() - Index)
 	{
 		Length = ByteArray.Num() - Index;
 	}
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return TEXT("");
 	}
 
 	FString String;
 	String.Reserve(Length * (AddSpaces ? 9 : 8));
-	for(int32 i = 1; i <= Length; i++)
+	for (int32 i = 1; i <= Length; i++)
 	{
-		for(int32 j = 7; j >= 0; j--)
+		for (int32 j = 7; j >= 0; j--)
 		{
-			if((ByteArray[Index + (i - 1)] & (1 << j)) > 0)
+			if ((ByteArray[Index + (i - 1)] & (1 << j)) > 0)
 			{
 				String.Append(TEXT("1"));
 			}
@@ -1080,7 +1060,7 @@ FString ULowEntryExtendedStandardLibrary::BytesToBinary(const TArray<uint8>& Byt
 				String.Append(TEXT("0"));
 			}
 		}
-		if(AddSpaces && (i < Length))
+		if (AddSpaces && (i < Length))
 		{
 			String.Append(TEXT(" "));
 		}
@@ -1091,28 +1071,28 @@ FString ULowEntryExtendedStandardLibrary::BytesToBinary(const TArray<uint8>& Byt
 
 TArray<uint8> ULowEntryExtendedStandardLibrary::BitStringToBytes(const FString& Binary)
 {
-	if(Binary.Len() <= 0)
+	if (Binary.Len() <= 0)
 	{
 		return TArray<uint8>();
 	}
 	FString String = Binary.Replace(TEXT(" "), TEXT(""));
-	if((String.Len() <= 0) || ((String.Len() % 8) != 0))
+	if ((String.Len() <= 0) || ((String.Len() % 8) != 0))
 	{
 		return TArray<uint8>();
 	}
 	TArray<uint8> Bytes;
 	Bytes.SetNum(String.Len() / 8);
 	int32 Index = 0;
-	for(int32 i = 0; i < String.Len(); i += 8)
+	for (int32 i = 0; i < String.Len(); i += 8)
 	{
 		uint8 b = 0;
-		for(int32 j = 0; j < 8; j++)
+		for (int32 j = 0; j < 8; j++)
 		{
-			if(String[i + j] == '0')
+			if (String[i + j] == '0')
 			{
 				continue;
 			}
-			if(String[i + j] == '1')
+			if (String[i + j] == '1')
 			{
 				b += (1 << j);
 			}
@@ -1130,32 +1110,32 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::BitStringToBytes(const FString& 
 
 FString ULowEntryExtendedStandardLibrary::BytesToBitString(const TArray<uint8>& ByteArray, const bool AddSpaces, int32 Index, int32 Length)
 {
-	if(ByteArray.Num() <= 0)
+	if (ByteArray.Num() <= 0)
 	{
 		return TEXT("");
 	}
 
-	if(Index < 0)
+	if (Index < 0)
 	{
 		Length += Index;
 		Index = 0;
 	}
-	if(Length > ByteArray.Num() - Index)
+	if (Length > ByteArray.Num() - Index)
 	{
 		Length = ByteArray.Num() - Index;
 	}
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return TEXT("");
 	}
 
 	FString String;
 	String.Reserve(Length * (AddSpaces ? 9 : 8));
-	for(int32 i = 1; i <= Length; i++)
+	for (int32 i = 1; i <= Length; i++)
 	{
-		for(int32 j = 0; j < 8; j++)
+		for (int32 j = 0; j < 8; j++)
 		{
-			if((ByteArray[Index + (i - 1)] & (1 << j)) > 0)
+			if ((ByteArray[Index + (i - 1)] & (1 << j)) > 0)
 			{
 				String.Append(TEXT("1"));
 			}
@@ -1164,7 +1144,7 @@ FString ULowEntryExtendedStandardLibrary::BytesToBitString(const TArray<uint8>& 
 				String.Append(TEXT("0"));
 			}
 		}
-		if(AddSpaces && (i < Length))
+		if (AddSpaces && (i < Length))
 		{
 			String.Append(TEXT(" "));
 		}
@@ -1177,7 +1157,7 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::BooleanToBytes(const bool Value)
 {
 	TArray<uint8> ByteArray;
 	ByteArray.SetNum(1);
-	if(Value)
+	if (Value)
 	{
 		ByteArray[0] = 0x01;
 	}
@@ -1190,21 +1170,21 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::BooleanToBytes(const bool Value)
 
 bool ULowEntryExtendedStandardLibrary::BytesToBoolean(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
 {
-	if(ByteArray.Num() <= 0)
+	if (ByteArray.Num() <= 0)
 	{
 		return false;
 	}
 
-	if(Index < 0)
+	if (Index < 0)
 	{
 		Length += Index;
 		Index = 0;
 	}
-	if(Length > ByteArray.Num() - Index)
+	if (Length > ByteArray.Num() - Index)
 	{
 		Length = ByteArray.Num() - Index;
 	}
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return false;
 	}
@@ -1215,7 +1195,7 @@ bool ULowEntryExtendedStandardLibrary::BytesToBoolean(const TArray<uint8>& ByteA
 
 uint8 ULowEntryExtendedStandardLibrary::BooleanToByte(const bool Value)
 {
-	if(Value)
+	if (Value)
 	{
 		return 0x01;
 	}
@@ -1241,34 +1221,34 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::IntegerToBytes(const int32 Value
 
 int32 ULowEntryExtendedStandardLibrary::BytesToInteger(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
 {
-	if(ByteArray.Num() <= 0)
+	if (ByteArray.Num() <= 0)
 	{
 		return 0;
 	}
 
-	if(Index < 0)
+	if (Index < 0)
 	{
 		Length += Index;
 		Index = 0;
 	}
-	if(Length > ByteArray.Num() - Index)
+	if (Length > ByteArray.Num() - Index)
 	{
 		Length = ByteArray.Num() - Index;
 	}
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return 0;
 	}
 
-	if(Length <= 1)
+	if (Length <= 1)
 	{
 		return ByteArray[Index + 0];
 	}
-	if(Length <= 2)
+	if (Length <= 2)
 	{
 		return (ByteArray[Index + 0] << 8) | ByteArray[Index + 1];
 	}
-	if(Length <= 3)
+	if (Length <= 3)
 	{
 		return (ByteArray[Index + 0] << 16) | (ByteArray[Index + 1] << 8) | ByteArray[Index + 2];
 	}
@@ -1293,50 +1273,50 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::LongToBytes(const int64 Value)
 
 int64 ULowEntryExtendedStandardLibrary::BytesToLong(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
 {
-	if(ByteArray.Num() <= 0)
+	if (ByteArray.Num() <= 0)
 	{
 		return 0;
 	}
 
-	if(Index < 0)
+	if (Index < 0)
 	{
 		Length += Index;
 		Index = 0;
 	}
-	if(Length > ByteArray.Num() - Index)
+	if (Length > ByteArray.Num() - Index)
 	{
 		Length = ByteArray.Num() - Index;
 	}
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return 0;
 	}
 
-	if(Length <= 1)
+	if (Length <= 1)
 	{
 		return ByteArray[Index + 0];
 	}
-	if(Length <= 2)
+	if (Length <= 2)
 	{
 		return (static_cast<int64>(ByteArray[Index + 0]) << 8) | static_cast<int64>(ByteArray[Index + 1]);
 	}
-	if(Length <= 3)
+	if (Length <= 3)
 	{
 		return (static_cast<int64>(ByteArray[Index + 0]) << 16) | (static_cast<int64>(ByteArray[Index + 1]) << 8) | static_cast<int64>(ByteArray[Index + 2]);
 	}
-	if(Length <= 4)
+	if (Length <= 4)
 	{
 		return (static_cast<int64>(ByteArray[Index + 0]) << 24) | (static_cast<int64>(ByteArray[Index + 1]) << 16) | (static_cast<int64>(ByteArray[Index + 2]) << 8) | static_cast<int64>(ByteArray[Index + 3]);
 	}
-	if(Length <= 5)
+	if (Length <= 5)
 	{
 		return (static_cast<int64>(ByteArray[Index + 0]) << 32) | (static_cast<int64>(ByteArray[Index + 1]) << 24) | (static_cast<int64>(ByteArray[Index + 2]) << 16) | (static_cast<int64>(ByteArray[Index + 3]) << 8) | static_cast<int64>(ByteArray[Index + 4]);
 	}
-	if(Length <= 6)
+	if (Length <= 6)
 	{
 		return (static_cast<int64>(ByteArray[Index + 0]) << 40) | (static_cast<int64>(ByteArray[Index + 1]) << 32) | (static_cast<int64>(ByteArray[Index + 2]) << 24) | (static_cast<int64>(ByteArray[Index + 3]) << 16) | (static_cast<int64>(ByteArray[Index + 4]) << 8) | static_cast<int64>(ByteArray[Index + 5]);
 	}
-	if(Length <= 7)
+	if (Length <= 7)
 	{
 		return (static_cast<int64>(ByteArray[Index + 0]) << 48) | (static_cast<int64>(ByteArray[Index + 1]) << 40) | (static_cast<int64>(ByteArray[Index + 2]) << 32) | (static_cast<int64>(ByteArray[Index + 3]) << 24) | (static_cast<int64>(ByteArray[Index + 4]) << 16) | (static_cast<int64>(ByteArray[Index + 5]) << 8) | static_cast<int64>(ByteArray[Index + 6]);
 	}
@@ -1361,7 +1341,7 @@ ULowEntryLong* ULowEntryExtendedStandardLibrary::ParseStringIntoLongBytes(const 
 
 TArray<uint8> ULowEntryExtendedStandardLibrary::FloatToBytes(const float Value)
 {
-	int32 IntValue = *((int32*) (&Value));
+	int32 IntValue = *((int32*)(&Value));
 	return IntegerToBytes(IntValue);
 }
 
@@ -1374,7 +1354,7 @@ float ULowEntryExtendedStandardLibrary::BytesToFloat(const TArray<uint8>& ByteAr
 
 TArray<uint8> ULowEntryExtendedStandardLibrary::DoubleToBytes(const double Value)
 {
-	int64 LongValue = *((int64*) (&Value));
+	int64 LongValue = *((int64*)(&Value));
 	return LongToBytes(LongValue);
 }
 
@@ -1405,21 +1385,21 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::ByteToBytes(const uint8 Value)
 
 uint8 ULowEntryExtendedStandardLibrary::BytesToByte(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
 {
-	if(ByteArray.Num() <= 0)
+	if (ByteArray.Num() <= 0)
 	{
 		return false;
 	}
 
-	if(Index < 0)
+	if (Index < 0)
 	{
 		Length += Index;
 		Index = 0;
 	}
-	if(Length > ByteArray.Num() - Index)
+	if (Length > ByteArray.Num() - Index)
 	{
 		Length = ByteArray.Num() - Index;
 	}
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return false;
 	}
@@ -1431,35 +1411,35 @@ uint8 ULowEntryExtendedStandardLibrary::BytesToByte(const TArray<uint8>& ByteArr
 void ULowEntryExtendedStandardLibrary::BitsToByte(const bool Bit1, const bool Bit2, const bool Bit3, const bool Bit4, const bool Bit5, const bool Bit6, const bool Bit7, const bool Bit8, uint8& Byte)
 {
 	uint8 B = 0;
-	if(Bit8)
+	if (Bit8)
 	{
 		B |= (1 << 7);
 	}
-	if(Bit7)
+	if (Bit7)
 	{
 		B |= (1 << 6);
 	}
-	if(Bit6)
+	if (Bit6)
 	{
 		B |= (1 << 5);
 	}
-	if(Bit5)
+	if (Bit5)
 	{
 		B |= (1 << 4);
 	}
-	if(Bit4)
+	if (Bit4)
 	{
 		B |= (1 << 3);
 	}
-	if(Bit3)
+	if (Bit3)
 	{
 		B |= (1 << 2);
 	}
-	if(Bit2)
+	if (Bit2)
 	{
 		B |= (1 << 1);
 	}
-	if(Bit1)
+	if (Bit1)
 	{
 		B |= (1 << 0);
 	}
@@ -1486,7 +1466,7 @@ bool ULowEntryExtendedStandardLibrary::IsBitSet(const uint8 B, const int32 Bit)
 
 uint8 ULowEntryExtendedStandardLibrary::GetByteWithBitSet(const uint8 Byte, const int32 Bit, const bool Value)
 {
-	if(Value)
+	if (Value)
 	{
 		return Byte | (1 << (Bit - 1));
 	}
@@ -1494,41 +1474,40 @@ uint8 ULowEntryExtendedStandardLibrary::GetByteWithBitSet(const uint8 Byte, cons
 }
 
 
-
 UTexture2D* ULowEntryExtendedStandardLibrary::BytesToImage(const TArray<uint8>& ByteArray, const ELowEntryImageFormat ImageFormat, int32 Index, int32 Length)
 {
-	if(ByteArray.Num() <= 0)
+	if (ByteArray.Num() <= 0)
 	{
 		return nullptr;
 	}
-	if(Index < 0)
+	if (Index < 0)
 	{
 		Length += Index;
 		Index = 0;
 	}
-	if(Length > ByteArray.Num() - Index)
+	if (Length > ByteArray.Num() - Index)
 	{
 		Length = ByteArray.Num() - Index;
 	}
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return nullptr;
 	}
 
 	IImageWrapperModule* ImageWrapperModule = FModuleManager::LoadModulePtr<IImageWrapperModule>("ImageWrapper");
-	if(ImageWrapperModule == nullptr)
+	if (ImageWrapperModule == nullptr)
 	{
 		return nullptr;
 	}
 
 	TSharedPtr<IImageWrapper> ImageWrapper = ImageWrapperModule->CreateImageWrapper(ELowEntryImageFormatToUE4(ImageFormat));
-	if(!ImageWrapper.IsValid() || !ImageWrapper->SetCompressed(ByteArray.GetData() + Index, Length))
+	if (!ImageWrapper.IsValid() || !ImageWrapper->SetCompressed(ByteArray.GetData() + Index, Length))
 	{
 		return nullptr;
 	}
 
 	TArray<uint8> Uncompressed;
-	if(!ImageWrapper->GetRaw(ERGBFormat::BGRA, 8, Uncompressed))
+	if (!ImageWrapper->GetRaw(ERGBFormat::BGRA, 8, Uncompressed))
 	{
 		return nullptr;
 	}
@@ -1539,42 +1518,42 @@ UTexture2D* ULowEntryExtendedStandardLibrary::BytesToImage(const TArray<uint8>& 
 UTexture2D* ULowEntryExtendedStandardLibrary::BytesToExistingImage(bool& ReusedGivenTexture2D, UTexture2D* Texture2D, const TArray<uint8>& ByteArray, const ELowEntryImageFormat ImageFormat, int32 Index, int32 Length)
 {
 	ReusedGivenTexture2D = false;
-	if(ByteArray.Num() <= 0)
+	if (ByteArray.Num() <= 0)
 	{
 		ReusedGivenTexture2D = (Texture2D == nullptr);
 		return nullptr;
 	}
-	if(Index < 0)
+	if (Index < 0)
 	{
 		Length += Index;
 		Index = 0;
 	}
-	if(Length > ByteArray.Num() - Index)
+	if (Length > ByteArray.Num() - Index)
 	{
 		Length = ByteArray.Num() - Index;
 	}
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		ReusedGivenTexture2D = (Texture2D == nullptr);
 		return nullptr;
 	}
 
 	IImageWrapperModule* ImageWrapperModule = FModuleManager::LoadModulePtr<IImageWrapperModule>("ImageWrapper");
-	if(ImageWrapperModule == nullptr)
+	if (ImageWrapperModule == nullptr)
 	{
 		ReusedGivenTexture2D = (Texture2D == nullptr);
 		return nullptr;
 	}
 
 	TSharedPtr<IImageWrapper> ImageWrapper = ImageWrapperModule->CreateImageWrapper(ELowEntryImageFormatToUE4(ImageFormat));
-	if(!ImageWrapper.IsValid() || !ImageWrapper->SetCompressed(ByteArray.GetData() + Index, Length))
+	if (!ImageWrapper.IsValid() || !ImageWrapper->SetCompressed(ByteArray.GetData() + Index, Length))
 	{
 		ReusedGivenTexture2D = (Texture2D == nullptr);
 		return nullptr;
 	}
 
 	TArray<uint8> Uncompressed;
-	if(!ImageWrapper->GetRaw(ERGBFormat::BGRA, 8, Uncompressed))
+	if (!ImageWrapper->GetRaw(ERGBFormat::BGRA, 8, Uncompressed))
 	{
 		ReusedGivenTexture2D = (Texture2D == nullptr);
 		return nullptr;
@@ -1589,13 +1568,13 @@ void ULowEntryExtendedStandardLibrary::Texture2DToBytes(UTexture2D* Texture2D, c
 {
 	ByteArray = TArray<uint8>();
 
-	if(Texture2D == nullptr)
+	if (Texture2D == nullptr)
 	{
 		return;
 	}
 
 #if WITH_EDITORONLY_DATA
-	if(Texture2D->MipGenSettings != TMGS_NoMipmaps)
+	if (Texture2D->MipGenSettings != TMGS_NoMipmaps)
 	{
 		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in Texture2DToBytes, the given Texture2D has to have MipGenSettings set to NoMipmaps, otherwise the blueprint will always fail"));
 		return;
@@ -1606,7 +1585,7 @@ void ULowEntryExtendedStandardLibrary::Texture2DToBytes(UTexture2D* Texture2D, c
 	bool PreviousSRGB = Texture2D->SRGB;
 	TextureCompressionSettings PreviousCompressionSettings = Texture2D->CompressionSettings;
 
-	if((PreviousSRGB != false) || (PreviousCompressionSettings != TC_VectorDisplacementmap))
+	if ((PreviousSRGB != false) || (PreviousCompressionSettings != TC_VectorDisplacementmap))
 	{
 		ChangedTexture2D = true;
 		Texture2D->SRGB = false;
@@ -1619,9 +1598,9 @@ void ULowEntryExtendedStandardLibrary::Texture2DToBytes(UTexture2D* Texture2D, c
 	int32 Mip0Height = Mip0.SizeY;
 
 	auto Mip0Data = &Mip0.BulkData;
-	if(Mip0Data == nullptr)
+	if (Mip0Data == nullptr)
 	{
-		if(ChangedTexture2D)
+		if (ChangedTexture2D)
 		{
 			Texture2D->SRGB = PreviousSRGB;
 			Texture2D->CompressionSettings = PreviousCompressionSettings;
@@ -1632,10 +1611,10 @@ void ULowEntryExtendedStandardLibrary::Texture2DToBytes(UTexture2D* Texture2D, c
 
 	void* Mip0Pixels_ = Mip0Data->Lock(LOCK_READ_ONLY);
 	FColor* Mip0Pixels = static_cast<FColor*>(Mip0Pixels_);
-	if(Mip0Pixels == nullptr)
+	if (Mip0Pixels == nullptr)
 	{
 		Mip0Data->Unlock();
-		if(ChangedTexture2D)
+		if (ChangedTexture2D)
 		{
 			Texture2D->SRGB = PreviousSRGB;
 			Texture2D->CompressionSettings = PreviousCompressionSettings;
@@ -1647,13 +1626,13 @@ void ULowEntryExtendedStandardLibrary::Texture2DToBytes(UTexture2D* Texture2D, c
 	TArray<FColor> Pixels;
 	int32 Total = Mip0Width * Mip0Height;
 	Pixels.SetNum(Total);
-	for(int32 i = 0; i < Total; i++)
+	for (int32 i = 0; i < Total; i++)
 	{
 		Pixels[i] = Mip0Pixels[i];
 	}
 	Mip0Data->Unlock();
 
-	if(ChangedTexture2D)
+	if (ChangedTexture2D)
 	{
 		Texture2D->SRGB = PreviousSRGB;
 		Texture2D->CompressionSettings = PreviousCompressionSettings;
@@ -1662,7 +1641,6 @@ void ULowEntryExtendedStandardLibrary::Texture2DToBytes(UTexture2D* Texture2D, c
 
 	PixelsToBytes(Mip0Width, Mip0Height, Pixels, ImageFormat, ByteArray, CompressionQuality);
 }
-
 
 
 void ULowEntryExtendedStandardLibrary::BytesToPixels(const TArray<uint8>& ByteArray, const ELowEntryImageFormat ImageFormat, int32& Width, int32& Height, TArray<FColor>& Pixels, int32 Index, int32 Length)
@@ -1680,33 +1658,33 @@ void ULowEntryExtendedStandardLibrary::BytesToPixels(const TArray<uint8>& ByteAr
 	//ULowEntryExtendedStandardLibrary::Texture2DToPixels(Texture2D, Width, Height, Pixels);
 	//return;
 
-	if(ByteArray.Num() <= 0)
+	if (ByteArray.Num() <= 0)
 	{
 		return;
 	}
-	if(Index < 0)
+	if (Index < 0)
 	{
 		Length += Index;
 		Index = 0;
 	}
-	if(Length > ByteArray.Num() - Index)
+	if (Length > ByteArray.Num() - Index)
 	{
 		Length = ByteArray.Num() - Index;
 	}
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return;
 	}
 
 	IImageWrapperModule& ImageWrapperModule = FModuleManager::LoadModuleChecked<IImageWrapperModule>(FName("ImageWrapper"));
 	TSharedPtr<IImageWrapper> ImageWrapper = ImageWrapperModule.CreateImageWrapper(ELowEntryImageFormatToUE4(ImageFormat));
-	if(!ImageWrapper.IsValid() || !ImageWrapper->SetCompressed(ByteArray.GetData() + Index, Length))
+	if (!ImageWrapper.IsValid() || !ImageWrapper->SetCompressed(ByteArray.GetData() + Index, Length))
 	{
 		return;
 	}
 
 	TArray<uint8> Uncompressed;
-	if(!ImageWrapper->GetRaw(ERGBFormat::BGRA, 8, Uncompressed))
+	if (!ImageWrapper->GetRaw(ERGBFormat::BGRA, 8, Uncompressed))
 	{
 		return;
 	}
@@ -1718,7 +1696,7 @@ void ULowEntryExtendedStandardLibrary::BytesToPixels(const TArray<uint8>& ByteAr
 
 	int32 Total = DataWidth * DataHeight;
 	Pixels.SetNum(Total);
-	for(int32 i = 0; i < Total; i++)
+	for (int32 i = 0; i < Total; i++)
 	{
 		Pixels[i] = DataPixels[i];
 	}
@@ -1733,57 +1711,57 @@ void ULowEntryExtendedStandardLibrary::PixelsToBytes(const int32 Width, const in
 	//FImageUtils::CompressImageArray(Width, Height, Pixels, ByteArray);
 	//return;
 
-	if((Width <= 0) || (Height <= 0))
+	if ((Width <= 0) || (Height <= 0))
 	{
 		return;
 	}
 
-	if((CompressionQuality < 0) || (CompressionQuality > 100))
+	if ((CompressionQuality < 0) || (CompressionQuality > 100))
 	{
 		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in PixelsToBytes, an invalid CompressionQuality (%i) has been given, should be 1-100 or 0 for the default value"), CompressionQuality);
 		return;
 	}
 
 	int32 Total = Width * Height;
-	if(Total != Pixels.Num())
+	if (Total != Pixels.Num())
 	{
 		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in PixelsToBytes, the number of given Pixels (%i) don't match the given Width (%i) x Height (%i) (Width x Height: %i)"), Pixels.Num(), Width, Height, Total);
 		return;
 	}
 
-	if(ImageFormat == ELowEntryImageFormat::Invalid)
+	if (ImageFormat == ELowEntryImageFormat::Invalid)
 	{
 		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in PixelsToBytes, Invalid compression is not supported"));
 		return;
 	}
-	if(ImageFormat == ELowEntryImageFormat::BMP)
+	if (ImageFormat == ELowEntryImageFormat::BMP)
 	{
 		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in PixelsToBytes, BMP compression is not supported"));
 		return;
 	}
-	if(ImageFormat == ELowEntryImageFormat::ICO)
+	if (ImageFormat == ELowEntryImageFormat::ICO)
 	{
 		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in PixelsToBytes, ICO compression is not supported"));
 		return;
 	}
-	if(ImageFormat == ELowEntryImageFormat::ICNS)
+	if (ImageFormat == ELowEntryImageFormat::ICNS)
 	{
 		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in PixelsToBytes, ICNS compression is not supported"));
 		return;
 	}
 
-	if(ImageFormat == ELowEntryImageFormat::GrayscaleJPEG)
+	if (ImageFormat == ELowEntryImageFormat::GrayscaleJPEG)
 	{
 		// Images are saved as RGBA but FColors are stored as Gray
 		TArray<uint8> MutablePixels;
-		for(int32 i = 0; i < Total; i++)
+		for (int32 i = 0; i < Total; i++)
 		{
 			MutablePixels.Add(static_cast<uint8>(FMath::RoundToDouble((0.2125 * Pixels[i].R) + (0.7154 * Pixels[i].G) + (0.0721 * Pixels[i].B))));
 		}
 
 		IImageWrapperModule& ImageWrapperModule = FModuleManager::LoadModuleChecked<IImageWrapperModule>(FName("ImageWrapper"));
 		TSharedPtr<IImageWrapper> ImageWrapper = ImageWrapperModule.CreateImageWrapper(ELowEntryImageFormatToUE4(ImageFormat));
-		if(!ImageWrapper.IsValid() || !ImageWrapper->SetRaw(MutablePixels.GetData(), MutablePixels.Num(), Width, Height, ERGBFormat::Gray, 8))
+		if (!ImageWrapper.IsValid() || !ImageWrapper->SetRaw(MutablePixels.GetData(), MutablePixels.Num(), Width, Height, ERGBFormat::Gray, 8))
 		{
 			return;
 		}
@@ -1794,7 +1772,7 @@ void ULowEntryExtendedStandardLibrary::PixelsToBytes(const int32 Width, const in
 	{
 		// Images are saved as RGBA but FColors are stored as BGRA
 		TArray<FColor> MutablePixels = Pixels;
-		for(int32 i = 0; i < Total; i++)
+		for (int32 i = 0; i < Total; i++)
 		{
 			MutablePixels[i].R = Pixels[i].B;
 			MutablePixels[i].B = Pixels[i].R;
@@ -1802,7 +1780,7 @@ void ULowEntryExtendedStandardLibrary::PixelsToBytes(const int32 Width, const in
 
 		IImageWrapperModule& ImageWrapperModule = FModuleManager::LoadModuleChecked<IImageWrapperModule>(FName("ImageWrapper"));
 		TSharedPtr<IImageWrapper> ImageWrapper = ImageWrapperModule.CreateImageWrapper(ELowEntryImageFormatToUE4(ImageFormat));
-		if(!ImageWrapper.IsValid() || !ImageWrapper->SetRaw(&MutablePixels[0], MutablePixels.Num() * sizeof(FColor), Width, Height, ERGBFormat::RGBA, 8))
+		if (!ImageWrapper.IsValid() || !ImageWrapper->SetRaw(&MutablePixels[0], MutablePixels.Num() * sizeof(FColor), Width, Height, ERGBFormat::RGBA, 8))
 		{
 			return;
 		}
@@ -1821,7 +1799,7 @@ FColor ULowEntryExtendedStandardLibrary::GrayscalePixel(const FColor& Pixel)
 TArray<FColor> ULowEntryExtendedStandardLibrary::GrayscalePixels(const TArray<FColor>& Pixels)
 {
 	TArray<FColor> Result;
-	for(const FColor& Pixel : Pixels)
+	for (const FColor& Pixel : Pixels)
 	{
 		Result.Add(GrayscalePixel(Pixel));
 	}
@@ -1835,13 +1813,13 @@ void ULowEntryExtendedStandardLibrary::Texture2DToPixels(UTexture2D* Texture2D, 
 	Height = 0;
 	Pixels = TArray<FColor>();
 
-	if(Texture2D == nullptr)
+	if (Texture2D == nullptr)
 	{
 		return;
 	}
 
 #if WITH_EDITORONLY_DATA
-	if(Texture2D->MipGenSettings != TMGS_NoMipmaps)
+	if (Texture2D->MipGenSettings != TMGS_NoMipmaps)
 	{
 		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in ImageToPixels, the given Texture2D has to have MipGenSettings set to NoMipmaps, otherwise the blueprint will always fail"));
 		return;
@@ -1852,7 +1830,7 @@ void ULowEntryExtendedStandardLibrary::Texture2DToPixels(UTexture2D* Texture2D, 
 	bool PreviousSRGB = Texture2D->SRGB;
 	TextureCompressionSettings PreviousCompressionSettings = Texture2D->CompressionSettings;
 
-	if((PreviousSRGB != false) || (PreviousCompressionSettings != TC_VectorDisplacementmap))
+	if ((PreviousSRGB != false) || (PreviousCompressionSettings != TC_VectorDisplacementmap))
 	{
 		ChangedTexture2D = true;
 		Texture2D->SRGB = false;
@@ -1865,9 +1843,9 @@ void ULowEntryExtendedStandardLibrary::Texture2DToPixels(UTexture2D* Texture2D, 
 	int32 Mip0Height = Mip0.SizeY;
 
 	auto Mip0Data = &Mip0.BulkData;
-	if(Mip0Data == nullptr)
+	if (Mip0Data == nullptr)
 	{
-		if(ChangedTexture2D)
+		if (ChangedTexture2D)
 		{
 			Texture2D->SRGB = PreviousSRGB;
 			Texture2D->CompressionSettings = PreviousCompressionSettings;
@@ -1878,10 +1856,10 @@ void ULowEntryExtendedStandardLibrary::Texture2DToPixels(UTexture2D* Texture2D, 
 
 	void* Mip0Pixels_ = Mip0Data->Lock(LOCK_READ_ONLY);
 	FColor* Mip0Pixels = static_cast<FColor*>(Mip0Pixels_);
-	if(Mip0Pixels == nullptr)
+	if (Mip0Pixels == nullptr)
 	{
 		Mip0Data->Unlock();
-		if(ChangedTexture2D)
+		if (ChangedTexture2D)
 		{
 			Texture2D->SRGB = PreviousSRGB;
 			Texture2D->CompressionSettings = PreviousCompressionSettings;
@@ -1894,13 +1872,13 @@ void ULowEntryExtendedStandardLibrary::Texture2DToPixels(UTexture2D* Texture2D, 
 	Height = Mip0Height;
 	int32 Total = Mip0Width * Mip0Height;
 	Pixels.SetNum(Total);
-	for(int32 i = 0; i < Total; i++)
+	for (int32 i = 0; i < Total; i++)
 	{
 		Pixels[i] = Mip0Pixels[i];
 	}
 	Mip0Data->Unlock();
 
-	if(ChangedTexture2D)
+	if (ChangedTexture2D)
 	{
 		Texture2D->SRGB = PreviousSRGB;
 		Texture2D->CompressionSettings = PreviousCompressionSettings;
@@ -1910,7 +1888,7 @@ void ULowEntryExtendedStandardLibrary::Texture2DToPixels(UTexture2D* Texture2D, 
 
 UTexture2D* ULowEntryExtendedStandardLibrary::PixelsToTexture2D(const int32 Width, const int32 Height, const TArray<FColor>& Pixels)
 {
-	if((Pixels.Num() <= 0) || (Width <= 0) || (Height <= 0))
+	if ((Pixels.Num() <= 0) || (Width <= 0) || (Height <= 0))
 	{
 		return nullptr;
 	}
@@ -1920,7 +1898,7 @@ UTexture2D* ULowEntryExtendedStandardLibrary::PixelsToTexture2D(const int32 Widt
 UTexture2D* ULowEntryExtendedStandardLibrary::PixelsToExistingTexture2D(bool& ReusedGivenTexture2D, UTexture2D* Texture2D, const int32 Width, const int32 Height, const TArray<FColor>& Pixels)
 {
 	ReusedGivenTexture2D = false;
-	if((Pixels.Num() <= 0) || (Width <= 0) || (Height <= 0))
+	if ((Pixels.Num() <= 0) || (Width <= 0) || (Height <= 0))
 	{
 		ReusedGivenTexture2D = (Texture2D == nullptr);
 		return nullptr;
@@ -1931,11 +1909,10 @@ UTexture2D* ULowEntryExtendedStandardLibrary::PixelsToExistingTexture2D(bool& Re
 }
 
 
-
 UTexture2D* ULowEntryExtendedStandardLibrary::DataToTexture2D(int32 Width, int32 Height, const void* Src, SIZE_T Count)
 {
 	UTexture2D* Texture2D = UTexture2D::CreateTransient(Width, Height, PF_B8G8R8A8);
-	if(Texture2D == nullptr)
+	if (Texture2D == nullptr)
 	{
 		return nullptr;
 	}
@@ -1955,11 +1932,11 @@ UTexture2D* ULowEntryExtendedStandardLibrary::DataToTexture2D(int32 Width, int32
 
 UTexture2D* ULowEntryExtendedStandardLibrary::DataToExistingTexture2D(UTexture2D* Texture2D, int32 Width, int32 Height, const void* Src, SIZE_T Count)
 {
-	if((Texture2D == nullptr) || (Texture2D->GetSizeX() != Width) || (Texture2D->GetSizeY() != Height) || (Texture2D->GetPixelFormat() != PF_B8G8R8A8))
+	if ((Texture2D == nullptr) || (Texture2D->GetSizeX() != Width) || (Texture2D->GetSizeY() != Height) || (Texture2D->GetPixelFormat() != PF_B8G8R8A8))
 	{
 		Texture2D = UTexture2D::CreateTransient(Width, Height, PF_B8G8R8A8);
 	}
-	if(Texture2D == nullptr)
+	if (Texture2D == nullptr)
 	{
 		return nullptr;
 	}
@@ -1978,11 +1955,10 @@ UTexture2D* ULowEntryExtendedStandardLibrary::DataToExistingTexture2D(UTexture2D
 }
 
 
-
 void ULowEntryExtendedStandardLibrary::SceneCapture2DToBytes(ASceneCapture2D* SceneCapture2D, const ELowEntryImageFormat ImageFormat, TArray<uint8>& ByteArray, const int32 CompressionQuality)
 {
 	ByteArray = TArray<uint8>();
-	if(SceneCapture2D != nullptr)
+	if (SceneCapture2D != nullptr)
 	{
 		SceneCaptureComponent2DToBytes(SceneCapture2D->GetCaptureComponent2D(), ImageFormat, ByteArray, CompressionQuality);
 	}
@@ -1991,7 +1967,7 @@ void ULowEntryExtendedStandardLibrary::SceneCapture2DToBytes(ASceneCapture2D* Sc
 void ULowEntryExtendedStandardLibrary::SceneCaptureComponent2DToBytes(USceneCaptureComponent2D* SceneCaptureComponent2D, const ELowEntryImageFormat ImageFormat, TArray<uint8>& ByteArray, const int32 CompressionQuality)
 {
 	ByteArray = TArray<uint8>();
-	if(SceneCaptureComponent2D != nullptr)
+	if (SceneCaptureComponent2D != nullptr)
 	{
 		TextureRenderTarget2DToBytes(SceneCaptureComponent2D->TextureTarget, ImageFormat, ByteArray, CompressionQuality);
 	}
@@ -2001,28 +1977,28 @@ void ULowEntryExtendedStandardLibrary::TextureRenderTarget2DToBytes(UTextureRend
 {
 	ByteArray = TArray<uint8>();
 
-	if(TextureRenderTarget2D == nullptr)
+	if (TextureRenderTarget2D == nullptr)
 	{
 		return;
 	}
-	if(TextureRenderTarget2D->GetFormat() != PF_B8G8R8A8)
+	if (TextureRenderTarget2D->GetFormat() != PF_B8G8R8A8)
 	{
 		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in ImageToBytes, the TextureRenderTarget2D has a [Render Target Format] that is not supported, use [RTF RGBA8] instead ([PF_B8G8R8A8] in C++)"));
 		return;
 	}
 
 	FRenderTarget* RenderTarget = TextureRenderTarget2D->GameThread_GetRenderTargetResource();
-	if(RenderTarget == nullptr)
+	if (RenderTarget == nullptr)
 	{
 		return;
 	}
 
 	TArray<FColor> Pixels;
-	if(!RenderTarget->ReadPixels(Pixels))
+	if (!RenderTarget->ReadPixels(Pixels))
 	{
 		return;
 	}
-	for(FColor& Pixel : Pixels)
+	for (FColor& Pixel : Pixels)
 	{
 		Pixel.A = 255;
 	}
@@ -2033,7 +2009,7 @@ void ULowEntryExtendedStandardLibrary::TextureRenderTarget2DToBytes(UTextureRend
 
 void ULowEntryExtendedStandardLibrary::SceneCapture2DToPixels(ASceneCapture2D* SceneCapture2D, int32& Width, int32& Height, TArray<FColor>& Pixels)
 {
-	if(SceneCapture2D == nullptr)
+	if (SceneCapture2D == nullptr)
 	{
 		Width = 0;
 		Height = 0;
@@ -2045,7 +2021,7 @@ void ULowEntryExtendedStandardLibrary::SceneCapture2DToPixels(ASceneCapture2D* S
 
 void ULowEntryExtendedStandardLibrary::SceneCaptureComponent2DToPixels(USceneCaptureComponent2D* SceneCaptureComponent2D, int32& Width, int32& Height, TArray<FColor>& Pixels)
 {
-	if(SceneCaptureComponent2D == nullptr)
+	if (SceneCaptureComponent2D == nullptr)
 	{
 		Width = 0;
 		Height = 0;
@@ -2061,23 +2037,23 @@ void ULowEntryExtendedStandardLibrary::TextureRenderTarget2DToPixels(UTextureRen
 	Height = 0;
 	Pixels = TArray<FColor>();
 
-	if(TextureRenderTarget2D == nullptr)
+	if (TextureRenderTarget2D == nullptr)
 	{
 		return;
 	}
-	if(TextureRenderTarget2D->GetFormat() != PF_B8G8R8A8)
+	if (TextureRenderTarget2D->GetFormat() != PF_B8G8R8A8)
 	{
 		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in ImageToPixels, the TextureRenderTarget2D has a [Render Target Format] that is not supported, use [RTF RGBA8] instead ([PF_B8G8R8A8] in C++)"));
 		return;
 	}
 
 	FRenderTarget* RenderTarget = TextureRenderTarget2D->GameThread_GetRenderTargetResource();
-	if(RenderTarget == nullptr)
+	if (RenderTarget == nullptr)
 	{
 		return;
 	}
 
-	if(!RenderTarget->ReadPixels(Pixels))
+	if (!RenderTarget->ReadPixels(Pixels))
 	{
 		Pixels = TArray<FColor>();
 		return;
@@ -2085,12 +2061,11 @@ void ULowEntryExtendedStandardLibrary::TextureRenderTarget2DToPixels(UTextureRen
 	FIntPoint Size = RenderTarget->GetSizeXY();
 	Width = Size.X;
 	Height = Size.Y;
-	for(FColor& Pixel : Pixels)
+	for (FColor& Pixel : Pixels)
 	{
 		Pixel.A = 255;
 	}
 }
-
 
 
 void ULowEntryExtendedStandardLibrary::LoadVideo(UMediaSoundComponent* MediaSoundComponent, const FString& Url, bool& Success, UMediaPlayer*& Player, UMediaTexture*& Texture, const bool PlayOnOpen, const bool Loop)
@@ -2100,7 +2075,7 @@ void ULowEntryExtendedStandardLibrary::LoadVideo(UMediaSoundComponent* MediaSoun
 	Texture = nullptr;
 
 	UMediaPlayer* LoadPlayer = NewObject<UMediaPlayer>();
-	if(!LoadPlayer->OpenUrl(Url))
+	if (!LoadPlayer->OpenUrl(Url))
 	{
 		return;
 	}
@@ -2115,22 +2090,20 @@ void ULowEntryExtendedStandardLibrary::LoadVideo(UMediaSoundComponent* MediaSoun
 	Texture->SetMediaPlayer(Player);
 	Texture->UpdateResource();
 
-	if(MediaSoundComponent != nullptr)
+	if (MediaSoundComponent != nullptr)
 	{
 		MediaSoundComponent->SetMediaPlayer(Player);
 	}
 }
 
 
-
 void ULowEntryExtendedStandardLibrary::TextureUpdateResource(UTexture* Texture)
 {
-	if(Texture != nullptr)
+	if (Texture != nullptr)
 	{
 		Texture->UpdateResource();
 	}
 }
-
 
 
 void ULowEntryExtendedStandardLibrary::SceneCapture2D_GetFov(ASceneCapture2D* SceneCapture2D, float& Fov)
@@ -2155,7 +2128,6 @@ void ULowEntryExtendedStandardLibrary::SceneCaptureComponent2D_SetFov(USceneCapt
 }
 
 
-
 TArray<uint8> ULowEntryExtendedStandardLibrary::Pearson(const TArray<uint8>& ByteArray, const int32 HashLength, int32 Index, int32 Length)
 {
 	return ULowEntryHashingPearsonLibrary::Hash(ByteArray, Index, Length, HashLength);
@@ -2163,18 +2135,18 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::Pearson(const TArray<uint8>& Byt
 
 TArray<uint8> ULowEntryExtendedStandardLibrary::Md5(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
 {
-	if(Index < 0)
+	if (Index < 0)
 	{
 		Length += Index;
 		Index = 0;
 	}
-	if(Length > ByteArray.Num() - Index)
+	if (Length > ByteArray.Num() - Index)
 	{
 		Length = ByteArray.Num() - Index;
 	}
 
 	FMD5 Hasher;
-	if(Length > 0)
+	if (Length > 0)
 	{
 		const uint8* Bytes = ByteArray.GetData();
 		Hasher.Update(const_cast<uint8*>(Bytes) + Index, Length);
@@ -2189,18 +2161,18 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::Md5(const TArray<uint8>& ByteArr
 
 TArray<uint8> ULowEntryExtendedStandardLibrary::Sha1(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
 {
-	if(Index < 0)
+	if (Index < 0)
 	{
 		Length += Index;
 		Index = 0;
 	}
-	if(Length > ByteArray.Num() - Index)
+	if (Length > ByteArray.Num() - Index)
 	{
 		Length = ByteArray.Num() - Index;
 	}
 
 	FSHA1 Hasher;
-	if(Length > 0)
+	if (Length > 0)
 	{
 		const uint8* Bytes = ByteArray.GetData();
 		Hasher.Update(const_cast<uint8*>(Bytes) + Index, Length);
@@ -2230,15 +2202,14 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::BCrypt(const TArray<uint8>& Byte
 }
 
 
-
 TArray<uint8> ULowEntryExtendedStandardLibrary::HMAC(const TArray<uint8>& ByteArray, const TArray<uint8>& Key, ELowEntryHmacAlgorithm Algorithm, int32 Index, int32 Length)
 {
-	if(Index < 0)
+	if (Index < 0)
 	{
 		Length += Index;
 		Index = 0;
 	}
-	if(Length > ByteArray.Num() - Index)
+	if (Length > ByteArray.Num() - Index)
 	{
 		Length = ByteArray.Num() - Index;
 	}
@@ -2246,24 +2217,24 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::HMAC(const TArray<uint8>& ByteAr
 	int32 BlockSize = HMAC_GetBlockSize(Algorithm);
 
 	TArray<uint8> KeyBytes = Key;
-	if(KeyBytes.Num() > BlockSize)
+	if (KeyBytes.Num() > BlockSize)
 	{
 		KeyBytes = HMAC_Hash(KeyBytes, Algorithm);// key = hash(key)
 	}
-	if(KeyBytes.Num() != BlockSize)
+	if (KeyBytes.Num() != BlockSize)
 	{
 		KeyBytes.SetNumZeroed(BlockSize);// key = key + 0x00 (till KeyBytes has BlockSize length)
 	}
 
 	TArray<uint8> ArrayO = KeyBytes;
 	TArray<uint8> ArrayI = KeyBytes;
-	for(int32 i = 0; i < KeyBytes.Num(); i++)
+	for (int32 i = 0; i < KeyBytes.Num(); i++)
 	{
 		ArrayO[i] ^= 0x5c;// o_key_pad = 0x5c ^ key
 		ArrayI[i] ^= 0x36;// i_key_pad = 0x36 ^ key
 	}
 
-	if(Length > 0)// (i_key_pad + message)
+	if (Length > 0)// (i_key_pad + message)
 	{
 		ArrayI.Append(ByteArray.GetData() + Index, Length);
 	}
@@ -2274,7 +2245,7 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::HMAC(const TArray<uint8>& ByteAr
 
 int32 ULowEntryExtendedStandardLibrary::HMAC_GetBlockSize(ELowEntryHmacAlgorithm Algorithm)
 {
-	switch(Algorithm)
+	switch (Algorithm)
 	{
 		case ELowEntryHmacAlgorithm::MD5:
 			return 64;
@@ -2292,7 +2263,7 @@ int32 ULowEntryExtendedStandardLibrary::HMAC_GetBlockSize(ELowEntryHmacAlgorithm
 
 TArray<uint8> ULowEntryExtendedStandardLibrary::HMAC_Hash(const TArray<uint8>& Array, ELowEntryHmacAlgorithm Algorithm)
 {
-	switch(Algorithm)
+	switch (Algorithm)
 	{
 		case ELowEntryHmacAlgorithm::MD5:
 			return Md5(Array);
@@ -2307,7 +2278,6 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::HMAC_Hash(const TArray<uint8>& A
 			return Sha256(Array);// defaults to SHA-256
 	}
 }
-
 
 
 TArray<FString> ULowEntryExtendedStandardLibrary::HashcashArray(const TArray<FString>& Resources, const int32 Bits)
@@ -2344,13 +2314,12 @@ ULowEntryParsedHashcash* ULowEntryExtendedStandardLibrary::HashcashParse(const F
 
 bool ULowEntryExtendedStandardLibrary::ParsedHashcashIsValid(ULowEntryParsedHashcash* Target)
 {
-	if(Target == nullptr)
+	if (Target == nullptr)
 	{
 		return false;
 	}
 	return Target->IsHashcashValid();
 }
-
 
 
 FString ULowEntryExtendedStandardLibrary::NewlineCharacter()
@@ -2372,12 +2341,11 @@ FString ULowEntryExtendedStandardLibrary::TabCharacter()
 {
 	return TEXT("\t");
 }
-	
 
 
 FString ULowEntryExtendedStandardLibrary::MinString(FString A, FString B)
 {
-	if(A >= B)
+	if (A >= B)
 	{
 		return B;
 	}
@@ -2386,7 +2354,7 @@ FString ULowEntryExtendedStandardLibrary::MinString(FString A, FString B)
 
 FString ULowEntryExtendedStandardLibrary::MaxString(FString A, FString B)
 {
-	if(A >= B)
+	if (A >= B)
 	{
 		return A;
 	}
@@ -2412,7 +2380,6 @@ bool ULowEntryExtendedStandardLibrary::GreaterEqualStringString(const FString& A
 {
 	return (A >= B);
 }
-
 
 
 bool ULowEntryExtendedStandardLibrary::LessIntegerFloat(const int32 A, const float B)
@@ -2541,27 +2508,26 @@ bool ULowEntryExtendedStandardLibrary::GreaterEqualByteFloat(const uint8 A, cons
 }
 
 
-
 float ULowEntryExtendedStandardLibrary::RoundDecimals(float Number, int32 Decimals)
 {
-	if(Number == 0)
+	if (Number == 0)
 	{
 		return Number;
 	}
-	if(Decimals > 0)
+	if (Decimals > 0)
 	{
 		int64 Multiplier = 1;
-		for(int32 i = 1; i <= Decimals; i++)
+		for (int32 i = 1; i <= Decimals; i++)
 		{
 			Multiplier *= 10;
 		}
 		float MultiplierFloat = static_cast<float>(Multiplier);
 		return FMath::RoundToFloat(Number * MultiplierFloat) / MultiplierFloat;
 	}
-	if(Decimals < 0)
+	if (Decimals < 0)
 	{
 		int64 Divider = 1;
-		for(int32 i = -1; i >= Decimals; i--)
+		for (int32 i = -1; i >= Decimals; i--)
 		{
 			Divider *= 10;
 		}
@@ -2573,24 +2539,24 @@ float ULowEntryExtendedStandardLibrary::RoundDecimals(float Number, int32 Decima
 
 float ULowEntryExtendedStandardLibrary::CeilDecimals(float Number, int32 Decimals)
 {
-	if(Number == 0)
+	if (Number == 0)
 	{
 		return Number;
 	}
-	if(Decimals > 0)
+	if (Decimals > 0)
 	{
 		int64 Multiplier = 1;
-		for(int32 i = 1; i <= Decimals; i++)
+		for (int32 i = 1; i <= Decimals; i++)
 		{
 			Multiplier *= 10;
 		}
 		float MultiplierFloat = static_cast<float>(Multiplier);
 		return FMath::CeilToFloat(Number * MultiplierFloat) / MultiplierFloat;
 	}
-	if(Decimals < 0)
+	if (Decimals < 0)
 	{
 		int64 Divider = 1;
-		for(int32 i = -1; i >= Decimals; i--)
+		for (int32 i = -1; i >= Decimals; i--)
 		{
 			Divider *= 10;
 		}
@@ -2602,24 +2568,24 @@ float ULowEntryExtendedStandardLibrary::CeilDecimals(float Number, int32 Decimal
 
 float ULowEntryExtendedStandardLibrary::FloorDecimals(float Number, int32 Decimals)
 {
-	if(Number == 0)
+	if (Number == 0)
 	{
 		return Number;
 	}
-	if(Decimals > 0)
+	if (Decimals > 0)
 	{
 		int64 Multiplier = 1;
-		for(int32 i = 1; i <= Decimals; i++)
+		for (int32 i = 1; i <= Decimals; i++)
 		{
 			Multiplier *= 10;
 		}
 		float MultiplierFloat = static_cast<float>(Multiplier);
 		return FMath::FloorToFloat(Number * MultiplierFloat) / MultiplierFloat;
 	}
-	if(Decimals < 0)
+	if (Decimals < 0)
 	{
 		int64 Divider = 1;
-		for(int32 i = -1; i >= Decimals; i--)
+		for (int32 i = -1; i >= Decimals; i--)
 		{
 			Divider *= 10;
 		}
@@ -2628,7 +2594,6 @@ float ULowEntryExtendedStandardLibrary::FloorDecimals(float Number, int32 Decima
 	}
 	return FMath::FloorToFloat(Number);
 }
-
 
 
 void ULowEntryExtendedStandardLibrary::MaxOfStringArray(const TArray<FString>& StringArray, int32& IndexOfMaxValue, FString& MaxValue)
@@ -2662,7 +2627,6 @@ void ULowEntryExtendedStandardLibrary::MinOfTimespanArray(const TArray<FTimespan
 }
 
 
-
 void ULowEntryExtendedStandardLibrary::DateTime_ToIso8601(const FDateTime& DateTime, FString& String)
 {
 	String = DateTime.ToIso8601();
@@ -2684,7 +2648,7 @@ void ULowEntryExtendedStandardLibrary::DateTime_ToUnixTimestamp(const FDateTime&
 
 void ULowEntryExtendedStandardLibrary::DateTime_FromUnixTimestamp(ULowEntryLong* Timestamp, FDateTime& DateTime)
 {
-	if(Timestamp == nullptr)
+	if (Timestamp == nullptr)
 	{
 		DateTime = FDateTime::FromUnixTimestamp(0);
 	}
@@ -2699,7 +2663,6 @@ void ULowEntryExtendedStandardLibrary::DateTime_FromUnixTimestamp(ULowEntryLong*
 }
 
 
-
 void ULowEntryExtendedStandardLibrary::ConvertLocalDateToUtcDate(const FDateTime& Local, FDateTime& Utc)
 {
 	Utc = Local - (FDateTime::Now() - FDateTime::UtcNow());
@@ -2711,11 +2674,10 @@ void ULowEntryExtendedStandardLibrary::ConvertUtcDateToLocalDate(const FDateTime
 }
 
 
-
 TArray<FString> ULowEntryExtendedStandardLibrary::SortStringArray(const TArray<FString>& StringArray, const bool Reversed)
 {
 	TArray<FString> Array = StringArray;
-	if(!Reversed)
+	if (!Reversed)
 	{
 		Array.Sort([](const FString& A, const FString& B)
 		{
@@ -2734,7 +2696,7 @@ TArray<FString> ULowEntryExtendedStandardLibrary::SortStringArray(const TArray<F
 
 void ULowEntryExtendedStandardLibrary::SortStringArrayDirectly(UPARAM(ref) TArray<FString>& StringArray, const bool Reversed)
 {
-	if(!Reversed)
+	if (!Reversed)
 	{
 		StringArray.Sort([](const FString& A, const FString& B)
 		{
@@ -2754,7 +2716,7 @@ void ULowEntryExtendedStandardLibrary::SortStringArrayDirectly(UPARAM(ref) TArra
 TArray<int32> ULowEntryExtendedStandardLibrary::SortIntegerArray(const TArray<int32>& IntegerArray, const bool Reversed)
 {
 	TArray<int32> Array = IntegerArray;
-	if(!Reversed)
+	if (!Reversed)
 	{
 		Array.Sort([](const int32 A, const int32 B)
 		{
@@ -2773,7 +2735,7 @@ TArray<int32> ULowEntryExtendedStandardLibrary::SortIntegerArray(const TArray<in
 
 void ULowEntryExtendedStandardLibrary::SortIntegerArrayDirectly(UPARAM(ref) TArray<int32>& IntegerArray, const bool Reversed)
 {
-	if(!Reversed)
+	if (!Reversed)
 	{
 		IntegerArray.Sort([](const int32 A, const int32 B)
 		{
@@ -2793,7 +2755,7 @@ void ULowEntryExtendedStandardLibrary::SortIntegerArrayDirectly(UPARAM(ref) TArr
 TArray<float> ULowEntryExtendedStandardLibrary::SortFloatArray(const TArray<float>& FloatArray, const bool Reversed)
 {
 	TArray<float> Array = FloatArray;
-	if(!Reversed)
+	if (!Reversed)
 	{
 		Array.Sort([](const float A, const float B)
 		{
@@ -2812,7 +2774,7 @@ TArray<float> ULowEntryExtendedStandardLibrary::SortFloatArray(const TArray<floa
 
 void ULowEntryExtendedStandardLibrary::SortFloatArrayDirectly(UPARAM(ref) TArray<float>& FloatArray, const bool Reversed)
 {
-	if(!Reversed)
+	if (!Reversed)
 	{
 		FloatArray.Sort([](const float A, const float B)
 		{
@@ -2832,7 +2794,7 @@ void ULowEntryExtendedStandardLibrary::SortFloatArrayDirectly(UPARAM(ref) TArray
 TArray<uint8> ULowEntryExtendedStandardLibrary::SortByteArray(const TArray<uint8>& ByteArray, const bool Reversed)
 {
 	TArray<uint8> Array = ByteArray;
-	if(!Reversed)
+	if (!Reversed)
 	{
 		Array.Sort([](const uint8 A, const uint8 B)
 		{
@@ -2851,7 +2813,7 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::SortByteArray(const TArray<uint8
 
 void ULowEntryExtendedStandardLibrary::SortByteArrayDirectly(UPARAM(ref) TArray<uint8>& ByteArray, const bool Reversed)
 {
-	if(!Reversed)
+	if (!Reversed)
 	{
 		ByteArray.Sort([](const uint8 A, const uint8 B)
 		{
@@ -2871,7 +2833,7 @@ void ULowEntryExtendedStandardLibrary::SortByteArrayDirectly(UPARAM(ref) TArray<
 TArray<FDateTime> ULowEntryExtendedStandardLibrary::SortDateTimeArray(const TArray<FDateTime>& DateTimeArray, const bool Reversed)
 {
 	TArray<FDateTime> Array = DateTimeArray;
-	if(!Reversed)
+	if (!Reversed)
 	{
 		Array.Sort([](const FDateTime& A, const FDateTime& B)
 		{
@@ -2890,7 +2852,7 @@ TArray<FDateTime> ULowEntryExtendedStandardLibrary::SortDateTimeArray(const TArr
 
 void ULowEntryExtendedStandardLibrary::SortDateTimeArrayDirectly(UPARAM(ref) TArray<FDateTime>& DateTimeArray, const bool Reversed)
 {
-	if(!Reversed)
+	if (!Reversed)
 	{
 		DateTimeArray.Sort([](const FDateTime& A, const FDateTime& B)
 		{
@@ -2910,7 +2872,7 @@ void ULowEntryExtendedStandardLibrary::SortDateTimeArrayDirectly(UPARAM(ref) TAr
 TArray<FTimespan> ULowEntryExtendedStandardLibrary::SortTimespanArray(const TArray<FTimespan>& TimespanArray, const bool Reversed)
 {
 	TArray<FTimespan> Array = TimespanArray;
-	if(!Reversed)
+	if (!Reversed)
 	{
 		Array.Sort([](const FTimespan& A, const FTimespan& B)
 		{
@@ -2929,7 +2891,7 @@ TArray<FTimespan> ULowEntryExtendedStandardLibrary::SortTimespanArray(const TArr
 
 void ULowEntryExtendedStandardLibrary::SortTimespanArrayDirectly(UPARAM(ref) TArray<FTimespan>& TimespanArray, const bool Reversed)
 {
-	if(!Reversed)
+	if (!Reversed)
 	{
 		TimespanArray.Sort([](const FTimespan& A, const FTimespan& B)
 		{
@@ -2949,7 +2911,7 @@ void ULowEntryExtendedStandardLibrary::SortTimespanArrayDirectly(UPARAM(ref) TAr
 TArray<UObject*> ULowEntryExtendedStandardLibrary::SortObjectArray(const TArray<UObject*>& ObjectArray, FDelegateULowEntryExtendedStandardLibraryCompareObjects Comparator, const bool Reversed)
 {
 	TArray<UObject*> Array = ObjectArray;
-	if(!Reversed)
+	if (!Reversed)
 	{
 		Array.Sort([Comparator](UObject& A, UObject& B)
 		{
@@ -2972,7 +2934,7 @@ TArray<UObject*> ULowEntryExtendedStandardLibrary::SortObjectArray(const TArray<
 
 void ULowEntryExtendedStandardLibrary::SortObjectArrayDirectly(UPARAM(ref) TArray<UObject*>& ObjectArray, FDelegateULowEntryExtendedStandardLibraryCompareObjects Comparator, const bool Reversed)
 {
-	if(!Reversed)
+	if (!Reversed)
 	{
 		ObjectArray.Sort([Comparator](UObject& A, UObject& B)
 		{
@@ -2993,13 +2955,12 @@ void ULowEntryExtendedStandardLibrary::SortObjectArrayDirectly(UPARAM(ref) TArra
 }
 
 
-
 void ULowEntryExtendedStandardLibrary::RandomDelay(UObject* WorldContextObject, float MinDuration, float MaxDuration, FLatentActionInfo LatentInfo)
 {
-	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
+	if (UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
 	{
 		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
-		if(LatentActionManager.FindExistingAction<FDelayAction>(LatentInfo.CallbackTarget, LatentInfo.UUID) == nullptr)
+		if (LatentActionManager.FindExistingAction<FDelayAction>(LatentInfo.CallbackTarget, LatentInfo.UUID) == nullptr)
 		{
 			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FDelayAction(FMath::FRandRange(MinDuration, MaxDuration), LatentInfo));
 		}
@@ -3008,11 +2969,11 @@ void ULowEntryExtendedStandardLibrary::RandomDelay(UObject* WorldContextObject, 
 
 void ULowEntryExtendedStandardLibrary::RetriggerableRandomDelay(UObject* WorldContextObject, float MinDuration, float MaxDuration, FLatentActionInfo LatentInfo)
 {
-	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
+	if (UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
 	{
 		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
 		FDelayAction* Action = LatentActionManager.FindExistingAction<FDelayAction>(LatentInfo.CallbackTarget, LatentInfo.UUID);
-		if(Action == nullptr)
+		if (Action == nullptr)
 		{
 			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FDelayAction(FMath::FRandRange(MinDuration, MaxDuration), LatentInfo));
 		}
@@ -3024,13 +2985,12 @@ void ULowEntryExtendedStandardLibrary::RetriggerableRandomDelay(UObject* WorldCo
 }
 
 
-
 void ULowEntryExtendedStandardLibrary::DelayFrames(UObject* WorldContextObject, int32 Frames, FLatentActionInfo LatentInfo)
 {
-	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
+	if (UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
 	{
 		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
-		if(LatentActionManager.FindExistingAction<FLowEntryDelayFramesAction>(LatentInfo.CallbackTarget, LatentInfo.UUID) == nullptr)
+		if (LatentActionManager.FindExistingAction<FLowEntryDelayFramesAction>(LatentInfo.CallbackTarget, LatentInfo.UUID) == nullptr)
 		{
 			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FLowEntryDelayFramesAction(Frames, LatentInfo));
 		}
@@ -3039,11 +2999,11 @@ void ULowEntryExtendedStandardLibrary::DelayFrames(UObject* WorldContextObject, 
 
 void ULowEntryExtendedStandardLibrary::RetriggerableDelayFrames(UObject* WorldContextObject, int32 Frames, FLatentActionInfo LatentInfo)
 {
-	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
+	if (UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
 	{
 		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
 		FLowEntryDelayFramesAction* Action = LatentActionManager.FindExistingAction<FLowEntryDelayFramesAction>(LatentInfo.CallbackTarget, LatentInfo.UUID);
-		if(Action == nullptr)
+		if (Action == nullptr)
 		{
 			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FLowEntryDelayFramesAction(Frames, LatentInfo));
 		}
@@ -3056,10 +3016,10 @@ void ULowEntryExtendedStandardLibrary::RetriggerableDelayFrames(UObject* WorldCo
 
 void ULowEntryExtendedStandardLibrary::RandomDelayFrames(UObject* WorldContextObject, int32 MinFrames, int32 MaxFrames, FLatentActionInfo LatentInfo)
 {
-	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
+	if (UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
 	{
 		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
-		if(LatentActionManager.FindExistingAction<FLowEntryDelayFramesAction>(LatentInfo.CallbackTarget, LatentInfo.UUID) == nullptr)
+		if (LatentActionManager.FindExistingAction<FLowEntryDelayFramesAction>(LatentInfo.CallbackTarget, LatentInfo.UUID) == nullptr)
 		{
 			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FLowEntryDelayFramesAction(FMath::RandRange(MinFrames, MaxFrames), LatentInfo));
 		}
@@ -3068,11 +3028,11 @@ void ULowEntryExtendedStandardLibrary::RandomDelayFrames(UObject* WorldContextOb
 
 void ULowEntryExtendedStandardLibrary::RetriggerableRandomDelayFrames(UObject* WorldContextObject, int32 MinFrames, int32 MaxFrames, FLatentActionInfo LatentInfo)
 {
-	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
+	if (UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
 	{
 		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
 		FLowEntryDelayFramesAction* Action = LatentActionManager.FindExistingAction<FLowEntryDelayFramesAction>(LatentInfo.CallbackTarget, LatentInfo.UUID);
-		if(Action == nullptr)
+		if (Action == nullptr)
 		{
 			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FLowEntryDelayFramesAction(FMath::RandRange(MinFrames, MaxFrames), LatentInfo));
 		}
@@ -3084,14 +3044,13 @@ void ULowEntryExtendedStandardLibrary::RetriggerableRandomDelayFrames(UObject* W
 }
 
 
-
 void ULowEntryExtendedStandardLibrary::QueueExecutions(UObject* WorldContextObject, ULowEntryExecutionQueue*& Queue, FLatentActionInfo LatentInfo)
 {
-	if(UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
+	if (UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
 	{
 		FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
 		FLowEntryExecutionQueueAction* Action = LatentActionManager.FindExistingAction<FLowEntryExecutionQueueAction>(LatentInfo.CallbackTarget, LatentInfo.UUID);
-		if(Action == nullptr)
+		if (Action == nullptr)
 		{
 			Queue = ULowEntryExecutionQueue::Create(1, true);
 			LatentActionManager.AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FLowEntryExecutionQueueAction(Queue, LatentInfo));
@@ -3105,24 +3064,23 @@ void ULowEntryExtendedStandardLibrary::QueueExecutions(UObject* WorldContextObje
 
 void ULowEntryExtendedStandardLibrary::NextQueueExecution(ULowEntryExecutionQueue* Queue)
 {
-	if(IsValid(Queue))
+	if (IsValid(Queue))
 	{
 		Queue->Next = true;
 	}
 }
 
 
-
 FString ULowEntryExtendedStandardLibrary::CreateString(const int32 Length, const FString& Filler)
 {
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return TEXT("");
 	}
 
 	FString FillerString = Filler;
 	int32 Steps = FillerString.Len();
-	if(Steps <= 0)
+	if (Steps <= 0)
 	{
 		FillerString = TEXT(" ");
 		Steps = FillerString.Len();
@@ -3131,16 +3089,16 @@ FString ULowEntryExtendedStandardLibrary::CreateString(const int32 Length, const
 
 	FString String = TEXT("");
 	String.Reserve(Length);
-	if(Overflow <= 0)
+	if (Overflow <= 0)
 	{
-		for(int32 i = 0; i < Length; i += Steps)
+		for (int32 i = 0; i < Length; i += Steps)
 		{
 			String.Append(FillerString);
 		}
 	}
 	else
 	{
-		for(int32 i = Steps; i < Length; i += Steps)
+		for (int32 i = Steps; i < Length; i += Steps)
 		{
 			String.Append(FillerString);
 		}
@@ -3150,10 +3108,9 @@ FString ULowEntryExtendedStandardLibrary::CreateString(const int32 Length, const
 }
 
 
-
 FString ULowEntryExtendedStandardLibrary::RemoveCharactersExcept(const FString& String, const bool KeepLowercaseAZ, const bool KeepUppercaseAZ, const bool KeepNumbers, const FString& OtherCharactersToKeep)
 {
-	if(String.Len() <= 0)
+	if (String.Len() <= 0)
 	{
 		return String;
 	}
@@ -3161,27 +3118,27 @@ FString ULowEntryExtendedStandardLibrary::RemoveCharactersExcept(const FString& 
 	FString NewString;
 	NewString.Reserve(String.Len());
 
-	for(const TCHAR Char : String)
+	for (const TCHAR Char : String)
 	{
-		if(KeepLowercaseAZ && (Char >= 'a') && (Char <= 'z'))
+		if (KeepLowercaseAZ && (Char >= 'a') && (Char <= 'z'))
 		{
 			NewString.AppendChar(Char);
 			continue;
 		}
-		if(KeepUppercaseAZ && (Char >= 'A') && (Char <= 'Z'))
+		if (KeepUppercaseAZ && (Char >= 'A') && (Char <= 'Z'))
 		{
 			NewString.AppendChar(Char);
 			continue;
 		}
-		if(KeepNumbers && (Char >= '0') && (Char <= '9'))
+		if (KeepNumbers && (Char >= '0') && (Char <= '9'))
 		{
 			NewString.AppendChar(Char);
 			continue;
 		}
 
-		for(const TCHAR KeepChar : OtherCharactersToKeep)
+		for (const TCHAR KeepChar : OtherCharactersToKeep)
 		{
-			if(Char == KeepChar)
+			if (Char == KeepChar)
 			{
 				NewString.AppendChar(Char);
 				break;
@@ -3194,7 +3151,7 @@ FString ULowEntryExtendedStandardLibrary::RemoveCharactersExcept(const FString& 
 
 FString ULowEntryExtendedStandardLibrary::ReplaceCharactersExcept(const FString& String, const FString& ReplacementCharacter, const bool KeepLowercaseAZ, const bool KeepUppercaseAZ, const bool KeepNumbers, const FString& OtherCharactersToKeep)
 {
-	if(String.Len() <= 0)
+	if (String.Len() <= 0)
 	{
 		return String;
 	}
@@ -3202,35 +3159,35 @@ FString ULowEntryExtendedStandardLibrary::ReplaceCharactersExcept(const FString&
 	FString NewString;
 	NewString.Reserve(FMath::Max(String.Len(), (ReplacementCharacter.Len() * String.Len())));
 
-	for(const TCHAR Char : String)
+	for (const TCHAR Char : String)
 	{
-		if(KeepLowercaseAZ && (Char >= 'a') && (Char <= 'z'))
+		if (KeepLowercaseAZ && (Char >= 'a') && (Char <= 'z'))
 		{
 			NewString.AppendChar(Char);
 			continue;
 		}
-		if(KeepUppercaseAZ && (Char >= 'A') && (Char <= 'Z'))
+		if (KeepUppercaseAZ && (Char >= 'A') && (Char <= 'Z'))
 		{
 			NewString.AppendChar(Char);
 			continue;
 		}
-		if(KeepNumbers && (Char >= '0') && (Char <= '9'))
+		if (KeepNumbers && (Char >= '0') && (Char <= '9'))
 		{
 			NewString.AppendChar(Char);
 			continue;
 		}
 
 		bool Keep = false;
-		for(const TCHAR KeepChar : OtherCharactersToKeep)
+		for (const TCHAR KeepChar : OtherCharactersToKeep)
 		{
-			if(Char == KeepChar)
+			if (Char == KeepChar)
 			{
 				NewString.AppendChar(Char);
 				Keep = true;
 				break;
 			}
 		}
-		if(Keep)
+		if (Keep)
 		{
 			continue;
 		}
@@ -3240,7 +3197,6 @@ FString ULowEntryExtendedStandardLibrary::ReplaceCharactersExcept(const FString&
 
 	return NewString;
 }
-
 
 
 bool ULowEntryExtendedStandardLibrary::RegexMatch(const FString& String, const FString& Pattern)
@@ -3256,7 +3212,7 @@ int32 ULowEntryExtendedStandardLibrary::RegexCount(const FString& String, const 
 	FRegexMatcher RegexMatcher(RegexPattern, String);
 	int32 Count = 0;
 	int32 Length = String.Len();
-	while(RegexMatcher.FindNext())
+	while (RegexMatcher.FindNext())
 	{
 		Count++;
 		int32 e = RegexMatcher.GetMatchEnding();
@@ -3273,24 +3229,24 @@ TArray<FLowEntryRegexMatch> ULowEntryExtendedStandardLibrary::RegexGetMatches(co
 	FRegexPattern RegexPattern(Pattern);
 	FRegexMatcher RegexMatcher(RegexPattern, String);
 	int32 MatchNumber = 0;
-	while(RegexMatcher.FindNext())
+	while (RegexMatcher.FindNext())
 	{
 		MatchNumber++;
 		int32 b = RegexMatcher.GetMatchBeginning();
 		int32 e = RegexMatcher.GetMatchEnding();
-		if((b < 0) || (e < 0))
+		if ((b < 0) || (e < 0))
 		{
 			continue;
 		}
 
 		TArray<FLowEntryRegexCaptureGroup> CaptureGroups;
 		int32 CaptureGroupNumber = 0;
-		while(true)
+		while (true)
 		{
 			CaptureGroupNumber++;
 			int32 gb = RegexMatcher.GetCaptureGroupBeginning(CaptureGroupNumber);
 			int32 ge = RegexMatcher.GetCaptureGroupEnding(CaptureGroupNumber);
-			if((gb < 0) || (ge < 0))
+			if ((gb < 0) || (ge < 0))
 			{
 				break;
 			}
@@ -3325,12 +3281,12 @@ FString ULowEntryExtendedStandardLibrary::RegexReplace(const FString& String, co
 
 	FRegexPattern RegexPattern(Pattern);
 	FRegexMatcher RegexMatcher(RegexPattern, String);
-	while(RegexMatcher.FindNext())
+	while (RegexMatcher.FindNext())
 	{
 		int32 b = RegexMatcher.GetMatchBeginning();
 		int32 e = RegexMatcher.GetMatchEnding();
 
-		for(int32 i = LastMatchEnding; i < b; i++)
+		for (int32 i = LastMatchEnding; i < b; i++)
 		{
 			Result += String[i];
 		}
@@ -3339,7 +3295,7 @@ FString ULowEntryExtendedStandardLibrary::RegexReplace(const FString& String, co
 		RegexMatcher.SetLimits(e, Length);
 		LastMatchEnding = e;
 	}
-	for(int32 i = LastMatchEnding; i < Length; i++)
+	for (int32 i = LastMatchEnding; i < Length; i++)
 	{
 		Result += String[i];
 	}
@@ -3347,10 +3303,9 @@ FString ULowEntryExtendedStandardLibrary::RegexReplace(const FString& String, co
 }
 
 
-
 void ULowEntryExtendedStandardLibrary::Crash()
 {
-	for(int32 i = 1; i <= 100; i++)
+	for (int32 i = 1; i <= 100; i++)
 	{
 		UE_LOG(LogBlueprintUserMessages, Log, TEXT("This crash was caused by LowEntryExtendedStandardLibrary::Crash() and was meant to happen."));
 	}
@@ -3358,11 +3313,10 @@ void ULowEntryExtendedStandardLibrary::Crash()
 }
 
 
-
 void ULowEntryExtendedStandardLibrary::HostGame(UObject* WorldContextObject, const FString& Map, const FString& Args, APlayerController* SpecificPlayer)
 {
 	APlayerController* TargetPC = SpecificPlayer ? SpecificPlayer : UGameplayStatics::GetPlayerController(WorldContextObject, 0);
-	if(TargetPC)
+	if (TargetPC)
 	{
 		TargetPC->ConsoleCommand(TEXT("open ") + Map + TEXT("?listen") + Args, true);
 	}
@@ -3371,7 +3325,7 @@ void ULowEntryExtendedStandardLibrary::HostGame(UObject* WorldContextObject, con
 void ULowEntryExtendedStandardLibrary::JoinGame(UObject* WorldContextObject, const FString& ServerAddress, const FString& Args, APlayerController* SpecificPlayer)
 {
 	APlayerController* TargetPC = SpecificPlayer ? SpecificPlayer : UGameplayStatics::GetPlayerController(WorldContextObject, 0);
-	if(TargetPC)
+	if (TargetPC)
 	{
 		TargetPC->ConsoleCommand(TEXT("open ") + ServerAddress + Args, true);
 	}
@@ -3380,7 +3334,7 @@ void ULowEntryExtendedStandardLibrary::JoinGame(UObject* WorldContextObject, con
 void ULowEntryExtendedStandardLibrary::ServerChangeMap(UObject* WorldContextObject, const FString& Map, const FString& Args, APlayerController* SpecificPlayer)
 {
 	APlayerController* TargetPC = SpecificPlayer ? SpecificPlayer : UGameplayStatics::GetPlayerController(WorldContextObject, 0);
-	if(TargetPC)
+	if (TargetPC)
 	{
 		TargetPC->ConsoleCommand(TEXT("servertravel ") + Map + Args, true);
 	}
@@ -3389,18 +3343,17 @@ void ULowEntryExtendedStandardLibrary::ServerChangeMap(UObject* WorldContextObje
 void ULowEntryExtendedStandardLibrary::ChangeMap(UObject* WorldContextObject, const FString& Map, const FString& Args, APlayerController* SpecificPlayer)
 {
 	APlayerController* TargetPC = SpecificPlayer ? SpecificPlayer : UGameplayStatics::GetPlayerController(WorldContextObject, 0);
-	if(TargetPC)
+	if (TargetPC)
 	{
 		TargetPC->ConsoleCommand(TEXT("open ") + Map + Args, true);
 	}
 }
 
 
-
 void ULowEntryExtendedStandardLibrary::TickFrames(UObject* WorldContextObject, FLatentActionInfo LatentInfo, const int32 Ticks, const int32 FramesInterval, int32& Tick)
 {
 	UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull);
-	if(World == nullptr)
+	if (World == nullptr)
 	{
 		return;
 	}
@@ -3411,7 +3364,7 @@ void ULowEntryExtendedStandardLibrary::TickFrames(UObject* WorldContextObject, F
 void ULowEntryExtendedStandardLibrary::TickSeconds(UObject* WorldContextObject, FLatentActionInfo LatentInfo, const int32 Ticks, const float SecondsInterval, int32& Tick)
 {
 	UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull);
-	if(World == nullptr)
+	if (World == nullptr)
 	{
 		return;
 	}
@@ -3420,12 +3373,10 @@ void ULowEntryExtendedStandardLibrary::TickSeconds(UObject* WorldContextObject, 
 }
 
 
-
 ULowEntryByteDataReader* ULowEntryExtendedStandardLibrary::ByteDataReader_Create(const TArray<uint8>& Bytes, int32 Index, int32 Length)
 {
 	return ULowEntryByteDataReader::Create(Bytes, Index, Length);
 }
-
 
 
 ULowEntryByteDataWriter* ULowEntryExtendedStandardLibrary::ByteDataWriter_Create()
@@ -3447,7 +3398,6 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::ByteDataWriter_GetBytes(ULowEntr
 {
 	return ByteDataWriter->GetBytes();
 }
-
 
 
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromByte(const uint8 Value)
@@ -3546,12 +3496,10 @@ ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFr
 }
 
 
-
 ULowEntryBitDataReader* ULowEntryExtendedStandardLibrary::BitDataReader_Create(const TArray<uint8>& Bytes, int32 Index, int32 Length)
 {
 	return ULowEntryBitDataReader::Create(Bytes, Index, Length);
 }
-
 
 
 ULowEntryBitDataWriter* ULowEntryExtendedStandardLibrary::BitDataWriter_Create()
@@ -3573,7 +3521,6 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::BitDataWriter_GetBytes(ULowEntry
 {
 	return BitDataWriter->GetBytes();
 }
-
 
 
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromBit(const bool Value)
@@ -3714,7 +3661,6 @@ ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFrom
 }
 
 
-
 ULowEntryLong* ULowEntryExtendedStandardLibrary::Long_CreateZero()
 {
 	return ULowEntryLong::Create();
@@ -3736,28 +3682,27 @@ ULowEntryDouble* ULowEntryExtendedStandardLibrary::Double_Create(const TArray<ui
 }
 
 
-
 void ULowEntryExtendedStandardLibrary::SetMousePosition(const int32 X, const int32 Y)
 {
-	if(GEngine == nullptr)
+	if (GEngine == nullptr)
 	{
 		return;
 	}
 
 	UGameViewportClient* ViewportClient = GEngine->GameViewport;
-	if(ViewportClient == nullptr)
+	if (ViewportClient == nullptr)
 	{
 		return;
 	}
 
 	FViewport* Viewport = ViewportClient->Viewport;
-	if(Viewport == nullptr)
+	if (Viewport == nullptr)
 	{
 		return;
 	}
 
 	FIntPoint Size = Viewport->GetSizeXY();
-	if((Size.X <= 0) || (Size.Y <= 0))
+	if ((Size.X <= 0) || (Size.Y <= 0))
 	{
 		return;
 	}
@@ -3771,36 +3716,36 @@ void ULowEntryExtendedStandardLibrary::GetMousePosition(bool& Success, int32& X,
 	X = 0;
 	Y = 0;
 
-	if(GEngine == nullptr)
+	if (GEngine == nullptr)
 	{
 		return;
 	}
 
 	UGameViewportClient* ViewportClient = GEngine->GameViewport;
-	if(ViewportClient == nullptr)
+	if (ViewportClient == nullptr)
 	{
 		return;
 	}
 
 	FViewport* Viewport = ViewportClient->Viewport;
-	if(Viewport == nullptr)
+	if (Viewport == nullptr)
 	{
 		return;
 	}
 
 	int32 MouseX = Viewport->GetMouseX();
 	int32 MouseY = Viewport->GetMouseY();
-	if((MouseX < 0) || (MouseY < 0))
+	if ((MouseX < 0) || (MouseY < 0))
 	{
 		return;
 	}
 
 	FIntPoint Size = Viewport->GetSizeXY();
-	if((Size.X <= 0) || (Size.Y <= 0))
+	if ((Size.X <= 0) || (Size.Y <= 0))
 	{
 		return;
 	}
-	if((Size.X < MouseX) || (Size.Y < MouseY))
+	if ((Size.X < MouseX) || (Size.Y < MouseY))
 	{
 		return;
 	}
@@ -3813,19 +3758,19 @@ void ULowEntryExtendedStandardLibrary::GetMousePosition(bool& Success, int32& X,
 
 void ULowEntryExtendedStandardLibrary::SetMousePositionInPercentages(const float X, const float Y)
 {
-	if(GEngine == nullptr)
+	if (GEngine == nullptr)
 	{
 		return;
 	}
 
 	UGameViewportClient* ViewportClient = GEngine->GameViewport;
-	if(ViewportClient == nullptr)
+	if (ViewportClient == nullptr)
 	{
 		return;
 	}
 
 	FViewport* Viewport = ViewportClient->Viewport;
-	if(Viewport == nullptr)
+	if (Viewport == nullptr)
 	{
 		return;
 	}
@@ -3840,36 +3785,36 @@ void ULowEntryExtendedStandardLibrary::GetMousePositionInPercentages(bool& Succe
 	X = 0;
 	Y = 0;
 
-	if(GEngine == nullptr)
+	if (GEngine == nullptr)
 	{
 		return;
 	}
 
 	UGameViewportClient* ViewportClient = GEngine->GameViewport;
-	if(ViewportClient == nullptr)
+	if (ViewportClient == nullptr)
 	{
 		return;
 	}
 
 	FViewport* Viewport = ViewportClient->Viewport;
-	if(Viewport == nullptr)
+	if (Viewport == nullptr)
 	{
 		return;
 	}
 
 	int32 MouseX = Viewport->GetMouseX();
 	int32 MouseY = Viewport->GetMouseY();
-	if((MouseX < 0) || (MouseY < 0))
+	if ((MouseX < 0) || (MouseY < 0))
 	{
 		return;
 	}
 
 	FIntPoint Size = Viewport->GetSizeXY();
-	if((Size.X <= 0) || (Size.Y <= 0))
+	if ((Size.X <= 0) || (Size.Y <= 0))
 	{
 		return;
 	}
-	if((Size.X < MouseX) || (Size.Y < MouseY))
+	if ((Size.X < MouseX) || (Size.Y < MouseY))
 	{
 		return;
 	}
@@ -3882,19 +3827,19 @@ void ULowEntryExtendedStandardLibrary::GetMousePositionInPercentages(bool& Succe
 
 void ULowEntryExtendedStandardLibrary::SetMouseLockedToViewport(const bool Locked)
 {
-	if(GEngine == nullptr)
+	if (GEngine == nullptr)
 	{
 		return;
 	}
 
 	UGameViewportClient* ViewportClient = GEngine->GameViewport;
-	if(ViewportClient == nullptr)
+	if (ViewportClient == nullptr)
 	{
 		return;
 	}
 
 	TSharedPtr<SViewport> ViewportWidget = ViewportClient->GetGameViewportWidget();
-	if(!ViewportWidget.IsValid())
+	if (!ViewportWidget.IsValid())
 	{
 		return;
 	}
@@ -3902,20 +3847,20 @@ void ULowEntryExtendedStandardLibrary::SetMouseLockedToViewport(const bool Locke
 	TArray<APlayerController*> LocalPlayerControllers;
 	GEngine->GetAllLocalPlayerControllers(LocalPlayerControllers);
 
-	for(APlayerController* LocalPlayerController : LocalPlayerControllers)
+	for (APlayerController* LocalPlayerController : LocalPlayerControllers)
 	{
-		if(LocalPlayerController == nullptr)
+		if (LocalPlayerController == nullptr)
 		{
 			continue;
 		}
 
 		ULocalPlayer* LocalPlayer = Cast<ULocalPlayer>(LocalPlayerController->Player);
-		if(LocalPlayer == nullptr)
+		if (LocalPlayer == nullptr)
 		{
 			continue;
 		}
 
-		if(Locked)
+		if (Locked)
 		{
 			LocalPlayer->GetSlateOperations().LockMouseToWidget(ViewportWidget.ToSharedRef());
 		}
@@ -3925,7 +3870,6 @@ void ULowEntryExtendedStandardLibrary::SetMouseLockedToViewport(const bool Locke
 		}
 	}
 }
-
 
 
 void ULowEntryExtendedStandardLibrary::GetPrimaryMonitorResolution(int32& Width, int32& Height)
@@ -3950,7 +3894,6 @@ void ULowEntryExtendedStandardLibrary::GetPrimaryMonitorWorkArea(int32& X, int32
 }
 
 
-
 void ULowEntryExtendedStandardLibrary::GetWindowBounds(bool& Success, int32& X, int32& Y, int32& Width, int32& Height)
 {
 	Success = false;
@@ -3959,19 +3902,19 @@ void ULowEntryExtendedStandardLibrary::GetWindowBounds(bool& Success, int32& X, 
 	Width = 0;
 	Height = 0;
 
-	if(GEngine == nullptr)
+	if (GEngine == nullptr)
 	{
 		return;
 	}
 
 	UGameViewportClient* ViewportClient = GEngine->GameViewport;
-	if(ViewportClient == nullptr)
+	if (ViewportClient == nullptr)
 	{
 		return;
 	}
 
 	TSharedPtr<SWindow> Window = ViewportClient->GetWindow();
-	if(!Window.IsValid())
+	if (!Window.IsValid())
 	{
 		return;
 	}
@@ -3992,19 +3935,19 @@ void ULowEntryExtendedStandardLibrary::GetWindowPosition(bool& Success, int32& X
 	X = 0;
 	Y = 0;
 
-	if(GEngine == nullptr)
+	if (GEngine == nullptr)
 	{
 		return;
 	}
 
 	UGameViewportClient* ViewportClient = GEngine->GameViewport;
-	if(ViewportClient == nullptr)
+	if (ViewportClient == nullptr)
 	{
 		return;
 	}
 
 	TSharedPtr<SWindow> Window = ViewportClient->GetWindow();
-	if(!Window.IsValid())
+	if (!Window.IsValid())
 	{
 		return;
 	}
@@ -4022,19 +3965,19 @@ void ULowEntryExtendedStandardLibrary::GetWindowSize(bool& Success, int32& Width
 	Width = 0;
 	Height = 0;
 
-	if(GEngine == nullptr)
+	if (GEngine == nullptr)
 	{
 		return;
 	}
 
 	UGameViewportClient* ViewportClient = GEngine->GameViewport;
-	if(ViewportClient == nullptr)
+	if (ViewportClient == nullptr)
 	{
 		return;
 	}
 
 	TSharedPtr<SWindow> Window = ViewportClient->GetWindow();
-	if(!Window.IsValid())
+	if (!Window.IsValid())
 	{
 		return;
 	}
@@ -4052,19 +3995,19 @@ void ULowEntryExtendedStandardLibrary::GetWindowPositionInPercentagesCentered(bo
 	X = 0;
 	Y = 0;
 
-	if(GEngine == nullptr)
+	if (GEngine == nullptr)
 	{
 		return;
 	}
 
 	UGameViewportClient* ViewportClient = GEngine->GameViewport;
-	if(ViewportClient == nullptr)
+	if (ViewportClient == nullptr)
 	{
 		return;
 	}
 
 	TSharedPtr<SWindow> Window = ViewportClient->GetWindow();
-	if(!Window.IsValid())
+	if (!Window.IsValid())
 	{
 		return;
 	}
@@ -4089,19 +4032,19 @@ void ULowEntryExtendedStandardLibrary::GetWindowPositionInPercentagesCentered(bo
 
 void ULowEntryExtendedStandardLibrary::SetWindowPosition(const int32 X, const int32 Y)
 {
-	if(GEngine == nullptr)
+	if (GEngine == nullptr)
 	{
 		return;
 	}
 
 	UGameViewportClient* ViewportClient = GEngine->GameViewport;
-	if(ViewportClient == nullptr)
+	if (ViewportClient == nullptr)
 	{
 		return;
 	}
 
 	TSharedPtr<SWindow> Window = ViewportClient->GetWindow();
-	if(!Window.IsValid())
+	if (!Window.IsValid())
 	{
 		return;
 	}
@@ -4111,19 +4054,19 @@ void ULowEntryExtendedStandardLibrary::SetWindowPosition(const int32 X, const in
 
 void ULowEntryExtendedStandardLibrary::SetWindowSize(const int32 Width, const int32 Height)
 {
-	if(GEngine == nullptr)
+	if (GEngine == nullptr)
 	{
 		return;
 	}
 
 	UGameViewportClient* ViewportClient = GEngine->GameViewport;
-	if(ViewportClient == nullptr)
+	if (ViewportClient == nullptr)
 	{
 		return;
 	}
 
 	TSharedPtr<SWindow> Window = ViewportClient->GetWindow();
-	if(!Window.IsValid())
+	if (!Window.IsValid())
 	{
 		return;
 	}
@@ -4133,19 +4076,19 @@ void ULowEntryExtendedStandardLibrary::SetWindowSize(const int32 Width, const in
 
 void ULowEntryExtendedStandardLibrary::SetWindowPositionInPercentagesCentered(const float X, const float Y)
 {
-	if(GEngine == nullptr)
+	if (GEngine == nullptr)
 	{
 		return;
 	}
 
 	UGameViewportClient* ViewportClient = GEngine->GameViewport;
-	if(ViewportClient == nullptr)
+	if (ViewportClient == nullptr)
 	{
 		return;
 	}
 
 	TSharedPtr<SWindow> Window = ViewportClient->GetWindow();
-	if(!Window.IsValid())
+	if (!Window.IsValid())
 	{
 		return;
 	}
@@ -4157,7 +4100,7 @@ void ULowEntryExtendedStandardLibrary::SetWindowPositionInPercentagesCentered(co
 	GetPrimaryMonitorWorkArea(ScreenX, ScreenY, ScreenWidth, ScreenHeight);
 
 	FVector2D WindowSize = Window->GetSizeInScreen();
-	
+
 	float NewScreenX = ScreenX + (ScreenWidth * X) - (WindowSize.X / 2.0f);
 	float NewScreenY = ScreenY + (ScreenHeight * Y) - (WindowSize.Y / 2.0f);
 
@@ -4165,25 +4108,24 @@ void ULowEntryExtendedStandardLibrary::SetWindowPositionInPercentagesCentered(co
 }
 
 
-
 void ULowEntryExtendedStandardLibrary::GetWindowBorderSize(bool& Success, FMargin& Margin)
 {
 	Success = false;
 	Margin = FMargin();
 
-	if(GEngine == nullptr)
+	if (GEngine == nullptr)
 	{
 		return;
 	}
 
 	UGameViewportClient* ViewportClient = GEngine->GameViewport;
-	if(ViewportClient == nullptr)
+	if (ViewportClient == nullptr)
 	{
 		return;
 	}
 
 	TSharedPtr<SWindow> Window = ViewportClient->GetWindow();
-	if(!Window.IsValid())
+	if (!Window.IsValid())
 	{
 		return;
 	}
@@ -4195,44 +4137,43 @@ void ULowEntryExtendedStandardLibrary::GetWindowBorderSize(bool& Success, FMargi
 }
 
 
-
 void ULowEntryExtendedStandardLibrary::GetWindowMode(bool& Success, bool& Fullscreen, bool& IsFullscreenWindowed)
 {
 	Success = false;
 	Fullscreen = false;
 	IsFullscreenWindowed = false;
 
-	if(GEngine == nullptr)
+	if (GEngine == nullptr)
 	{
 		return;
 	}
 
 	UGameViewportClient* ViewportClient = GEngine->GameViewport;
-	if(ViewportClient == nullptr)
+	if (ViewportClient == nullptr)
 	{
 		return;
 	}
 
 	TSharedPtr<SWindow> Window = ViewportClient->GetWindow();
-	if(!Window.IsValid())
+	if (!Window.IsValid())
 	{
 		return;
 	}
 
 	EWindowMode::Type Mode = Window->GetWindowMode();
 
-	if(Mode == EWindowMode::Type::Fullscreen)
+	if (Mode == EWindowMode::Type::Fullscreen)
 	{
 		Success = true;
 		Fullscreen = true;
 	}
-	else if(Mode == EWindowMode::Type::WindowedFullscreen)
+	else if (Mode == EWindowMode::Type::WindowedFullscreen)
 	{
 		Success = true;
 		Fullscreen = true;
 		IsFullscreenWindowed = true;
 	}
-	else if(Mode == EWindowMode::Type::Windowed)
+	else if (Mode == EWindowMode::Type::Windowed)
 	{
 		Success = true;
 	}
@@ -4240,26 +4181,26 @@ void ULowEntryExtendedStandardLibrary::GetWindowMode(bool& Success, bool& Fullsc
 
 void ULowEntryExtendedStandardLibrary::SetWindowMode(const bool Fullscreen, const bool IsFullscreenWindowed)
 {
-	if(GEngine == nullptr)
+	if (GEngine == nullptr)
 	{
 		return;
 	}
 
 	UGameViewportClient* ViewportClient = GEngine->GameViewport;
-	if(ViewportClient == nullptr)
+	if (ViewportClient == nullptr)
 	{
 		return;
 	}
 
 	TSharedPtr<SWindow> Window = ViewportClient->GetWindow();
-	if(!Window.IsValid())
+	if (!Window.IsValid())
 	{
 		return;
 	}
 
-	if(Fullscreen)
+	if (Fullscreen)
 	{
-		if(IsFullscreenWindowed)
+		if (IsFullscreenWindowed)
 		{
 			Window->SetWindowMode(EWindowMode::Type::WindowedFullscreen);
 		}
@@ -4275,16 +4216,15 @@ void ULowEntryExtendedStandardLibrary::SetWindowMode(const bool Fullscreen, cons
 }
 
 
-
 void ULowEntryExtendedStandardLibrary::SetSplitScreenEnabled(const bool Enabled)
 {
-	if(GEngine == nullptr)
+	if (GEngine == nullptr)
 	{
 		return;
 	}
 
 	UGameViewportClient* ViewportClient = GEngine->GameViewport;
-	if(ViewportClient == nullptr)
+	if (ViewportClient == nullptr)
 	{
 		return;
 	}
@@ -4296,13 +4236,13 @@ void ULowEntryExtendedStandardLibrary::GetSplitScreenType(ELowEntrySplitScreenTy
 {
 	Type = ELowEntrySplitScreenType::None;
 
-	if(GEngine == nullptr)
+	if (GEngine == nullptr)
 	{
 		return;
 	}
 
 	UGameViewportClient* ViewportClient = GEngine->GameViewport;
-	if(ViewportClient == nullptr)
+	if (ViewportClient == nullptr)
 	{
 		return;
 	}
@@ -4315,13 +4255,13 @@ void ULowEntryExtendedStandardLibrary::SetSplitScreenType_TwoPlayers(const ELowE
 	UGameMapsSettings* Settings = GetMutableDefault<UGameMapsSettings>();
 	Settings->TwoPlayerSplitscreenLayout = ELowEntrySplitScreenTypeTwoPlayersToUE4(Type);
 
-	if(GEngine == nullptr)
+	if (GEngine == nullptr)
 	{
 		return;
 	}
 
 	UGameViewportClient* ViewportClient = GEngine->GameViewport;
-	if(ViewportClient == nullptr)
+	if (ViewportClient == nullptr)
 	{
 		return;
 	}
@@ -4334,13 +4274,13 @@ void ULowEntryExtendedStandardLibrary::SetSplitScreenType_ThreePlayers(const ELo
 	UGameMapsSettings* Settings = GetMutableDefault<UGameMapsSettings>();
 	Settings->ThreePlayerSplitscreenLayout = ELowEntrySplitScreenTypeThreePlayersToUE4(Type);
 
-	if(GEngine == nullptr)
+	if (GEngine == nullptr)
 	{
 		return;
 	}
 
 	UGameViewportClient* ViewportClient = GEngine->GameViewport;
-	if(ViewportClient == nullptr)
+	if (ViewportClient == nullptr)
 	{
 		return;
 	}
@@ -4349,19 +4289,18 @@ void ULowEntryExtendedStandardLibrary::SetSplitScreenType_ThreePlayers(const ELo
 }
 
 
-
 void ULowEntryExtendedStandardLibrary::IsWorldRenderingEnabled(bool& Success, bool& Enabled)
 {
 	Success = false;
 	Enabled = false;
 
-	if(GEngine == nullptr)
+	if (GEngine == nullptr)
 	{
 		return;
 	}
 
 	UGameViewportClient* ViewportClient = GEngine->GameViewport;
-	if(ViewportClient == nullptr)
+	if (ViewportClient == nullptr)
 	{
 		return;
 	}
@@ -4372,20 +4311,19 @@ void ULowEntryExtendedStandardLibrary::IsWorldRenderingEnabled(bool& Success, bo
 
 void ULowEntryExtendedStandardLibrary::SetWorldRenderingEnabled(const bool Enabled)
 {
-	if(GEngine == nullptr)
+	if (GEngine == nullptr)
 	{
 		return;
 	}
 
 	UGameViewportClient* ViewportClient = GEngine->GameViewport;
-	if(ViewportClient == nullptr)
+	if (ViewportClient == nullptr)
 	{
 		return;
 	}
 
 	ViewportClient->bDisableWorldRendering = (Enabled ? 0 : 1);
 }
-
 
 
 FString ULowEntryExtendedStandardLibrary::ClipboardGet()
@@ -4401,7 +4339,6 @@ void ULowEntryExtendedStandardLibrary::ClipboardSet(const FString& Value)
 }
 
 
-
 void ULowEntryExtendedStandardLibrary::GetClassWithName(const FString& ClassName, UClass*& Class_, bool& Success)
 {
 	Class_ = nullptr;
@@ -4410,7 +4347,7 @@ void ULowEntryExtendedStandardLibrary::GetClassWithName(const FString& ClassName
 	{// load class >>
 		FSoftObjectPath Reference(ClassName);
 		UClass* FoundClass = Cast<UClass>(Reference.TryLoad());
-		if(FoundClass != nullptr)
+		if (FoundClass != nullptr)
 		{
 			Class_ = FoundClass;
 			Success = true;
@@ -4420,7 +4357,7 @@ void ULowEntryExtendedStandardLibrary::GetClassWithName(const FString& ClassName
 
 	{// get class >>
 		UClass* FoundClass = FindObject<UClass>(ANY_PACKAGE, *ClassName);
-		if(FoundClass != nullptr)
+		if (FoundClass != nullptr)
 		{
 			Class_ = FoundClass;
 			Success = true;
@@ -4430,10 +4367,10 @@ void ULowEntryExtendedStandardLibrary::GetClassWithName(const FString& ClassName
 
 	{// get class through redirector >>
 		UObjectRedirector* RenamedClassRedirector = FindObject<UObjectRedirector>(ANY_PACKAGE, *ClassName);
-		if((RenamedClassRedirector != nullptr) && (RenamedClassRedirector->DestinationObject != nullptr))
+		if ((RenamedClassRedirector != nullptr) && (RenamedClassRedirector->DestinationObject != nullptr))
 		{
 			UClass* FoundClass = CastChecked<UClass>(RenamedClassRedirector->DestinationObject);
-			if(FoundClass != nullptr)
+			if (FoundClass != nullptr)
 			{
 				Class_ = FoundClass;
 				Success = true;
@@ -4443,12 +4380,10 @@ void ULowEntryExtendedStandardLibrary::GetClassWithName(const FString& ClassName
 }
 
 
-
 FVector2D ULowEntryExtendedStandardLibrary::Divide_Vector2dVector2d(const FVector2D& A, const FVector2D& B)
 {
 	return A / B;
 }
-
 
 
 FVector2D ULowEntryExtendedStandardLibrary::GetAbsoluteSize(const FGeometry& Geometry)
@@ -4472,10 +4407,9 @@ FVector2D ULowEntryExtendedStandardLibrary::GetAbsoluteToLocalScale(const FGeome
 }
 
 
-
 void ULowEntryExtendedStandardLibrary::ClearAllUserFocus()
 {
-	if(!FSlateApplication::IsInitialized())
+	if (!FSlateApplication::IsInitialized())
 	{
 		return;
 	}
@@ -4484,7 +4418,7 @@ void ULowEntryExtendedStandardLibrary::ClearAllUserFocus()
 
 void ULowEntryExtendedStandardLibrary::ClearUserFocus(const int32 UserIndex)
 {
-	if(!FSlateApplication::IsInitialized())
+	if (!FSlateApplication::IsInitialized())
 	{
 		return;
 	}
@@ -4493,7 +4427,7 @@ void ULowEntryExtendedStandardLibrary::ClearUserFocus(const int32 UserIndex)
 
 void ULowEntryExtendedStandardLibrary::ClearKeyboardFocus()
 {
-	if(!FSlateApplication::IsInitialized())
+	if (!FSlateApplication::IsInitialized())
 	{
 		return;
 	}
@@ -4502,12 +4436,12 @@ void ULowEntryExtendedStandardLibrary::ClearKeyboardFocus()
 
 FName ULowEntryExtendedStandardLibrary::GetUserFocusedWidgetType(const int32 UserIndex)
 {
-	if(!FSlateApplication::IsInitialized())
+	if (!FSlateApplication::IsInitialized())
 	{
 		return TEXT("");
 	}
 	TSharedPtr<SWidget> Widget = FSlateApplication::Get().GetUserFocusedWidget(UserIndex);
-	if(!Widget.IsValid())
+	if (!Widget.IsValid())
 	{
 		return TEXT("");
 	}
@@ -4516,18 +4450,17 @@ FName ULowEntryExtendedStandardLibrary::GetUserFocusedWidgetType(const int32 Use
 
 FName ULowEntryExtendedStandardLibrary::GetKeyboardFocusedWidgetType()
 {
-	if(!FSlateApplication::IsInitialized())
+	if (!FSlateApplication::IsInitialized())
 	{
 		return TEXT("");
 	}
 	TSharedPtr<SWidget> Widget = FSlateApplication::Get().GetKeyboardFocusedWidget();
-	if(!Widget.IsValid())
+	if (!Widget.IsValid())
 	{
 		return TEXT("");
 	}
 	return Widget->GetType();
 }
-
 
 
 void ULowEntryExtendedStandardLibrary::ExecToBoolean(const ELowEntryExtendedStandardLibraryTrueOrFalse Branch, bool& Value)
@@ -4546,106 +4479,105 @@ void ULowEntryExtendedStandardLibrary::ExecToByte(const ELowEntryExtendedStandar
 }
 
 
-
 void ULowEntryExtendedStandardLibrary::CaseSwitchInteger(const int32 OnlyCheckFirstX, const int32 Value, const int32 _1__, const int32 _2__, const int32 _3__, const int32 _4__, const int32 _5__, const int32 _6__, const int32 _7__, const int32 _8__, const int32 _9__, const int32 _10__, ELowEntryExtendedStandardLibrary1to10other& Branch)
 {
 	Branch = ELowEntryExtendedStandardLibrary1to10other::Other;
 
-	if(OnlyCheckFirstX < 1)
+	if (OnlyCheckFirstX < 1)
 	{
 		return;
 	}
-	if(Value == _1__)
+	if (Value == _1__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_1_;
 		return;
 	}
 
-	if(OnlyCheckFirstX < 2)
+	if (OnlyCheckFirstX < 2)
 	{
 		return;
 	}
-	if(Value == _2__)
+	if (Value == _2__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_2_;
 		return;
 	}
 
-	if(OnlyCheckFirstX < 3)
+	if (OnlyCheckFirstX < 3)
 	{
 		return;
 	}
-	if(Value == _3__)
+	if (Value == _3__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_3_;
 		return;
 	}
 
-	if(OnlyCheckFirstX < 4)
+	if (OnlyCheckFirstX < 4)
 	{
 		return;
 	}
-	if(Value == _4__)
+	if (Value == _4__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_4_;
 		return;
 	}
 
-	if(OnlyCheckFirstX < 5)
+	if (OnlyCheckFirstX < 5)
 	{
 		return;
 	}
-	if(Value == _5__)
+	if (Value == _5__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_5_;
 		return;
 	}
 
-	if(OnlyCheckFirstX < 6)
+	if (OnlyCheckFirstX < 6)
 	{
 		return;
 	}
-	if(Value == _6__)
+	if (Value == _6__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_6_;
 		return;
 	}
 
-	if(OnlyCheckFirstX < 7)
+	if (OnlyCheckFirstX < 7)
 	{
 		return;
 	}
-	if(Value == _7__)
+	if (Value == _7__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_7_;
 		return;
 	}
 
-	if(OnlyCheckFirstX < 8)
+	if (OnlyCheckFirstX < 8)
 	{
 		return;
 	}
-	if(Value == _8__)
+	if (Value == _8__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_8_;
 		return;
 	}
 
-	if(OnlyCheckFirstX < 9)
+	if (OnlyCheckFirstX < 9)
 	{
 		return;
 	}
-	if(Value == _9__)
+	if (Value == _9__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_9_;
 		return;
 	}
 
-	if(OnlyCheckFirstX < 10)
+	if (OnlyCheckFirstX < 10)
 	{
 		return;
 	}
-	if(Value == _10__)
+	if (Value == _10__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_10_;
 	}
@@ -4655,101 +4587,101 @@ void ULowEntryExtendedStandardLibrary::CaseSwitchByte(const int32 OnlyCheckFirst
 {
 	Branch = ELowEntryExtendedStandardLibrary1to10other::Other;
 
-	if(OnlyCheckFirstX < 1)
+	if (OnlyCheckFirstX < 1)
 	{
 		return;
 	}
-	if(Value == _1__)
+	if (Value == _1__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_1_;
 		return;
 	}
 
-	if(OnlyCheckFirstX < 2)
+	if (OnlyCheckFirstX < 2)
 	{
 		return;
 	}
-	if(Value == _2__)
+	if (Value == _2__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_2_;
 		return;
 	}
 
-	if(OnlyCheckFirstX < 3)
+	if (OnlyCheckFirstX < 3)
 	{
 		return;
 	}
-	if(Value == _3__)
+	if (Value == _3__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_3_;
 		return;
 	}
 
-	if(OnlyCheckFirstX < 4)
+	if (OnlyCheckFirstX < 4)
 	{
 		return;
 	}
-	if(Value == _4__)
+	if (Value == _4__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_4_;
 		return;
 	}
 
-	if(OnlyCheckFirstX < 5)
+	if (OnlyCheckFirstX < 5)
 	{
 		return;
 	}
-	if(Value == _5__)
+	if (Value == _5__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_5_;
 		return;
 	}
 
-	if(OnlyCheckFirstX < 6)
+	if (OnlyCheckFirstX < 6)
 	{
 		return;
 	}
-	if(Value == _6__)
+	if (Value == _6__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_6_;
 		return;
 	}
 
-	if(OnlyCheckFirstX < 7)
+	if (OnlyCheckFirstX < 7)
 	{
 		return;
 	}
-	if(Value == _7__)
+	if (Value == _7__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_7_;
 		return;
 	}
 
-	if(OnlyCheckFirstX < 8)
+	if (OnlyCheckFirstX < 8)
 	{
 		return;
 	}
-	if(Value == _8__)
+	if (Value == _8__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_8_;
 		return;
 	}
 
-	if(OnlyCheckFirstX < 9)
+	if (OnlyCheckFirstX < 9)
 	{
 		return;
 	}
-	if(Value == _9__)
+	if (Value == _9__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_9_;
 		return;
 	}
 
-	if(OnlyCheckFirstX < 10)
+	if (OnlyCheckFirstX < 10)
 	{
 		return;
 	}
-	if(Value == _10__)
+	if (Value == _10__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_10_;
 	}
@@ -4759,132 +4691,130 @@ void ULowEntryExtendedStandardLibrary::CaseSwitchObject(const int32 OnlyCheckFir
 {
 	Branch = ELowEntryExtendedStandardLibrary1to10other::Other;
 
-	if(OnlyCheckFirstX < 1)
+	if (OnlyCheckFirstX < 1)
 	{
 		return;
 	}
-	if(Value == _1__)
+	if (Value == _1__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_1_;
 		return;
 	}
 
-	if(OnlyCheckFirstX < 2)
+	if (OnlyCheckFirstX < 2)
 	{
 		return;
 	}
-	if(Value == _2__)
+	if (Value == _2__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_2_;
 		return;
 	}
 
-	if(OnlyCheckFirstX < 3)
+	if (OnlyCheckFirstX < 3)
 	{
 		return;
 	}
-	if(Value == _3__)
+	if (Value == _3__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_3_;
 		return;
 	}
 
-	if(OnlyCheckFirstX < 4)
+	if (OnlyCheckFirstX < 4)
 	{
 		return;
 	}
-	if(Value == _4__)
+	if (Value == _4__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_4_;
 		return;
 	}
 
-	if(OnlyCheckFirstX < 5)
+	if (OnlyCheckFirstX < 5)
 	{
 		return;
 	}
-	if(Value == _5__)
+	if (Value == _5__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_5_;
 		return;
 	}
 
-	if(OnlyCheckFirstX < 6)
+	if (OnlyCheckFirstX < 6)
 	{
 		return;
 	}
-	if(Value == _6__)
+	if (Value == _6__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_6_;
 		return;
 	}
 
-	if(OnlyCheckFirstX < 7)
+	if (OnlyCheckFirstX < 7)
 	{
 		return;
 	}
-	if(Value == _7__)
+	if (Value == _7__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_7_;
 		return;
 	}
 
-	if(OnlyCheckFirstX < 8)
+	if (OnlyCheckFirstX < 8)
 	{
 		return;
 	}
-	if(Value == _8__)
+	if (Value == _8__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_8_;
 		return;
 	}
 
-	if(OnlyCheckFirstX < 9)
+	if (OnlyCheckFirstX < 9)
 	{
 		return;
 	}
-	if(Value == _9__)
+	if (Value == _9__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_9_;
 		return;
 	}
 
-	if(OnlyCheckFirstX < 10)
+	if (OnlyCheckFirstX < 10)
 	{
 		return;
 	}
-	if(Value == _10__)
+	if (Value == _10__)
 	{
 		Branch = ELowEntryExtendedStandardLibrary1to10other::_10_;
 	}
 }
 
 
-
 void ULowEntryExtendedStandardLibrary::PlayerControllerGetLocalPlayer(APlayerController* PlayerController, bool& Success, ULocalPlayer*& LocalPlayer)
 {
 	Success = false;
 	LocalPlayer = nullptr;
-	if(PlayerController == nullptr)
+	if (PlayerController == nullptr)
 	{
 		return;
 	}
-	if(PlayerController->Player == nullptr)
+	if (PlayerController->Player == nullptr)
 	{
 		return;
 	}
-	if(!PlayerController->Player->GetClass()->IsChildOf(ULocalPlayer::StaticClass()))
+	if (!PlayerController->Player->GetClass()->IsChildOf(ULocalPlayer::StaticClass()))
 	{
 		return;
 	}
 	LocalPlayer = static_cast<ULocalPlayer*>(PlayerController->Player);
-	if(LocalPlayer == nullptr)
+	if (LocalPlayer == nullptr)
 	{
 		return;
 	}
 	Success = true;
 }
-
 
 
 void ULowEntryExtendedStandardLibrary::SimpleKismetSystemLibraryPrintString(const FString& InString)
@@ -4895,9 +4825,9 @@ void ULowEntryExtendedStandardLibrary::SimpleKismetSystemLibraryPrintString(cons
 
 	UE_LOG(LogBlueprintUserMessages, Log, TEXT("%s"), *InString);
 
-	if(GAreScreenMessagesEnabled)
+	if (GAreScreenMessagesEnabled)
 	{
-		if(GEngine != nullptr)
+		if (GEngine != nullptr)
 		{
 			GEngine->AddOnScreenDebugMessage(INDEX_NONE, ScreenDurationTime, TextColor.ToFColor(true), InString);
 		}
@@ -4912,36 +4842,36 @@ ULowEntryByteArray* ULowEntryExtendedStandardLibrary::EncapsulateByteArray(const
 
 TArray<uint8> ULowEntryExtendedStandardLibrary::MergeEncapsulatedByteArrays(const TArray<ULowEntryByteArray*>& ByteArrays)
 {
-	if(ByteArrays.Num() <= 0)
+	if (ByteArrays.Num() <= 0)
 	{
 		return TArray<uint8>();
 	}
-	if(ByteArrays.Num() == 1)
+	if (ByteArrays.Num() == 1)
 	{
 		ULowEntryByteArray* Array = ByteArrays[0];
-		if(Array == nullptr)
+		if (Array == nullptr)
 		{
 			return TArray<uint8>();
 		}
 		return Array->ByteArray;
 	}
 	int32 Length = 0;
-	for(ULowEntryByteArray* Array : ByteArrays)
+	for (ULowEntryByteArray* Array : ByteArrays)
 	{
-		if(Array != nullptr)
+		if (Array != nullptr)
 		{
 			Length += Array->ByteArray.Num();
 		}
 	}
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return TArray<uint8>();
 	}
 	TArray<uint8> Merged = TArray<uint8>();
 	Merged.Reserve(Length);
-	for(ULowEntryByteArray* Array : ByteArrays)
+	for (ULowEntryByteArray* Array : ByteArrays)
 	{
-		if(Array != nullptr)
+		if (Array != nullptr)
 		{
 			Merged.Append(Array->ByteArray);
 		}

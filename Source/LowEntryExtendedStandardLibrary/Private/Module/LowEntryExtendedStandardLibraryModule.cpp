@@ -3,13 +3,9 @@
 #include "LowEntryExtendedStandardLibraryModule.h"
 
 
-void FLowEntryExtendedStandardLibraryModule::StartupModule()
-{
-}
+void FLowEntryExtendedStandardLibraryModule::StartupModule() {}
 
-void FLowEntryExtendedStandardLibraryModule::ShutdownModule()
-{
-}
+void FLowEntryExtendedStandardLibraryModule::ShutdownModule() {}
 
 
 IMPLEMENT_MODULE(FLowEntryExtendedStandardLibraryModule, LowEntryExtendedStandardLibrary)

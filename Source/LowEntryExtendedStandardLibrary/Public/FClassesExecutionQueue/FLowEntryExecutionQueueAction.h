@@ -21,28 +21,26 @@ public:
 		: ExecutionFunction(LatentInfo.ExecutionFunction)
 		, OutputLink(LatentInfo.Linkage)
 		, CallbackTarget(LatentInfo.CallbackTarget)
-		, Queue(Queue0)
-	{
-	}
+		, Queue(Queue0) { }
 
 	virtual void UpdateOperation(FLatentResponse& Response) override
 	{
-		if(!IsValid(Queue))
+		if (!IsValid(Queue))
 		{
-            Response.DoneIf(true);
-            return;
-        }
-        if(Queue->Next)
-        {
+			Response.DoneIf(true);
+			return;
+		}
+		if (Queue->Next)
+		{
 			Queue->Next = false;
 			Queue->DecreaseCount();
-            Response.TriggerLink(ExecutionFunction, OutputLink, CallbackTarget);
-        }
+			Response.TriggerLink(ExecutionFunction, OutputLink, CallbackTarget);
+		}
 	}
 
 	ULowEntryExecutionQueue* GetOrCreateQueueAndIncreaseCount()
 	{
-		if(!IsValid(Queue))
+		if (!IsValid(Queue))
 		{
 			Queue = ULowEntryExecutionQueue::Create(1, true);
 			return Queue;
@@ -55,7 +53,7 @@ public:
 	// Returns a human readable description of the latent operation's current state
 	virtual FString GetDescription() const override
 	{
-		if(!IsValid(Queue))
+		if (!IsValid(Queue))
 		{
 			return FString::Printf(TEXT("Queued (0 executions remaining)"));
 		}

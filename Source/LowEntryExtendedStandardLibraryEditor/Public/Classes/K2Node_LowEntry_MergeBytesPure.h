@@ -11,7 +11,6 @@ UCLASS(MinimalAPI)
 class UK2Node_LowEntry_MergeBytesPure : public UK2Node_LowEntry_MakeCustomArray
 {
 	GENERATED_UCLASS_BODY()
-
 public:
 	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API virtual FNodeHandlingFunctor* CreateNodeHandler(FKismetCompilerContext& CompilerContext) const override;
 	LOWENTRYEXTENDEDSTANDARDLIBRARYEDITOR_API UEdGraphPin* GetPin(const FString& PinName) const;

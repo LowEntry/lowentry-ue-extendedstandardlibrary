@@ -41,35 +41,35 @@ enum class ELowEntryImageFormat : uint8
 
 static EImageFormat ELowEntryImageFormatToUE4(ELowEntryImageFormat Value)
 {
-	if(Value == ELowEntryImageFormat::Invalid)
+	if (Value == ELowEntryImageFormat::Invalid)
 	{
 		return EImageFormat::Invalid;
 	}
-	if(Value == ELowEntryImageFormat::PNG)
+	if (Value == ELowEntryImageFormat::PNG)
 	{
 		return EImageFormat::PNG;
 	}
-	if(Value == ELowEntryImageFormat::JPEG)
+	if (Value == ELowEntryImageFormat::JPEG)
 	{
 		return EImageFormat::JPEG;
 	}
-	if(Value == ELowEntryImageFormat::GrayscaleJPEG)
+	if (Value == ELowEntryImageFormat::GrayscaleJPEG)
 	{
 		return EImageFormat::GrayscaleJPEG;
 	}
-	if(Value == ELowEntryImageFormat::BMP)
+	if (Value == ELowEntryImageFormat::BMP)
 	{
 		return EImageFormat::BMP;
 	}
-	if(Value == ELowEntryImageFormat::ICO)
+	if (Value == ELowEntryImageFormat::ICO)
 	{
 		return EImageFormat::ICO;
 	}
-	if(Value == ELowEntryImageFormat::EXR)
+	if (Value == ELowEntryImageFormat::EXR)
 	{
 		return EImageFormat::EXR;
 	}
-	if(Value == ELowEntryImageFormat::ICNS)
+	if (Value == ELowEntryImageFormat::ICNS)
 	{
 		return EImageFormat::ICNS;
 	}
@@ -78,35 +78,35 @@ static EImageFormat ELowEntryImageFormatToUE4(ELowEntryImageFormat Value)
 
 static ELowEntryImageFormat ELowEntryImageFormatFromUE4(EImageFormat Value)
 {
-	if(Value == EImageFormat::Invalid)
+	if (Value == EImageFormat::Invalid)
 	{
 		return ELowEntryImageFormat::Invalid;
 	}
-	if(Value == EImageFormat::PNG)
+	if (Value == EImageFormat::PNG)
 	{
 		return ELowEntryImageFormat::PNG;
 	}
-	if(Value == EImageFormat::JPEG)
+	if (Value == EImageFormat::JPEG)
 	{
 		return ELowEntryImageFormat::JPEG;
 	}
-	if(Value == EImageFormat::GrayscaleJPEG)
+	if (Value == EImageFormat::GrayscaleJPEG)
 	{
 		return ELowEntryImageFormat::GrayscaleJPEG;
 	}
-	if(Value == EImageFormat::BMP)
+	if (Value == EImageFormat::BMP)
 	{
 		return ELowEntryImageFormat::BMP;
 	}
-	if(Value == EImageFormat::ICO)
+	if (Value == EImageFormat::ICO)
 	{
 		return ELowEntryImageFormat::ICO;
 	}
-	if(Value == EImageFormat::EXR)
+	if (Value == EImageFormat::EXR)
 	{
 		return ELowEntryImageFormat::EXR;
 	}
-	if(Value == EImageFormat::ICNS)
+	if (Value == EImageFormat::ICNS)
 	{
 		return ELowEntryImageFormat::ICNS;
 	}

@@ -22,9 +22,7 @@
 class FKCHandler_LowEntry_MakeCustomArray : public FNodeHandlingFunctor
 {
 public:
-	explicit FKCHandler_LowEntry_MakeCustomArray(FKismetCompilerContext& InCompilerContext) : FNodeHandlingFunctor(InCompilerContext)
-	{
-	}
+	explicit FKCHandler_LowEntry_MakeCustomArray(FKismetCompilerContext& InCompilerContext) : FNodeHandlingFunctor(InCompilerContext) { }
 
 	virtual void RegisterNets(FKismetFunctionContext& Context, UEdGraphNode* Node) override
 	{
@@ -62,12 +60,12 @@ public:
 		CreateArrayStatement.Type = KCST_CreateArray;
 		CreateArrayStatement.LHS = *ArrayOutputVariable;
 
-		for(UEdGraphPin* Pin : Node->Pins)
+		for (UEdGraphPin* Pin : Node->Pins)
 		{
-			if(Pin && (Pin->Direction == EGPD_Input) && (Pin->PinType.PinCategory != UEdGraphSchema_K2::PC_Exec))
+			if (Pin && (Pin->Direction == EGPD_Input) && (Pin->PinType.PinCategory != UEdGraphSchema_K2::PC_Exec))
 			{
 				FBPTerminal** InputTerm = Context.NetMap.Find(FEdGraphUtilities::GetNetFromPin(Pin));
-				if(InputTerm)
+				if (InputTerm)
 				{
 					CreateArrayStatement.RHS.Add(*InputTerm);
 				}
@@ -85,7 +83,7 @@ public:
 		CreateConvertStatement.RHS.Add(*ArrayOutputVariable);
 
 
-		if(!ArrayNode->LowEntry_IsNodePure)
+		if (!ArrayNode->LowEntry_IsNodePure)
 		{
 			GenerateSimpleThenGoto(Context, *Node);
 		}
@@ -144,7 +142,7 @@ bool UK2Node_LowEntry_MakeCustomArray::IsNodePure() const
 
 void UK2Node_LowEntry_MakeCustomArray::AllocateDefaultPins()
 {
-	if(!LowEntry_IsNodePure)
+	if (!LowEntry_IsNodePure)
 	{
 		CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Exec, nullptr, UEdGraphSchema_K2::PN_Execute);
 		CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Exec, nullptr, UEdGraphSchema_K2::PN_Then);
@@ -159,7 +157,7 @@ void UK2Node_LowEntry_MakeCustomArray::AllocateDefaultPins()
 	ArrayOutputPin->bHidden = true;
 
 	// Create the input pins to create the arrays from
-	for(int32 i = 0; i < NumInputs; ++i)
+	for (int32 i = 0; i < NumInputs; ++i)
 	{
 		CreatePin(EGPD_Input, LowEntry_InputType, LowEntry_InputClass, GetPinName(i));
 	}
@@ -179,13 +177,13 @@ void UK2Node_LowEntry_MakeCustomArray::GetNodeContextMenuActions(UToolMenu* Menu
 {
 	Super::Super::GetNodeContextMenuActions(Menu, Context);
 
-	if(!Context->bIsDebugging)
+	if (!Context->bIsDebugging)
 	{
 		FToolMenuSection& Section = Menu->AddSection("K2NodeMakeArray", FText::FromString("Low Entry"));
 
-		if(Context->Pin != nullptr)
+		if (Context->Pin != nullptr)
 		{
-			if((Context->Pin->Direction == EGPD_Input) && (Context->Pin->ParentPin == nullptr) && (Context->Pin->PinType.PinCategory != UEdGraphSchema_K2::PC_Exec))
+			if ((Context->Pin->Direction == EGPD_Input) && (Context->Pin->ParentPin == nullptr) && (Context->Pin->PinType.PinCategory != UEdGraphSchema_K2::PC_Exec))
 			{
 				Section.AddMenuEntry(
 					"RemovePin",
@@ -230,12 +228,12 @@ FText UK2Node_LowEntry_MakeCustomArray::GetMenuCategory() const
 
 bool UK2Node_LowEntry_MakeCustomArray::IsConnectionDisallowed(const UEdGraphPin* MyPin, const UEdGraphPin* OtherPin, FString& OutReason) const
 {
-	if(Super::Super::IsConnectionDisallowed(MyPin, OtherPin, OutReason))
+	if (Super::Super::IsConnectionDisallowed(MyPin, OtherPin, OutReason))
 	{
 		return true;
 	}
 
-	if(!ensure(OtherPin))
+	if (!ensure(OtherPin))
 	{
 		return true;
 	}

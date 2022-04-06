@@ -12,8 +12,6 @@ UCLASS(BlueprintType)
 class LOWENTRYEXTENDEDSTANDARDLIBRARY_API ULowEntryByteArray : public UObject
 {
 	GENERATED_UCLASS_BODY()
-
-
 public:
 	static ULowEntryByteArray* CreateFromByteArray(const TArray<uint8>& Value);
 

@@ -16,7 +16,6 @@ UCLASS(MinimalAPI, abstract)
 class UK2Node_LowEntry_MakeCustomArray : public UK2Node_LowEntry_MakeContainer
 {
 	GENERATED_UCLASS_BODY()
-
 public:
 	UPROPERTY()
 	FString LowEntry_Name = TEXT("");

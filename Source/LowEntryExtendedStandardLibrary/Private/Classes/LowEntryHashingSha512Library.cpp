@@ -19,23 +19,23 @@ void ULowEntryHashingSha512Library::update(const TArray<uint8>& b, const int64 o
 	int64 partLen = BLOCK_SIZE - n;
 	int64 i = 0;
 
-	if(len >= partLen)
+	if (len >= partLen)
 	{
-		for(int32 index = 0; index < partLen; index++)
+		for (int32 index = 0; index < partLen; index++)
 		{
 			buffer[n + index] = b[offset + index];
 		}
 		sha(buffer, 0);
-		for(i = partLen; ((i + BLOCK_SIZE) - 1) < len; i += BLOCK_SIZE)
+		for (i = partLen; ((i + BLOCK_SIZE) - 1) < len; i += BLOCK_SIZE)
 		{
 			sha(b, offset + i);
 		}
 		n = 0;
 	}
 
-	if(i < len)
+	if (i < len)
 	{
-		for(int32 index = 0; index < len - i; index++)
+		for (int32 index = 0; index < len - i; index++)
 		{
 			buffer[n + index] = b[offset + i + index];
 		}
@@ -162,18 +162,18 @@ void ULowEntryHashingSha512Library::sha(const TArray<uint8>& in, int64 offset)
 	uint64 T;
 	uint64 T2;
 	int32 r;
-	for(r = 0; r < 16; r++)
+	for (r = 0; r < 16; r++)
 	{
 		w[r] = (static_cast<int64>(in[offset]) << 56) | ((static_cast<int64>(in[offset + 1]) & 0xFF) << 48) | ((static_cast<int64>(in[offset + 2]) & 0xFF) << 40) | ((static_cast<int64>(in[offset + 3]) & 0xFF) << 32) | ((static_cast<int64>(in[offset + 4]) & 0xFF) << 24) | ((static_cast<int64>(in[offset + 5]) & 0xFF) << 16) | ((static_cast<int64>(in[offset + 6]) & 0xFF) << 8) | (static_cast<int64>(in[offset + 7]) & 0xFF);
 		offset += 8;
 	}
-	for(r = 16; r < 80; r++)
+	for (r = 16; r < 80; r++)
 	{
 		T = w[r - 2];
 		T2 = w[r - 15];
 		w[r] = ((s(T, 19) | (T << 45)) ^ (s(T, 61) | (T << 3)) ^ s(T, 6)) + w[r - 7] + ((s(T2, 1) | (T2 << 63)) ^ (s(T2, 8) | (T2 << 56)) ^ s(T2, 7)) + w[r - 16];
 	}
-	for(r = 0; r < 80; r++)
+	for (r = 0; r < 80; r++)
 	{
 		T = H + ((s(E, 14) | (E << 50)) ^ (s(E, 18) | (E << 46)) ^ (s(E, 41) | (E << 23))) + ((E & F) ^ ((~E) & G)) + k[r] + w[r];
 		T2 = ((s(A, 28) | (A << 36)) ^ (s(A, 34) | (A << 30)) ^ (s(A, 39) | (A << 25))) + ((A & B) ^ (A & C) ^ (B & C));
@@ -214,24 +214,24 @@ TArray<uint8> ULowEntryHashingSha512Library::Hash(const TArray<uint8>& Bytes)
 
 TArray<uint8> ULowEntryHashingSha512Library::Hash(const TArray<uint8>& Bytes, int32 Index, int32 Length)
 {
-	if(Bytes.Num() <= 0)
+	if (Bytes.Num() <= 0)
 	{
 		ULowEntryHashingSha512Library instance = ULowEntryHashingSha512Library();
 		instance.initialize();
 		return instance.digest();
 	}
 
-	if(Index < 0)
+	if (Index < 0)
 	{
 		Length += Index;
 		Index = 0;
 	}
-	if(Length >(Bytes.Num() - Index))
+	if (Length > (Bytes.Num() - Index))
 	{
 		Length = Bytes.Num() - Index;
 	}
 
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		ULowEntryHashingSha512Library instance = ULowEntryHashingSha512Library();
 		instance.initialize();

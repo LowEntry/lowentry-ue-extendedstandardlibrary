@@ -21,9 +21,7 @@ public:
 		: ExecutionFunction(LatentInfo.ExecutionFunction)
 		, OutputLink(LatentInfo.Linkage)
 		, CallbackTarget(LatentInfo.CallbackTarget)
-		, FramesRemaining(Frames)
-	{
-	}
+		, FramesRemaining(Frames) { }
 
 	virtual void UpdateOperation(FLatentResponse& Response) override
 	{

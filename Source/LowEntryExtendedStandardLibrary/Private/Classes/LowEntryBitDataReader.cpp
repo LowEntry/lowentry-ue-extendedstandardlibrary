@@ -7,34 +7,30 @@
 constexpr uint8 ULowEntryBitDataReader::mask[9] = {static_cast<uint8>(0x00), static_cast<uint8>(0x01), static_cast<uint8>(0x03), static_cast<uint8>(0x07), static_cast<uint8>(0x0F), static_cast<uint8>(0x1F), static_cast<uint8>(0x3F), static_cast<uint8>(0x7F), static_cast<uint8>(0xFF)};
 
 
-// init >>
-	ULowEntryBitDataReader::ULowEntryBitDataReader(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
-	{
-	}
+ULowEntryBitDataReader::ULowEntryBitDataReader(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) { }
 
-	ULowEntryBitDataReader* ULowEntryBitDataReader::Create(const TArray<uint8>& Bytes, int32 Index, int32 Length)
-	{
-		ULowEntryBitDataReader* Item = NewObject<ULowEntryBitDataReader>();
-		Item->Bytes = ULowEntryExtendedStandardLibrary::BytesSubArray(Bytes, Index, Length);
-		return Item;
-	}
+ULowEntryBitDataReader* ULowEntryBitDataReader::Create(const TArray<uint8>& Bytes, int32 Index, int32 Length)
+{
+	ULowEntryBitDataReader* Item = NewObject<ULowEntryBitDataReader>();
+	Item->Bytes = ULowEntryExtendedStandardLibrary::BytesSubArray(Bytes, Index, Length);
+	return Item;
+}
 
-	ULowEntryBitDataReader* ULowEntryBitDataReader::CreateClone(const TArray<uint8>& Bytes, const int32 Position, const uint8 CurrentByte, const int32 CurrentBytePosition)
-	{
-		ULowEntryBitDataReader* Item = NewObject<ULowEntryBitDataReader>();
-		Item->Bytes = Bytes;
-		Item->Position = Position;
-		Item->CurrentByte = CurrentByte;
-		Item->CurrentBytePosition = CurrentBytePosition;
-		return Item;
-	}
-// init <<
+ULowEntryBitDataReader* ULowEntryBitDataReader::CreateClone(const TArray<uint8>& Bytes, const int32 Position, const uint8 CurrentByte, const int32 CurrentBytePosition)
+{
+	ULowEntryBitDataReader* Item = NewObject<ULowEntryBitDataReader>();
+	Item->Bytes = Bytes;
+	Item->Position = Position;
+	Item->CurrentByte = CurrentByte;
+	Item->CurrentBytePosition = CurrentBytePosition;
+	return Item;
+}
 
 
 int32 ULowEntryBitDataReader::GetAndIncreasePosition(const int32 Increasement)
 {
 	int32 Pos = Position;
-	if((Bytes.Num() - Increasement) <= Position)
+	if ((Bytes.Num() - Increasement) <= Position)
 	{
 		Position = Bytes.Num();
 	}
@@ -48,11 +44,11 @@ int32 ULowEntryBitDataReader::GetAndIncreasePosition(const int32 Increasement)
 int32 ULowEntryBitDataReader::MaxElementsRemaining(const int32 MinimumSizePerElement)
 {
 	int32 RemainingCount = Remaining();
-	if(RemainingCount <= 0)
+	if (RemainingCount <= 0)
 	{
 		return 0;
 	}
-	if(MinimumSizePerElement <= 1)
+	if (MinimumSizePerElement <= 1)
 	{
 		return RemainingCount;
 	}
@@ -72,7 +68,7 @@ int32 ULowEntryBitDataReader::GetPosition()
 
 void ULowEntryBitDataReader::SetPosition(const int32 Position_)
 {
-	if(Position_ < 0)
+	if (Position_ < 0)
 	{
 		Reset();
 	}
@@ -81,14 +77,14 @@ void ULowEntryBitDataReader::SetPosition(const int32 Position_)
 		Position = Position_ / 8;
 		CurrentBytePosition = Position_ % 8;
 		CurrentByte = 0;
-		if(Position > Bytes.Num())
+		if (Position > Bytes.Num())
 		{
 			Position = Bytes.Num();
 			CurrentBytePosition = 0;
 		}
-		else if(CurrentBytePosition > 0)
+		else if (CurrentBytePosition > 0)
 		{
-			if(Position == 0)
+			if (Position == 0)
 			{
 				CurrentBytePosition = 0;
 			}
@@ -116,7 +112,7 @@ void ULowEntryBitDataReader::Empty()
 
 int32 ULowEntryBitDataReader::Remaining()
 {
-	if(CurrentBytePosition != 0)
+	if (CurrentBytePosition != 0)
 	{
 		return (Bytes.Num() - Position) + 1;
 	}
@@ -126,10 +122,10 @@ int32 ULowEntryBitDataReader::Remaining()
 
 bool ULowEntryBitDataReader::GetRawBit()
 {
-	if(CurrentBytePosition == 0)
+	if (CurrentBytePosition == 0)
 	{
 		int32 pos = GetAndIncreasePosition(1);
-		if(Bytes.Num() <= pos)
+		if (Bytes.Num() <= pos)
 		{
 			return false;
 		}
@@ -138,7 +134,7 @@ bool ULowEntryBitDataReader::GetRawBit()
 
 	bool bit = (((CurrentByte >> CurrentBytePosition) & 1) != 0);
 
-	if(CurrentBytePosition == 7)
+	if (CurrentBytePosition == 7)
 	{
 		CurrentBytePosition = 0;
 	}
@@ -152,10 +148,10 @@ bool ULowEntryBitDataReader::GetRawBit()
 
 uint8 ULowEntryBitDataReader::GetRawByte()
 {
-	if(CurrentBytePosition == 0)
+	if (CurrentBytePosition == 0)
 	{
 		int32 pos = GetAndIncreasePosition(1);
-		if(Bytes.Num() <= pos)
+		if (Bytes.Num() <= pos)
 		{
 			return 0;
 		}
@@ -164,7 +160,7 @@ uint8 ULowEntryBitDataReader::GetRawByte()
 	uint8 b = ((CurrentByte >> CurrentBytePosition) & mask[8 - CurrentBytePosition]);
 
 	int32 pos = GetAndIncreasePosition(1);
-	if(Bytes.Num() <= pos)
+	if (Bytes.Num() <= pos)
 	{
 		CurrentBytePosition = 0;
 		return b;
@@ -176,19 +172,19 @@ uint8 ULowEntryBitDataReader::GetRawByte()
 
 uint8 ULowEntryBitDataReader::GetPartialRawByte(int32 Bits)
 {
-	if(Bits == 0)
+	if (Bits == 0)
 	{
 		return 0;
 	}
-	if((Bits >= 8) || (Bits <= -8))
+	if ((Bits >= 8) || (Bits <= -8))
 	{
 		return GetRawByte();
 	}
 
-	if(CurrentBytePosition == 0)
+	if (CurrentBytePosition == 0)
 	{
 		int32 pos = GetAndIncreasePosition(1);
-		if(Bytes.Num() <= pos)
+		if (Bytes.Num() <= pos)
 		{
 			return 0;
 		}
@@ -196,7 +192,7 @@ uint8 ULowEntryBitDataReader::GetPartialRawByte(int32 Bits)
 	}
 
 	bool mostSignificantBits = false;
-	if(Bits < 0)
+	if (Bits < 0)
 	{
 		Bits = -Bits;
 		mostSignificantBits = true;
@@ -205,14 +201,14 @@ uint8 ULowEntryBitDataReader::GetPartialRawByte(int32 Bits)
 	uint8 b = ((CurrentByte >> CurrentBytePosition) & mask[8 - CurrentBytePosition]);
 	CurrentBytePosition += Bits;
 
-	if(CurrentBytePosition >= 8)
+	if (CurrentBytePosition >= 8)
 	{
 		int32 pos = GetAndIncreasePosition(1);
-		if(Bytes.Num() <= pos)
+		if (Bytes.Num() <= pos)
 		{
 			CurrentBytePosition = 0;
 			b = (b & mask[Bits]);
-			if(mostSignificantBits)
+			if (mostSignificantBits)
 			{
 				return (b << (8 - Bits));
 			}
@@ -221,10 +217,10 @@ uint8 ULowEntryBitDataReader::GetPartialRawByte(int32 Bits)
 		CurrentByte = Bytes[pos];
 		CurrentBytePosition -= 8;
 
-		if(CurrentBytePosition != 0)
+		if (CurrentBytePosition != 0)
 		{
 			b = ((b | (CurrentByte << (Bits - CurrentBytePosition))) & mask[Bits]);
-			if(mostSignificantBits)
+			if (mostSignificantBits)
 			{
 				return (b << (8 - Bits));
 			}
@@ -232,7 +228,7 @@ uint8 ULowEntryBitDataReader::GetPartialRawByte(int32 Bits)
 		}
 	}
 	b = (b & mask[Bits]);
-	if(mostSignificantBits)
+	if (mostSignificantBits)
 	{
 		return (b << (8 - Bits));
 	}
@@ -247,7 +243,7 @@ bool ULowEntryBitDataReader::GetBit()
 
 uint8 ULowEntryBitDataReader::GetByteLeastSignificantBits(const int32 BitCount)
 {
-	if(BitCount <= 0)
+	if (BitCount <= 0)
 	{
 		return 0;
 	}
@@ -256,7 +252,7 @@ uint8 ULowEntryBitDataReader::GetByteLeastSignificantBits(const int32 BitCount)
 
 uint8 ULowEntryBitDataReader::GetByteMostSignificantBits(const int32 BitCount)
 {
-	if(BitCount <= 0)
+	if (BitCount <= 0)
 	{
 		return 0;
 	}
@@ -265,11 +261,11 @@ uint8 ULowEntryBitDataReader::GetByteMostSignificantBits(const int32 BitCount)
 
 int32 ULowEntryBitDataReader::GetIntegerLeastSignificantBits(const int32 BitCount)
 {
-	if(BitCount <= 0)
+	if (BitCount <= 0)
 	{
 		return 0;
 	}
-	if(BitCount >= 32)
+	if (BitCount >= 32)
 	{
 		uint8 b1 = GetRawByte();
 		uint8 b2 = GetRawByte();
@@ -277,7 +273,7 @@ int32 ULowEntryBitDataReader::GetIntegerLeastSignificantBits(const int32 BitCoun
 		uint8 b4 = GetRawByte();
 		return (b4 << 24) | (b3 << 16) | (b2 << 8) | b1;
 	}
-	if(BitCount > 24)
+	if (BitCount > 24)
 	{
 		uint8 b1 = GetRawByte();
 		uint8 b2 = GetRawByte();
@@ -285,14 +281,14 @@ int32 ULowEntryBitDataReader::GetIntegerLeastSignificantBits(const int32 BitCoun
 		uint8 b4 = GetPartialRawByte(BitCount - 24);
 		return (b4 << 24) | (b3 << 16) | (b2 << 8) | b1;
 	}
-	if(BitCount > 16)
+	if (BitCount > 16)
 	{
 		uint8 b1 = GetRawByte();
 		uint8 b2 = GetRawByte();
 		uint8 b3 = GetPartialRawByte(BitCount - 16);
 		return (b3 << 16) | (b2 << 8) | b1;
 	}
-	if(BitCount > 8)
+	if (BitCount > 8)
 	{
 		uint8 b1 = GetRawByte();
 		uint8 b2 = GetPartialRawByte(BitCount - 8);
@@ -304,12 +300,12 @@ int32 ULowEntryBitDataReader::GetIntegerLeastSignificantBits(const int32 BitCoun
 
 int32 ULowEntryBitDataReader::GetIntegerMostSignificantBits(int32 BitCount)
 {
-	if(BitCount <= 0)
+	if (BitCount <= 0)
 	{
 		return 0;
 	}
 	BitCount = -BitCount;
-	if(BitCount <= -32)
+	if (BitCount <= -32)
 	{
 		uint8 b1 = GetRawByte();
 		uint8 b2 = GetRawByte();
@@ -317,7 +313,7 @@ int32 ULowEntryBitDataReader::GetIntegerMostSignificantBits(int32 BitCount)
 		uint8 b4 = GetRawByte();
 		return (b4 << 24) | (b3 << 16) | (b2 << 8) | b1;
 	}
-	if(BitCount < -24)
+	if (BitCount < -24)
 	{
 		uint8 b1 = GetPartialRawByte(BitCount + 24);
 		uint8 b2 = GetRawByte();
@@ -325,14 +321,14 @@ int32 ULowEntryBitDataReader::GetIntegerMostSignificantBits(int32 BitCount)
 		uint8 b4 = GetRawByte();
 		return (b4 << 24) | (b3 << 16) | (b2 << 8) | b1;
 	}
-	if(BitCount < -16)
+	if (BitCount < -16)
 	{
 		uint8 b1 = GetPartialRawByte(BitCount + 16);
 		uint8 b2 = GetRawByte();
 		uint8 b3 = GetRawByte();
 		return (b3 << 24) | (b2 << 16) | (b1 << 8);
 	}
-	if(BitCount < -8)
+	if (BitCount < -8)
 	{
 		uint8 b1 = GetPartialRawByte(BitCount + 8);
 		uint8 b2 = GetRawByte();
@@ -350,7 +346,7 @@ uint8 ULowEntryBitDataReader::GetByte()
 int32 ULowEntryBitDataReader::GetInteger()
 {
 	int32 RemainingCount = Remaining();
-	if(RemainingCount >= 4)
+	if (RemainingCount >= 4)
 	{
 		uint8 b1 = GetRawByte();
 		uint8 b2 = GetRawByte();
@@ -358,20 +354,20 @@ int32 ULowEntryBitDataReader::GetInteger()
 		uint8 b4 = GetRawByte();
 		return (b1 << 24) | (b2 << 16) | (b3 << 8) | b4;
 	}
-	if(RemainingCount == 3)
+	if (RemainingCount == 3)
 	{
 		uint8 b1 = GetRawByte();
 		uint8 b2 = GetRawByte();
 		uint8 b3 = GetRawByte();
 		return (b1 << 16) | (b2 << 8) | b3;
 	}
-	if(RemainingCount == 2)
+	if (RemainingCount == 2)
 	{
 		uint8 b1 = GetRawByte();
 		uint8 b2 = GetRawByte();
 		return (b1 << 8) | b2;
 	}
-	if(RemainingCount == 1)
+	if (RemainingCount == 1)
 	{
 		return GetRawByte();
 	}
@@ -380,18 +376,18 @@ int32 ULowEntryBitDataReader::GetInteger()
 
 int32 ULowEntryBitDataReader::GetUinteger()
 {
-	if(Remaining() < 1)
+	if (Remaining() < 1)
 	{
 		return 0;
 	}
 
 	uint8 b1 = GetRawByte();
-	if(((b1 >> 7) & 1) == 0)
+	if (((b1 >> 7) & 1) == 0)
 	{
 		return b1;
 	}
 
-	if(Remaining() < 3)
+	if (Remaining() < 3)
 	{
 		Empty();
 		return 0;
@@ -402,7 +398,7 @@ int32 ULowEntryBitDataReader::GetUinteger()
 	uint8 b4 = GetRawByte();
 
 	int32 Value = ((b1 & ~(1 << 7)) << 24) | (b2 << 16) | (b3 << 8) | b4;
-	if(Value < 128)
+	if (Value < 128)
 	{
 		return 0;
 	}
@@ -411,18 +407,18 @@ int32 ULowEntryBitDataReader::GetUinteger()
 
 int32 ULowEntryBitDataReader::GetPositiveInteger1()
 {
-	if(Remaining() < 1)
+	if (Remaining() < 1)
 	{
 		return 0;
 	}
 
 	uint8 b1 = GetRawByte();
-	if(((b1 >> 7) & 1) == 0)
+	if (((b1 >> 7) & 1) == 0)
 	{
 		return b1;
 	}
 
-	if(Remaining() < 3)
+	if (Remaining() < 3)
 	{
 		Empty();
 		return 0;
@@ -433,7 +429,7 @@ int32 ULowEntryBitDataReader::GetPositiveInteger1()
 	uint8 b4 = GetRawByte();
 
 	int32 Value = ((b1 & ~(1 << 7)) << 24) | (b2 << 16) | (b3 << 8) | b4;
-	if(Value < 128)
+	if (Value < 128)
 	{
 		return 0;
 	}
@@ -442,7 +438,7 @@ int32 ULowEntryBitDataReader::GetPositiveInteger1()
 
 int32 ULowEntryBitDataReader::GetPositiveInteger2()
 {
-	if(Remaining() < 2)
+	if (Remaining() < 2)
 	{
 		Empty();
 		return 0;
@@ -450,12 +446,12 @@ int32 ULowEntryBitDataReader::GetPositiveInteger2()
 
 	uint8 b1 = GetRawByte();
 	uint8 b2 = GetRawByte();
-	if(((b1 >> 7) & 1) == 0)
+	if (((b1 >> 7) & 1) == 0)
 	{
 		return (b1 << 8) | b2;
 	}
 
-	if(Remaining() < 2)
+	if (Remaining() < 2)
 	{
 		Empty();
 		return 0;
@@ -465,7 +461,7 @@ int32 ULowEntryBitDataReader::GetPositiveInteger2()
 	uint8 b4 = GetRawByte();
 
 	int32 Value = ((b1 & ~(1 << 7)) << 24) | (b2 << 16) | (b3 << 8) | b4;
-	if(Value < 32768)
+	if (Value < 32768)
 	{
 		return 0;
 	}
@@ -474,7 +470,7 @@ int32 ULowEntryBitDataReader::GetPositiveInteger2()
 
 int32 ULowEntryBitDataReader::GetPositiveInteger3()
 {
-	if(Remaining() < 3)
+	if (Remaining() < 3)
 	{
 		Empty();
 		return 0;
@@ -483,12 +479,12 @@ int32 ULowEntryBitDataReader::GetPositiveInteger3()
 	uint8 b1 = GetRawByte();
 	uint8 b2 = GetRawByte();
 	uint8 b3 = GetRawByte();
-	if(((b1 >> 7) & 1) == 0)
+	if (((b1 >> 7) & 1) == 0)
 	{
 		return (b1 << 16) | (b2 << 8) | b3;
 	}
 
-	if(Remaining() < 1)
+	if (Remaining() < 1)
 	{
 		Empty();
 		return 0;
@@ -497,7 +493,7 @@ int32 ULowEntryBitDataReader::GetPositiveInteger3()
 	uint8 b4 = GetRawByte();
 
 	int32 Value = ((b1 & ~(1 << 7)) << 24) | (b2 << 16) | (b3 << 8) | b4;
-	if(Value < 8388608)
+	if (Value < 8388608)
 	{
 		return 0;
 	}
@@ -507,7 +503,7 @@ int32 ULowEntryBitDataReader::GetPositiveInteger3()
 int64 ULowEntryBitDataReader::GetLong()
 {
 	int32 RemainingCount = Remaining();
-	if(RemainingCount >= 8)
+	if (RemainingCount >= 8)
 	{
 		int64 b1 = GetRawByte();
 		int64 b2 = GetRawByte();
@@ -519,7 +515,7 @@ int64 ULowEntryBitDataReader::GetLong()
 		int64 b8 = GetRawByte();
 		return (b1 << 56) | (b2 << 48) | (b3 << 40) | (b4 << 32) | (b5 << 24) | (b6 << 16) | (b7 << 8) | b8;
 	}
-	if(RemainingCount >= 7)
+	if (RemainingCount >= 7)
 	{
 		int64 b1 = GetRawByte();
 		int64 b2 = GetRawByte();
@@ -530,7 +526,7 @@ int64 ULowEntryBitDataReader::GetLong()
 		int64 b7 = GetRawByte();
 		return (b1 << 48) | (b2 << 40) | (b3 << 32) | (b4 << 24) | (b5 << 16) | (b6 << 8) | b7;
 	}
-	if(RemainingCount >= 6)
+	if (RemainingCount >= 6)
 	{
 		int64 b1 = GetRawByte();
 		int64 b2 = GetRawByte();
@@ -540,7 +536,7 @@ int64 ULowEntryBitDataReader::GetLong()
 		int64 b6 = GetRawByte();
 		return (b1 << 40) | (b2 << 32) | (b3 << 24) | (b4 << 16) | (b5 << 8) | b6;
 	}
-	if(RemainingCount >= 5)
+	if (RemainingCount >= 5)
 	{
 		int64 b1 = GetRawByte();
 		int64 b2 = GetRawByte();
@@ -549,7 +545,7 @@ int64 ULowEntryBitDataReader::GetLong()
 		int64 b5 = GetRawByte();
 		return (b1 << 32) | (b2 << 24) | (b3 << 16) | (b4 << 8) | b5;
 	}
-	if(RemainingCount >= 4)
+	if (RemainingCount >= 4)
 	{
 		int64 b1 = GetRawByte();
 		int64 b2 = GetRawByte();
@@ -557,20 +553,20 @@ int64 ULowEntryBitDataReader::GetLong()
 		int64 b4 = GetRawByte();
 		return (b1 << 24) | (b2 << 16) | (b3 << 8) | b4;
 	}
-	if(RemainingCount == 3)
+	if (RemainingCount == 3)
 	{
 		int64 b1 = GetRawByte();
 		int64 b2 = GetRawByte();
 		int64 b3 = GetRawByte();
 		return (b1 << 16) | (b2 << 8) | b3;
 	}
-	if(RemainingCount == 2)
+	if (RemainingCount == 2)
 	{
 		int64 b1 = GetRawByte();
 		int64 b2 = GetRawByte();
 		return (b1 << 8) | b2;
 	}
-	if(RemainingCount == 1)
+	if (RemainingCount == 1)
 	{
 		return GetRawByte();
 	}
@@ -581,7 +577,7 @@ ULowEntryLong* ULowEntryBitDataReader::GetLongBytes()
 {
 	TArray<uint8> Data;
 	int32 RemainingCount = Remaining();
-	if(RemainingCount >= 8)
+	if (RemainingCount >= 8)
 	{
 		Data.Add(GetRawByte());
 		Data.Add(GetRawByte());
@@ -592,7 +588,7 @@ ULowEntryLong* ULowEntryBitDataReader::GetLongBytes()
 		Data.Add(GetRawByte());
 		Data.Add(GetRawByte());
 	}
-	else if(RemainingCount == 7)
+	else if (RemainingCount == 7)
 	{
 		Data.Add(GetRawByte());
 		Data.Add(GetRawByte());
@@ -602,7 +598,7 @@ ULowEntryLong* ULowEntryBitDataReader::GetLongBytes()
 		Data.Add(GetRawByte());
 		Data.Add(GetRawByte());
 	}
-	else if(RemainingCount == 6)
+	else if (RemainingCount == 6)
 	{
 		Data.Add(GetRawByte());
 		Data.Add(GetRawByte());
@@ -611,7 +607,7 @@ ULowEntryLong* ULowEntryBitDataReader::GetLongBytes()
 		Data.Add(GetRawByte());
 		Data.Add(GetRawByte());
 	}
-	else if(RemainingCount == 5)
+	else if (RemainingCount == 5)
 	{
 		Data.Add(GetRawByte());
 		Data.Add(GetRawByte());
@@ -619,25 +615,25 @@ ULowEntryLong* ULowEntryBitDataReader::GetLongBytes()
 		Data.Add(GetRawByte());
 		Data.Add(GetRawByte());
 	}
-	else if(RemainingCount == 4)
+	else if (RemainingCount == 4)
 	{
 		Data.Add(GetRawByte());
 		Data.Add(GetRawByte());
 		Data.Add(GetRawByte());
 		Data.Add(GetRawByte());
 	}
-	else if(RemainingCount == 3)
+	else if (RemainingCount == 3)
 	{
 		Data.Add(GetRawByte());
 		Data.Add(GetRawByte());
 		Data.Add(GetRawByte());
 	}
-	else if(RemainingCount == 2)
+	else if (RemainingCount == 2)
 	{
 		Data.Add(GetRawByte());
 		Data.Add(GetRawByte());
 	}
-	else if(RemainingCount == 1)
+	else if (RemainingCount == 1)
 	{
 		Data.Add(GetRawByte());
 	}
@@ -654,7 +650,7 @@ ULowEntryDouble* ULowEntryBitDataReader::GetDoubleBytes()
 {
 	TArray<uint8> Data;
 	int32 RemainingCount = Remaining();
-	if(RemainingCount >= 8)
+	if (RemainingCount >= 8)
 	{
 		Data.Add(GetRawByte());
 		Data.Add(GetRawByte());
@@ -665,7 +661,7 @@ ULowEntryDouble* ULowEntryBitDataReader::GetDoubleBytes()
 		Data.Add(GetRawByte());
 		Data.Add(GetRawByte());
 	}
-	else if(RemainingCount == 7)
+	else if (RemainingCount == 7)
 	{
 		Data.Add(GetRawByte());
 		Data.Add(GetRawByte());
@@ -675,7 +671,7 @@ ULowEntryDouble* ULowEntryBitDataReader::GetDoubleBytes()
 		Data.Add(GetRawByte());
 		Data.Add(GetRawByte());
 	}
-	else if(RemainingCount == 6)
+	else if (RemainingCount == 6)
 	{
 		Data.Add(GetRawByte());
 		Data.Add(GetRawByte());
@@ -684,7 +680,7 @@ ULowEntryDouble* ULowEntryBitDataReader::GetDoubleBytes()
 		Data.Add(GetRawByte());
 		Data.Add(GetRawByte());
 	}
-	else if(RemainingCount == 5)
+	else if (RemainingCount == 5)
 	{
 		Data.Add(GetRawByte());
 		Data.Add(GetRawByte());
@@ -692,25 +688,25 @@ ULowEntryDouble* ULowEntryBitDataReader::GetDoubleBytes()
 		Data.Add(GetRawByte());
 		Data.Add(GetRawByte());
 	}
-	else if(RemainingCount == 4)
+	else if (RemainingCount == 4)
 	{
 		Data.Add(GetRawByte());
 		Data.Add(GetRawByte());
 		Data.Add(GetRawByte());
 		Data.Add(GetRawByte());
 	}
-	else if(RemainingCount == 3)
+	else if (RemainingCount == 3)
 	{
 		Data.Add(GetRawByte());
 		Data.Add(GetRawByte());
 		Data.Add(GetRawByte());
 	}
-	else if(RemainingCount == 2)
+	else if (RemainingCount == 2)
 	{
 		Data.Add(GetRawByte());
 		Data.Add(GetRawByte());
 	}
-	else if(RemainingCount == 1)
+	else if (RemainingCount == 1)
 	{
 		Data.Add(GetRawByte());
 	}
@@ -726,18 +722,18 @@ FString ULowEntryBitDataReader::GetStringUtf8()
 {
 	int32 length = GetUinteger();
 	length = FMath::Min(length, MaxElementsRemaining(1));
-	if(length <= 0)
+	if (length <= 0)
 	{
 		return "";
 	}
-	if(CurrentBytePosition == 0)
+	if (CurrentBytePosition == 0)
 	{
 		int32 pos = GetAndIncreasePosition(length);
 		return ULowEntryExtendedStandardLibrary::BytesToStringUtf8(Bytes, pos, length);
 	}
 	TArray<uint8> Data;
 	Data.SetNum(length);
-	for(int i = 0; i < length; i++)
+	for (int i = 0; i < length; i++)
 	{
 		Data[i] = GetRawByte();
 	}
@@ -749,13 +745,13 @@ TArray<bool> ULowEntryBitDataReader::GetBitArray()
 {
 	int32 Length = GetUinteger();
 	Length = FMath::Min(Length, SafeMultiply(MaxElementsRemaining(1), 8));
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return TArray<bool>();
 	}
 	TArray<bool> Array;
 	Array.SetNum(Length);
-	for(int32 i = 0; i < Length; i++)
+	for (int32 i = 0; i < Length; i++)
 	{
 		Array[i] = GetBoolean();
 	}
@@ -765,18 +761,18 @@ TArray<bool> ULowEntryBitDataReader::GetBitArray()
 TArray<uint8> ULowEntryBitDataReader::GetByteArrayLeastSignificantBits(const int32 BitCount)
 {
 	int32 Length = GetUinteger();
-	if(BitCount <= 0)
+	if (BitCount <= 0)
 	{
 		return TArray<uint8>();
 	}
 	Length = static_cast<int>(FMath::Min(static_cast<double>(Length), FMath::CeilToDouble(MaxElementsRemaining(1) * (8.0 / BitCount))));
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return TArray<uint8>();
 	}
 	TArray<uint8> Array;
 	Array.SetNum(Length);
-	for(int32 i = 0; i < Length; i++)
+	for (int32 i = 0; i < Length; i++)
 	{
 		Array[i] = GetByteLeastSignificantBits(BitCount);
 	}
@@ -786,18 +782,18 @@ TArray<uint8> ULowEntryBitDataReader::GetByteArrayLeastSignificantBits(const int
 TArray<uint8> ULowEntryBitDataReader::GetByteArrayMostSignificantBits(const int32 BitCount)
 {
 	int32 Length = GetUinteger();
-	if(BitCount <= 0)
+	if (BitCount <= 0)
 	{
 		return TArray<uint8>();
 	}
 	Length = static_cast<int>(FMath::Min(static_cast<double>(Length), FMath::CeilToDouble(MaxElementsRemaining(1) * (8.0 / BitCount))));
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return TArray<uint8>();
 	}
 	TArray<uint8> Array;
 	Array.SetNum(Length);
-	for(int32 i = 0; i < Length; i++)
+	for (int32 i = 0; i < Length; i++)
 	{
 		Array[i] = GetByteMostSignificantBits(BitCount);
 	}
@@ -807,18 +803,18 @@ TArray<uint8> ULowEntryBitDataReader::GetByteArrayMostSignificantBits(const int3
 TArray<int32> ULowEntryBitDataReader::GetIntegerArrayLeastSignificantBits(const int32 BitCount)
 {
 	int32 Length = GetUinteger();
-	if(BitCount <= 0)
+	if (BitCount <= 0)
 	{
 		return TArray<int32>();
 	}
 	Length = static_cast<int>(FMath::Min(static_cast<double>(Length), FMath::CeilToDouble(MaxElementsRemaining(1) * (8.0 / BitCount))));
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return TArray<int32>();
 	}
 	TArray<int32> Array;
 	Array.SetNum(Length);
-	for(int32 i = 0; i < Length; i++)
+	for (int32 i = 0; i < Length; i++)
 	{
 		Array[i] = GetIntegerLeastSignificantBits(BitCount);
 	}
@@ -828,18 +824,18 @@ TArray<int32> ULowEntryBitDataReader::GetIntegerArrayLeastSignificantBits(const 
 TArray<int32> ULowEntryBitDataReader::GetIntegerArrayMostSignificantBits(const int32 BitCount)
 {
 	int32 Length = GetUinteger();
-	if(BitCount <= 0)
+	if (BitCount <= 0)
 	{
 		return TArray<int32>();
 	}
 	Length = static_cast<int>(FMath::Min(static_cast<double>(Length), FMath::CeilToDouble(MaxElementsRemaining(1) * (8.0 / BitCount))));
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return TArray<int32>();
 	}
 	TArray<int32> Array;
 	Array.SetNum(Length);
-	for(int32 i = 0; i < Length; i++)
+	for (int32 i = 0; i < Length; i++)
 	{
 		Array[i] = GetIntegerMostSignificantBits(BitCount);
 	}
@@ -850,18 +846,18 @@ TArray<uint8> ULowEntryBitDataReader::GetByteArray()
 {
 	int32 length = GetUinteger();
 	length = FMath::Min(length, MaxElementsRemaining(1));
-	if(length <= 0)
+	if (length <= 0)
 	{
 		return TArray<uint8>();
 	}
-	if(CurrentBytePosition == 0)
+	if (CurrentBytePosition == 0)
 	{
 		int32 pos = GetAndIncreasePosition(length);
 		return ULowEntryExtendedStandardLibrary::BytesSubArray(Bytes, pos, length);
 	}
 	TArray<uint8> Data;
 	Data.SetNum(length);
-	for(int i = 0; i < length; i++)
+	for (int i = 0; i < length; i++)
 	{
 		Data[i] = GetRawByte();
 	}
@@ -872,13 +868,13 @@ TArray<int32> ULowEntryBitDataReader::GetIntegerArray()
 {
 	int32 Length = GetUinteger();
 	Length = FMath::Min(Length, MaxElementsRemaining(4));
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return TArray<int32>();
 	}
 	TArray<int32> Array;
 	Array.SetNum(Length);
-	for(int32 i = 0; i < Length; i++)
+	for (int32 i = 0; i < Length; i++)
 	{
 		Array[i] = GetInteger();
 	}
@@ -889,13 +885,13 @@ TArray<int32> ULowEntryBitDataReader::GetPositiveInteger1Array()
 {
 	int32 Length = GetUinteger();
 	Length = FMath::Min(Length, MaxElementsRemaining(1));
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return TArray<int32>();
 	}
 	TArray<int32> Array;
 	Array.SetNum(Length);
-	for(int32 i = 0; i < Length; i++)
+	for (int32 i = 0; i < Length; i++)
 	{
 		Array[i] = GetPositiveInteger1();
 	}
@@ -906,13 +902,13 @@ TArray<int32> ULowEntryBitDataReader::GetPositiveInteger2Array()
 {
 	int32 Length = GetUinteger();
 	Length = FMath::Min(Length, MaxElementsRemaining(2));
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return TArray<int32>();
 	}
 	TArray<int32> Array;
 	Array.SetNum(Length);
-	for(int32 i = 0; i < Length; i++)
+	for (int32 i = 0; i < Length; i++)
 	{
 		Array[i] = GetPositiveInteger2();
 	}
@@ -923,13 +919,13 @@ TArray<int32> ULowEntryBitDataReader::GetPositiveInteger3Array()
 {
 	int32 Length = GetUinteger();
 	Length = FMath::Min(Length, MaxElementsRemaining(3));
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return TArray<int32>();
 	}
 	TArray<int32> Array;
 	Array.SetNum(Length);
-	for(int32 i = 0; i < Length; i++)
+	for (int32 i = 0; i < Length; i++)
 	{
 		Array[i] = GetPositiveInteger3();
 	}
@@ -940,13 +936,13 @@ TArray<int64> ULowEntryBitDataReader::GetLongArray()
 {
 	int32 Length = GetUinteger();
 	Length = FMath::Min(Length, MaxElementsRemaining(8));
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return TArray<int64>();
 	}
 	TArray<int64> Array;
 	Array.SetNum(Length);
-	for(int32 i = 0; i < Length; i++)
+	for (int32 i = 0; i < Length; i++)
 	{
 		Array[i] = GetLong();
 	}
@@ -957,13 +953,13 @@ TArray<ULowEntryLong*> ULowEntryBitDataReader::GetLongBytesArray()
 {
 	int32 Length = GetUinteger();
 	Length = FMath::Min(Length, MaxElementsRemaining(8));
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return TArray<ULowEntryLong*>();
 	}
 	TArray<ULowEntryLong*> Array;
 	Array.SetNum(Length);
-	for(int32 i = 0; i < Length; i++)
+	for (int32 i = 0; i < Length; i++)
 	{
 		Array[i] = GetLongBytes();
 	}
@@ -974,13 +970,13 @@ TArray<float> ULowEntryBitDataReader::GetFloatArray()
 {
 	int32 Length = GetUinteger();
 	Length = FMath::Min(Length, MaxElementsRemaining(4));
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return TArray<float>();
 	}
 	TArray<float> Array;
 	Array.SetNum(Length);
-	for(int32 i = 0; i < Length; i++)
+	for (int32 i = 0; i < Length; i++)
 	{
 		Array[i] = GetFloat();
 	}
@@ -991,13 +987,13 @@ TArray<ULowEntryDouble*> ULowEntryBitDataReader::GetDoubleBytesArray()
 {
 	int32 Length = GetUinteger();
 	Length = FMath::Min(Length, MaxElementsRemaining(8));
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return TArray<ULowEntryDouble*>();
 	}
 	TArray<ULowEntryDouble*> Array;
 	Array.SetNum(Length);
-	for(int32 i = 0; i < Length; i++)
+	for (int32 i = 0; i < Length; i++)
 	{
 		Array[i] = GetDoubleBytes();
 	}
@@ -1008,13 +1004,13 @@ TArray<bool> ULowEntryBitDataReader::GetBooleanArray()
 {
 	int32 Length = GetUinteger();
 	Length = FMath::Min(Length, SafeMultiply(MaxElementsRemaining(1), 8));
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return TArray<bool>();
 	}
 	TArray<bool> Array;
 	Array.SetNum(Length);
-	for(int32 i = 0; i < Length; i++)
+	for (int32 i = 0; i < Length; i++)
 	{
 		Array[i] = GetBoolean();
 	}
@@ -1025,13 +1021,13 @@ TArray<FString> ULowEntryBitDataReader::GetStringUtf8Array()
 {
 	int32 Length = GetUinteger();
 	Length = FMath::Min(Length, MaxElementsRemaining(1));
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return TArray<FString>();
 	}
 	TArray<FString> Array;
 	Array.SetNumZeroed(Length);
-	for(int32 i = 0; i < Length; i++)
+	for (int32 i = 0; i < Length; i++)
 	{
 		Array[i] = GetStringUtf8();
 	}
@@ -1044,11 +1040,11 @@ int32 ULowEntryBitDataReader::SafeMultiply(const int32 A, const int32 B)
 	int64 Result = static_cast<int64>(A) * static_cast<int64>(B);
 	int32 Max = 2147483647;
 	int32 Min = (-2147483647 - 1);
-	if(Result >= Max)
+	if (Result >= Max)
 	{
 		return Max;
 	}
-	if(Result <= Min)
+	if (Result <= Min)
 	{
 		return Min;
 	}

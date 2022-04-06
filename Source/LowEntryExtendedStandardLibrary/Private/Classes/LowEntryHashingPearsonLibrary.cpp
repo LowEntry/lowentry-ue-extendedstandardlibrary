@@ -8,7 +8,7 @@ constexpr uint8 ULowEntryHashingPearsonLibrary::pearson[256] = {static_cast<uint
 
 TArray<uint8> ULowEntryHashingPearsonLibrary::Hash(const TArray<uint8>& Bytes, int32 Index, int32 Length, const int32 HashLength)
 {
-	if(HashLength <= 0)
+	if (HashLength <= 0)
 	{
 		return TArray<uint8>();
 	}
@@ -16,29 +16,29 @@ TArray<uint8> ULowEntryHashingPearsonLibrary::Hash(const TArray<uint8>& Bytes, i
 	TArray<uint8> hh;
 	hh.SetNum(HashLength);
 
-	if(Bytes.Num() <= 0)
+	if (Bytes.Num() <= 0)
 	{
 		return hh;
 	}
 
-	if(Index < 0)
+	if (Index < 0)
 	{
 		Length += Index;
 		Index = 0;
 	}
-	if(Length > (Bytes.Num() - Index))
+	if (Length > (Bytes.Num() - Index))
 	{
 		Length = Bytes.Num() - Index;
 	}
-	if(Length <= 0)
+	if (Length <= 0)
 	{
 		return hh;
 	}
 
-	for(int32 j = 0; j < HashLength; j++)
+	for (int32 j = 0; j < HashLength; j++)
 	{
 		uint8 h = pearson[(Bytes[Index] + j) & 0xff];
-		for(int32 i = 1; i < Length; i++)
+		for (int32 i = 1; i < Length; i++)
 		{
 			h = pearson[(h ^ Bytes[(Index + i) & 0xff]) & 0xff];
 		}

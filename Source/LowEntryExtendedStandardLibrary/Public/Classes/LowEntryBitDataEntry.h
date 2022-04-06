@@ -15,8 +15,6 @@ UCLASS(BlueprintType)
 class LOWENTRYEXTENDEDSTANDARDLIBRARY_API ULowEntryBitDataEntry : public UObject
 {
 	GENERATED_UCLASS_BODY()
-
-
 public:
 	static ULowEntryBitDataEntry* CreateFromBit(const bool Value);
 	static ULowEntryBitDataEntry* CreateFromByteLeastSignificantBits(const uint8 Value, const int32 BitCount);
@@ -109,7 +107,6 @@ public:
 	int32 GetBitCount();
 
 
-
 	bool IsBit();
 	void SetBit(const bool Value);
 	bool GetBit();
@@ -176,7 +173,6 @@ public:
 	bool IsStringUtf8();
 	void SetStringUtf8(const FString& Value);
 	FString GetStringUtf8();
-
 
 
 	bool IsBitArray();

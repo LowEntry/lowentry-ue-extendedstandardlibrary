@@ -14,8 +14,6 @@ UCLASS(BlueprintType)
 class LOWENTRYEXTENDEDSTANDARDLIBRARY_API ULowEntryLatentActionInteger : public UObject
 {
 	GENERATED_UCLASS_BODY()
-
-
 public:
 	static ULowEntryLatentActionInteger* Create();
 
@@ -28,13 +26,13 @@ public:
 
 	UPROPERTY()
 	int32 KeepAliveCount = 0;
-	
+
 
 	/**
 	* Waits till the latent action is done.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Latent Action|Integer", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", DisplayName = "Wait Till Done", Keywords = "untill for end finished complete completion"))
-		void WaitTillDone(UObject* WorldContextObject, FLatentActionInfo LatentInfo, int32& Result_);
+	void WaitTillDone(UObject* WorldContextObject, FLatentActionInfo LatentInfo, int32& Result_);
 
 	void LatentActionDone();
 
@@ -42,17 +40,17 @@ public:
 	* Causes the latent action to be done.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Latent Action|Integer", Meta = (DisplayName = "Done", Keywords = "end finished complete completion"))
-		void Done(int32 Result_);
+	void Done(int32 Result_);
 
 	/**
 	* Returns true if the latent action is done.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Latent Action|Integer", Meta = (DisplayName = "Is Done", Keywords = "end finished complete completion"))
-		bool IsDone();
+	bool IsDone();
 
 	/**
 	* Returns the result.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Latent Action|Integer", Meta = (DisplayName = "Get Result", Keywords = "result return value"))
-		void GetResult(int32& Result_);
+	void GetResult(int32& Result_);
 };

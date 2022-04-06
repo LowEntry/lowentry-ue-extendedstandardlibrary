@@ -3,21 +3,17 @@
 #include "LowEntryParsedHashcash.h"
 
 
-// init >>
-	ULowEntryParsedHashcash::ULowEntryParsedHashcash(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
-	{
-	}
+ULowEntryParsedHashcash::ULowEntryParsedHashcash(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) { }
 
-	ULowEntryParsedHashcash* ULowEntryParsedHashcash::Create(const bool Valid_, const FString& Resource_, const FDateTime& Date_, const int32 Bits_)
-	{
-		ULowEntryParsedHashcash* Instance = NewObject<ULowEntryParsedHashcash>();
-		Instance->Valid = Valid_;
-		Instance->Resource = Resource_;
-		Instance->Date = Date_;
-		Instance->Bits = Bits_;
-		return Instance;
-	}
-// init <<
+ULowEntryParsedHashcash* ULowEntryParsedHashcash::Create(const bool Valid_, const FString& Resource_, const FDateTime& Date_, const int32 Bits_)
+{
+	ULowEntryParsedHashcash* Instance = NewObject<ULowEntryParsedHashcash>();
+	Instance->Valid = Valid_;
+	Instance->Resource = Resource_;
+	Instance->Date = Date_;
+	Instance->Bits = Bits_;
+	return Instance;
+}
 
 
 bool ULowEntryParsedHashcash::IsHashcashValid()
@@ -43,7 +39,7 @@ int32 ULowEntryParsedHashcash::GetBits()
 
 FString ULowEntryParsedHashcash::ToString()
 {
-	if(!Valid)
+	if (!Valid)
 	{
 		return TEXT("{invalid}");
 	}

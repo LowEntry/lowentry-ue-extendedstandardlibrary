@@ -33,9 +33,9 @@ public:
 
 	virtual ~FLowEntryLatentActionString() override
 	{
-		if(!Done)
+		if (!Done)
 		{
-			if(IsValid(LatentActionObject))
+			if (IsValid(LatentActionObject))
 			{
 				Done = true;
 				LatentActionObject->LatentActionDone();
@@ -45,12 +45,12 @@ public:
 
 	virtual void UpdateOperation(FLatentResponse& Response) override
 	{
-		if(!IsValid(LatentActionObject))
+		if (!IsValid(LatentActionObject))
 		{
 			Response.FinishAndTriggerIf(true, ExecutionFunction, OutputLink, CallbackTarget);
 			return;
 		}
-		if(LatentActionObject->Finished)
+		if (LatentActionObject->Finished)
 		{
 			Done = true;
 			Result = LatentActionObject->Result;

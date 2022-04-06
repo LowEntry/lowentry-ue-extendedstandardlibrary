@@ -3,34 +3,30 @@
 #include "LowEntryExecutionQueue.h"
 
 
-// init >>
-	ULowEntryExecutionQueue::ULowEntryExecutionQueue(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
-	{
-	}
+ULowEntryExecutionQueue::ULowEntryExecutionQueue(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) { }
 
-	ULowEntryExecutionQueue* ULowEntryExecutionQueue::Create()
-	{
-		return NewObject<ULowEntryExecutionQueue>();
-	}
+ULowEntryExecutionQueue* ULowEntryExecutionQueue::Create()
+{
+	return NewObject<ULowEntryExecutionQueue>();
+}
 
-	ULowEntryExecutionQueue* ULowEntryExecutionQueue::Create(const int32 Count, const bool Next)
+ULowEntryExecutionQueue* ULowEntryExecutionQueue::Create(const int32 Count, const bool Next)
+{
+	ULowEntryExecutionQueue* Instance = NewObject<ULowEntryExecutionQueue>();
+	Instance->Count = Count;
+	Instance->Next = Next;
+	if (Count > 0)
 	{
-		ULowEntryExecutionQueue* Instance = NewObject<ULowEntryExecutionQueue>();
-		Instance->Count = Count;
-		Instance->Next = Next;
-		if(Count > 0)
-		{
-			Instance->AddToRoot();
-		}
-		return Instance;
+		Instance->AddToRoot();
 	}
-// init <<
+	return Instance;
+}
 
 
 void ULowEntryExecutionQueue::IncreaseCount()
 {
 	Count++;
-	if(Count == 1)
+	if (Count == 1)
 	{
 		AddToRoot();
 	}
@@ -39,11 +35,11 @@ void ULowEntryExecutionQueue::IncreaseCount()
 void ULowEntryExecutionQueue::DecreaseCount()
 {
 	Count--;
-	if(Count == 0)
+	if (Count == 0)
 	{
 		RemoveFromRoot();
 	}
-	if(Count < 0)
+	if (Count < 0)
 	{
 		Count = 0;
 	}

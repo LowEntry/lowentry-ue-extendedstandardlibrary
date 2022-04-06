@@ -4,20 +4,22 @@ using System.IO;
 public class LowEntryExtendedStandardLibraryEditor : ModuleRules
 {
 	public LowEntryExtendedStandardLibraryEditor(ReadOnlyTargetRules Target) : base(Target)
-    {
-        PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+	{
+		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-        PublicIncludePaths.AddRange(
-			new string[] {
-                Path.Combine(ModuleDirectory, "Public/Module"),
-                Path.Combine(ModuleDirectory, "Public/Classes"),
+		PublicIncludePaths.AddRange(
+			new string[]
+			{
+				Path.Combine(ModuleDirectory, "Public/Module"),
+				Path.Combine(ModuleDirectory, "Public/Classes")
 			}
 		);
 
 		PrivateIncludePaths.AddRange(
-			new string[] {
-                Path.Combine(ModuleDirectory, "Private/Module"),
-                Path.Combine(ModuleDirectory, "Private/Classes"),
+			new string[]
+			{
+				Path.Combine(ModuleDirectory, "Private/Module"),
+				Path.Combine(ModuleDirectory, "Private/Classes")
 			}
 		);
 
@@ -32,7 +34,7 @@ public class LowEntryExtendedStandardLibraryEditor : ModuleRules
 				"EditorStyle",
 				"AIModule",
 				"BlueprintGraph",
-				"LowEntryExtendedStandardLibrary",
+				"LowEntryExtendedStandardLibrary"
 			}
 		);
 
@@ -44,11 +46,11 @@ public class LowEntryExtendedStandardLibraryEditor : ModuleRules
 				"UnrealEd",
 				"GraphEditor",
 				"SlateCore",
-                "Kismet",
-                "KismetWidgets",
-                "PropertyEditor",
-                "ToolMenus",
-            }
+				"Kismet",
+				"KismetWidgets",
+				"PropertyEditor",
+				"ToolMenus"
+			}
 		);
 	}
 }

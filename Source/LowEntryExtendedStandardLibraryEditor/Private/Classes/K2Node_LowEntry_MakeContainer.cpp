@@ -42,12 +42,12 @@ void FKCHandler_LowEntry_MakeContainer::Compile(FKismetFunctionContext& Context,
 	CreateContainerStatement.Type = CompiledStatementType;
 	CreateContainerStatement.LHS = *ContainerTerm;
 
-	for(UEdGraphPin* Pin : Node->Pins)
+	for (UEdGraphPin* Pin : Node->Pins)
 	{
-		if(Pin && Pin->Direction == EGPD_Input)
+		if (Pin && Pin->Direction == EGPD_Input)
 		{
 			FBPTerminal** InputTerm = Context.NetMap.Find(FEdGraphUtilities::GetNetFromPin(Pin));
-			if(InputTerm)
+			if (InputTerm)
 			{
 				CreateContainerStatement.RHS.Add(*InputTerm);
 			}
@@ -75,15 +75,15 @@ void UK2Node_LowEntry_MakeContainer::ReallocatePinsDuringReconstruction(TArray<U
 	Super::ReallocatePinsDuringReconstruction(OldPins);
 
 	// This is necessary to retain type information after pasting or loading from disc
-	if(UEdGraphPin* OutputPin = GetOutputPin())
+	if (UEdGraphPin* OutputPin = GetOutputPin())
 	{
 		// Only update the output pin if it is currently a wildcard
-		if(OutputPin->PinType.PinCategory == UEdGraphSchema_K2::PC_Wildcard)
+		if (OutputPin->PinType.PinCategory == UEdGraphSchema_K2::PC_Wildcard)
 		{
 			// Find the matching Old Pin if it exists
-			for(UEdGraphPin* OldPin : OldPins)
+			for (UEdGraphPin* OldPin : OldPins)
 			{
-				if(OldPin->Direction == EGPD_Output)
+				if (OldPin->Direction == EGPD_Output)
 				{
 					// Update our output pin with the old type information and then propagate it to our input pins
 					OutputPin->PinType = OldPin->PinType;
@@ -103,7 +103,7 @@ void UK2Node_LowEntry_MakeContainer::AllocateDefaultPins()
 	CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Wildcard, GetOutputPinName(), PinParams);
 
 	// Create the input pins to create the container from
-	for(int32 i = 0; i < NumInputs; ++i)
+	for (int32 i = 0; i < NumInputs; ++i)
 	{
 		CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Wildcard, GetPinName(i));
 	}
@@ -111,9 +111,9 @@ void UK2Node_LowEntry_MakeContainer::AllocateDefaultPins()
 
 void UK2Node_LowEntry_MakeContainer::GetKeyAndValuePins(TArray<UEdGraphPin*>& KeyPins, TArray<UEdGraphPin*>& ValuePins) const
 {
-	for(UEdGraphPin* CurrentPin : Pins)
+	for (UEdGraphPin* CurrentPin : Pins)
 	{
-		if(CurrentPin->Direction == EGPD_Input && CurrentPin->ParentPin == nullptr)
+		if (CurrentPin->Direction == EGPD_Input && CurrentPin->ParentPin == nullptr)
 		{
 			KeyPins.Add(CurrentPin);
 		}
@@ -125,9 +125,9 @@ bool UK2Node_LowEntry_MakeContainer::CanResetToWildcard() const
 	bool bClearPinsToWildcard = true;
 
 	// Check to see if we want to clear the wildcards.
-	for(const UEdGraphPin* Pin : Pins)
+	for (const UEdGraphPin* Pin : Pins)
 	{
-		if(Pin->LinkedTo.Num() > 0)
+		if (Pin->LinkedTo.Num() > 0)
 		{
 			// One of the pins is still linked, we will not be clearing the types.
 			bClearPinsToWildcard = false;
@@ -140,14 +140,14 @@ bool UK2Node_LowEntry_MakeContainer::CanResetToWildcard() const
 
 void UK2Node_LowEntry_MakeContainer::ClearPinTypeToWildcard()
 {
-	if(CanResetToWildcard())
+	if (CanResetToWildcard())
 	{
 		UEdGraphPin* OutputPin = GetOutputPin();
 		OutputPin->PinType.PinCategory = UEdGraphSchema_K2::PC_Wildcard;
 		OutputPin->PinType.PinSubCategory = NAME_None;
 		OutputPin->PinType.PinSubCategoryObject = nullptr;
 
-		if(ContainerType == EPinContainerType::Map)
+		if (ContainerType == EPinContainerType::Map)
 		{
 			OutputPin->PinType.PinValueType.TerminalCategory = UEdGraphSchema_K2::PC_Wildcard;
 			OutputPin->PinType.PinValueType.TerminalSubCategory = NAME_None;
@@ -170,9 +170,9 @@ void UK2Node_LowEntry_MakeContainer::NotifyPinConnectionListChanged(UEdGraphPin*
 	auto CountLinkedPins = [](const TArray<UEdGraphPin*> PinsToCount)
 	{
 		int32 LinkedPins = 0;
-		for(UEdGraphPin* CurrentPin : PinsToCount)
+		for (UEdGraphPin* CurrentPin : PinsToCount)
 		{
-			if(CurrentPin->LinkedTo.Num() > 0)
+			if (CurrentPin->LinkedTo.Num() > 0)
 			{
 				++LinkedPins;
 			}
@@ -187,13 +187,13 @@ void UK2Node_LowEntry_MakeContainer::NotifyPinConnectionListChanged(UEdGraphPin*
 	UEdGraphPin* OutputPin = GetOutputPin();
 
 	bool bNotifyGraphChanged = false;
-	if(Pin->LinkedTo.Num() > 0)
+	if (Pin->LinkedTo.Num() > 0)
 	{
-		if(Pin->ParentPin == nullptr)
+		if (Pin->ParentPin == nullptr)
 		{
-			if(Pin == OutputPin)
+			if (Pin == OutputPin)
 			{
-				if(NumKeyPinsWithLinks == 0 && (OutputPin->PinType.PinCategory == UEdGraphSchema_K2::PC_Wildcard && Pin->LinkedTo[0]->PinType.PinCategory != UEdGraphSchema_K2::PC_Wildcard))
+				if (NumKeyPinsWithLinks == 0 && (OutputPin->PinType.PinCategory == UEdGraphSchema_K2::PC_Wildcard && Pin->LinkedTo[0]->PinType.PinCategory != UEdGraphSchema_K2::PC_Wildcard))
 				{
 					FEdGraphTerminalType TerminalType = MoveTemp(OutputPin->PinType.PinValueType);
 					OutputPin->PinType = Pin->LinkedTo[0]->PinType;
@@ -201,16 +201,16 @@ void UK2Node_LowEntry_MakeContainer::NotifyPinConnectionListChanged(UEdGraphPin*
 					OutputPin->PinType.ContainerType = ContainerType;
 					bNotifyGraphChanged = true;
 				}
-				if(ContainerType == EPinContainerType::Map && NumValuePinsWithLinks == 0 && (OutputPin->PinType.PinValueType.TerminalCategory == UEdGraphSchema_K2::PC_Wildcard && Pin->LinkedTo[0]->PinType.PinValueType.TerminalCategory != UEdGraphSchema_K2::PC_Wildcard))
+				if (ContainerType == EPinContainerType::Map && NumValuePinsWithLinks == 0 && (OutputPin->PinType.PinValueType.TerminalCategory == UEdGraphSchema_K2::PC_Wildcard && Pin->LinkedTo[0]->PinType.PinValueType.TerminalCategory != UEdGraphSchema_K2::PC_Wildcard))
 				{
 					OutputPin->PinType.PinValueType = Pin->LinkedTo[0]->PinType.PinValueType;
 					bNotifyGraphChanged = true;
 				}
 			}
-			else if(ValuePins.Contains(Pin))
+			else if (ValuePins.Contains(Pin))
 			{
 				// Just made a connection to a value pin, was it the first?
-				if(NumValuePinsWithLinks == 1 && (OutputPin->PinType.PinValueType.TerminalCategory == UEdGraphSchema_K2::PC_Wildcard && Pin->LinkedTo[0]->PinType.PinCategory != UEdGraphSchema_K2::PC_Wildcard))
+				if (NumValuePinsWithLinks == 1 && (OutputPin->PinType.PinValueType.TerminalCategory == UEdGraphSchema_K2::PC_Wildcard && Pin->LinkedTo[0]->PinType.PinCategory != UEdGraphSchema_K2::PC_Wildcard))
 				{
 					// Update the types on all the pins
 					OutputPin->PinType.PinValueType = FEdGraphTerminalType::FromPinType(Pin->LinkedTo[0]->PinType);
@@ -220,7 +220,7 @@ void UK2Node_LowEntry_MakeContainer::NotifyPinConnectionListChanged(UEdGraphPin*
 			else
 			{
 				// Just made a connection to a key pin, was it the first?
-				if(NumKeyPinsWithLinks == 1 && (OutputPin->PinType.PinCategory == UEdGraphSchema_K2::PC_Wildcard && Pin->LinkedTo[0]->PinType.PinCategory != UEdGraphSchema_K2::PC_Wildcard))
+				if (NumKeyPinsWithLinks == 1 && (OutputPin->PinType.PinCategory == UEdGraphSchema_K2::PC_Wildcard && Pin->LinkedTo[0]->PinType.PinCategory != UEdGraphSchema_K2::PC_Wildcard))
 				{
 					FEdGraphTerminalType TerminalType = MoveTemp(OutputPin->PinType.PinValueType);
 					OutputPin->PinType = Pin->LinkedTo[0]->PinType;
@@ -231,16 +231,16 @@ void UK2Node_LowEntry_MakeContainer::NotifyPinConnectionListChanged(UEdGraphPin*
 			}
 		}
 	}
-	else if(OutputPin->LinkedTo.Num() == 0)
+	else if (OutputPin->LinkedTo.Num() == 0)
 	{
 		// Return to wildcard if theres nothing in any of the input pins
 		TFunction<bool(TArray<UEdGraphPin*>&)> PinsInUse = [this](TArray<UEdGraphPin*>& PinsToConsider)
 		{
 			bool bPinInUse = false;
-			for(UEdGraphPin* CurrentPin : PinsToConsider)
+			for (UEdGraphPin* CurrentPin : PinsToConsider)
 			{
 				// Is there something in this pin?
-				if(CurrentPin->SubPins.Num() > 0 || !CurrentPin->DoesDefaultValueMatchAutogenerated())
+				if (CurrentPin->SubPins.Num() > 0 || !CurrentPin->DoesDefaultValueMatchAutogenerated())
 				{
 					bPinInUse = true;
 					break;
@@ -252,7 +252,7 @@ void UK2Node_LowEntry_MakeContainer::NotifyPinConnectionListChanged(UEdGraphPin*
 		const bool bResetOutputPinPrimary = ((NumKeyPinsWithLinks == 0) && !PinsInUse(KeyPins));
 		const bool bResetOutputPinSecondary = ((NumValuePinsWithLinks == 0) && !PinsInUse(ValuePins));
 
-		if(bResetOutputPinPrimary)
+		if (bResetOutputPinPrimary)
 		{
 			OutputPin->PinType.PinCategory = UEdGraphSchema_K2::PC_Wildcard;
 			OutputPin->PinType.PinSubCategory = NAME_None;
@@ -260,7 +260,7 @@ void UK2Node_LowEntry_MakeContainer::NotifyPinConnectionListChanged(UEdGraphPin*
 
 			bNotifyGraphChanged = true;
 		}
-		if(bResetOutputPinSecondary && ContainerType == EPinContainerType::Map)
+		if (bResetOutputPinSecondary && ContainerType == EPinContainerType::Map)
 		{
 			OutputPin->PinType.PinValueType.TerminalCategory = UEdGraphSchema_K2::PC_Wildcard;
 			OutputPin->PinType.PinValueType.TerminalSubCategory = NAME_None;
@@ -270,7 +270,7 @@ void UK2Node_LowEntry_MakeContainer::NotifyPinConnectionListChanged(UEdGraphPin*
 		}
 	}
 
-	if(bNotifyGraphChanged)
+	if (bNotifyGraphChanged)
 	{
 		PropagatePinType();
 		GetGraph()->NotifyGraphChanged();
@@ -281,13 +281,13 @@ void UK2Node_LowEntry_MakeContainer::PropagatePinType()
 {
 	const UEdGraphPin* OutputPin = GetOutputPin();
 
-	if(OutputPin)
+	if (OutputPin)
 	{
-		UClass const* CallingContext = nullptr;
-		if(UBlueprint const* Blueprint = GetBlueprint())
+		const UClass* CallingContext = nullptr;
+		if (const UBlueprint* Blueprint = GetBlueprint())
 		{
 			CallingContext = Blueprint->GeneratedClass;
-			if(CallingContext == nullptr)
+			if (CallingContext == nullptr)
 			{
 				CallingContext = Blueprint->ParentClass;
 			}
@@ -303,11 +303,11 @@ void UK2Node_LowEntry_MakeContainer::PropagatePinType()
 		{
 			// if we've reset to wild card or the parent pin no longer matches we need to collapse the split pin(s)
 			// otherwise everything should be OK:
-			if(CurrentPin->SubPins.Num() != 0 &&
+			if (CurrentPin->SubPins.Num() != 0 &&
 				(CurrentPin->PinType.PinCategory != PinType.PinCategory ||
 					CurrentPin->PinType.PinSubCategory != PinType.PinSubCategory ||
 					CurrentPin->PinType.PinSubCategoryObject != PinType.PinSubCategoryObject)
-				)
+			)
 			{
 				Schema->RecombinePin(CurrentPin->SubPins[0]);
 			}
@@ -317,25 +317,25 @@ void UK2Node_LowEntry_MakeContainer::PropagatePinType()
 			CurrentPin->PinType.PinSubCategoryObject = PinType.PinSubCategoryObject;
 		};
 
-		for(UEdGraphPin* CurrentKeyPin : KeyPins)
+		for (UEdGraphPin* CurrentKeyPin : KeyPins)
 		{
 			PropagateToPin(CurrentKeyPin, OutputPin->PinType);
 		}
 
-		if(ValuePins.Num() > 0)
+		if (ValuePins.Num() > 0)
 		{
 			const FEdGraphPinType ValuePinType = FEdGraphPinType::GetPinTypeForTerminalType(OutputPin->PinType.PinValueType);
-			for(UEdGraphPin* CurrentValuePin : ValuePins)
+			for (UEdGraphPin* CurrentValuePin : ValuePins)
 			{
 				PropagateToPin(CurrentValuePin, ValuePinType);
 			}
 		}
 
-		for(UEdGraphPin* CurrentPin : Pins)
+		for (UEdGraphPin* CurrentPin : Pins)
 		{
-			if(CurrentPin && CurrentPin != OutputPin)
+			if (CurrentPin && CurrentPin != OutputPin)
 			{
-				if(CurrentPin->PinType.PinCategory == UEdGraphSchema_K2::PC_Wildcard || CurrentPin->GetDefaultAsString().IsEmpty() == true)
+				if (CurrentPin->PinType.PinCategory == UEdGraphSchema_K2::PC_Wildcard || CurrentPin->GetDefaultAsString().IsEmpty() == true)
 				{
 					// Only reset default value if there isn't one set or it is a wildcard. Otherwise this deletes data!
 					Schema->SetPinAutogeneratedDefaultValueBasedOnType(CurrentPin);
@@ -343,9 +343,9 @@ void UK2Node_LowEntry_MakeContainer::PropagatePinType()
 
 				// Verify that all previous connections to this pin are still valid with the new type
 				TArray<UEdGraphPin*> LinkedToCopy = CurrentPin->LinkedTo;
-				for(UEdGraphPin* ConnectedPin : LinkedToCopy)
+				for (UEdGraphPin* ConnectedPin : LinkedToCopy)
 				{
-					if(!Schema->ArePinsCompatible(CurrentPin, ConnectedPin, CallingContext))
+					if (!Schema->ArePinsCompatible(CurrentPin, ConnectedPin, CallingContext))
 					{
 						CurrentPin->BreakLinkTo(ConnectedPin);
 					}
@@ -353,9 +353,9 @@ void UK2Node_LowEntry_MakeContainer::PropagatePinType()
 			}
 		}
 		// If we have a valid graph we should refresh it now to reflect any changes we made
-		if(UEdGraphNode* OwningNode = OutputPin->GetOwningNode())
+		if (UEdGraphNode* OwningNode = OutputPin->GetOwningNode())
 		{
-			if(UEdGraph* Graph = OwningNode->GetGraph())
+			if (UEdGraph* Graph = OwningNode->GetGraph())
 			{
 				Graph->NotifyGraphChanged();
 			}
@@ -374,12 +374,12 @@ void UK2Node_LowEntry_MakeContainer::PostReconstructNode()
 	bool bFoundValue = !bMapContainer;
 
 	UEdGraphPin* OutputPin = GetOutputPin();
-	if(OutputPin->LinkedTo.Num() > 0)
+	if (OutputPin->LinkedTo.Num() > 0)
 	{
 		OutputPinType = OutputPin->LinkedTo[0]->PinType;
 		bFoundKey = true;
 
-		if(bMapContainer)
+		if (bMapContainer)
 		{
 			OutputPinValueType = OutputPin->LinkedTo[0]->PinType.PinValueType;
 			bFoundValue = true;
@@ -391,29 +391,29 @@ void UK2Node_LowEntry_MakeContainer::PostReconstructNode()
 		UEdGraphPin* CurrentTopParent = nullptr;
 
 		check(Pins[0] == OutputPin);
-		for(int32 PinIndex = 1; PinIndex < Pins.Num() && (!bFoundKey || !bFoundValue); ++PinIndex)
+		for (int32 PinIndex = 1; PinIndex < Pins.Num() && (!bFoundKey || !bFoundValue); ++PinIndex)
 		{
-			if(UEdGraphPin* CurrentPin = Pins[PinIndex])
+			if (UEdGraphPin* CurrentPin = Pins[PinIndex])
 			{
-				if(CurrentPin->ParentPin == nullptr)
+				if (CurrentPin->ParentPin == nullptr)
 				{
 					CurrentTopParent = CurrentPin;
-					if(bMapContainer)
+					if (bMapContainer)
 					{
 						bKeyPin = !bKeyPin;
 					}
 				}
 
-				if((bKeyPin && !bFoundKey) || (!bKeyPin && !bFoundValue))
+				if ((bKeyPin && !bFoundKey) || (!bKeyPin && !bFoundValue))
 				{
 					checkSlow((CurrentPin->ParentPin == nullptr) || (CurrentTopParent != nullptr));
-					if(CurrentPin->LinkedTo.Num() > 0)
+					if (CurrentPin->LinkedTo.Num() > 0)
 					{
 						// The pin is linked, use its type as the type for the key or value type as appropriate
 
 						// If this is a split pin, so we want to base the pin type on the parent rather than the linked to pin
 						const FEdGraphPinType& PinType = (CurrentPin->ParentPin ? CurrentTopParent->PinType : CurrentPin->LinkedTo[0]->PinType);
-						if(bKeyPin)
+						if (bKeyPin)
 						{
 							OutputPinType = PinType;
 							bFoundKey = true;
@@ -424,14 +424,14 @@ void UK2Node_LowEntry_MakeContainer::PostReconstructNode()
 							bFoundValue = true;
 						}
 					}
-					else if(!Pins[PinIndex]->DoesDefaultValueMatchAutogenerated())
+					else if (!Pins[PinIndex]->DoesDefaultValueMatchAutogenerated())
 					{
 						// The pin has user data in it, continue to use its type as the type for all pins.
 
 						// If this is a split pin, so we want to base the pin type on the parent rather than this pin
 						const FEdGraphPinType& PinType = (CurrentPin->ParentPin ? CurrentTopParent->PinType : CurrentPin->PinType);
 
-						if(bKeyPin)
+						if (bKeyPin)
 						{
 							OutputPinType = PinType;
 							bFoundKey = true;
@@ -447,7 +447,7 @@ void UK2Node_LowEntry_MakeContainer::PostReconstructNode()
 		}
 	}
 
-	if(bFoundKey)
+	if (bFoundKey)
 	{
 		OutputPin->PinType = MoveTemp(OutputPinType);
 	}
@@ -458,9 +458,9 @@ void UK2Node_LowEntry_MakeContainer::PostReconstructNode()
 		OutputPin->PinType.PinSubCategoryObject = nullptr;
 	}
 
-	if(bMapContainer)
+	if (bMapContainer)
 	{
-		if(bFoundValue)
+		if (bFoundValue)
 		{
 			OutputPin->PinType.PinValueType = MoveTemp(OutputPinValueType);
 		}
@@ -494,7 +494,7 @@ void UK2Node_LowEntry_MakeContainer::AddInputPin()
 	GetDefault<UEdGraphSchema_K2>()->SetPinAutogeneratedDefaultValueBasedOnType(Pin);
 
 	const bool bIsCompiling = GetBlueprint()->bBeingCompiled;
-	if(!bIsCompiling)
+	if (!bIsCompiling)
 	{
 		FBlueprintEditorUtils::MarkBlueprintAsStructurallyModified(GetBlueprint());
 	}
@@ -508,10 +508,10 @@ FName UK2Node_LowEntry_MakeContainer::GetPinName(const int32 PinIndex) const
 void UK2Node_LowEntry_MakeContainer::SyncPinNames()
 {
 	int32 CurrentNumParentPins = 0;
-	for(int32 PinIndex = 0; PinIndex < Pins.Num(); ++PinIndex)
+	for (int32 PinIndex = 0; PinIndex < Pins.Num(); ++PinIndex)
 	{
 		UEdGraphPin*& CurrentPin = Pins[PinIndex];
-		if(CurrentPin->Direction == EGPD_Input &&
+		if (CurrentPin->Direction == EGPD_Input &&
 			CurrentPin->ParentPin == nullptr)
 		{
 			const FName OldName = CurrentPin->PinName;
@@ -520,7 +520,7 @@ void UK2Node_LowEntry_MakeContainer::SyncPinNames()
 			CurrentPin->Modify();
 			CurrentPin->PinName = ElementName;
 
-			if(CurrentPin->SubPins.Num() > 0)
+			if (CurrentPin->SubPins.Num() > 0)
 			{
 				const FString OldNameStr = OldName.ToString();
 				const FString ElementNameStr = ElementName.ToString();
@@ -531,7 +531,7 @@ void UK2Node_LowEntry_MakeContainer::SyncPinNames()
 				OldFriendlyName.InsertAt(1, " ");
 				ElementFriendlyName.InsertAt(1, " ");
 
-				for(UEdGraphPin* SubPin : CurrentPin->SubPins)
+				for (UEdGraphPin* SubPin : CurrentPin->SubPins)
 				{
 					FString SubPinFriendlyName = SubPin->PinFriendlyName.ToString();
 					SubPinFriendlyName.ReplaceInline(*OldFriendlyName, *ElementFriendlyName);
@@ -556,27 +556,27 @@ void UK2Node_LowEntry_MakeContainer::RemoveInputPin(UEdGraphPin* Pin)
 
 	TFunction<void(UEdGraphPin*)> RemovePinLambda = [this, &RemovePinLambda](UEdGraphPin* PinToRemove)
 	{
-		for(int32 SubPinIndex = PinToRemove->SubPins.Num() - 1; SubPinIndex >= 0; --SubPinIndex)
+		for (int32 SubPinIndex = PinToRemove->SubPins.Num() - 1; SubPinIndex >= 0; --SubPinIndex)
 		{
 			RemovePinLambda(PinToRemove->SubPins[SubPinIndex]);
 		}
 
 		int32 PinRemovalIndex = INDEX_NONE;
-		if(Pins.Find(PinToRemove, PinRemovalIndex))
+		if (Pins.Find(PinToRemove, PinRemovalIndex))
 		{
 			Pins.RemoveAt(PinRemovalIndex);
 			PinToRemove->MarkAsGarbage();
 		}
 	};
 
-	if(ContainerType == EPinContainerType::Map)
+	if (ContainerType == EPinContainerType::Map)
 	{
 		TArray<UEdGraphPin*> KeyPins;
 		TArray<UEdGraphPin*> ValuePins;
 		GetKeyAndValuePins(KeyPins, ValuePins);
 
 		int32 PinIndex = INDEX_NONE;
-		if(ValuePins.Find(Pin, PinIndex))
+		if (ValuePins.Find(Pin, PinIndex))
 		{
 			RemovePinLambda(KeyPins[PinIndex]);
 		}
@@ -610,7 +610,7 @@ void UK2Node_LowEntry_MakeContainer::GetMenuActions(FBlueprintActionDatabaseRegi
 	// check to make sure that the registrar is looking for actions of this type
 	// (could be regenerating actions for a specific asset, and therefore the 
 	// registrar would only accept actions corresponding to that asset)
-	if(ActionRegistrar.IsOpenForRegistration(ActionKey))
+	if (ActionRegistrar.IsOpenForRegistration(ActionKey))
 	{
 		UBlueprintNodeSpawner* NodeSpawner = UBlueprintNodeSpawner::Create(GetClass());
 		check(NodeSpawner != nullptr);
@@ -621,19 +621,19 @@ void UK2Node_LowEntry_MakeContainer::GetMenuActions(FBlueprintActionDatabaseRegi
 
 bool UK2Node_LowEntry_MakeContainer::IsConnectionDisallowed(const UEdGraphPin* MyPin, const UEdGraphPin* OtherPin, FString& OutReason) const
 {
-	if(!ensure(OtherPin))
+	if (!ensure(OtherPin))
 	{
 		return true;
 	}
 
 	// if MyPin has a ParentPin then we are dealing with a split pin and we should evaluate it with default behavior
-	if(MyPin->ParentPin == nullptr && OtherPin->PinType.IsContainer() == true && MyPin->Direction == EGPD_Input)
+	if (MyPin->ParentPin == nullptr && OtherPin->PinType.IsContainer() == true && MyPin->Direction == EGPD_Input)
 	{
 		OutReason = NSLOCTEXT("K2Node", "MakeContainer_InputIsContainer", "Cannot make a container with an input of a container!").ToString();
 		return true;
 	}
 
-	if(UEdGraphSchema_K2::IsExecPin(*OtherPin))
+	if (UEdGraphSchema_K2::IsExecPin(*OtherPin))
 	{
 		OutReason = NSLOCTEXT("K2Node", "MakeContainer_InputIsExec", "Cannot make a container with an execution input!").ToString();
 		return true;
