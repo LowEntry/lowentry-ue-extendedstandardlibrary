@@ -1,14 +1,14 @@
 {
   "FileVersion": 3,
   "FriendlyName": "Low Entry - Extended Standard Library",
-  "Version": 77,
+  "Version": 78,
   "VersionName": "5.0.0 r0",
   "EngineVersion": "5.0.0",
   "CreatedBy": "Low Entry",
   "CreatedByURL": "https://lowentry.com",
   "MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/846c2ad08f164f45b0335ecebf85361e",
   "Description": "The Extended Standard Library plugin provides you with blueprints that add a lot of functionality and improvements to the blueprint scripting language.",
-  "Category": "Low Entry.Plugins",
+  "Category": "Low Entry",
   "EnabledByDefault": true,
   "Modules": [
     {

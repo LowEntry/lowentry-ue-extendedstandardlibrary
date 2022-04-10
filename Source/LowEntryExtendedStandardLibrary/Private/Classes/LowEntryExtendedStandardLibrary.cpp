@@ -54,7 +54,9 @@
 
 #include "Engine/GameViewportClient.h"
 #include "Engine/Engine.h"
+#include "Engine/LocalPlayer.h"
 #include "Widgets/SViewport.h"
+#include "Framework/Application/SlateApplication.h"
 
 
 ULowEntryExtendedStandardLibrary::ULowEntryExtendedStandardLibrary(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) { }
