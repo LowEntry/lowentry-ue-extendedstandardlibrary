@@ -320,14 +320,6 @@ public:
 	static int32 GetAndroidBuildVersion();
 
 	/**
-	* Returns true if this is an Android daydream application, returns false if it failed.
-	*
-	* This will always only ever work on Android devices, other systems will always return false.
-	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Android", Meta = (DisplayName = "Is Android Daydream Application", Keywords = "android system"))
-	static bool IsAndroidDaydreamApplication();
-
-	/**
 	* Returns the number of cores, returns -1 if it failed.
 	*
 	* This will always only ever work on Android devices, other systems will always return -1.

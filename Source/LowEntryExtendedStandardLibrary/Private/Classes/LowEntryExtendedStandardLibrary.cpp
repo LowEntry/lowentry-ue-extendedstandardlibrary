@@ -479,15 +479,6 @@ int32 ULowEntryExtendedStandardLibrary::GetAndroidBuildVersion()
 #endif
 }
 
-bool ULowEntryExtendedStandardLibrary::IsAndroidDaydreamApplication()
-{
-#if PLATFORM_ANDROID
-	return FAndroidMisc::IsDaydreamApplication();
-#else
-	return false;
-#endif
-}
-
 int32 ULowEntryExtendedStandardLibrary::GetAndroidNumberOfCores()
 {
 #if PLATFORM_ANDROID
