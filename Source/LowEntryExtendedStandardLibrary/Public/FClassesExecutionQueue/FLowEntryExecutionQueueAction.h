@@ -30,11 +30,15 @@ public:
 			Response.DoneIf(true);
 			return;
 		}
-		if (Queue->Next)
+		if (Queue->Next && (Queue->Count > 0))
 		{
 			Queue->Next = false;
 			Queue->DecreaseCount();
 			Response.TriggerLink(ExecutionFunction, OutputLink, CallbackTarget);
+			if (Queue->Count <= 0)
+			{
+				Response.DoneIf(true);
+			}
 		}
 	}
 
