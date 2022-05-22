@@ -1544,13 +1544,26 @@ public:
 	* Sorts a copy of the given array.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Float Array) (Copy)"))
-	static TArray<double> SortFloatArray(const TArray<double>& FloatArray, const bool Reversed = false);
+	static TArray<float> SortFloatArray(const TArray<float>& FloatArray, const bool Reversed = false);
 
 	/**
 	* Sorts the given array.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Float Array)"))
-	static void SortFloatArrayDirectly(UPARAM(ref) TArray<double>& FloatArray, const bool Reversed = false);
+	static void SortFloatArrayDirectly(UPARAM(ref) TArray<float>& FloatArray, const bool Reversed = false);
+
+
+	/**
+	* Sorts a copy of the given array.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Double Array) (Copy)", Keywords = "float"))
+	static TArray<double> SortDoubleArray(const TArray<double>& DoubleArray, const bool Reversed = false);
+
+	/**
+	* Sorts the given array.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Double Array)", Keywords = "float"))
+	static void SortDoubleArrayDirectly(UPARAM(ref) TArray<double>& DoubleArray, const bool Reversed = false);
 
 
 	/**

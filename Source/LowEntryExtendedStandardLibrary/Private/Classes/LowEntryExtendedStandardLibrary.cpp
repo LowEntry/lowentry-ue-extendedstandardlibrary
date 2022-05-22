@@ -2748,9 +2748,48 @@ void ULowEntryExtendedStandardLibrary::SortIntegerArrayDirectly(UPARAM(ref) TArr
 }
 
 
-TArray<double> ULowEntryExtendedStandardLibrary::SortFloatArray(const TArray<double>& FloatArray, const bool Reversed)
+TArray<float> ULowEntryExtendedStandardLibrary::SortFloatArray(const TArray<float>& FloatArray, const bool Reversed)
 {
-	TArray<double> Array = FloatArray;
+	TArray<float> Array = FloatArray;
+	if (!Reversed)
+	{
+		Array.Sort([](const float A, const float B)
+		{
+			return A < B;
+		});
+	}
+	else
+	{
+		Array.Sort([](const float A, const float B)
+		{
+			return A > B;
+		});
+	}
+	return Array;
+}
+
+void ULowEntryExtendedStandardLibrary::SortFloatArrayDirectly(UPARAM(ref) TArray<float>& FloatArray, const bool Reversed)
+{
+	if (!Reversed)
+	{
+		FloatArray.Sort([](const float A, const float B)
+		{
+			return A < B;
+		});
+	}
+	else
+	{
+		FloatArray.Sort([](const float A, const float B)
+		{
+			return A > B;
+		});
+	}
+}
+
+
+TArray<double> ULowEntryExtendedStandardLibrary::SortDoubleArray(const TArray<double>& DoubleArray, const bool Reversed)
+{
+	TArray<double> Array = DoubleArray;
 	if (!Reversed)
 	{
 		Array.Sort([](const double A, const double B)
@@ -2768,18 +2807,18 @@ TArray<double> ULowEntryExtendedStandardLibrary::SortFloatArray(const TArray<dou
 	return Array;
 }
 
-void ULowEntryExtendedStandardLibrary::SortFloatArrayDirectly(UPARAM(ref) TArray<double>& FloatArray, const bool Reversed)
+void ULowEntryExtendedStandardLibrary::SortDoubleArrayDirectly(UPARAM(ref) TArray<double>& DoubleArray, const bool Reversed)
 {
 	if (!Reversed)
 	{
-		FloatArray.Sort([](const double A, const double B)
+		DoubleArray.Sort([](const double A, const double B)
 		{
 			return A < B;
 		});
 	}
 	else
 	{
-		FloatArray.Sort([](const double A, const double B)
+		DoubleArray.Sort([](const double A, const double B)
 		{
 			return A > B;
 		});
