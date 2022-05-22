@@ -9,7 +9,8 @@ ULowEntryByteDataEntry::ULowEntryByteDataEntry(const FObjectInitializer& ObjectI
 	, IntegerValue(0)
 	, LongValue(0)
 	, FloatValue(0)
-	, BooleanValue(false) { }
+	, DoubleValue(0)
+	, BooleanValue(false) {}
 
 ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromByte(const uint8 Value)
 {
@@ -58,6 +59,12 @@ ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromFloat(const float Valu
 {
 	ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
 	Instance->SetFloat(Value);
+	return Instance;
+}
+ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromDouble(const double Value)
+{
+	ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
+	Instance->SetDouble(Value);
 	return Instance;
 }
 ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromDoubleBytes(ULowEntryDouble* Value)
@@ -128,6 +135,12 @@ ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromFloatArray(const TArra
 {
 	ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
 	Instance->SetFloatArray(Value);
+	return Instance;
+}
+ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromDoubleArray(const TArray<double>& Value)
+{
+	ULowEntryByteDataEntry* Instance = NewObject<ULowEntryByteDataEntry>();
+	Instance->SetDoubleArray(Value);
 	return Instance;
 }
 ULowEntryByteDataEntry* ULowEntryByteDataEntry::CreateFromDoubleBytesArray(const TArray<ULowEntryDouble*>& Value)
@@ -262,6 +275,20 @@ void ULowEntryByteDataEntry::SetFloat(const float Value)
 float ULowEntryByteDataEntry::GetFloat()
 {
 	return FloatValue;
+}
+
+bool ULowEntryByteDataEntry::IsDouble()
+{
+	return (Type == 16);
+}
+void ULowEntryByteDataEntry::SetDouble(const double Value)
+{
+	Type = 16;
+	DoubleValue = Value;
+}
+double ULowEntryByteDataEntry::GetDouble()
+{
+	return DoubleValue;
 }
 
 bool ULowEntryByteDataEntry::IsDoubleBytes()
@@ -419,6 +446,20 @@ void ULowEntryByteDataEntry::SetFloatArray(const TArray<float>& Value)
 TArray<float> ULowEntryByteDataEntry::GetFloatArray()
 {
 	return FloatArrayValue;
+}
+
+bool ULowEntryByteDataEntry::IsDoubleArray()
+{
+	return (Type == 116);
+}
+void ULowEntryByteDataEntry::SetDoubleArray(const TArray<double>& Value)
+{
+	Type = 116;
+	DoubleArrayValue = Value;
+}
+TArray<double> ULowEntryByteDataEntry::GetDoubleArray()
+{
+	return DoubleArrayValue;
 }
 
 bool ULowEntryByteDataEntry::IsDoubleBytesArray()

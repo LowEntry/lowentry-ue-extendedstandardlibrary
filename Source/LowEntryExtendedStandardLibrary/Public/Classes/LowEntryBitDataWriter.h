@@ -162,6 +162,12 @@ public:
 	void AddFloat(const float Value);
 
 	/**
+	* Adds a double.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Bit Data|Writer", Meta = (DisplayName = "Add Double"))
+	void AddDouble(const double Value);
+
+	/**
 	* Adds a double (bytes).
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Bit Data|Writer", Meta = (DisplayName = "Add Double (Bytes)"))
@@ -289,6 +295,12 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Bit Data|Writer", Meta = (DisplayName = "Add Float Array"))
 	void AddFloatArray(const TArray<float>& Value);
+
+	/**
+	* Adds a double array.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Bit Data|Writer", Meta = (DisplayName = "Add Double Array"))
+	void AddDoubleArray(const TArray<double>& Value);
 
 	/**
 	* Adds a double (bytes) array.

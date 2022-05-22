@@ -32,7 +32,7 @@ UK2Node_LowEntry_MergeBytesPure::UK2Node_LowEntry_MergeBytesPure(const FObjectIn
 class FKCHandler_LowEntry_MergeBytesPure : public FNodeHandlingFunctor
 {
 public:
-	explicit FKCHandler_LowEntry_MergeBytesPure(FKismetCompilerContext& InCompilerContext) : FNodeHandlingFunctor(InCompilerContext) { }
+	explicit FKCHandler_LowEntry_MergeBytesPure(FKismetCompilerContext& InCompilerContext) : FNodeHandlingFunctor(InCompilerContext) {}
 
 	virtual void RegisterNets(FKismetFunctionContext& Context, UEdGraphNode* Node) override
 	{

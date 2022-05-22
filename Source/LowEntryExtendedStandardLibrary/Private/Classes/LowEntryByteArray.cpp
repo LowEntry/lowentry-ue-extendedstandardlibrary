@@ -3,7 +3,7 @@
 #include "LowEntryByteArray.h"
 
 
-ULowEntryByteArray::ULowEntryByteArray(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) { }
+ULowEntryByteArray::ULowEntryByteArray(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {}
 
 ULowEntryByteArray* ULowEntryByteArray::CreateFromByteArray(const TArray<uint8>& Value)
 {

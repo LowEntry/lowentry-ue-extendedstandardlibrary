@@ -16,12 +16,12 @@ public:
 	FWeakObjectPtr CallbackTarget;
 
 	const int32 Ticks;
-	const float SecondsInterval;
+	const double SecondsInterval;
 
 	int32& Tick;
-	float CurrentSecondsInterval = 0;
+	double CurrentSecondsInterval = 0;
 
-	FLowEntryTickSeconds(const FLatentActionInfo& LatentInfo, const int32 Ticks0, const float SecondsInterval0, int32& Tick0)
+	FLowEntryTickSeconds(const FLatentActionInfo& LatentInfo, const int32 Ticks0, const double SecondsInterval0, int32& Tick0)
 		: ExecutionFunction(LatentInfo.ExecutionFunction)
 		, OutputLink(LatentInfo.Linkage)
 		, CallbackTarget(LatentInfo.CallbackTarget)

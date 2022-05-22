@@ -3,7 +3,7 @@
 #include "LowEntryExecutionQueue.h"
 
 
-ULowEntryExecutionQueue::ULowEntryExecutionQueue(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) { }
+ULowEntryExecutionQueue::ULowEntryExecutionQueue(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {}
 
 ULowEntryExecutionQueue* ULowEntryExecutionQueue::Create()
 {

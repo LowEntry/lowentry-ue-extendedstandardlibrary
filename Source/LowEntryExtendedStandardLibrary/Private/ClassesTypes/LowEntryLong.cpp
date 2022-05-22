@@ -122,12 +122,12 @@ bool ULowEntryLong::Integer_LessThan(const int32 Value)
 	return (GetLong() < Value);
 }
 
-bool ULowEntryLong::Float_GreaterThan(const float Value)
+bool ULowEntryLong::Float_GreaterThan(const double Value)
 {
 	return (GetLong() > Value);
 }
 
-bool ULowEntryLong::Float_LessThan(const float Value)
+bool ULowEntryLong::Float_LessThan(const double Value)
 {
 	return (GetLong() < Value);
 }

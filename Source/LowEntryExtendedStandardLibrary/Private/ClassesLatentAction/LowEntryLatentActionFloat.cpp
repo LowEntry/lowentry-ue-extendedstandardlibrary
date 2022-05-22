@@ -18,7 +18,7 @@ ULowEntryLatentActionFloat* ULowEntryLatentActionFloat::Create()
 }
 
 
-void ULowEntryLatentActionFloat::WaitTillDone(UObject* WorldContextObject, FLatentActionInfo LatentInfo, float& Result_)
+void ULowEntryLatentActionFloat::WaitTillDone(UObject* WorldContextObject, FLatentActionInfo LatentInfo, double& Result_)
 {
 	UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull);
 	if (World == nullptr)
@@ -51,7 +51,7 @@ void ULowEntryLatentActionFloat::LatentActionDone()
 	}
 }
 
-void ULowEntryLatentActionFloat::Done(float Result_)
+void ULowEntryLatentActionFloat::Done(double Result_)
 {
 	Result = Result_;
 	if (!Finished)
@@ -66,7 +66,7 @@ bool ULowEntryLatentActionFloat::IsDone()
 	return Finished;
 }
 
-void ULowEntryLatentActionFloat::GetResult(float& Result_)
+void ULowEntryLatentActionFloat::GetResult(double& Result_)
 {
 	Result_ = Result;
 }

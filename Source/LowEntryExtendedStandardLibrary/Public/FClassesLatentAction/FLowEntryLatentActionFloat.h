@@ -18,11 +18,11 @@ public:
 	FWeakObjectPtr CallbackTarget;
 
 	ULowEntryLatentActionFloat* LatentActionObject = nullptr;
-	float& Result;
+	double& Result;
 
 	bool Done = false;
 
-	FLowEntryLatentActionFloat(const FLatentActionInfo& LatentInfo, ULowEntryLatentActionFloat* LatentActionObject0, float& Result0)
+	FLowEntryLatentActionFloat(const FLatentActionInfo& LatentInfo, ULowEntryLatentActionFloat* LatentActionObject0, double& Result0)
 		: ExecutionFunction(LatentInfo.ExecutionFunction)
 		, OutputLink(LatentInfo.Linkage)
 		, CallbackTarget(LatentInfo.CallbackTarget)

@@ -8,7 +8,7 @@
 constexpr uint8 ULowEntryBitDataWriter::mask[9] = {static_cast<uint8>(0x00), static_cast<uint8>(0x01), static_cast<uint8>(0x03), static_cast<uint8>(0x07), static_cast<uint8>(0x0F), static_cast<uint8>(0x1F), static_cast<uint8>(0x3F), static_cast<uint8>(0x7F), static_cast<uint8>(0xFF)};
 
 
-ULowEntryBitDataWriter::ULowEntryBitDataWriter(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) { }
+ULowEntryBitDataWriter::ULowEntryBitDataWriter(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {}
 
 ULowEntryBitDataWriter* ULowEntryBitDataWriter::Create()
 {
@@ -74,6 +74,10 @@ ULowEntryBitDataWriter* ULowEntryBitDataWriter::CreateFromEntryArray(const TArra
 			{
 				Instance->AddFloat(Item->GetFloat());
 			}
+			else if (Item->IsDouble())
+			{
+				Instance->AddDouble(Item->GetDouble());
+			}
 			else if (Item->IsDoubleBytes())
 			{
 				Instance->AddDoubleBytes(Item->GetDoubleBytes());
@@ -138,6 +142,10 @@ ULowEntryBitDataWriter* ULowEntryBitDataWriter::CreateFromEntryArray(const TArra
 			else if (Item->IsFloatArray())
 			{
 				Instance->AddFloatArray(Item->GetFloatArray());
+			}
+			else if (Item->IsDoubleArray())
+			{
+				Instance->AddDoubleArray(Item->GetDoubleArray());
 			}
 			else if (Item->IsDoubleBytesArray())
 			{
@@ -460,6 +468,10 @@ void ULowEntryBitDataWriter::AddFloat(const float Value)
 {
 	AddRawBytes(ULowEntryExtendedStandardLibrary::FloatToBytes(Value));
 }
+void ULowEntryBitDataWriter::AddDouble(const double Value)
+{
+	AddRawBytes(ULowEntryExtendedStandardLibrary::DoubleToBytes(Value));
+}
 void ULowEntryBitDataWriter::AddDoubleBytes(ULowEntryDouble* Value)
 {
 	if (Value != nullptr)
@@ -658,6 +670,20 @@ void ULowEntryBitDataWriter::AddFloatArray(const TArray<float>& Value)
 	for (float V : Value)
 	{
 		AddFloat(V);
+	}
+}
+void ULowEntryBitDataWriter::AddDoubleArray(const TArray<double>& Value)
+{
+	int64 Size = Value.Num();
+	if ((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
+	AddUinteger(Size);
+	for (double V : Value)
+	{
+		AddDouble(V);
 	}
 }
 void ULowEntryBitDataWriter::AddDoubleBytesArray(const TArray<ULowEntryDouble*>& Value)

@@ -21,7 +21,7 @@ public:
 		: ExecutionFunction(LatentInfo.ExecutionFunction)
 		, OutputLink(LatentInfo.Linkage)
 		, CallbackTarget(LatentInfo.CallbackTarget)
-		, Queue(Queue0) { }
+		, Queue(Queue0) {}
 
 	virtual void UpdateOperation(FLatentResponse& Response) override
 	{

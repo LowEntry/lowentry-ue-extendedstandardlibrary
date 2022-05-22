@@ -175,6 +175,12 @@ public:
 	float GetFloat();
 
 	/**
+	* Gets a double.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Bit Data|Reader", Meta = (DisplayName = "Get Double"))
+	double GetDouble();
+
+	/**
 	* Gets a double (bytes).
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Bit Data|Reader", Meta = (DisplayName = "Get Double (bytes)"))
@@ -278,6 +284,12 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Bit Data|Reader", Meta = (DisplayName = "Get Float Array"))
 	TArray<float> GetFloatArray();
+
+	/**
+	* Gets a double array.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Bit Data|Reader", Meta = (DisplayName = "Get Double Array"))
+	TArray<double> GetDoubleArray();
 
 	/**
 	* Gets a double (byte) array.

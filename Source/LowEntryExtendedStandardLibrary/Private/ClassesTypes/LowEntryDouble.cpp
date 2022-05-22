@@ -96,28 +96,28 @@ FString ULowEntryDouble::CastToString(const int32 MinFractionalDigits)
 }
 
 
-void ULowEntryDouble::Float_Add(const float Value)
+void ULowEntryDouble::Float_Add(const double Value)
 {
 	SetDouble(GetDouble() + Value);
 }
 
-void ULowEntryDouble::Float_Subtract(const float Value)
+void ULowEntryDouble::Float_Subtract(const double Value)
 {
 	SetDouble(GetDouble() - Value);
 }
 
 
-bool ULowEntryDouble::Float_Equals(const float Value)
+bool ULowEntryDouble::Float_Equals(const double Value)
 {
 	return (GetDouble() == Value);
 }
 
-bool ULowEntryDouble::Float_GreaterThan(const float Value)
+bool ULowEntryDouble::Float_GreaterThan(const double Value)
 {
 	return (GetDouble() > Value);
 }
 
-bool ULowEntryDouble::Float_LessThan(const float Value)
+bool ULowEntryDouble::Float_LessThan(const double Value)
 {
 	return (GetDouble() < Value);
 }

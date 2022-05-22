@@ -40,7 +40,16 @@ public:
 	void SetBytes(const TArray<uint8>& ByteArray, int32 Index = 0, int32 Length = 0x7FFFFFFF);
 
 
+	/**
+	* Returns the value.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Types|Double (bytes)", Meta = (DisplayName = "Get Value", Keywords = "double float"))
 	double GetDouble();
+
+	/**
+	* Sets the value.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Types|Double (bytes)", Meta = (DisplayName = "Set Value", Keywords = "double float"))
 	void SetDouble(const double Value);
 
 
@@ -67,32 +76,32 @@ public:
 	* Add a float to this double.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Types|Double (bytes)", Meta = (DisplayName = "Add (Float)"))
-	void Float_Add(const float Value);
+	void Float_Add(const double Value);
 
 	/**
 	* Subtracts a float from this double.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Types|Double (bytes)", Meta = (DisplayName = "Subtract (Float)"))
-	void Float_Subtract(const float Value);
+	void Float_Subtract(const double Value);
 
 
 	/**
 	* Returns true if the double is equal to the given integer.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Types|Double (bytes)", Meta = (DisplayName = "Equals (Float)"))
-	bool Float_Equals(const float Value);
+	bool Float_Equals(const double Value);
 
 	/**
 	* Returns true if the double is greater than the given float.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Types|Double (bytes)", Meta = (DisplayName = "Greater Than (Float)"))
-	bool Float_GreaterThan(const float Value);
+	bool Float_GreaterThan(const double Value);
 
 	/**
 	* Returns true if the double is less than the given float.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Types|Double (bytes)", Meta = (DisplayName = "Less Than (Float)"))
-	bool Float_LessThan(const float Value);
+	bool Float_LessThan(const double Value);
 
 	/**
 	* Returns true if the double is greater than the given integer.
@@ -139,13 +148,13 @@ public:
 	bool DoubleBytes_LessThan(ULowEntryDouble* Value);
 
 	/**
-	* Returns true if the double is greater than the given integer.
+	* Returns true if the double is greater than the given long.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Types|Double (bytes)", Meta = (DisplayName = "Greater Than (Long Bytes)"))
 	bool LongBytes_GreaterThan(ULowEntryLong* Value);
 
 	/**
-	* Returns true if the double is less than the given integer.
+	* Returns true if the double is less than the given long.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Types|Double (bytes)", Meta = (DisplayName = "Less Than (Long Bytes)"))
 	bool LongBytes_LessThan(ULowEntryLong* Value);

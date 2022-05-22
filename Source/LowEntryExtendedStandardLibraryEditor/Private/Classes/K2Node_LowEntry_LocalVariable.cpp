@@ -25,7 +25,7 @@
 class FKCHandler_LowEntry_LocalVariable : public FNodeHandlingFunctor
 {
 public:
-	explicit FKCHandler_LowEntry_LocalVariable(FKismetCompilerContext& InCompilerContext) : FNodeHandlingFunctor(InCompilerContext) { }
+	explicit FKCHandler_LowEntry_LocalVariable(FKismetCompilerContext& InCompilerContext) : FNodeHandlingFunctor(InCompilerContext) {}
 
 	virtual void RegisterNets(FKismetFunctionContext& Context, UEdGraphNode* Node) override
 	{

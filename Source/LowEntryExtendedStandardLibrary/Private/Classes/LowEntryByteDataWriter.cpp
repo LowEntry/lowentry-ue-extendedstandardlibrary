@@ -5,7 +5,7 @@
 #include "LowEntryExtendedStandardLibrary.h"
 
 
-ULowEntryByteDataWriter::ULowEntryByteDataWriter(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) { }
+ULowEntryByteDataWriter::ULowEntryByteDataWriter(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {}
 
 ULowEntryByteDataWriter* ULowEntryByteDataWriter::Create()
 {
@@ -51,6 +51,10 @@ ULowEntryByteDataWriter* ULowEntryByteDataWriter::CreateFromEntryArray(const TAr
 			{
 				Instance->AddFloat(Item->GetFloat());
 			}
+			else if (Item->IsDouble())
+			{
+				Instance->AddDouble(Item->GetDouble());
+			}
 			else if (Item->IsDoubleBytes())
 			{
 				Instance->AddDoubleBytes(Item->GetDoubleBytes());
@@ -95,6 +99,10 @@ ULowEntryByteDataWriter* ULowEntryByteDataWriter::CreateFromEntryArray(const TAr
 			else if (Item->IsFloatArray())
 			{
 				Instance->AddFloatArray(Item->GetFloatArray());
+			}
+			else if (Item->IsDoubleArray())
+			{
+				Instance->AddDoubleArray(Item->GetDoubleArray());
 			}
 			else if (Item->IsDoubleBytesArray())
 			{
@@ -246,6 +254,10 @@ void ULowEntryByteDataWriter::AddFloat(const float Value)
 {
 	AddRawBytes(ULowEntryExtendedStandardLibrary::FloatToBytes(Value));
 }
+void ULowEntryByteDataWriter::AddDouble(const double Value)
+{
+	AddRawBytes(ULowEntryExtendedStandardLibrary::DoubleToBytes(Value));
+}
 void ULowEntryByteDataWriter::AddDoubleBytes(ULowEntryDouble* Value)
 {
 	if (Value != nullptr)
@@ -381,6 +393,20 @@ void ULowEntryByteDataWriter::AddFloatArray(const TArray<float>& Value)
 	for (float V : Value)
 	{
 		AddFloat(V);
+	}
+}
+void ULowEntryByteDataWriter::AddDoubleArray(const TArray<double>& Value)
+{
+	int64 Size = Value.Num();
+	if ((Size <= 0) || (Size > 0x7fffffff))
+	{
+		AddUinteger(0);
+		return;
+	}
+	AddUinteger(Size);
+	for (double V : Value)
+	{
+		AddDouble(V);
 	}
 }
 void ULowEntryByteDataWriter::AddDoubleBytesArray(const TArray<ULowEntryDouble*>& Value)

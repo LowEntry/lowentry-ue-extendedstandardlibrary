@@ -25,6 +25,7 @@ public:
 	static ULowEntryByteDataEntry* CreateFromLongBytes(ULowEntryLong* Value);
 
 	static ULowEntryByteDataEntry* CreateFromFloat(const float Value);
+	static ULowEntryByteDataEntry* CreateFromDouble(const double Value);
 	static ULowEntryByteDataEntry* CreateFromDoubleBytes(ULowEntryDouble* Value);
 
 	static ULowEntryByteDataEntry* CreateFromBoolean(const bool Value);
@@ -40,6 +41,7 @@ public:
 	static ULowEntryByteDataEntry* CreateFromLongBytesArray(const TArray<ULowEntryLong*>& Value);
 
 	static ULowEntryByteDataEntry* CreateFromFloatArray(const TArray<float>& Value);
+	static ULowEntryByteDataEntry* CreateFromDoubleArray(const TArray<double>& Value);
 	static ULowEntryByteDataEntry* CreateFromDoubleBytesArray(const TArray<ULowEntryDouble*>& Value);
 
 	static ULowEntryByteDataEntry* CreateFromBooleanArray(const TArray<bool>& Value);
@@ -63,6 +65,8 @@ public:
 	UPROPERTY()
 	float FloatValue;
 	UPROPERTY()
+	double DoubleValue;
+	UPROPERTY()
 	ULowEntryDouble* DoubleBytesValue = nullptr;
 
 	UPROPERTY()
@@ -82,6 +86,8 @@ public:
 
 	UPROPERTY()
 	TArray<float> FloatArrayValue;
+	UPROPERTY()
+	TArray<double> DoubleArrayValue;
 	UPROPERTY()
 	TArray<ULowEntryDouble*> DoubleBytesArrayValue;
 
@@ -124,6 +130,10 @@ public:
 	bool IsFloat();
 	void SetFloat(const float Value);
 	float GetFloat();
+
+	bool IsDouble();
+	void SetDouble(const double Value);
+	double GetDouble();
 
 	bool IsDoubleBytes();
 	void SetDoubleBytes(ULowEntryDouble* Value);
@@ -171,6 +181,10 @@ public:
 	bool IsFloatArray();
 	void SetFloatArray(const TArray<float>& Value);
 	TArray<float> GetFloatArray();
+
+	bool IsDoubleArray();
+	void SetDoubleArray(const TArray<double>& Value);
+	TArray<double> GetDoubleArray();
 
 	bool IsDoubleBytesArray();
 	void SetDoubleBytesArray(const TArray<ULowEntryDouble*>& Value);

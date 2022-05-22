@@ -107,13 +107,13 @@ public:
 	* Returns true if the long is greater than the given float.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Types|Long (bytes)", Meta = (DisplayName = "Greater Than (Float)"))
-	bool Float_GreaterThan(const float Value);
+	bool Float_GreaterThan(const double Value);
 
 	/**
 	* Returns true if the long is less than the given float.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Types|Long (bytes)", Meta = (DisplayName = "Less Than (Float)"))
-	bool Float_LessThan(const float Value);
+	bool Float_LessThan(const double Value);
 
 
 	/**
@@ -148,13 +148,13 @@ public:
 	bool LongBytes_LessThan(ULowEntryLong* Value);
 
 	/**
-	* Returns true if the long is greater than the given float.
+	* Returns true if the long is greater than the given double.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Types|Long (bytes)", Meta = (DisplayName = "Greater Than (Double Bytes)"))
 	bool DoubleBytes_GreaterThan(ULowEntryDouble* Value);
 
 	/**
-	* Returns true if the long is less than the given float.
+	* Returns true if the long is less than the given double.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Types|Long (bytes)", Meta = (DisplayName = "Less Than (Double Bytes)"))
 	bool DoubleBytes_LessThan(ULowEntryDouble* Value);

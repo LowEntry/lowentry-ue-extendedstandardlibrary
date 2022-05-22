@@ -59,7 +59,7 @@
 #include "Framework/Application/SlateApplication.h"
 
 
-ULowEntryExtendedStandardLibrary::ULowEntryExtendedStandardLibrary(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) { }
+ULowEntryExtendedStandardLibrary::ULowEntryExtendedStandardLibrary(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {}
 
 
 void ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(UObject* WorldContextObject, const FString& InString, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor)
@@ -373,7 +373,7 @@ void ULowEntryExtendedStandardLibrary::GetBatteryCharge(int32& Percentage, bool&
 #endif
 }
 
-void ULowEntryExtendedStandardLibrary::GetBatteryTemperature(float& Celsius, bool& Success)
+void ULowEntryExtendedStandardLibrary::GetBatteryTemperature(double& Celsius, bool& Success)
 {
 #if PLATFORM_ANDROID
 	Success = true;
@@ -386,7 +386,7 @@ void ULowEntryExtendedStandardLibrary::GetBatteryTemperature(float& Celsius, boo
 }
 
 
-void ULowEntryExtendedStandardLibrary::GetCurrentVolumePercentage(float& Percentage, bool& Success)
+void ULowEntryExtendedStandardLibrary::GetCurrentVolumePercentage(double& Percentage, bool& Success)
 {
 #if PLATFORM_ANDROID
 	Success = true;
@@ -549,7 +549,7 @@ void ULowEntryExtendedStandardLibrary::SetGenericTeamId(AActor* Target, const ui
 }
 
 
-void ULowEntryExtendedStandardLibrary::SoundClass_SetVolume(USoundClass* SoundClass, const float Volume)
+void ULowEntryExtendedStandardLibrary::SoundClass_SetVolume(USoundClass* SoundClass, const double Volume)
 {
 	if (SoundClass == nullptr)
 	{
@@ -558,7 +558,7 @@ void ULowEntryExtendedStandardLibrary::SoundClass_SetVolume(USoundClass* SoundCl
 	SoundClass->Properties.Volume = Volume;
 }
 
-float ULowEntryExtendedStandardLibrary::SoundClass_GetVolume(USoundClass* SoundClass)
+double ULowEntryExtendedStandardLibrary::SoundClass_GetVolume(USoundClass* SoundClass)
 {
 	if (SoundClass == nullptr)
 	{
@@ -567,7 +567,7 @@ float ULowEntryExtendedStandardLibrary::SoundClass_GetVolume(USoundClass* SoundC
 	return SoundClass->Properties.Volume;
 }
 
-void ULowEntryExtendedStandardLibrary::SoundClass_SetPitch(USoundClass* SoundClass, const float Pitch)
+void ULowEntryExtendedStandardLibrary::SoundClass_SetPitch(USoundClass* SoundClass, const double Pitch)
 {
 	if (SoundClass == nullptr)
 	{
@@ -576,7 +576,7 @@ void ULowEntryExtendedStandardLibrary::SoundClass_SetPitch(USoundClass* SoundCla
 	SoundClass->Properties.Pitch = Pitch;
 }
 
-float ULowEntryExtendedStandardLibrary::SoundClass_GetPitch(USoundClass* SoundClass)
+double ULowEntryExtendedStandardLibrary::SoundClass_GetPitch(USoundClass* SoundClass)
 {
 	if (SoundClass == nullptr)
 	{
@@ -1334,7 +1334,7 @@ ULowEntryLong* ULowEntryExtendedStandardLibrary::ParseStringIntoLongBytes(const 
 
 TArray<uint8> ULowEntryExtendedStandardLibrary::FloatToBytes(const float Value)
 {
-	int32 IntValue = *((int32*)(&Value));
+	const int32 IntValue = *reinterpret_cast<const int32*>(&Value);
 	return IntegerToBytes(IntValue);
 }
 
@@ -1347,7 +1347,7 @@ float ULowEntryExtendedStandardLibrary::BytesToFloat(const TArray<uint8>& ByteAr
 
 TArray<uint8> ULowEntryExtendedStandardLibrary::DoubleToBytes(const double Value)
 {
-	int64 LongValue = *((int64*)(&Value));
+	const int64 LongValue = *reinterpret_cast<const int64*>(&Value);
 	return LongToBytes(LongValue);
 }
 
@@ -2099,23 +2099,23 @@ void ULowEntryExtendedStandardLibrary::TextureUpdateResource(UTexture* Texture)
 }
 
 
-void ULowEntryExtendedStandardLibrary::SceneCapture2D_GetFov(ASceneCapture2D* SceneCapture2D, float& Fov)
+void ULowEntryExtendedStandardLibrary::SceneCapture2D_GetFov(ASceneCapture2D* SceneCapture2D, double& Fov)
 {
 	Fov = SceneCapture2D->GetCaptureComponent2D()->FOVAngle;
 }
 
-void ULowEntryExtendedStandardLibrary::SceneCapture2D_SetFov(ASceneCapture2D* SceneCapture2D, const float Fov)
+void ULowEntryExtendedStandardLibrary::SceneCapture2D_SetFov(ASceneCapture2D* SceneCapture2D, const double Fov)
 {
 	SceneCapture2D->GetCaptureComponent2D()->FOVAngle = Fov;
 }
 
 
-void ULowEntryExtendedStandardLibrary::SceneCaptureComponent2D_GetFov(USceneCaptureComponent2D* SceneCaptureComponent2D, float& Fov)
+void ULowEntryExtendedStandardLibrary::SceneCaptureComponent2D_GetFov(USceneCaptureComponent2D* SceneCaptureComponent2D, double& Fov)
 {
 	Fov = SceneCaptureComponent2D->FOVAngle;
 }
 
-void ULowEntryExtendedStandardLibrary::SceneCaptureComponent2D_SetFov(USceneCaptureComponent2D* SceneCaptureComponent2D, const float Fov)
+void ULowEntryExtendedStandardLibrary::SceneCaptureComponent2D_SetFov(USceneCaptureComponent2D* SceneCaptureComponent2D, const double Fov)
 {
 	SceneCaptureComponent2D->FOVAngle = Fov;
 }
@@ -2375,22 +2375,22 @@ bool ULowEntryExtendedStandardLibrary::GreaterEqualStringString(const FString& A
 }
 
 
-bool ULowEntryExtendedStandardLibrary::LessIntegerFloat(const int32 A, const float B)
+bool ULowEntryExtendedStandardLibrary::LessIntegerFloat(const int32 A, const double B)
 {
 	return (A < B);
 }
 
-bool ULowEntryExtendedStandardLibrary::GreaterIntegerFloat(const int32 A, const float B)
+bool ULowEntryExtendedStandardLibrary::GreaterIntegerFloat(const int32 A, const double B)
 {
 	return (A > B);
 }
 
-bool ULowEntryExtendedStandardLibrary::LessEqualIntegerFloat(const int32 A, const float B)
+bool ULowEntryExtendedStandardLibrary::LessEqualIntegerFloat(const int32 A, const double B)
 {
 	return (A <= B);
 }
 
-bool ULowEntryExtendedStandardLibrary::GreaterEqualIntegerFloat(const int32 A, const float B)
+bool ULowEntryExtendedStandardLibrary::GreaterEqualIntegerFloat(const int32 A, const double B)
 {
 	return (A >= B);
 }
@@ -2417,43 +2417,43 @@ bool ULowEntryExtendedStandardLibrary::GreaterEqualIntegerByte(const int32 A, co
 }
 
 
-bool ULowEntryExtendedStandardLibrary::LessFloatInteger(const float A, const int32 B)
+bool ULowEntryExtendedStandardLibrary::LessFloatInteger(const double A, const int32 B)
 {
 	return (A < B);
 }
 
-bool ULowEntryExtendedStandardLibrary::GreaterFloatInteger(const float A, const int32 B)
+bool ULowEntryExtendedStandardLibrary::GreaterFloatInteger(const double A, const int32 B)
 {
 	return (A > B);
 }
 
-bool ULowEntryExtendedStandardLibrary::LessEqualFloatInteger(const float A, const int32 B)
+bool ULowEntryExtendedStandardLibrary::LessEqualFloatInteger(const double A, const int32 B)
 {
 	return (A <= B);
 }
 
-bool ULowEntryExtendedStandardLibrary::GreaterEqualFloatInteger(const float A, const int32 B)
+bool ULowEntryExtendedStandardLibrary::GreaterEqualFloatInteger(const double A, const int32 B)
 {
 	return (A >= B);
 }
 
 
-bool ULowEntryExtendedStandardLibrary::LessFloatByte(const float A, const uint8 B)
+bool ULowEntryExtendedStandardLibrary::LessFloatByte(const double A, const uint8 B)
 {
 	return (A < B);
 }
 
-bool ULowEntryExtendedStandardLibrary::GreaterFloatByte(const float A, const uint8 B)
+bool ULowEntryExtendedStandardLibrary::GreaterFloatByte(const double A, const uint8 B)
 {
 	return (A > B);
 }
 
-bool ULowEntryExtendedStandardLibrary::LessEqualFloatByte(const float A, const uint8 B)
+bool ULowEntryExtendedStandardLibrary::LessEqualFloatByte(const double A, const uint8 B)
 {
 	return (A <= B);
 }
 
-bool ULowEntryExtendedStandardLibrary::GreaterEqualFloatByte(const float A, const uint8 B)
+bool ULowEntryExtendedStandardLibrary::GreaterEqualFloatByte(const double A, const uint8 B)
 {
 	return (A >= B);
 }
@@ -2480,33 +2480,34 @@ bool ULowEntryExtendedStandardLibrary::GreaterEqualByteInteger(const uint8 A, co
 }
 
 
-bool ULowEntryExtendedStandardLibrary::LessByteFloat(const uint8 A, const float B)
+bool ULowEntryExtendedStandardLibrary::LessByteFloat(const uint8 A, const double B)
 {
 	return (A < B);
 }
 
-bool ULowEntryExtendedStandardLibrary::GreaterByteFloat(const uint8 A, const float B)
+bool ULowEntryExtendedStandardLibrary::GreaterByteFloat(const uint8 A, const double B)
 {
 	return (A > B);
 }
 
-bool ULowEntryExtendedStandardLibrary::LessEqualByteFloat(const uint8 A, const float B)
+bool ULowEntryExtendedStandardLibrary::LessEqualByteFloat(const uint8 A, const double B)
 {
 	return (A <= B);
 }
 
-bool ULowEntryExtendedStandardLibrary::GreaterEqualByteFloat(const uint8 A, const float B)
+bool ULowEntryExtendedStandardLibrary::GreaterEqualByteFloat(const uint8 A, const double B)
 {
 	return (A >= B);
 }
 
 
-float ULowEntryExtendedStandardLibrary::RoundDecimals(float Number, int32 Decimals)
+double ULowEntryExtendedStandardLibrary::RoundDecimals(double Number, int32 Decimals)
 {
 	if (Number == 0)
 	{
 		return Number;
 	}
+	Decimals = FMath::Min(18, Decimals);
 	if (Decimals > 0)
 	{
 		int64 Multiplier = 1;
@@ -2514,7 +2515,7 @@ float ULowEntryExtendedStandardLibrary::RoundDecimals(float Number, int32 Decima
 		{
 			Multiplier *= 10;
 		}
-		float MultiplierFloat = static_cast<float>(Multiplier);
+		double MultiplierFloat = static_cast<double>(Multiplier);
 		return FMath::RoundToFloat(Number * MultiplierFloat) / MultiplierFloat;
 	}
 	if (Decimals < 0)
@@ -2524,18 +2525,19 @@ float ULowEntryExtendedStandardLibrary::RoundDecimals(float Number, int32 Decima
 		{
 			Divider *= 10;
 		}
-		float DividerFloat = static_cast<float>(Divider);
+		double DividerFloat = static_cast<double>(Divider);
 		return FMath::RoundToFloat(Number / DividerFloat) * DividerFloat;
 	}
 	return FMath::RoundToFloat(Number);
 }
 
-float ULowEntryExtendedStandardLibrary::CeilDecimals(float Number, int32 Decimals)
+double ULowEntryExtendedStandardLibrary::CeilDecimals(double Number, int32 Decimals)
 {
 	if (Number == 0)
 	{
 		return Number;
 	}
+	Decimals = FMath::Min(18, Decimals);
 	if (Decimals > 0)
 	{
 		int64 Multiplier = 1;
@@ -2543,7 +2545,7 @@ float ULowEntryExtendedStandardLibrary::CeilDecimals(float Number, int32 Decimal
 		{
 			Multiplier *= 10;
 		}
-		float MultiplierFloat = static_cast<float>(Multiplier);
+		double MultiplierFloat = static_cast<double>(Multiplier);
 		return FMath::CeilToFloat(Number * MultiplierFloat) / MultiplierFloat;
 	}
 	if (Decimals < 0)
@@ -2553,18 +2555,19 @@ float ULowEntryExtendedStandardLibrary::CeilDecimals(float Number, int32 Decimal
 		{
 			Divider *= 10;
 		}
-		float DividerFloat = static_cast<float>(Divider);
+		double DividerFloat = static_cast<double>(Divider);
 		return FMath::CeilToFloat(Number / DividerFloat) * DividerFloat;
 	}
 	return FMath::CeilToFloat(Number);
 }
 
-float ULowEntryExtendedStandardLibrary::FloorDecimals(float Number, int32 Decimals)
+double ULowEntryExtendedStandardLibrary::FloorDecimals(double Number, int32 Decimals)
 {
 	if (Number == 0)
 	{
 		return Number;
 	}
+	Decimals = FMath::Min(18, Decimals);
 	if (Decimals > 0)
 	{
 		int64 Multiplier = 1;
@@ -2572,7 +2575,7 @@ float ULowEntryExtendedStandardLibrary::FloorDecimals(float Number, int32 Decima
 		{
 			Multiplier *= 10;
 		}
-		float MultiplierFloat = static_cast<float>(Multiplier);
+		double MultiplierFloat = static_cast<double>(Multiplier);
 		return FMath::FloorToFloat(Number * MultiplierFloat) / MultiplierFloat;
 	}
 	if (Decimals < 0)
@@ -2582,7 +2585,7 @@ float ULowEntryExtendedStandardLibrary::FloorDecimals(float Number, int32 Decima
 		{
 			Divider *= 10;
 		}
-		float DividerFloat = static_cast<float>(Divider);
+		double DividerFloat = static_cast<double>(Divider);
 		return FMath::FloorToFloat(Number / DividerFloat) * DividerFloat;
 	}
 	return FMath::FloorToFloat(Number);
@@ -2745,19 +2748,19 @@ void ULowEntryExtendedStandardLibrary::SortIntegerArrayDirectly(UPARAM(ref) TArr
 }
 
 
-TArray<float> ULowEntryExtendedStandardLibrary::SortFloatArray(const TArray<float>& FloatArray, const bool Reversed)
+TArray<double> ULowEntryExtendedStandardLibrary::SortFloatArray(const TArray<double>& FloatArray, const bool Reversed)
 {
-	TArray<float> Array = FloatArray;
+	TArray<double> Array = FloatArray;
 	if (!Reversed)
 	{
-		Array.Sort([](const float A, const float B)
+		Array.Sort([](const double A, const double B)
 		{
 			return A < B;
 		});
 	}
 	else
 	{
-		Array.Sort([](const float A, const float B)
+		Array.Sort([](const double A, const double B)
 		{
 			return A > B;
 		});
@@ -2765,18 +2768,18 @@ TArray<float> ULowEntryExtendedStandardLibrary::SortFloatArray(const TArray<floa
 	return Array;
 }
 
-void ULowEntryExtendedStandardLibrary::SortFloatArrayDirectly(UPARAM(ref) TArray<float>& FloatArray, const bool Reversed)
+void ULowEntryExtendedStandardLibrary::SortFloatArrayDirectly(UPARAM(ref) TArray<double>& FloatArray, const bool Reversed)
 {
 	if (!Reversed)
 	{
-		FloatArray.Sort([](const float A, const float B)
+		FloatArray.Sort([](const double A, const double B)
 		{
 			return A < B;
 		});
 	}
 	else
 	{
-		FloatArray.Sort([](const float A, const float B)
+		FloatArray.Sort([](const double A, const double B)
 		{
 			return A > B;
 		});
@@ -2948,7 +2951,7 @@ void ULowEntryExtendedStandardLibrary::SortObjectArrayDirectly(UPARAM(ref) TArra
 }
 
 
-void ULowEntryExtendedStandardLibrary::RandomDelay(UObject* WorldContextObject, float MinDuration, float MaxDuration, FLatentActionInfo LatentInfo)
+void ULowEntryExtendedStandardLibrary::RandomDelay(UObject* WorldContextObject, double MinDuration, double MaxDuration, FLatentActionInfo LatentInfo)
 {
 	if (UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
 	{
@@ -2960,7 +2963,7 @@ void ULowEntryExtendedStandardLibrary::RandomDelay(UObject* WorldContextObject, 
 	}
 }
 
-void ULowEntryExtendedStandardLibrary::RetriggerableRandomDelay(UObject* WorldContextObject, float MinDuration, float MaxDuration, FLatentActionInfo LatentInfo)
+void ULowEntryExtendedStandardLibrary::RetriggerableRandomDelay(UObject* WorldContextObject, double MinDuration, double MaxDuration, FLatentActionInfo LatentInfo)
 {
 	if (UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
 	{
@@ -3354,7 +3357,7 @@ void ULowEntryExtendedStandardLibrary::TickFrames(UObject* WorldContextObject, F
 	World->GetLatentActionManager().AddNewAction(LatentInfo.CallbackTarget, LatentInfo.UUID, new FLowEntryTickFrames(LatentInfo, Ticks, FramesInterval, Tick));
 }
 
-void ULowEntryExtendedStandardLibrary::TickSeconds(UObject* WorldContextObject, FLatentActionInfo LatentInfo, const int32 Ticks, const float SecondsInterval, int32& Tick)
+void ULowEntryExtendedStandardLibrary::TickSeconds(UObject* WorldContextObject, FLatentActionInfo LatentInfo, const int32 Ticks, const double SecondsInterval, int32& Tick)
 {
 	UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull);
 	if (World == nullptr)
@@ -3426,6 +3429,10 @@ ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFr
 {
 	return ULowEntryByteDataEntry::CreateFromFloat(Value);
 }
+ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromDouble(const double Value)
+{
+	return ULowEntryByteDataEntry::CreateFromDouble(Value);
+}
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromDoubleBytes(ULowEntryDouble* Value)
 {
 	return ULowEntryByteDataEntry::CreateFromDoubleBytes(Value);
@@ -3473,6 +3480,10 @@ ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFr
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromFloatArray(const TArray<float>& Value)
 {
 	return ULowEntryByteDataEntry::CreateFromFloatArray(Value);
+}
+ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromDoubleArray(const TArray<double>& Value)
+{
+	return ULowEntryByteDataEntry::CreateFromDoubleArray(Value);
 }
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromDoubleBytesArray(const TArray<ULowEntryDouble*>& Value)
 {
@@ -3570,6 +3581,10 @@ ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFrom
 {
 	return ULowEntryBitDataEntry::CreateFromFloat(Value);
 }
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromDouble(const double Value)
+{
+	return ULowEntryBitDataEntry::CreateFromDouble(Value);
+}
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromDoubleBytes(ULowEntryDouble* Value)
 {
 	return ULowEntryBitDataEntry::CreateFromDoubleBytes(Value);
@@ -3638,6 +3653,10 @@ ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFrom
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromFloatArray(const TArray<float>& Value)
 {
 	return ULowEntryBitDataEntry::CreateFromFloatArray(Value);
+}
+ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromDoubleArray(const TArray<double>& Value)
+{
+	return ULowEntryBitDataEntry::CreateFromDoubleArray(Value);
 }
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromDoubleBytesArray(const TArray<ULowEntryDouble*>& Value)
 {
@@ -3749,7 +3768,7 @@ void ULowEntryExtendedStandardLibrary::GetMousePosition(bool& Success, int32& X,
 }
 
 
-void ULowEntryExtendedStandardLibrary::SetMousePositionInPercentages(const float X, const float Y)
+void ULowEntryExtendedStandardLibrary::SetMousePositionInPercentages(const double X, const double Y)
 {
 	if (GEngine == nullptr)
 	{
@@ -3769,10 +3788,10 @@ void ULowEntryExtendedStandardLibrary::SetMousePositionInPercentages(const float
 	}
 
 	FIntPoint Size = Viewport->GetSizeXY();
-	Viewport->SetMouse(FMath::RoundToInt(Size.X * FMath::Clamp(X, 0.0f, 1.0f)), FMath::RoundToInt(Size.Y * FMath::Clamp(Y, 0.0f, 1.0f)));
+	Viewport->SetMouse(FMath::RoundToInt(Size.X * FMath::Clamp(X, 0.0, 1.0)), FMath::RoundToInt(Size.Y * FMath::Clamp(Y, 0.0, 1.0)));
 }
 
-void ULowEntryExtendedStandardLibrary::GetMousePositionInPercentages(bool& Success, float& X, float& Y)
+void ULowEntryExtendedStandardLibrary::GetMousePositionInPercentages(bool& Success, double& X, double& Y)
 {
 	Success = false;
 	X = 0;
@@ -3813,8 +3832,8 @@ void ULowEntryExtendedStandardLibrary::GetMousePositionInPercentages(bool& Succe
 	}
 
 	Success = true;
-	X = MouseX / static_cast<float>(Size.X);
-	Y = MouseY / static_cast<float>(Size.Y);
+	X = MouseX / static_cast<double>(Size.X);
+	Y = MouseY / static_cast<double>(Size.Y);
 }
 
 
@@ -3982,7 +4001,7 @@ void ULowEntryExtendedStandardLibrary::GetWindowSize(bool& Success, int32& Width
 	Height = Size.Y;
 }
 
-void ULowEntryExtendedStandardLibrary::GetWindowPositionInPercentagesCentered(bool& Success, float& X, float& Y)
+void ULowEntryExtendedStandardLibrary::GetWindowPositionInPercentagesCentered(bool& Success, double& X, double& Y)
 {
 	Success = false;
 	X = 0;
@@ -4014,8 +4033,8 @@ void ULowEntryExtendedStandardLibrary::GetWindowPositionInPercentagesCentered(bo
 	FVector2D Position = Window->GetPositionInScreen();
 	FVector2D WindowSize = Window->GetSizeInScreen();
 
-	float NewScreenX = ((Position.X + (WindowSize.X / 2.0f)) - ScreenX) / ScreenWidth;
-	float NewScreenY = ((Position.Y + (WindowSize.Y / 2.0f)) - ScreenY) / ScreenHeight;
+	double NewScreenX = ((Position.X + (WindowSize.X / 2.0)) - ScreenX) / ScreenWidth;
+	double NewScreenY = ((Position.Y + (WindowSize.Y / 2.0)) - ScreenY) / ScreenHeight;
 
 	Success = true;
 	X = NewScreenX;
@@ -4042,7 +4061,7 @@ void ULowEntryExtendedStandardLibrary::SetWindowPosition(const int32 X, const in
 		return;
 	}
 
-	Window->MoveWindowTo(FVector2D(static_cast<float>(X), static_cast<float>(Y)));
+	Window->MoveWindowTo(FVector2D(X, Y));
 }
 
 void ULowEntryExtendedStandardLibrary::SetWindowSize(const int32 Width, const int32 Height)
@@ -4067,7 +4086,7 @@ void ULowEntryExtendedStandardLibrary::SetWindowSize(const int32 Width, const in
 	Window->Resize(FVector2D(Width, Height));
 }
 
-void ULowEntryExtendedStandardLibrary::SetWindowPositionInPercentagesCentered(const float X, const float Y)
+void ULowEntryExtendedStandardLibrary::SetWindowPositionInPercentagesCentered(const double X, const double Y)
 {
 	if (GEngine == nullptr)
 	{
@@ -4094,8 +4113,8 @@ void ULowEntryExtendedStandardLibrary::SetWindowPositionInPercentagesCentered(co
 
 	FVector2D WindowSize = Window->GetSizeInScreen();
 
-	float NewScreenX = ScreenX + (ScreenWidth * X) - (WindowSize.X / 2.0f);
-	float NewScreenY = ScreenY + (ScreenHeight * Y) - (WindowSize.Y / 2.0f);
+	double NewScreenX = ScreenX + (ScreenWidth * X) - (WindowSize.X / 2.0);
+	double NewScreenY = ScreenY + (ScreenHeight * Y) - (WindowSize.Y / 2.0);
 
 	Window->MoveWindowTo(FVector2D(NewScreenX, NewScreenY));
 }

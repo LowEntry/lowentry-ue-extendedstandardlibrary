@@ -3,7 +3,7 @@
 #include "LowEntryParsedHashcash.h"
 
 
-ULowEntryParsedHashcash::ULowEntryParsedHashcash(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) { }
+ULowEntryParsedHashcash::ULowEntryParsedHashcash(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {}
 
 ULowEntryParsedHashcash* ULowEntryParsedHashcash::Create(const bool Valid_, const FString& Resource_, const FDateTime& Date_, const int32 Bits_)
 {

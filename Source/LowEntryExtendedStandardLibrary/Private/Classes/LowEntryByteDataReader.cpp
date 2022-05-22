@@ -4,7 +4,7 @@
 #include "LowEntryExtendedStandardLibrary.h"
 
 
-ULowEntryByteDataReader::ULowEntryByteDataReader(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) { }
+ULowEntryByteDataReader::ULowEntryByteDataReader(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {}
 
 ULowEntryByteDataReader* ULowEntryByteDataReader::Create(const TArray<uint8>& Bytes, int32 Index, int32 Length)
 {
@@ -239,6 +239,16 @@ float ULowEntryByteDataReader::GetFloat()
 	return ULowEntryExtendedStandardLibrary::BytesToFloat(Bytes, Pos, 4);
 }
 
+double ULowEntryByteDataReader::GetDouble()
+{
+	int32 Pos = GetAndIncreasePosition(8);
+	if (Bytes.Num() <= Pos)
+	{
+		return 0;
+	}
+	return ULowEntryExtendedStandardLibrary::BytesToDouble(Bytes, Pos, 8);
+}
+
 ULowEntryDouble* ULowEntryByteDataReader::GetDoubleBytes()
 {
 	int32 Pos = GetAndIncreasePosition(8);
@@ -405,6 +415,23 @@ TArray<float> ULowEntryByteDataReader::GetFloatArray()
 	for (int32 i = 0; i < Length; i++)
 	{
 		Array[i] = GetFloat();
+	}
+	return Array;
+}
+
+TArray<double> ULowEntryByteDataReader::GetDoubleArray()
+{
+	int32 Length = GetUinteger();
+	Length = FMath::Min(Length, MaxElementsRemaining(8));
+	if (Length <= 0)
+	{
+		return TArray<double>();
+	}
+	TArray<double> Array;
+	Array.SetNum(Length);
+	for (int32 i = 0; i < Length; i++)
+	{
+		Array[i] = GetDouble();
 	}
 	return Array;
 }

@@ -22,7 +22,7 @@
 class FKCHandler_LowEntry_MakeCustomArray : public FNodeHandlingFunctor
 {
 public:
-	explicit FKCHandler_LowEntry_MakeCustomArray(FKismetCompilerContext& InCompilerContext) : FNodeHandlingFunctor(InCompilerContext) { }
+	explicit FKCHandler_LowEntry_MakeCustomArray(FKismetCompilerContext& InCompilerContext) : FNodeHandlingFunctor(InCompilerContext) {}
 
 	virtual void RegisterNets(FKismetFunctionContext& Context, UEdGraphNode* Node) override
 	{

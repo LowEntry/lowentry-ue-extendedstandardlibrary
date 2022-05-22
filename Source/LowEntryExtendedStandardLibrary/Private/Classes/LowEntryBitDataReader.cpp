@@ -7,7 +7,7 @@
 constexpr uint8 ULowEntryBitDataReader::mask[9] = {static_cast<uint8>(0x00), static_cast<uint8>(0x01), static_cast<uint8>(0x03), static_cast<uint8>(0x07), static_cast<uint8>(0x0F), static_cast<uint8>(0x1F), static_cast<uint8>(0x3F), static_cast<uint8>(0x7F), static_cast<uint8>(0xFF)};
 
 
-ULowEntryBitDataReader::ULowEntryBitDataReader(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) { }
+ULowEntryBitDataReader::ULowEntryBitDataReader(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {}
 
 ULowEntryBitDataReader* ULowEntryBitDataReader::Create(const TArray<uint8>& Bytes, int32 Index, int32 Length)
 {
@@ -646,6 +646,12 @@ float ULowEntryBitDataReader::GetFloat()
 	return *reinterpret_cast<float*>(&IntValue);
 }
 
+double ULowEntryBitDataReader::GetDouble()
+{
+	int64 LongValue = GetLong();
+	return *reinterpret_cast<double*>(&LongValue);
+}
+
 ULowEntryDouble* ULowEntryBitDataReader::GetDoubleBytes()
 {
 	TArray<uint8> Data;
@@ -979,6 +985,23 @@ TArray<float> ULowEntryBitDataReader::GetFloatArray()
 	for (int32 i = 0; i < Length; i++)
 	{
 		Array[i] = GetFloat();
+	}
+	return Array;
+}
+
+TArray<double> ULowEntryBitDataReader::GetDoubleArray()
+{
+	int32 Length = GetUinteger();
+	Length = FMath::Min(Length, MaxElementsRemaining(8));
+	if (Length <= 0)
+	{
+		return TArray<double>();
+	}
+	TArray<double> Array;
+	Array.SetNum(Length);
+	for (int32 i = 0; i < Length; i++)
+	{
+		Array[i] = GetDouble();
 	}
 	return Array;
 }

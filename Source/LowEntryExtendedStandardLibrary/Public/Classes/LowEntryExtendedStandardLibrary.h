@@ -231,7 +231,7 @@ public:
 	* Currently only works on Android devices.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Battery", Meta = (DisplayName = "Get Battery Temperature", Keywords = "degrees android"))
-	static void GetBatteryTemperature(float& Celsius, bool& Success);
+	static void GetBatteryTemperature(double& Celsius, bool& Success);
 
 
 	/**
@@ -242,7 +242,7 @@ public:
 	* Note: This blueprint is not used to retrieve or change the sound volume in-game, you will have to use Sound Classes for that.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Get System Volume (Percentages)", Keywords = "sound audio android current system"))
-	static void GetCurrentVolumePercentage(float& Percentage, bool& Success);
+	static void GetCurrentVolumePercentage(double& Percentage, bool& Success);
 
 
 	/**
@@ -381,25 +381,25 @@ public:
 	* Sets the volume of a Sound Class.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Sound Class", Meta = (DisplayName = "Set Volume"))
-	static void SoundClass_SetVolume(USoundClass* SoundClass, const float Volume);
+	static void SoundClass_SetVolume(USoundClass* SoundClass, const double Volume);
 
 	/**
 	* Returns the volume of a Sound Class.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Sound Class", Meta = (DisplayName = "Get Volume"))
-	static float SoundClass_GetVolume(USoundClass* SoundClass);
+	static double SoundClass_GetVolume(USoundClass* SoundClass);
 
 	/**
 	* Sets the pitch of a Sound Class.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Sound Class", Meta = (DisplayName = "Set Pitch"))
-	static void SoundClass_SetPitch(USoundClass* SoundClass, const float Pitch);
+	static void SoundClass_SetPitch(USoundClass* SoundClass, const double Pitch);
 
 	/**
 	* Returns the pitch of a Sound Class.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Sound Class", Meta = (DisplayName = "Get Pitch"))
-	static float SoundClass_GetPitch(USoundClass* SoundClass);
+	static double SoundClass_GetPitch(USoundClass* SoundClass);
 
 
 	/**
@@ -670,9 +670,22 @@ public:
 	static float BytesToFloat(const TArray<uint8>& ByteArray, int32 Index = 0, int32 Length = 0x7FFFFFFF);
 
 
+	/**
+	* Converts a double into a Byte Array (8 bytes).
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|To Bytes", Meta = (DisplayName = "Double To Bytes", Keywords = "byte array double"))
 	static TArray<uint8> DoubleToBytes(const double Value);
 
+	/**
+	* Converts a Byte Array into a double.
+	* 
+	* If there are more than 8 bytes given, it will only convert the first 8 bytes to a double.
+	* If there are less than 8 bytes given, it will prefix the bytes with 0 value bytes (so 01010101 01010101 01010101 turns into 00000000 00000000 00000000 00000000 00000000 01010101 01010101 01010101).
+	* If there are no bytes given, it will return 0.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Encoding|From Bytes", Meta = (DisplayName = "Bytes To Double", Keywords = "byte array double", AdvancedDisplay = "1"))
 	static double BytesToDouble(const TArray<uint8>& ByteArray, int32 Index = 0, int32 Length = 0x7FFFFFFF);
+
 
 	/**
 	* Converts a Byte Array into a double (bytes).
@@ -974,26 +987,26 @@ public:
 	* Returns the FOV of the given SceneCapture2D's SceneCaptureComponent2D.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Get FOV (SceneCapture2D)"))
-	static void SceneCapture2D_GetFov(ASceneCapture2D* SceneCapture2D, float& Fov);
+	static void SceneCapture2D_GetFov(ASceneCapture2D* SceneCapture2D, double& Fov);
 
 	/**
 	* Sets the FOV of the given SceneCapture2D's SceneCaptureComponent2D.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Set FOV (SceneCapture2D)"))
-	static void SceneCapture2D_SetFov(ASceneCapture2D* SceneCapture2D, const float Fov);
+	static void SceneCapture2D_SetFov(ASceneCapture2D* SceneCapture2D, const double Fov);
 
 
 	/**
 	* Returns the FOV of the given SceneCaptureComponent2D.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Get FOV (SceneCaptureComponent2D)"))
-	static void SceneCaptureComponent2D_GetFov(USceneCaptureComponent2D* SceneCaptureComponent2D, float& Fov);
+	static void SceneCaptureComponent2D_GetFov(USceneCaptureComponent2D* SceneCaptureComponent2D, double& Fov);
 
 	/**
 	* Sets the FOV of the given SceneCaptureComponent2D.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Set FOV (SceneCaptureComponent2D)"))
-	static void SceneCaptureComponent2D_SetFov(USceneCaptureComponent2D* SceneCaptureComponent2D, const float Fov);
+	static void SceneCaptureComponent2D_SetFov(USceneCaptureComponent2D* SceneCaptureComponent2D, const double Fov);
 
 
 	/**
@@ -1244,25 +1257,25 @@ public:
 	* Returns true if A is less than B (A < B)
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Integer < Float", CompactNodeTitle = "<"))
-	static bool LessIntegerFloat(const int32 A, const float B);
+	static bool LessIntegerFloat(const int32 A, const double B);
 
 	/**
 	* Returns true if A is greater than B (A > B)
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Integer > Float", CompactNodeTitle = ">"))
-	static bool GreaterIntegerFloat(const int32 A, const float B);
+	static bool GreaterIntegerFloat(const int32 A, const double B);
 
 	/**
 	* Returns true if A is less than or equal to B (A <= B)
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Integer <= Float", CompactNodeTitle = "<="))
-	static bool LessEqualIntegerFloat(const int32 A, const float B);
+	static bool LessEqualIntegerFloat(const int32 A, const double B);
 
 	/**
 	* Returns true if A is greater than or equal to B (A >= B)
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Integer >= Float", CompactNodeTitle = ">="))
-	static bool GreaterEqualIntegerFloat(const int32 A, const float B);
+	static bool GreaterEqualIntegerFloat(const int32 A, const double B);
 
 
 	/**
@@ -1294,50 +1307,50 @@ public:
 	* Returns true if A is less than B (A < B)
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Float < Integer", CompactNodeTitle = "<"))
-	static bool LessFloatInteger(const float A, const int32 B);
+	static bool LessFloatInteger(const double A, const int32 B);
 
 	/**
 	* Returns true if A is greater than B (A > B)
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Float > Integer", CompactNodeTitle = ">"))
-	static bool GreaterFloatInteger(const float A, const int32 B);
+	static bool GreaterFloatInteger(const double A, const int32 B);
 
 	/**
 	* Returns true if A is less than or equal to B (A <= B)
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Float <= Integer", CompactNodeTitle = "<="))
-	static bool LessEqualFloatInteger(const float A, const int32 B);
+	static bool LessEqualFloatInteger(const double A, const int32 B);
 
 	/**
 	* Returns true if A is greater than or equal to B (A >= B)
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Float >= Integer", CompactNodeTitle = ">="))
-	static bool GreaterEqualFloatInteger(const float A, const int32 B);
+	static bool GreaterEqualFloatInteger(const double A, const int32 B);
 
 
 	/**
 	* Returns true if A is less than B (A < B)
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Float < Byte", CompactNodeTitle = "<"))
-	static bool LessFloatByte(const float A, const uint8 B);
+	static bool LessFloatByte(const double A, const uint8 B);
 
 	/**
 	* Returns true if A is greater than B (A > B)
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Float > Byte", CompactNodeTitle = ">"))
-	static bool GreaterFloatByte(const float A, const uint8 B);
+	static bool GreaterFloatByte(const double A, const uint8 B);
 
 	/**
 	* Returns true if A is less than or equal to B (A <= B)
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Float <= Byte", CompactNodeTitle = "<="))
-	static bool LessEqualFloatByte(const float A, const uint8 B);
+	static bool LessEqualFloatByte(const double A, const uint8 B);
 
 	/**
 	* Returns true if A is greater than or equal to B (A >= B)
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Float >= Byte", CompactNodeTitle = ">="))
-	static bool GreaterEqualFloatByte(const float A, const uint8 B);
+	static bool GreaterEqualFloatByte(const double A, const uint8 B);
 
 
 	/**
@@ -1369,44 +1382,44 @@ public:
 	* Returns true if A is less than B (A < B)
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Byte < Float", CompactNodeTitle = "<"))
-	static bool LessByteFloat(const uint8 A, const float B);
+	static bool LessByteFloat(const uint8 A, const double B);
 
 	/**
 	* Returns true if A is greater than B (A > B)
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Byte > Float", CompactNodeTitle = ">"))
-	static bool GreaterByteFloat(const uint8 A, const float B);
+	static bool GreaterByteFloat(const uint8 A, const double B);
 
 	/**
 	* Returns true if A is less than or equal to B (A <= B)
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Byte <= Float", CompactNodeTitle = "<="))
-	static bool LessEqualByteFloat(const uint8 A, const float B);
+	static bool LessEqualByteFloat(const uint8 A, const double B);
 
 	/**
 	* Returns true if A is greater than or equal to B (A >= B)
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Byte >= Float", CompactNodeTitle = ">="))
-	static bool GreaterEqualByteFloat(const uint8 A, const float B);
+	static bool GreaterEqualByteFloat(const uint8 A, const double B);
 
 
 	/**
 	* Rounds to the given Decimals.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (DisplayName = "Round (With Decimals)"))
-	static float RoundDecimals(float Number, int32 Decimals);
+	static double RoundDecimals(double Number, int32 Decimals);
 
 	/**
 	* Ceil to the given Decimals.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (DisplayName = "Ceil (With Decimals)"))
-	static float CeilDecimals(float Number, int32 Decimals);
+	static double CeilDecimals(double Number, int32 Decimals);
 
 	/**
 	* Floor to the given Decimals.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (DisplayName = "Floor (With Decimals)"))
-	static float FloorDecimals(float Number, int32 Decimals);
+	static double FloorDecimals(double Number, int32 Decimals);
 
 
 	/**
@@ -1531,13 +1544,13 @@ public:
 	* Sorts a copy of the given array.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Float Array) (Copy)"))
-	static TArray<float> SortFloatArray(const TArray<float>& FloatArray, const bool Reversed = false);
+	static TArray<double> SortFloatArray(const TArray<double>& FloatArray, const bool Reversed = false);
 
 	/**
 	* Sorts the given array.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Float Array)"))
-	static void SortFloatArrayDirectly(UPARAM(ref) TArray<float>& FloatArray, const bool Reversed = false);
+	static void SortFloatArrayDirectly(UPARAM(ref) TArray<double>& FloatArray, const bool Reversed = false);
 
 
 	/**
@@ -1613,7 +1626,7 @@ public:
 	* @param LatentInfo 	The latent action.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Delay", meta = (DeprecatedFunction, DeprecationMessage = "Use a [Delay] with a [Random Float In Range] instead.", Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", MinDuration = "0.2", MaxDuration = "0.5"))
-	static void RandomDelay(UObject* WorldContextObject, float MinDuration, float MaxDuration, FLatentActionInfo LatentInfo);
+	static void RandomDelay(UObject* WorldContextObject, double MinDuration, double MaxDuration, FLatentActionInfo LatentInfo);
 
 	/**
 	* Perform a latent action with a retriggerable random delay (specified in seconds).  Calling again while it is counting down will reset the countdown to a new random Duration.
@@ -1624,7 +1637,7 @@ public:
 	* @param LatentInfo 	The latent action.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Delay", meta = (DeprecatedFunction, DeprecationMessage = "Use a [Retriggerable Delay] with a [Random Float In Range] instead.", Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", MinDuration = "0.2", MaxDuration = "0.5"))
-	static void RetriggerableRandomDelay(UObject* WorldContextObject, float MinDuration, float MaxDuration, FLatentActionInfo LatentInfo);
+	static void RetriggerableRandomDelay(UObject* WorldContextObject, double MinDuration, double MaxDuration, FLatentActionInfo LatentInfo);
 
 
 	/**
@@ -1774,7 +1787,7 @@ public:
 	* Ticks for x times, with x seconds interval between each tick.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", DisplayName = "Tick (Seconds Interval)", Keywords = "loop timer loop delay"))
-	static void TickSeconds(UObject* WorldContextObject, FLatentActionInfo LatentInfo, const int32 Ticks, const float SecondsInterval, int32& Tick);
+	static void TickSeconds(UObject* WorldContextObject, FLatentActionInfo LatentInfo, const int32 Ticks, const double SecondsInterval, int32& Tick);
 
 
 	/**
@@ -1871,6 +1884,12 @@ public:
 	static ULowEntryByteDataEntry* ByteDataEntry_CreateFromFloat(const float Value);
 
 	/**
+	* Creates a new Byte Data Entry with the value of a double.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Double"))
+	static ULowEntryByteDataEntry* ByteDataEntry_CreateFromDouble(const double Value);
+
+	/**
 	* Creates a new Byte Data Entry with the value of a double (bytes).
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Double (bytes)"))
@@ -1950,6 +1969,12 @@ public:
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Float Array"))
 	static ULowEntryByteDataEntry* ByteDataEntry_CreateFromFloatArray(const TArray<float>& Value);
+
+	/**
+	* Creates a new Byte Data Entry with the value of a double array.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Byte Data|Entry", Meta = (DisplayName = "Double Array"))
+	static ULowEntryByteDataEntry* ByteDataEntry_CreateFromDoubleArray(const TArray<double>& Value);
 
 	/**
 	* Creates a new Byte Data Entry with the value of a double (bytes) array.
@@ -2133,6 +2158,12 @@ public:
 	static ULowEntryBitDataEntry* BitDataEntry_CreateFromFloat(const float Value);
 
 	/**
+	* Creates a new Bit Data Entry with the value of a double.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Double"))
+	static ULowEntryBitDataEntry* BitDataEntry_CreateFromDouble(const double Value);
+
+	/**
 	* Creates a new Bit Data Entry with the value of a double (bytes).
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Double (bytes)"))
@@ -2264,6 +2295,12 @@ public:
 	static ULowEntryBitDataEntry* BitDataEntry_CreateFromFloatArray(const TArray<float>& Value);
 
 	/**
+	* Creates a new Bit Data Entry with the value of a double array.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Double Array"))
+	static ULowEntryBitDataEntry* BitDataEntry_CreateFromDoubleArray(const TArray<double>& Value);
+
+	/**
 	* Creates a new Bit Data Entry with the value of a double (bytes) array.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Bit Data|Entry", Meta = (DisplayName = "Double (bytes) Array"))
@@ -2334,7 +2371,7 @@ public:
 	* Y:  0.0 is top,  1.0 is bottom
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Mouse", Meta = (DisplayName = "Set Mouse Position (Percentages)"))
-	static void SetMousePositionInPercentages(const float X, const float Y);
+	static void SetMousePositionInPercentages(const double X, const double Y);
 
 	/**
 	* Returns the mouse position (relative to the viewport) in percentages, from 0.0 to 1.0.
@@ -2349,7 +2386,7 @@ public:
 	*  - the mouse is outside of the viewport
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Mouse", Meta = (DisplayName = "Get Mouse Position (Percentages)"))
-	static void GetMousePositionInPercentages(bool& Success, float& X, float& Y);
+	static void GetMousePositionInPercentages(bool& Success, double& X, double& Y);
 
 
 	/**
@@ -2416,11 +2453,11 @@ public:
 	*  - GameViewportClient's Window is null
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Get Window Position (Percentages)"))
-	static void GetWindowPositionInPercentagesCentered(bool& Success, float& X, float& Y);
+	static void GetWindowPositionInPercentagesCentered(bool& Success, double& X, double& Y);
 
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Get Window Position (Percentages)", DeprecatedFunction, DeprecationMessage = "Use GetWindowPositionInPercentagesCentered instead"))
 	// ReSharper disable once IdentifierTypo
-	static void GetWindowPositiomInPercentagesCentered(bool& Success, float& X, float& Y) { GetWindowPositionInPercentagesCentered(Success, X, Y); }
+	static void GetWindowPositiomInPercentagesCentered(bool& Success, double& X, double& Y) { GetWindowPositionInPercentagesCentered(Success, X, Y); }
 
 
 	/**
@@ -2441,11 +2478,11 @@ public:
 	* This will take the window size in account, meaning that X=0.5 and Y=0.5 will cause the window to be centered in the primary screen work area.
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Set Window Position (Percentages)"))
-	static void SetWindowPositionInPercentagesCentered(const float X, const float Y);
+	static void SetWindowPositionInPercentagesCentered(const double X, const double Y);
 
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Set Window Position (Percentages)", DeprecatedFunction, DeprecationMessage = "Use SetWindowPositionInPercentagesCentered instead"))
 	// ReSharper disable once IdentifierTypo
-	static void SetWindowPositiomInPercentagesCentered(const float X, const float Y) { SetWindowPositionInPercentagesCentered(X, Y); }
+	static void SetWindowPositiomInPercentagesCentered(const double X, const double Y) { SetWindowPositionInPercentagesCentered(X, Y); }
 
 
 	/**

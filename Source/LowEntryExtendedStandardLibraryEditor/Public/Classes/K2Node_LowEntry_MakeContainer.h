@@ -17,7 +17,7 @@ class FKCHandler_LowEntry_MakeContainer : public FNodeHandlingFunctor
 public:
 	FKCHandler_LowEntry_MakeContainer(FKismetCompilerContext& InCompilerContext)
 		: FNodeHandlingFunctor(InCompilerContext)
-		, CompiledStatementType(KCST_Nop) { }
+		, CompiledStatementType(KCST_Nop) {}
 
 	virtual void RegisterNets(FKismetFunctionContext& Context, UEdGraphNode* Node) override;
 	virtual void Compile(FKismetFunctionContext& Context, UEdGraphNode* Node) override;
