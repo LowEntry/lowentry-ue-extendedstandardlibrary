@@ -164,8 +164,12 @@ bool ULowEntryExtendedStandardLibrary::WithEditor()
 
 bool ULowEntryExtendedStandardLibrary::Html5Platform()
 {
-#if false/*PLATFORM_HTML5*/
+#ifdef PLATFORM_HTML5
+#if PLATFORM_HTML5
 	return true;
+#else
+	return false;
+#endif
 #else
 	return false;
 #endif
@@ -252,8 +256,12 @@ bool ULowEntryExtendedStandardLibrary::MacPlatform()
 
 bool ULowEntryExtendedStandardLibrary::Ps4Platform()
 {
+#ifdef PLATFORM_PS4
 #if PLATFORM_PS4
 	return true;
+#else
+	return false;
+#endif
 #else
 	return false;
 #endif
@@ -261,8 +269,12 @@ bool ULowEntryExtendedStandardLibrary::Ps4Platform()
 
 bool ULowEntryExtendedStandardLibrary::XboxOnePlatform()
 {
+#ifdef PLATFORM_PS4
 #if PLATFORM_XBOXONE
 	return true;
+#else
+	return false;
+#endif
 #else
 	return false;
 #endif
@@ -270,8 +282,12 @@ bool ULowEntryExtendedStandardLibrary::XboxOnePlatform()
 
 bool ULowEntryExtendedStandardLibrary::SwitchPlatform()
 {
+#ifdef PLATFORM_SWITCH
 #if PLATFORM_SWITCH
 	return true;
+#else
+	return false;
+#endif
 #else
 	return false;
 #endif
@@ -4407,7 +4423,7 @@ void ULowEntryExtendedStandardLibrary::GetClassWithName(const FString& ClassName
 	}// load class <<
 
 	{// get class >>
-		UClass* FoundClass = FindObject<UClass>(ANY_PACKAGE, *ClassName);
+		UClass* FoundClass = FindFirstObject<UClass>(*ClassName);
 		if (FoundClass != nullptr)
 		{
 			Class_ = FoundClass;
@@ -4417,7 +4433,7 @@ void ULowEntryExtendedStandardLibrary::GetClassWithName(const FString& ClassName
 	}// get class <<
 
 	{// get class through redirector >>
-		UObjectRedirector* RenamedClassRedirector = FindObject<UObjectRedirector>(ANY_PACKAGE, *ClassName);
+		UObjectRedirector* RenamedClassRedirector = FindFirstObject<UObjectRedirector>(*ClassName);
 		if ((RenamedClassRedirector != nullptr) && (RenamedClassRedirector->DestinationObject != nullptr))
 		{
 			UClass* FoundClass = CastChecked<UClass>(RenamedClassRedirector->DestinationObject);
