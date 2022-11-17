@@ -164,12 +164,8 @@ bool ULowEntryExtendedStandardLibrary::WithEditor()
 
 bool ULowEntryExtendedStandardLibrary::Html5Platform()
 {
-#ifdef PLATFORM_HTML5
-#if PLATFORM_HTML5
+#if defined( PLATFORM_HTML5 ) && PLATFORM_HTML5
 	return true;
-#else
-	return false;
-#endif
 #else
 	return false;
 #endif
@@ -177,7 +173,7 @@ bool ULowEntryExtendedStandardLibrary::Html5Platform()
 
 bool ULowEntryExtendedStandardLibrary::WindowsPlatform()
 {
-#if PLATFORM_WINDOWS
+#if defined( PLATFORM_WINDOWS ) && PLATFORM_WINDOWS
 	return true;
 #else
 	return false;
@@ -186,7 +182,7 @@ bool ULowEntryExtendedStandardLibrary::WindowsPlatform()
 
 bool ULowEntryExtendedStandardLibrary::Windows32Platform()
 {
-#if PLATFORM_WINDOWS
+#if defined( PLATFORM_WINDOWS ) && PLATFORM_WINDOWS
 #ifdef _WIN64
 	return false;
 #else
@@ -199,7 +195,7 @@ bool ULowEntryExtendedStandardLibrary::Windows32Platform()
 
 bool ULowEntryExtendedStandardLibrary::Windows64Platform()
 {
-#if PLATFORM_WINDOWS
+#if defined( PLATFORM_WINDOWS ) && PLATFORM_WINDOWS
 #ifdef _WIN64
 	return true;
 #else
@@ -212,33 +208,25 @@ bool ULowEntryExtendedStandardLibrary::Windows64Platform()
 
 bool ULowEntryExtendedStandardLibrary::WindowsRtPlatform()
 {
-#ifdef PLATFORM_WINRT
-#if PLATFORM_WINRT
+#if defined( PLATFORM_WINRT ) && PLATFORM_WINRT
 		return true;
 #else
 		return false;
-#endif
-#else
-	return false;
 #endif
 }
 
 bool ULowEntryExtendedStandardLibrary::WindowsRtArmPlatform()
 {
-#ifdef PLATFORM_WINRT_ARM
-#if PLATFORM_WINRT_ARM
+#if defined( PLATFORM_WINRT_ARM ) && PLATFORM_WINRT_ARM
 		return true;
 #else
 		return false;
-#endif
-#else
-	return false;
 #endif
 }
 
 bool ULowEntryExtendedStandardLibrary::LinuxPlatform()
 {
-#if PLATFORM_LINUX
+#if defined( PLATFORM_LINUX ) && PLATFORM_LINUX
 	return true;
 #else
 	return false;
@@ -247,7 +235,7 @@ bool ULowEntryExtendedStandardLibrary::LinuxPlatform()
 
 bool ULowEntryExtendedStandardLibrary::MacPlatform()
 {
-#if PLATFORM_MAC
+#if defined( PLATFORM_MAC ) && PLATFORM_MAC
 	return true;
 #else
 	return false;
@@ -256,12 +244,8 @@ bool ULowEntryExtendedStandardLibrary::MacPlatform()
 
 bool ULowEntryExtendedStandardLibrary::Ps4Platform()
 {
-#ifdef PLATFORM_PS4
-#if PLATFORM_PS4
+#if defined( PLATFORM_PS4 ) && PLATFORM_PS4
 	return true;
-#else
-	return false;
-#endif
 #else
 	return false;
 #endif
@@ -269,12 +253,8 @@ bool ULowEntryExtendedStandardLibrary::Ps4Platform()
 
 bool ULowEntryExtendedStandardLibrary::XboxOnePlatform()
 {
-#ifdef PLATFORM_PS4
-#if PLATFORM_XBOXONE
+#if defined( PLATFORM_XBOXONE ) && PLATFORM_XBOXONE
 	return true;
-#else
-	return false;
-#endif
 #else
 	return false;
 #endif
@@ -282,12 +262,8 @@ bool ULowEntryExtendedStandardLibrary::XboxOnePlatform()
 
 bool ULowEntryExtendedStandardLibrary::SwitchPlatform()
 {
-#ifdef PLATFORM_SWITCH
-#if PLATFORM_SWITCH
+#if defined( PLATFORM_SWITCH ) && PLATFORM_SWITCH
 	return true;
-#else
-	return false;
-#endif
 #else
 	return false;
 #endif
@@ -295,7 +271,7 @@ bool ULowEntryExtendedStandardLibrary::SwitchPlatform()
 
 bool ULowEntryExtendedStandardLibrary::AndroidPlatform()
 {
-#if PLATFORM_ANDROID
+#if defined( PLATFORM_ANDROID ) && PLATFORM_ANDROID
 	return true;
 #else
 	return false;
@@ -304,7 +280,7 @@ bool ULowEntryExtendedStandardLibrary::AndroidPlatform()
 
 bool ULowEntryExtendedStandardLibrary::IosPlatform()
 {
-#if PLATFORM_IOS
+#if defined( PLATFORM_IOS ) && PLATFORM_IOS
 	return true;
 #else
 	return false;
@@ -313,7 +289,7 @@ bool ULowEntryExtendedStandardLibrary::IosPlatform()
 
 bool ULowEntryExtendedStandardLibrary::DesktopPlatform()
 {
-#if PLATFORM_DESKTOP
+#if defined( PLATFORM_DESKTOP ) && PLATFORM_DESKTOP
 	return true;
 #else
 	return false;
@@ -348,7 +324,7 @@ FString ULowEntryExtendedStandardLibrary::GetProjectVersion()
 
 void ULowEntryExtendedStandardLibrary::GetBatteryState(ELowEntryBatteryState& State, bool& Success)
 {
-#if PLATFORM_ANDROID
+#if defined( PLATFORM_ANDROID ) && PLATFORM_ANDROID
 	Success = true;
 	FAndroidMisc::FBatteryState Data = FAndroidMisc::GetBatteryState();
 	if(Data.State == FAndroidMisc::EBatteryState::BATTERY_STATE_CHARGING)
@@ -379,7 +355,7 @@ void ULowEntryExtendedStandardLibrary::GetBatteryState(ELowEntryBatteryState& St
 
 void ULowEntryExtendedStandardLibrary::GetBatteryCharge(int32& Percentage, bool& Success)
 {
-#if PLATFORM_ANDROID
+#if defined( PLATFORM_ANDROID ) && PLATFORM_ANDROID
 	Success = true;
 	FAndroidMisc::FBatteryState Data = FAndroidMisc::GetBatteryState();
 	Percentage = Data.Level;
@@ -391,7 +367,7 @@ void ULowEntryExtendedStandardLibrary::GetBatteryCharge(int32& Percentage, bool&
 
 void ULowEntryExtendedStandardLibrary::GetBatteryTemperature(double& Celsius, bool& Success)
 {
-#if PLATFORM_ANDROID
+#if defined( PLATFORM_ANDROID ) && PLATFORM_ANDROID
 	Success = true;
 	FAndroidMisc::FBatteryState Data = FAndroidMisc::GetBatteryState();
 	Celsius = Data.Temperature;
@@ -404,7 +380,7 @@ void ULowEntryExtendedStandardLibrary::GetBatteryTemperature(double& Celsius, bo
 
 void ULowEntryExtendedStandardLibrary::GetCurrentVolumePercentage(double& Percentage, bool& Success)
 {
-#if PLATFORM_ANDROID
+#if defined( PLATFORM_ANDROID ) && PLATFORM_ANDROID
 	Success = true;
 	Percentage = (FAndroidMisc::GetVolumeState(nullptr) / 15.0f);
 #else
@@ -416,7 +392,7 @@ void ULowEntryExtendedStandardLibrary::GetCurrentVolumePercentage(double& Percen
 
 void ULowEntryExtendedStandardLibrary::GetAndroidVolume(int& Volume)
 {
-#if PLATFORM_ANDROID
+#if defined( PLATFORM_ANDROID ) && PLATFORM_ANDROID
 	Volume = FAndroidMisc::GetVolumeState(nullptr);
 #else
 	Volume = 0;
@@ -425,7 +401,7 @@ void ULowEntryExtendedStandardLibrary::GetAndroidVolume(int& Volume)
 
 FString ULowEntryExtendedStandardLibrary::GetAndroidDeviceMake()
 {
-#if PLATFORM_ANDROID
+#if defined( PLATFORM_ANDROID ) && PLATFORM_ANDROID
 	return FAndroidMisc::GetDeviceMake();
 #else
 	return TEXT("");
@@ -434,7 +410,7 @@ FString ULowEntryExtendedStandardLibrary::GetAndroidDeviceMake()
 
 FString ULowEntryExtendedStandardLibrary::GetAndroidDeviceModel()
 {
-#if PLATFORM_ANDROID
+#if defined( PLATFORM_ANDROID ) && PLATFORM_ANDROID
 	return FAndroidMisc::GetDeviceModel();
 #else
 	return TEXT("");
@@ -443,7 +419,7 @@ FString ULowEntryExtendedStandardLibrary::GetAndroidDeviceModel()
 
 FString ULowEntryExtendedStandardLibrary::GetAndroidVersion()
 {
-#if PLATFORM_ANDROID
+#if defined( PLATFORM_ANDROID ) && PLATFORM_ANDROID
 	return FAndroidMisc::GetAndroidVersion();
 #else
 	return TEXT("");
@@ -452,7 +428,7 @@ FString ULowEntryExtendedStandardLibrary::GetAndroidVersion()
 
 FString ULowEntryExtendedStandardLibrary::GetAndroidOsLanguage()
 {
-#if PLATFORM_ANDROID
+#if defined( PLATFORM_ANDROID ) && PLATFORM_ANDROID
 	return FAndroidMisc::GetOSLanguage();
 #else
 	return TEXT("");
@@ -461,7 +437,7 @@ FString ULowEntryExtendedStandardLibrary::GetAndroidOsLanguage()
 
 FString ULowEntryExtendedStandardLibrary::GetAndroidDefaultLocale()
 {
-#if PLATFORM_ANDROID
+#if defined( PLATFORM_ANDROID ) && PLATFORM_ANDROID
 	return FAndroidMisc::GetDefaultLocale();
 #else
 	return TEXT("");
@@ -470,7 +446,7 @@ FString ULowEntryExtendedStandardLibrary::GetAndroidDefaultLocale()
 
 FString ULowEntryExtendedStandardLibrary::GetAndroidGpuFamily()
 {
-#if PLATFORM_ANDROID
+#if defined( PLATFORM_ANDROID ) && PLATFORM_ANDROID
 	return FAndroidMisc::GetGPUFamily();
 #else
 	return TEXT("");
@@ -479,7 +455,7 @@ FString ULowEntryExtendedStandardLibrary::GetAndroidGpuFamily()
 
 FString ULowEntryExtendedStandardLibrary::GetAndroidGlVersion()
 {
-#if PLATFORM_ANDROID
+#if defined( PLATFORM_ANDROID ) && PLATFORM_ANDROID
 	return FAndroidMisc::GetGLVersion();
 #else
 	return TEXT("");
@@ -488,7 +464,7 @@ FString ULowEntryExtendedStandardLibrary::GetAndroidGlVersion()
 
 int32 ULowEntryExtendedStandardLibrary::GetAndroidBuildVersion()
 {
-#if PLATFORM_ANDROID
+#if defined( PLATFORM_ANDROID ) && PLATFORM_ANDROID
 	return FAndroidMisc::GetAndroidBuildVersion();
 #else
 	return -1;
@@ -497,7 +473,7 @@ int32 ULowEntryExtendedStandardLibrary::GetAndroidBuildVersion()
 
 int32 ULowEntryExtendedStandardLibrary::GetAndroidNumberOfCores()
 {
-#if PLATFORM_ANDROID
+#if defined( PLATFORM_ANDROID ) && PLATFORM_ANDROID
 	return FAndroidMisc::NumberOfCores();
 #else
 	return -1;
@@ -506,7 +482,7 @@ int32 ULowEntryExtendedStandardLibrary::GetAndroidNumberOfCores()
 
 bool ULowEntryExtendedStandardLibrary::AreAndroidHeadphonesPluggedIn()
 {
-#if PLATFORM_ANDROID
+#if defined( PLATFORM_ANDROID ) && PLATFORM_ANDROID
 	return FAndroidMisc::AreHeadPhonesPluggedIn();
 #else
 	return false;
