@@ -186,7 +186,7 @@ bool ULowEntryExtendedStandardLibrary::Windows32Platform()
 #ifdef _WIN64
 	return false;
 #else
-		return true;
+	return true;
 #endif
 #else
 	return false;
@@ -199,7 +199,7 @@ bool ULowEntryExtendedStandardLibrary::Windows64Platform()
 #ifdef _WIN64
 	return true;
 #else
-		return false;
+	return false;
 #endif
 #else
 	return false;
@@ -209,18 +209,18 @@ bool ULowEntryExtendedStandardLibrary::Windows64Platform()
 bool ULowEntryExtendedStandardLibrary::WindowsRtPlatform()
 {
 #if defined( PLATFORM_WINRT ) && PLATFORM_WINRT
-		return true;
+	return true;
 #else
-		return false;
+	return false;
 #endif
 }
 
 bool ULowEntryExtendedStandardLibrary::WindowsRtArmPlatform()
 {
 #if defined( PLATFORM_WINRT_ARM ) && PLATFORM_WINRT_ARM
-		return true;
+	return true;
 #else
-		return false;
+	return false;
 #endif
 }
 
@@ -804,10 +804,8 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::StringToBytesUtf8(const FString&
 		return TArray<uint8>();
 	}
 
-	TArray<uint8> ByteArray;
-	FTCHARToUTF8 Src = FTCHARToUTF8(String.GetCharArray().GetData());
-	ByteArray.Append((uint8*)Src.Get(), Src.Length());
-	return ByteArray;
+	const FTCHARToUTF8 Src = FTCHARToUTF8(String.GetCharArray().GetData());
+	return TArray(reinterpret_cast<const uint8*>(Src.Get()), Src.Length());
 }
 
 FString ULowEntryExtendedStandardLibrary::BytesToStringUtf8(const TArray<uint8>& ByteArray, int32 Index, int32 Length)
@@ -831,10 +829,8 @@ FString ULowEntryExtendedStandardLibrary::BytesToStringUtf8(const TArray<uint8>&
 		return TEXT("");
 	}
 
-	FString String = TEXT("");
-	FUTF8ToTCHAR Src = FUTF8ToTCHAR(reinterpret_cast<const ANSICHAR*>(ByteArray.GetData() + Index), Length);
-	String.AppendChars(Src.Get(), Src.Length());
-	return String;
+	const FUTF8ToTCHAR Src = FUTF8ToTCHAR(reinterpret_cast<const ANSICHAR*>(ByteArray.GetData() + Index), Length);
+	return FString(Src.Get(), Src.Length());
 }
 
 
