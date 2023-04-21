@@ -829,8 +829,8 @@ FString ULowEntryExtendedStandardLibrary::BytesToStringUtf8(const TArray<uint8>&
 		return TEXT("");
 	}
 
-	const FUTF8ToTCHAR Src = FUTF8ToTCHAR(reinterpret_cast<const ANSICHAR*>(ByteArray.GetData() + Index), Length);
-	return FString(Src.Get(), Src.Length());
+	const FUTF8ToTCHAR Src(reinterpret_cast<const ANSICHAR*>(ByteArray.GetData() + Index), Length);
+	return FString(Src.Length(), Src.Get());
 }
 
 
