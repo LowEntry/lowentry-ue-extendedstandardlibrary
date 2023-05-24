@@ -49,14 +49,18 @@
 
 #include "GameMapsSettings.h"
 #include "IImageWrapperModule.h"
+#include "TextureResource.h"
 #include "Components/SceneCaptureComponent2D.h"
 #include "Engine/TextureRenderTarget2D.h"
 
 #include "Engine/GameViewportClient.h"
 #include "Engine/Engine.h"
 #include "Engine/LocalPlayer.h"
+#include "Engine/Texture2D.h"
 #include "Widgets/SViewport.h"
 #include "Framework/Application/SlateApplication.h"
+#include "Misc/ConfigCacheIni.h"
+#include "UObject/ObjectRedirector.h"
 
 
 ULowEntryExtendedStandardLibrary::ULowEntryExtendedStandardLibrary(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {}
@@ -505,7 +509,7 @@ void ULowEntryExtendedStandardLibrary::GetMaximumVolume(int32& Volume, bool& Suc
 
 void ULowEntryExtendedStandardLibrary::CreateObject(TSubclassOf<UObject> Class, UObject*& Object)
 {
-	Object = NewObject<UObject>(GetTransientPackage(), Class);
+	Object = NewObject<UObject>(reinterpret_cast<UObject*>(GetTransientPackage()), Class);
 }
 
 
