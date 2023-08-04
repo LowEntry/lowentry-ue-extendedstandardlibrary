@@ -1489,13 +1489,13 @@ public:
 	static void DateTime_ToString(const FDateTime& DateTime, FString& String, const FString& Format = TEXT("%Y.%m.%d-%H.%M.%S"));
 
 	/**
-	* Creates a FDateTime with the given time in milliseconds after January 1, 1970 00:00:00 GMT.
+	* Returns the number of milliseconds since January 1, 1970, 00:00:00 GMT represented by the given FDateTime.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Date Time", Meta = (DisplayName = "To Unix Timestamp", Keywords = "byte array long get create convert"))
 	static void DateTime_ToUnixTimestamp(const FDateTime& DateTime, ULowEntryLong*& Timestamp);
 
 	/**
-	* Returns the number of milliseconds since January 1, 1970, 00:00:00 GMT represented by the given FDateTime.
+	* Creates a FDateTime with the given time in milliseconds after January 1, 1970 00:00:00 GMT.
 	*/
 	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Date Time", Meta = (DisplayName = "Date Time from Unix Timestamp", Keywords = "byte array long get create convert"))
 	static void DateTime_FromUnixTimestamp(ULowEntryLong* Timestamp, FDateTime& DateTime);
