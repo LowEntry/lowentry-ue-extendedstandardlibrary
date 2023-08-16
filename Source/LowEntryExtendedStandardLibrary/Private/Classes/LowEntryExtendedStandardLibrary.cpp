@@ -2060,6 +2060,8 @@ void ULowEntryExtendedStandardLibrary::LoadVideo(UMediaSoundComponent* MediaSoun
 	Texture = nullptr;
 
 	UMediaPlayer* LoadPlayer = NewObject<UMediaPlayer>();
+	LoadPlayer->SetLooping(Loop);
+	LoadPlayer->PlayOnOpen = PlayOnOpen;
 	if (!LoadPlayer->OpenUrl(Url))
 	{
 		return;
@@ -2068,8 +2070,6 @@ void ULowEntryExtendedStandardLibrary::LoadVideo(UMediaSoundComponent* MediaSoun
 	Success = true;
 
 	Player = LoadPlayer;
-	Player->SetLooping(Loop);
-	Player->PlayOnOpen = PlayOnOpen;
 
 	Texture = NewObject<UMediaTexture>();
 	Texture->SetMediaPlayer(Player);
