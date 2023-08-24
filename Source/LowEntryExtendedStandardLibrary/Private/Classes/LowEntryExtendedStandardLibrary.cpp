@@ -1792,6 +1792,108 @@ TArray<FColor> ULowEntryExtendedStandardLibrary::GrayscalePixels(const TArray<FC
 }
 
 
+TArray<FColor> ULowEntryExtendedStandardLibrary::FlipPixelChannelsRG(const TArray<FColor>& Pixels)
+{
+	TArray<FColor> Result;
+	for (const FColor& Pixel : Pixels)
+	{
+		Result.Add(FColor(Pixel.G, Pixel.R, Pixel.B, Pixel.A));
+	}
+	return Result;
+}
+
+TArray<FColor> ULowEntryExtendedStandardLibrary::FlipPixelChannelsGB(const TArray<FColor>& Pixels)
+{
+	TArray<FColor> Result;
+	for (const FColor& Pixel : Pixels)
+	{
+		Result.Add(FColor(Pixel.R, Pixel.B, Pixel.G, Pixel.A));
+	}
+	return Result;
+}
+
+TArray<FColor> ULowEntryExtendedStandardLibrary::FlipPixelChannelsRB(const TArray<FColor>& Pixels)
+{
+	TArray<FColor> Result;
+	for (const FColor& Pixel : Pixels)
+	{
+		Result.Add(FColor(Pixel.B, Pixel.G, Pixel.R, Pixel.A));
+	}
+	return Result;
+}
+
+TArray<FColor> ULowEntryExtendedStandardLibrary::FlipPixelChannelsRA(const TArray<FColor>& Pixels)
+{
+	TArray<FColor> Result;
+	for (const FColor& Pixel : Pixels)
+	{
+		Result.Add(FColor(Pixel.A, Pixel.G, Pixel.B, Pixel.R));
+	}
+	return Result;
+}
+
+TArray<FColor> ULowEntryExtendedStandardLibrary::FlipPixelChannelsGA(const TArray<FColor>& Pixels)
+{
+	TArray<FColor> Result;
+	for (const FColor& Pixel : Pixels)
+	{
+		Result.Add(FColor(Pixel.R, Pixel.A, Pixel.B, Pixel.G));
+	}
+	return Result;
+}
+
+TArray<FColor> ULowEntryExtendedStandardLibrary::FlipPixelChannelsBA(const TArray<FColor>& Pixels)
+{
+	TArray<FColor> Result;
+	for (const FColor& Pixel : Pixels)
+	{
+		Result.Add(FColor(Pixel.R, Pixel.G, Pixel.A, Pixel.B));
+	}
+	return Result;
+}
+
+
+TArray<FColor> ULowEntryExtendedStandardLibrary::InvertPixelChannelR(const TArray<FColor>& Pixels)
+{
+	TArray<FColor> Result;
+	for (const FColor& Pixel : Pixels)
+	{
+		Result.Add(FColor(Pixel.R ^ 0xff, Pixel.G, Pixel.B, Pixel.A));
+	}
+	return Result;
+}
+
+TArray<FColor> ULowEntryExtendedStandardLibrary::InvertPixelChannelG(const TArray<FColor>& Pixels)
+{
+	TArray<FColor> Result;
+	for (const FColor& Pixel : Pixels)
+	{
+		Result.Add(FColor(Pixel.R, Pixel.G ^ 0xff, Pixel.B, Pixel.A));
+	}
+	return Result;
+}
+
+TArray<FColor> ULowEntryExtendedStandardLibrary::InvertPixelChannelB(const TArray<FColor>& Pixels)
+{
+	TArray<FColor> Result;
+	for (const FColor& Pixel : Pixels)
+	{
+		Result.Add(FColor(Pixel.R, Pixel.G, Pixel.B ^ 0xff, Pixel.A));
+	}
+	return Result;
+}
+
+TArray<FColor> ULowEntryExtendedStandardLibrary::InvertPixelChannelA(const TArray<FColor>& Pixels)
+{
+	TArray<FColor> Result;
+	for (const FColor& Pixel : Pixels)
+	{
+		Result.Add(FColor(Pixel.R, Pixel.G, Pixel.B, Pixel.A ^ 0xff));
+	}
+	return Result;
+}
+
+
 void ULowEntryExtendedStandardLibrary::Texture2DToPixels(UTexture2D* Texture2D, int32& Width, int32& Height, TArray<FColor>& Pixels)
 {
 	Width = 0;

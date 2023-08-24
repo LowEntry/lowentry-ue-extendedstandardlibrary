@@ -77,7 +77,6 @@ class LOWENTRYEXTENDEDSTANDARDLIBRARY_API ULowEntryExtendedStandardLibrary : pub
 public:
 	static void KismetSystemLibraryPrintString(UObject* WorldContextObject, const FString& InString, const float ScreenDurationTime, const bool bPrintToScreen, const bool bPrintToLog, const FLinearColor TextColor);
 
-
 public:
 	/**
 	* Returns true if this is a debug build (UE_BUILD_DEBUG), returns false otherwise.
@@ -807,7 +806,7 @@ public:
 	*
 	* The formula it uses:  brightness  =  21.25% red  +  71.54% green  +  7.21% blue
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Image|Other", Meta = (DisplayName = "Grayscale Pixel", Keywords = "to convert grey get"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Image|Other", Meta = (DisplayName = "Grayscale Pixel", Keywords = "to convert grey get color"))
 	static FColor GrayscalePixel(const FColor& Pixel);
 
 	/**
@@ -815,8 +814,70 @@ public:
 	*
 	* The formula it uses:  brightness  =  21.25% red  +  71.54% green  +  7.21% blue
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Image|Other", Meta = (DisplayName = "Grayscale Pixels", Keywords = "to convert grey get"))
-	static TArray<FColor> GrayscalePixels(const TArray<FColor>& Pixel);
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Image|Other", Meta = (DisplayName = "Grayscale Pixels", Keywords = "to convert grey get color"))
+	static TArray<FColor> GrayscalePixels(const TArray<FColor>& Pixels);
+
+
+	/**
+	* Flips the red and green channels of the given pixels.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Image|Other", Meta = (DisplayName = "Flip Pixel Channels (Red Green)", Keywords = "to convert make swap switch set color redgreen rg greenred gr"))
+	static TArray<FColor> FlipPixelChannelsRG(const TArray<FColor>& Pixels);
+
+	/**
+	* Flips the green and blue channels of the given pixels.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Image|Other", Meta = (DisplayName = "Flip Pixel Channels (Green Blue)", Keywords = "to convert make swap switch set color greenblue gb bluegreen bg"))
+	static TArray<FColor> FlipPixelChannelsGB(const TArray<FColor>& Pixels);
+
+	/**
+	* Flips the red and blue channels of the given pixels.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Image|Other", Meta = (DisplayName = "Flip Pixel Channels (Red Blue)", Keywords = "to convert make swap switch set color redblue rb bluered br"))
+	static TArray<FColor> FlipPixelChannelsRB(const TArray<FColor>& Pixels);
+
+	/**
+	* Flips the red and alpha channels of the given pixels.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Image|Other", Meta = (DisplayName = "Flip Pixel Channels (Red Alpha)", Keywords = "to convert make swap switch set color redalpha ra alphared ar"))
+	static TArray<FColor> FlipPixelChannelsRA(const TArray<FColor>& Pixels);
+
+	/**
+	* Flips the green and alpha channels of the given pixels.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Image|Other", Meta = (DisplayName = "Flip Pixel Channels (Green Alpha)", Keywords = "to convert make swap switch set color greenalpha ga alphagreen ag"))
+	static TArray<FColor> FlipPixelChannelsGA(const TArray<FColor>& Pixels);
+
+	/**
+	* Flips the blue and alpha channels of the given pixels.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Image|Other", Meta = (DisplayName = "Flip Pixel Channels (Blue Alpha)", Keywords = "to convert make swap switch set color bluealpha ba alphablue ab"))
+	static TArray<FColor> FlipPixelChannelsBA(const TArray<FColor>& Pixels);
+
+
+	/**
+	* Inverts the red channel of the given pixels.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Image|Other", Meta = (DisplayName = "Invert Pixel Channel (Red)", Keywords = "to convert make swap switch set color red"))
+	static TArray<FColor> InvertPixelChannelR(const TArray<FColor>& Pixels);
+
+	/**
+	* Inverts the green channel of the given pixels.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Image|Other", Meta = (DisplayName = "Invert Pixel Channel (Red)", Keywords = "to convert make swap switch set color green"))
+	static TArray<FColor> InvertPixelChannelG(const TArray<FColor>& Pixels);
+
+	/**
+	* Inverts the blue channel of the given pixels.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Image|Other", Meta = (DisplayName = "Invert Pixel Channel (Red)", Keywords = "to convert make swap switch set color blue"))
+	static TArray<FColor> InvertPixelChannelB(const TArray<FColor>& Pixels);
+
+	/**
+	* Inverts the alpha channel of the given pixels.
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Image|Other", Meta = (DisplayName = "Invert Pixel Channel (Red)", Keywords = "to convert make swap switch set color alpha alfa"))
+	static TArray<FColor> InvertPixelChannelA(const TArray<FColor>& Pixels);
 
 
 	/**
@@ -1066,6 +1127,7 @@ public:
 private:
 	static int32 HMAC_GetBlockSize(ELowEntryHmacAlgorithm Algorithm);
 	static TArray<uint8> HMAC_Hash(const TArray<uint8>& Array, ELowEntryHmacAlgorithm Algorithm);
+
 public:
 	/**
 	* Creates Hashcash hashes, each will have a variable amount of characters.
