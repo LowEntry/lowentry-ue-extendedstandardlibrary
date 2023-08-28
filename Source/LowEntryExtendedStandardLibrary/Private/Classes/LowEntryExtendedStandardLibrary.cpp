@@ -1558,72 +1558,10 @@ void ULowEntryExtendedStandardLibrary::Texture2DToBytes(UTexture2D* Texture2D, c
 		return;
 	}
 
-#if WITH_EDITORONLY_DATA
-	if (Texture2D->MipGenSettings != TMGS_NoMipmaps)
-	{
-		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in Texture2DToBytes, the given Texture2D has to have MipGenSettings set to NoMipmaps, otherwise the blueprint will always fail"));
-		return;
-	}
-#endif
-
-	bool ChangedTexture2D = false;
-	bool PreviousSRGB = Texture2D->SRGB;
-	TextureCompressionSettings PreviousCompressionSettings = Texture2D->CompressionSettings;
-
-	if ((PreviousSRGB != false) || (PreviousCompressionSettings != TC_VectorDisplacementmap))
-	{
-		ChangedTexture2D = true;
-		Texture2D->SRGB = false;
-		Texture2D->CompressionSettings = TC_VectorDisplacementmap;
-		Texture2D->UpdateResource();
-	}
-
-	FTexture2DMipMap& Mip0 = Texture2D->GetPlatformData()->Mips[0];
-	int32 Mip0Width = Mip0.SizeX;
-	int32 Mip0Height = Mip0.SizeY;
-
-	auto Mip0Data = &Mip0.BulkData;
-	if (Mip0Data == nullptr)
-	{
-		if (ChangedTexture2D)
-		{
-			Texture2D->SRGB = PreviousSRGB;
-			Texture2D->CompressionSettings = PreviousCompressionSettings;
-			Texture2D->UpdateResource();
-		}
-		return;
-	}
-
-	void* Mip0Pixels_ = Mip0Data->Lock(LOCK_READ_ONLY);
-	FColor* Mip0Pixels = static_cast<FColor*>(Mip0Pixels_);
-	if (Mip0Pixels == nullptr)
-	{
-		Mip0Data->Unlock();
-		if (ChangedTexture2D)
-		{
-			Texture2D->SRGB = PreviousSRGB;
-			Texture2D->CompressionSettings = PreviousCompressionSettings;
-			Texture2D->UpdateResource();
-		}
-		return;
-	}
-
+	int32 Mip0Width = 0;
+	int32 Mip0Height = 0;
 	TArray<FColor> Pixels;
-	int32 Total = Mip0Width * Mip0Height;
-	Pixels.SetNum(Total);
-	for (int32 i = 0; i < Total; i++)
-	{
-		Pixels[i] = Mip0Pixels[i];
-	}
-	Mip0Data->Unlock();
-
-	if (ChangedTexture2D)
-	{
-		Texture2D->SRGB = PreviousSRGB;
-		Texture2D->CompressionSettings = PreviousCompressionSettings;
-		Texture2D->UpdateResource();
-	}
-
+	Texture2DToPixels(Texture2D, Mip0Width, Mip0Height, Pixels);
 	PixelsToBytes(Mip0Width, Mip0Height, Pixels, ImageFormat, ByteArray, CompressionQuality);
 }
 
@@ -1633,15 +1571,6 @@ void ULowEntryExtendedStandardLibrary::BytesToPixels(const TArray<uint8>& ByteAr
 	Width = 0;
 	Height = 0;
 	Pixels = TArray<FColor>();
-
-	//UTexture2D* Texture2D = ULowEntryExtendedStandardLibrary::BytesToImage(ByteArray, ImageFormat, Index, Length);
-	//if(Texture2D == nullptr)
-	//{
-	//	return;
-	//}
-	//
-	//ULowEntryExtendedStandardLibrary::Texture2DToPixels(Texture2D, Width, Height, Pixels);
-	//return;
 
 	if (ByteArray.Num() <= 0)
 	{
@@ -1932,6 +1861,7 @@ void ULowEntryExtendedStandardLibrary::Texture2DToPixels(UTexture2D* Texture2D, 
 	auto Mip0Data = &Mip0.BulkData;
 	if (Mip0Data == nullptr)
 	{
+		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in ImageToPixels, Mips[0].BulkData couldn't be accessed (it was NULL)"));
 		if (ChangedTexture2D)
 		{
 			Texture2D->SRGB = PreviousSRGB;
@@ -1945,6 +1875,7 @@ void ULowEntryExtendedStandardLibrary::Texture2DToPixels(UTexture2D* Texture2D, 
 	FColor* Mip0Pixels = static_cast<FColor*>(Mip0Pixels_);
 	if (Mip0Pixels == nullptr)
 	{
+		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in ImageToPixels, Mips[0].BulkData couldn't be cast to FColor*"));
 		Mip0Data->Unlock();
 		if (ChangedTexture2D)
 		{
@@ -1959,9 +1890,39 @@ void ULowEntryExtendedStandardLibrary::Texture2DToPixels(UTexture2D* Texture2D, 
 	Height = Mip0Height;
 	int32 Total = Mip0Width * Mip0Height;
 	Pixels.SetNum(Total);
-	for (int32 i = 0; i < Total; i++)
+	EPixelFormat PixelFormat = Texture2D->GetPixelFormat();
+	if (PixelFormat == PF_B8G8R8A8)
 	{
-		Pixels[i] = Mip0Pixels[i];
+		for (int32 i = 0; i < Total; i++)
+		{
+			Pixels[i] = Mip0Pixels[i];
+		}
+	}
+	else if (PixelFormat == PF_R8G8B8A8)
+	{
+		for (int32 i = 0; i < Total; i++)
+		{
+			Pixels[i] = FColor(Mip0Pixels[i].B, Mip0Pixels[i].G, Mip0Pixels[i].R, Mip0Pixels[i].A);
+		}
+	}
+	else if (PixelFormat == PF_A8R8G8B8)
+	{
+		for (int32 i = 0; i < Total; i++)
+		{
+			Pixels[i] = FColor(Mip0Pixels[i].A, Mip0Pixels[i].B, Mip0Pixels[i].G, Mip0Pixels[i].R);
+		}
+	}
+	else
+	{
+		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in ImageToPixels, the given Texture2D has an unsupported PixelFormat (%s), the supported formats are: PF_R8G8B8A8, PF_B8G8R8A8, PF_A8R8G8B8"), *Texture2D->GetPixelFormatEnum()->GetNameByValue(PixelFormat).GetPlainNameString());
+		Mip0Data->Unlock();
+		if (ChangedTexture2D)
+		{
+			Texture2D->SRGB = PreviousSRGB;
+			Texture2D->CompressionSettings = PreviousCompressionSettings;
+			Texture2D->UpdateResource();
+		}
+		return;
 	}
 	Mip0Data->Unlock();
 
