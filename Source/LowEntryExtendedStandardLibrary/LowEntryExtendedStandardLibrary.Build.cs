@@ -42,6 +42,7 @@ public class LowEntryExtendedStandardLibrary : ModuleRules
 				"CoreUObject",
 				"Slate",
 				"SlateCore",
+				"StructUtils",
 				"ImageWrapper",
 				"Media",
 				"MediaAssets",

@@ -14,6 +14,7 @@
 #include "LowEntryLatentActionNone.h"
 #include "LowEntryLatentActionObject.h"
 #include "LowEntryLatentActionString.h"
+#include "LowEntryLatentActionStruct.h"
 
 #include "LowEntryParsedHashcash.h"
 
@@ -610,6 +611,11 @@ void ULowEntryExtendedStandardLibrary::LatentAction_Create_Object(ULowEntryLaten
 void ULowEntryExtendedStandardLibrary::LatentAction_Create_String(ULowEntryLatentActionString*& LatentAction)
 {
 	LatentAction = ULowEntryLatentActionString::Create();
+}
+
+void ULowEntryExtendedStandardLibrary::LatentAction_Create_Struct(ULowEntryLatentActionStruct*& LatentAction)
+{
+	LatentAction = ULowEntryLatentActionStruct::Create();
 }
 
 
@@ -3039,6 +3045,53 @@ void ULowEntryExtendedStandardLibrary::SortObjectArrayDirectly(UPARAM(ref) TArra
 		{
 			bool Result = false;
 			Comparator.Execute(&A, &B, Result);
+			return !Result;
+		});
+	}
+}
+
+
+TArray<FInstancedStruct> ULowEntryExtendedStandardLibrary::SortStructArray(const TArray<FInstancedStruct>& StructArray, FDelegateULowEntryExtendedStandardLibraryCompareStructs Comparator, const bool Reversed)
+{
+	TArray<FInstancedStruct> Array = StructArray;
+	if (!Reversed)
+	{
+		Array.Sort([Comparator](const FInstancedStruct& A, const FInstancedStruct& B)
+		{
+			bool Result = false;
+			Comparator.Execute(A, B, Result);
+			return Result;
+		});
+	}
+	else
+	{
+		Array.Sort([Comparator](const FInstancedStruct& A, const FInstancedStruct& B)
+		{
+			bool Result = false;
+			Comparator.Execute(A, B, Result);
+			return !Result;
+		});
+	}
+	return Array;
+}
+
+void ULowEntryExtendedStandardLibrary::SortStructArrayDirectly(UPARAM(ref) TArray<FInstancedStruct>& StructArray, FDelegateULowEntryExtendedStandardLibraryCompareStructs Comparator, const bool Reversed)
+{
+	if (!Reversed)
+	{
+		StructArray.Sort([Comparator](const FInstancedStruct& A, const FInstancedStruct& B)
+		{
+			bool Result = false;
+			Comparator.Execute(A, B, Result);
+			return Result;
+		});
+	}
+	else
+	{
+		StructArray.Sort([Comparator](const FInstancedStruct& A, const FInstancedStruct& B)
+		{
+			bool Result = false;
+			Comparator.Execute(A, B, Result);
 			return !Result;
 		});
 	}

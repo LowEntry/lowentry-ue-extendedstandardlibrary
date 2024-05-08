@@ -1,8 +1,8 @@
 {
   "FileVersion": 3,
   "FriendlyName": "Low Entry - Extended Standard Library",
-  "Version": 91,
-  "VersionName": "5.4.0 r0",
+  "Version": 92,
+  "VersionName": "5.4.0 r1",
   "EngineVersion": "5.4.0",
   "CreatedBy": "Low Entry",
   "CreatedByURL": "https://lowentry.com",
@@ -22,6 +22,12 @@
       "Type": "UncookedOnly",
       "LoadingPhase": "Default",
       "BlacklistPlatforms": []
+    }
+  ],
+  "Plugins": [
+    {
+      "Name": "StructUtils",
+      "Enabled": true
     }
   ],
   "CanContainContent": true
