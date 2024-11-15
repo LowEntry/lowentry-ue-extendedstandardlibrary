@@ -14,7 +14,7 @@
 
 #include "DelayAction.h"
 #include "Engine/LatentActionManager.h"
-#include "InstancedStruct.h"
+#include "StructUtils/InstancedStruct.h"
 
 #include "FLowEntryRegexMatch.h"
 

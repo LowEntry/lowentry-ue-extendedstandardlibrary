@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 
 #include "LatentActions.h"
-#include "InstancedStruct.h"
+#include "StructUtils/InstancedStruct.h"
 
 #include "LowEntryLatentActionStruct.h"
 

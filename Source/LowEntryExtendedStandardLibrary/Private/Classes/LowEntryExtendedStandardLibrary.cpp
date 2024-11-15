@@ -81,15 +81,17 @@ void ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(UObject* W
 			{
 				switch (World->GetNetMode())
 				{
-					case NM_Client:
-						Prefix = FString::Printf(TEXT("Client %d: "), GPlayInEditorID - 1);
-						break;
-					case NM_DedicatedServer:
-					case NM_ListenServer:
-						Prefix = FString::Printf(TEXT("Server: "));
-						break;
-					default:
-						break;
+				case NM_Client:
+					// GPlayInEditorID 0 is always the server, so 1 will be first client.
+					// You want to keep this logic in sync with GeneratePIEViewportWindowTitle and UpdatePlayInEditorWorldDebugString
+					Prefix = FString::Printf(TEXT("Client %d: "), UE::GetPlayInEditorID());
+					break;
+				case NM_DedicatedServer:
+				case NM_ListenServer:
+					Prefix = FString::Printf(TEXT("Server: "));
+					break;
+				default:
+					break;
 				}
 			}
 		}

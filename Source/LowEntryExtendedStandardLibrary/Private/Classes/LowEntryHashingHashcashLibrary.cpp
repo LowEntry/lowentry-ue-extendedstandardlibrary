@@ -57,7 +57,7 @@ FString ULowEntryHashingHashcashLibrary::hashCustomCreationDate(const FString& r
 
 	while (true)
 	{
-		buffer.SetNum(prefixpos, false);
+		buffer.SetNum(prefixpos, EAllowShrinking::No);
 
 		TArray<uint8> randomBytes;
 		ULowEntryExtendedStandardLibrary::GenerateRandomBytes(12, randomBytes);
