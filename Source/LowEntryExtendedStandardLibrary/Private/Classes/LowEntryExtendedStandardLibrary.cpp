@@ -334,19 +334,19 @@ void ULowEntryExtendedStandardLibrary::GetBatteryState(ELowEntryBatteryState& St
 #if defined( PLATFORM_ANDROID ) && PLATFORM_ANDROID
 	Success = true;
 	FAndroidMisc::FBatteryState Data = FAndroidMisc::GetBatteryState();
-	if(Data.State == FAndroidMisc::EBatteryState::BATTERY_STATE_CHARGING)
+	if (Data.State == FAndroidMisc::EBatteryState::BATTERY_STATE_CHARGING)
 	{
 		State = ELowEntryBatteryState::Charging;
 	}
-	else if(Data.State == FAndroidMisc::EBatteryState::BATTERY_STATE_DISCHARGING)
+	else if (Data.State == FAndroidMisc::EBatteryState::BATTERY_STATE_DISCHARGING)
 	{
 		State = ELowEntryBatteryState::Discharging;
 	}
-	else if(Data.State == FAndroidMisc::EBatteryState::BATTERY_STATE_FULL)
+	else if (Data.State == FAndroidMisc::EBatteryState::BATTERY_STATE_FULL)
 	{
 		State = ELowEntryBatteryState::Full;
 	}
-	else if(Data.State == FAndroidMisc::EBatteryState::BATTERY_STATE_NOT_CHARGING)
+	else if (Data.State == FAndroidMisc::EBatteryState::BATTERY_STATE_NOT_CHARGING)
 	{
 		State = ELowEntryBatteryState::NotCharging;
 	}
@@ -4567,12 +4567,6 @@ void ULowEntryExtendedStandardLibrary::GetClassWithName(const FString& ClassName
 			}
 		}
 	}// get class through redirector <<
-}
-
-
-FVector2D ULowEntryExtendedStandardLibrary::Divide_Vector2dVector2d(const FVector2D& A, const FVector2D& B)
-{
-	return A / B;
 }
 
 

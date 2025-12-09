@@ -1291,37 +1291,37 @@ public:
 	/**
 	* Returns the minimum value of the given values.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (DisplayName = "Min (String)", CompactNodeTitle = "MIN", CommutativeAssociativeBinaryOperator = "true"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (DeprecatedFunction, DeprecationMessage = "Use the built-in string comparison operators instead.", DisplayName = "Min (String)", CompactNodeTitle = "MIN", CommutativeAssociativeBinaryOperator = "true"))
 	static FString MinString(FString A, FString B);
 
 	/**
 	* Returns the maximum value of the given values.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (DisplayName = "Max (String)", CompactNodeTitle = "MAX", CommutativeAssociativeBinaryOperator = "true"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|String", Meta = (DeprecatedFunction, DeprecationMessage = "Use the built-in string comparison operators instead.", DisplayName = "Max (String)", CompactNodeTitle = "MAX", CommutativeAssociativeBinaryOperator = "true"))
 	static FString MaxString(FString A, FString B);
 
 	/**
 	* Returns true if A is less than B (A < B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "String < String", CompactNodeTitle = "<"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DeprecatedFunction, DeprecationMessage = "Use the built-in string comparison operators instead.", DisplayName = "String < String", CompactNodeTitle = "<"))
 	static bool LessStringString(const FString& A, const FString& B);
 
 	/**
 	* Returns true if A is greater than B (A > B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "String > String", CompactNodeTitle = ">"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DeprecatedFunction, DeprecationMessage = "Use the built-in string comparison operators instead.", DisplayName = "String > String", CompactNodeTitle = ">"))
 	static bool GreaterStringString(const FString& A, const FString& B);
 
 	/**
 	* Returns true if A is less than or equal to B (A <= B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "String <= String", CompactNodeTitle = "<="))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DeprecatedFunction, DeprecationMessage = "Use the built-in string comparison operators instead.", DisplayName = "String <= String", CompactNodeTitle = "<="))
 	static bool LessEqualStringString(const FString& A, const FString& B);
 
 	/**
 	* Returns true if A is greater than or equal to B (A >= B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "String >= String", CompactNodeTitle = ">="))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DeprecatedFunction, DeprecationMessage = "Use the built-in string comparison operators instead.", DisplayName = "String >= String", CompactNodeTitle = ">="))
 	static bool GreaterEqualStringString(const FString& A, const FString& B);
 
 
@@ -2565,10 +2565,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Get Window Position (Percentages)"))
 	static void GetWindowPositionInPercentagesCentered(bool& Success, double& X, double& Y);
 
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Get Window Position (Percentages)", DeprecatedFunction, DeprecationMessage = "Use GetWindowPositionInPercentagesCentered instead"))
-	// ReSharper disable once IdentifierTypo
-	static void GetWindowPositiomInPercentagesCentered(bool& Success, double& X, double& Y) { GetWindowPositionInPercentagesCentered(Success, X, Y); }
-
 
 	/**
 	* Sets the window position in screen space.
@@ -2589,10 +2585,6 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Set Window Position (Percentages)"))
 	static void SetWindowPositionInPercentagesCentered(const double X, const double Y);
-
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Set Window Position (Percentages)", DeprecatedFunction, DeprecationMessage = "Use SetWindowPositionInPercentagesCentered instead"))
-	// ReSharper disable once IdentifierTypo
-	static void SetWindowPositiomInPercentagesCentered(const double X, const double Y) { SetWindowPositionInPercentagesCentered(X, Y); }
 
 
 	/**
@@ -2682,13 +2674,13 @@ public:
 	/**
 	* Retrieves and returns the clipboard's content.
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Clipboard", Meta = (DisplayName = "Clipboard Get", Keywords = "paste retrieve obtain access"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Clipboard", Meta = (DeprecatedFunction, DeprecationMessage = "Use KismetSystemLibrary.GetClipboardContents instead.", DisplayName = "Clipboard Get", Keywords = "paste retrieve obtain access"))
 	static FString ClipboardGet();
 
 	/**
 	* Sets the given string as the clipboard's content.
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Clipboard", Meta = (DisplayName = "Clipboard Set", Keywords = "copy put place"))
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Clipboard", Meta = (DeprecatedFunction, DeprecationMessage = "Use KismetSystemLibrary.SetClipboardContents instead.", DisplayName = "Clipboard Set", Keywords = "copy put place"))
 	static void ClipboardSet(const FString& Value);
 
 
@@ -2706,13 +2698,6 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Get Class With Name", Keywords = "get retrieve create object path find by value"))
 	static void GetClassWithName(const FString& ClassName, UClass*& Class_, bool& Success);
-
-
-	/**
-	* Divides A by B.
-	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (DisplayName = "vector2d / vector2d", Keywords = "divide vector2d", CompactNodeTitle = "/"))
-	static FVector2D Divide_Vector2dVector2d(const FVector2D& A, const FVector2D& B);
 
 
 	/**
