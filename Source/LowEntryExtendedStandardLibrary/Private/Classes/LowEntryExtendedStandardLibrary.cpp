@@ -5005,7 +5005,7 @@ void ULowEntryExtendedStandardLibrary::SimpleKismetSystemLibraryPrintString(cons
 {
 #if !(UE_BUILD_SHIPPING || UE_BUILD_TEST)
 	float ScreenDurationTime = 5.0f;
-	FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0);
+	FLinearColor TextColor = FLinearColor(0.0f, 0.66f, 1.0f);
 
 	UE_LOG(LogBlueprintUserMessages, Log, TEXT("%s"), *InString);
 
