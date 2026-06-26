@@ -15,13 +15,13 @@
       "Name": "LowEntryExtendedStandardLibrary",
       "Type": "Runtime",
       "LoadingPhase": "PreDefault",
-      "BlacklistPlatforms": []
+      "PlatformDenyList": []
     },
     {
       "Name": "LowEntryExtendedStandardLibraryEditor",
       "Type": "UncookedOnly",
       "LoadingPhase": "Default",
-      "BlacklistPlatforms": []
+      "PlatformDenyList": []
     }
   ],
   "CanContainContent": true
