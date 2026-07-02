@@ -14,6 +14,7 @@
 #include "LowEntryLatentActionNone.h"
 #include "LowEntryLatentActionObject.h"
 #include "LowEntryLatentActionString.h"
+#include "LowEntryLatentActionStruct.h"
 
 #include "LowEntryParsedHashcash.h"
 
@@ -336,19 +337,19 @@ void ULowEntryExtendedStandardLibrary::GetBatteryState(ELowEntryBatteryState& St
 #if defined( PLATFORM_ANDROID ) && PLATFORM_ANDROID
 	Success = true;
 	FAndroidMisc::FBatteryState Data = FAndroidMisc::GetBatteryState();
-	if(Data.State == FAndroidMisc::EBatteryState::BATTERY_STATE_CHARGING)
+	if (Data.State == FAndroidMisc::EBatteryState::BATTERY_STATE_CHARGING)
 	{
 		State = ELowEntryBatteryState::Charging;
 	}
-	else if(Data.State == FAndroidMisc::EBatteryState::BATTERY_STATE_DISCHARGING)
+	else if (Data.State == FAndroidMisc::EBatteryState::BATTERY_STATE_DISCHARGING)
 	{
 		State = ELowEntryBatteryState::Discharging;
 	}
-	else if(Data.State == FAndroidMisc::EBatteryState::BATTERY_STATE_FULL)
+	else if (Data.State == FAndroidMisc::EBatteryState::BATTERY_STATE_FULL)
 	{
 		State = ELowEntryBatteryState::Full;
 	}
-	else if(Data.State == FAndroidMisc::EBatteryState::BATTERY_STATE_NOT_CHARGING)
+	else if (Data.State == FAndroidMisc::EBatteryState::BATTERY_STATE_NOT_CHARGING)
 	{
 		State = ELowEntryBatteryState::NotCharging;
 	}
@@ -615,6 +616,11 @@ void ULowEntryExtendedStandardLibrary::LatentAction_Create_Object(ULowEntryLaten
 void ULowEntryExtendedStandardLibrary::LatentAction_Create_String(ULowEntryLatentActionString*& LatentAction)
 {
 	LatentAction = ULowEntryLatentActionString::Create();
+}
+
+void ULowEntryExtendedStandardLibrary::LatentAction_Create_Struct(ULowEntryLatentActionStruct*& LatentAction)
+{
+	LatentAction = ULowEntryLatentActionStruct::Create();
 }
 
 
@@ -1839,102 +1845,87 @@ void ULowEntryExtendedStandardLibrary::Texture2DToPixels(UTexture2D* Texture2D, 
 		return;
 	}
 
+	bool ChangedTexture2D = false;
+	const bool PreviousSRGB = Texture2D->SRGB;
+	const TextureCompressionSettings PreviousCompressionSettings = Texture2D->CompressionSettings;
+
+	bool MipGenSettingsNeedChange = false;
 #if WITH_EDITORONLY_DATA
-	if (Texture2D->MipGenSettings != TMGS_NoMipmaps)
-	{
-		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in ImageToPixels, the given Texture2D has to have MipGenSettings set to NoMipmaps, otherwise the blueprint will always fail"));
-		return;
-	}
+	MipGenSettingsNeedChange = (Texture2D->MipGenSettings != TMGS_NoMipmaps);
+	const TEnumAsByte<enum TextureMipGenSettings> PreviousMipGenSettings = Texture2D->MipGenSettings;
 #endif
 
-	bool ChangedTexture2D = false;
-	bool PreviousSRGB = Texture2D->SRGB;
-	TextureCompressionSettings PreviousCompressionSettings = Texture2D->CompressionSettings;
-
-	if ((PreviousSRGB != false) || (PreviousCompressionSettings != TC_VectorDisplacementmap))
+	if (MipGenSettingsNeedChange || (PreviousSRGB != false) || (PreviousCompressionSettings != TC_VectorDisplacementmap))
 	{
 		ChangedTexture2D = true;
 		Texture2D->SRGB = false;
 		Texture2D->CompressionSettings = TC_VectorDisplacementmap;
+#if WITH_EDITORONLY_DATA
+		Texture2D->MipGenSettings = TMGS_NoMipmaps;
+#endif
 		Texture2D->UpdateResource();
 	}
 
 	FTexture2DMipMap& Mip0 = Texture2D->GetPlatformData()->Mips[0];
-	int32 Mip0Width = Mip0.SizeX;
-	int32 Mip0Height = Mip0.SizeY;
+	const int32 Mip0Width = Mip0.SizeX;
+	const int32 Mip0Height = Mip0.SizeY;
 
 	auto Mip0Data = &Mip0.BulkData;
 	if (Mip0Data == nullptr)
 	{
 		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in ImageToPixels, Mips[0].BulkData couldn't be accessed (it was NULL)"));
-		if (ChangedTexture2D)
-		{
-			Texture2D->SRGB = PreviousSRGB;
-			Texture2D->CompressionSettings = PreviousCompressionSettings;
-			Texture2D->UpdateResource();
-		}
-		return;
-	}
-
-	void* Mip0Pixels_ = Mip0Data->Lock(LOCK_READ_ONLY);
-	FColor* Mip0Pixels = static_cast<FColor*>(Mip0Pixels_);
-	if (Mip0Pixels == nullptr)
-	{
-		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in ImageToPixels, Mips[0].BulkData couldn't be cast to FColor*"));
-		Mip0Data->Unlock();
-		if (ChangedTexture2D)
-		{
-			Texture2D->SRGB = PreviousSRGB;
-			Texture2D->CompressionSettings = PreviousCompressionSettings;
-			Texture2D->UpdateResource();
-		}
-		return;
-	}
-
-	Width = Mip0Width;
-	Height = Mip0Height;
-	int32 Total = Mip0Width * Mip0Height;
-	Pixels.SetNum(Total);
-	EPixelFormat PixelFormat = Texture2D->GetPixelFormat();
-	if (PixelFormat == PF_B8G8R8A8)
-	{
-		for (int32 i = 0; i < Total; i++)
-		{
-			Pixels[i] = Mip0Pixels[i];
-		}
-	}
-	else if (PixelFormat == PF_R8G8B8A8)
-	{
-		for (int32 i = 0; i < Total; i++)
-		{
-			Pixels[i] = FColor(Mip0Pixels[i].B, Mip0Pixels[i].G, Mip0Pixels[i].R, Mip0Pixels[i].A);
-		}
-	}
-	else if (PixelFormat == PF_A8R8G8B8)
-	{
-		for (int32 i = 0; i < Total; i++)
-		{
-			Pixels[i] = FColor(Mip0Pixels[i].A, Mip0Pixels[i].B, Mip0Pixels[i].G, Mip0Pixels[i].R);
-		}
 	}
 	else
 	{
-		UE_LOG(LogBlueprintUserMessages, Error, TEXT("in ImageToPixels, the given Texture2D has an unsupported PixelFormat (%s), the supported formats are: PF_R8G8B8A8, PF_B8G8R8A8, PF_A8R8G8B8"), *Texture2D->GetPixelFormatEnum()->GetNameByValue(PixelFormat).GetPlainNameString());
-		Mip0Data->Unlock();
-		if (ChangedTexture2D)
+		void* Mip0Pixels_ = Mip0Data->Lock(LOCK_READ_ONLY);
+		FColor* Mip0Pixels = static_cast<FColor*>(Mip0Pixels_);
+		if (Mip0Pixels == nullptr)
 		{
-			Texture2D->SRGB = PreviousSRGB;
-			Texture2D->CompressionSettings = PreviousCompressionSettings;
-			Texture2D->UpdateResource();
+			UE_LOG(LogBlueprintUserMessages, Error, TEXT("in ImageToPixels, Mips[0].BulkData couldn't be cast to FColor*"));
 		}
-		return;
+		else
+		{
+			Width = Mip0Width;
+			Height = Mip0Height;
+			const int32 Total = Mip0Width * Mip0Height;
+			Pixels.SetNum(Total);
+			const EPixelFormat PixelFormat = Texture2D->GetPixelFormat();
+			if (PixelFormat == PF_B8G8R8A8)
+			{
+				for (int32 i = 0; i < Total; i++)
+				{
+					Pixels[i] = Mip0Pixels[i];
+				}
+			}
+			else if (PixelFormat == PF_R8G8B8A8)
+			{
+				for (int32 i = 0; i < Total; i++)
+				{
+					Pixels[i] = FColor(Mip0Pixels[i].B, Mip0Pixels[i].G, Mip0Pixels[i].R, Mip0Pixels[i].A);
+				}
+			}
+			else if (PixelFormat == PF_A8R8G8B8)
+			{
+				for (int32 i = 0; i < Total; i++)
+				{
+					Pixels[i] = FColor(Mip0Pixels[i].A, Mip0Pixels[i].B, Mip0Pixels[i].G, Mip0Pixels[i].R);
+				}
+			}
+			else
+			{
+				UE_LOG(LogBlueprintUserMessages, Error, TEXT("in ImageToPixels, the given Texture2D has an unsupported PixelFormat (%s), the supported formats are: PF_R8G8B8A8, PF_B8G8R8A8, PF_A8R8G8B8"), *Texture2D->GetPixelFormatEnum()->GetNameByValue(PixelFormat).GetPlainNameString());
+			}
+		}
+		Mip0Data->Unlock();
 	}
-	Mip0Data->Unlock();
 
 	if (ChangedTexture2D)
 	{
 		Texture2D->SRGB = PreviousSRGB;
 		Texture2D->CompressionSettings = PreviousCompressionSettings;
+#if WITH_EDITORONLY_DATA
+		Texture2D->MipGenSettings = PreviousMipGenSettings;
+#endif
 		Texture2D->UpdateResource();
 	}
 }
@@ -2300,17 +2291,17 @@ int32 ULowEntryExtendedStandardLibrary::HMAC_GetBlockSize(ELowEntryHmacAlgorithm
 {
 	switch (Algorithm)
 	{
-		case ELowEntryHmacAlgorithm::MD5:
-			return 64;
-		case ELowEntryHmacAlgorithm::SHA1:
-			return 64;
-		case ELowEntryHmacAlgorithm::SHA256:
-			return 64;
-		case ELowEntryHmacAlgorithm::SHA512:
-			return 128;
-		default:
-			UE_LOG(LogBlueprintUserMessages, Error, TEXT("Unsupported HMAC Algorithm, falls back to SHA-256"));
-			return 64;// defaults to SHA-256
+	case ELowEntryHmacAlgorithm::MD5:
+		return 64;
+	case ELowEntryHmacAlgorithm::SHA1:
+		return 64;
+	case ELowEntryHmacAlgorithm::SHA256:
+		return 64;
+	case ELowEntryHmacAlgorithm::SHA512:
+		return 128;
+	default:
+		UE_LOG(LogBlueprintUserMessages, Error, TEXT("Unsupported HMAC Algorithm, falls back to SHA-256"));
+		return 64;// defaults to SHA-256
 	}
 }
 
@@ -2318,17 +2309,17 @@ TArray<uint8> ULowEntryExtendedStandardLibrary::HMAC_Hash(const TArray<uint8>& A
 {
 	switch (Algorithm)
 	{
-		case ELowEntryHmacAlgorithm::MD5:
-			return Md5(Array);
-		case ELowEntryHmacAlgorithm::SHA1:
-			return Sha1(Array);
-		case ELowEntryHmacAlgorithm::SHA256:
-			return Sha256(Array);
-		case ELowEntryHmacAlgorithm::SHA512:
-			return Sha512(Array);
-		default:
-			UE_LOG(LogBlueprintUserMessages, Error, TEXT("Unsupported HMAC Algorithm, falls back to SHA-256"));
-			return Sha256(Array);// defaults to SHA-256
+	case ELowEntryHmacAlgorithm::MD5:
+		return Md5(Array);
+	case ELowEntryHmacAlgorithm::SHA1:
+		return Sha1(Array);
+	case ELowEntryHmacAlgorithm::SHA256:
+		return Sha256(Array);
+	case ELowEntryHmacAlgorithm::SHA512:
+		return Sha512(Array);
+	default:
+		UE_LOG(LogBlueprintUserMessages, Error, TEXT("Unsupported HMAC Algorithm, falls back to SHA-256"));
+		return Sha256(Array);// defaults to SHA-256
 	}
 }
 
@@ -3050,6 +3041,53 @@ void ULowEntryExtendedStandardLibrary::SortObjectArrayDirectly(UPARAM(ref) TArra
 }
 
 
+TArray<FInstancedStruct> ULowEntryExtendedStandardLibrary::SortStructArray(const TArray<FInstancedStruct>& StructArray, FDelegateULowEntryExtendedStandardLibraryCompareStructs Comparator, const bool Reversed)
+{
+	TArray<FInstancedStruct> Array = StructArray;
+	if (!Reversed)
+	{
+		Array.Sort([Comparator](const FInstancedStruct& A, const FInstancedStruct& B)
+		{
+			bool Result = false;
+			Comparator.Execute(A, B, Result);
+			return Result;
+		});
+	}
+	else
+	{
+		Array.Sort([Comparator](const FInstancedStruct& A, const FInstancedStruct& B)
+		{
+			bool Result = false;
+			Comparator.Execute(A, B, Result);
+			return !Result;
+		});
+	}
+	return Array;
+}
+
+void ULowEntryExtendedStandardLibrary::SortStructArrayDirectly(UPARAM(ref) TArray<FInstancedStruct>& StructArray, FDelegateULowEntryExtendedStandardLibraryCompareStructs Comparator, const bool Reversed)
+{
+	if (!Reversed)
+	{
+		StructArray.Sort([Comparator](const FInstancedStruct& A, const FInstancedStruct& B)
+		{
+			bool Result = false;
+			Comparator.Execute(A, B, Result);
+			return Result;
+		});
+	}
+	else
+	{
+		StructArray.Sort([Comparator](const FInstancedStruct& A, const FInstancedStruct& B)
+		{
+			bool Result = false;
+			Comparator.Execute(A, B, Result);
+			return !Result;
+		});
+	}
+}
+
+
 void ULowEntryExtendedStandardLibrary::RandomDelay(UObject* WorldContextObject, double MinDuration, double MaxDuration, FLatentActionInfo LatentInfo)
 {
 	if (UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
@@ -3499,26 +3537,32 @@ ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFr
 {
 	return ULowEntryByteDataEntry::CreateFromByte(Value);
 }
+
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromInteger(const int32 Value)
 {
 	return ULowEntryByteDataEntry::CreateFromInteger(Value);
 }
+
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromPositiveInteger1(const int32 Value)
 {
 	return ULowEntryByteDataEntry::CreateFromPositiveInteger1(Value);
 }
+
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromPositiveInteger2(const int32 Value)
 {
 	return ULowEntryByteDataEntry::CreateFromPositiveInteger2(Value);
 }
+
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromPositiveInteger3(const int32 Value)
 {
 	return ULowEntryByteDataEntry::CreateFromPositiveInteger3(Value);
 }
+
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromLong(const int64 Value)
 {
 	return ULowEntryByteDataEntry::CreateFromLong(Value);
 }
+
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromLongBytes(ULowEntryLong* Value)
 {
 	return ULowEntryByteDataEntry::CreateFromLongBytes(Value);
@@ -3528,10 +3572,12 @@ ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFr
 {
 	return ULowEntryByteDataEntry::CreateFromFloat(Value);
 }
+
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromDouble(const double Value)
 {
 	return ULowEntryByteDataEntry::CreateFromDouble(Value);
 }
+
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromDoubleBytes(ULowEntryDouble* Value)
 {
 	return ULowEntryByteDataEntry::CreateFromDoubleBytes(Value);
@@ -3541,6 +3587,7 @@ ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFr
 {
 	return ULowEntryByteDataEntry::CreateFromBoolean(Value);
 }
+
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromStringUtf8(const FString& Value)
 {
 	return ULowEntryByteDataEntry::CreateFromStringUtf8(Value);
@@ -3551,26 +3598,32 @@ ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFr
 {
 	return ULowEntryByteDataEntry::CreateFromByteArray(Value);
 }
+
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromIntegerArray(const TArray<int32>& Value)
 {
 	return ULowEntryByteDataEntry::CreateFromIntegerArray(Value);
 }
+
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromPositiveInteger1Array(const TArray<int32>& Value)
 {
 	return ULowEntryByteDataEntry::CreateFromPositiveInteger1Array(Value);
 }
+
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromPositiveInteger2Array(const TArray<int32>& Value)
 {
 	return ULowEntryByteDataEntry::CreateFromPositiveInteger2Array(Value);
 }
+
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromPositiveInteger3Array(const TArray<int32>& Value)
 {
 	return ULowEntryByteDataEntry::CreateFromPositiveInteger3Array(Value);
 }
+
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromLongArray(const TArray<int64>& Value)
 {
 	return ULowEntryByteDataEntry::CreateFromLongArray(Value);
 }
+
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromLongBytesArray(const TArray<ULowEntryLong*>& Value)
 {
 	return ULowEntryByteDataEntry::CreateFromLongBytesArray(Value);
@@ -3580,10 +3633,12 @@ ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFr
 {
 	return ULowEntryByteDataEntry::CreateFromFloatArray(Value);
 }
+
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromDoubleArray(const TArray<double>& Value)
 {
 	return ULowEntryByteDataEntry::CreateFromDoubleArray(Value);
 }
+
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromDoubleBytesArray(const TArray<ULowEntryDouble*>& Value)
 {
 	return ULowEntryByteDataEntry::CreateFromDoubleBytesArray(Value);
@@ -3593,6 +3648,7 @@ ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFr
 {
 	return ULowEntryByteDataEntry::CreateFromBooleanArray(Value);
 }
+
 ULowEntryByteDataEntry* ULowEntryExtendedStandardLibrary::ByteDataEntry_CreateFromStringUtf8Array(const TArray<FString>& Value)
 {
 	return ULowEntryByteDataEntry::CreateFromStringUtf8Array(Value);
@@ -3630,18 +3686,22 @@ ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFrom
 {
 	return ULowEntryBitDataEntry::CreateFromBit(Value);
 }
+
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromByteLeastSignificantBits(const uint8 Value, const int32 BitCount)
 {
 	return ULowEntryBitDataEntry::CreateFromByteLeastSignificantBits(Value, BitCount);
 }
+
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromByteMostSignificantBits(const uint8 Value, const int32 BitCount)
 {
 	return ULowEntryBitDataEntry::CreateFromByteMostSignificantBits(Value, BitCount);
 }
+
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromIntegerLeastSignificantBits(const int32 Value, const int32 BitCount)
 {
 	return ULowEntryBitDataEntry::CreateFromIntegerLeastSignificantBits(Value, BitCount);
 }
+
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromIntegerMostSignificantBits(const int32 Value, const int32 BitCount)
 {
 	return ULowEntryBitDataEntry::CreateFromIntegerMostSignificantBits(Value, BitCount);
@@ -3651,26 +3711,32 @@ ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFrom
 {
 	return ULowEntryBitDataEntry::CreateFromByte(Value);
 }
+
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromInteger(const int32 Value)
 {
 	return ULowEntryBitDataEntry::CreateFromInteger(Value);
 }
+
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromPositiveInteger1(const int32 Value)
 {
 	return ULowEntryBitDataEntry::CreateFromPositiveInteger1(Value);
 }
+
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromPositiveInteger2(const int32 Value)
 {
 	return ULowEntryBitDataEntry::CreateFromPositiveInteger2(Value);
 }
+
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromPositiveInteger3(const int32 Value)
 {
 	return ULowEntryBitDataEntry::CreateFromPositiveInteger3(Value);
 }
+
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromLong(const int64 Value)
 {
 	return ULowEntryBitDataEntry::CreateFromLong(Value);
 }
+
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromLongBytes(ULowEntryLong* Value)
 {
 	return ULowEntryBitDataEntry::CreateFromLongBytes(Value);
@@ -3680,10 +3746,12 @@ ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFrom
 {
 	return ULowEntryBitDataEntry::CreateFromFloat(Value);
 }
+
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromDouble(const double Value)
 {
 	return ULowEntryBitDataEntry::CreateFromDouble(Value);
 }
+
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromDoubleBytes(ULowEntryDouble* Value)
 {
 	return ULowEntryBitDataEntry::CreateFromDoubleBytes(Value);
@@ -3693,6 +3761,7 @@ ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFrom
 {
 	return ULowEntryBitDataEntry::CreateFromBoolean(Value);
 }
+
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromStringUtf8(const FString& Value)
 {
 	return ULowEntryBitDataEntry::CreateFromStringUtf8(Value);
@@ -3703,18 +3772,22 @@ ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFrom
 {
 	return ULowEntryBitDataEntry::CreateFromBitArray(Value);
 }
+
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromByteArrayLeastSignificantBits(const TArray<uint8>& Value, const int32 BitCount)
 {
 	return ULowEntryBitDataEntry::CreateFromByteArrayLeastSignificantBits(Value, BitCount);
 }
+
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromByteArrayMostSignificantBits(const TArray<uint8>& Value, const int32 BitCount)
 {
 	return ULowEntryBitDataEntry::CreateFromByteArrayMostSignificantBits(Value, BitCount);
 }
+
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromIntegerArrayLeastSignificantBits(const TArray<int32>& Value, const int32 BitCount)
 {
 	return ULowEntryBitDataEntry::CreateFromIntegerArrayLeastSignificantBits(Value, BitCount);
 }
+
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromIntegerArrayMostSignificantBits(const TArray<int32>& Value, const int32 BitCount)
 {
 	return ULowEntryBitDataEntry::CreateFromIntegerArrayMostSignificantBits(Value, BitCount);
@@ -3724,26 +3797,32 @@ ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFrom
 {
 	return ULowEntryBitDataEntry::CreateFromByteArray(Value);
 }
+
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromIntegerArray(const TArray<int32>& Value)
 {
 	return ULowEntryBitDataEntry::CreateFromIntegerArray(Value);
 }
+
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromPositiveInteger1Array(const TArray<int32>& Value)
 {
 	return ULowEntryBitDataEntry::CreateFromPositiveInteger1Array(Value);
 }
+
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromPositiveInteger2Array(const TArray<int32>& Value)
 {
 	return ULowEntryBitDataEntry::CreateFromPositiveInteger2Array(Value);
 }
+
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromPositiveInteger3Array(const TArray<int32>& Value)
 {
 	return ULowEntryBitDataEntry::CreateFromPositiveInteger3Array(Value);
 }
+
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromLongArray(const TArray<int64>& Value)
 {
 	return ULowEntryBitDataEntry::CreateFromLongArray(Value);
 }
+
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromLongBytesArray(const TArray<ULowEntryLong*>& Value)
 {
 	return ULowEntryBitDataEntry::CreateFromLongBytesArray(Value);
@@ -3753,10 +3832,12 @@ ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFrom
 {
 	return ULowEntryBitDataEntry::CreateFromFloatArray(Value);
 }
+
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromDoubleArray(const TArray<double>& Value)
 {
 	return ULowEntryBitDataEntry::CreateFromDoubleArray(Value);
 }
+
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromDoubleBytesArray(const TArray<ULowEntryDouble*>& Value)
 {
 	return ULowEntryBitDataEntry::CreateFromDoubleBytesArray(Value);
@@ -3766,6 +3847,7 @@ ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFrom
 {
 	return ULowEntryBitDataEntry::CreateFromBooleanArray(Value);
 }
+
 ULowEntryBitDataEntry* ULowEntryExtendedStandardLibrary::BitDataEntry_CreateFromStringUtf8Array(const TArray<FString>& Value)
 {
 	return ULowEntryBitDataEntry::CreateFromStringUtf8Array(Value);
@@ -4491,12 +4573,6 @@ void ULowEntryExtendedStandardLibrary::GetClassWithName(const FString& ClassName
 }
 
 
-FVector2D ULowEntryExtendedStandardLibrary::Divide_Vector2dVector2d(const FVector2D& A, const FVector2D& B)
-{
-	return A / B;
-}
-
-
 FVector2D ULowEntryExtendedStandardLibrary::GetAbsoluteSize(const FGeometry& Geometry)
 {
 	FVector2D LocalSize = Geometry.GetLocalSize();
@@ -4932,7 +5008,7 @@ void ULowEntryExtendedStandardLibrary::SimpleKismetSystemLibraryPrintString(cons
 {
 #if !(UE_BUILD_SHIPPING || UE_BUILD_TEST)
 	float ScreenDurationTime = 5.0f;
-	FLinearColor TextColor = FLinearColor(0.0, 0.66, 1.0);
+	FLinearColor TextColor = FLinearColor(0.0f, 0.66f, 1.0f);
 
 	UE_LOG(LogBlueprintUserMessages, Log, TEXT("%s"), *InString);
 

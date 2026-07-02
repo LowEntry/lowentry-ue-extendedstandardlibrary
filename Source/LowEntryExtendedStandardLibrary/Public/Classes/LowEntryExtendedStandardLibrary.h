@@ -14,6 +14,7 @@
 
 #include "DelayAction.h"
 #include "Engine/LatentActionManager.h"
+#include "StructUtils/InstancedStruct.h"
 
 #include "FLowEntryRegexMatch.h"
 
@@ -48,6 +49,7 @@ class ULowEntryLatentActionInteger;
 class ULowEntryLatentActionNone;
 class ULowEntryLatentActionObject;
 class ULowEntryLatentActionString;
+class ULowEntryLatentActionStruct;
 
 class ULowEntryParsedHashcash;
 
@@ -68,6 +70,8 @@ class ULowEntryExecutionQueue;
 
 
 DECLARE_DYNAMIC_DELEGATE_ThreeParams(FDelegateULowEntryExtendedStandardLibraryCompareObjects, UObject*, ObjectA, UObject*, ObjectB, bool&, Result);
+
+DECLARE_DYNAMIC_DELEGATE_ThreeParams(FDelegateULowEntryExtendedStandardLibraryCompareStructs, const FInstancedStruct&, StructA, const FInstancedStruct&, StructB, bool&, Result);
 
 
 UCLASS()
@@ -436,6 +440,12 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Latent Action|String", Meta = (DisplayName = "Create Latent Action (String)", Keywords = "make instance"))
 	static void LatentAction_Create_String(ULowEntryLatentActionString*& LatentAction);
+
+	/**
+	* Creates a new latent action.
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Latent Action|Struct", Meta = (DisplayName = "Create Latent Action (Struct)", Keywords = "make instance"))
+	static void LatentAction_Create_Struct(ULowEntryLatentActionStruct*& LatentAction);
 
 
 	/**
@@ -1318,150 +1328,150 @@ public:
 	/**
 	* Returns true if A is less than B (A < B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Integer < Float", CompactNodeTitle = "<"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DeprecatedFunction, DeprecationMessage = "Use the new built-in compare blueprint instead.", DisplayName = "Integer < Float", CompactNodeTitle = "<"))
 	static bool LessIntegerFloat(const int32 A, const double B);
 
 	/**
 	* Returns true if A is greater than B (A > B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Integer > Float", CompactNodeTitle = ">"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DeprecatedFunction, DeprecationMessage = "Use the new built-in compare blueprint instead.", DisplayName = "Integer > Float", CompactNodeTitle = ">"))
 	static bool GreaterIntegerFloat(const int32 A, const double B);
 
 	/**
 	* Returns true if A is less than or equal to B (A <= B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Integer <= Float", CompactNodeTitle = "<="))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DeprecatedFunction, DeprecationMessage = "Use the new built-in compare blueprint instead.", DisplayName = "Integer <= Float", CompactNodeTitle = "<="))
 	static bool LessEqualIntegerFloat(const int32 A, const double B);
 
 	/**
 	* Returns true if A is greater than or equal to B (A >= B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Integer >= Float", CompactNodeTitle = ">="))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DeprecatedFunction, DeprecationMessage = "Use the new built-in compare blueprint instead.", DisplayName = "Integer >= Float", CompactNodeTitle = ">="))
 	static bool GreaterEqualIntegerFloat(const int32 A, const double B);
 
 
 	/**
 	* Returns true if A is less than B (A < B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Integer < Byte", CompactNodeTitle = "<"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DeprecatedFunction, DeprecationMessage = "Use the new built-in compare blueprint instead.", DisplayName = "Integer < Byte", CompactNodeTitle = "<"))
 	static bool LessIntegerByte(const int32 A, const uint8 B);
 
 	/**
 	* Returns true if A is greater than B (A > B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Integer > Byte", CompactNodeTitle = ">"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DeprecatedFunction, DeprecationMessage = "Use the new built-in compare blueprint instead.", DisplayName = "Integer > Byte", CompactNodeTitle = ">"))
 	static bool GreaterIntegerByte(const int32 A, const uint8 B);
 
 	/**
 	* Returns true if A is less than or equal to B (A <= B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Integer <= Byte", CompactNodeTitle = "<="))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DeprecatedFunction, DeprecationMessage = "Use the new built-in compare blueprint instead.", DisplayName = "Integer <= Byte", CompactNodeTitle = "<="))
 	static bool LessEqualIntegerByte(const int32 A, const uint8 B);
 
 	/**
 	* Returns true if A is greater than or equal to B (A >= B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Integer >= Byte", CompactNodeTitle = ">="))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DeprecatedFunction, DeprecationMessage = "Use the new built-in compare blueprint instead.", DisplayName = "Integer >= Byte", CompactNodeTitle = ">="))
 	static bool GreaterEqualIntegerByte(const int32 A, const uint8 B);
 
 
 	/**
 	* Returns true if A is less than B (A < B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Float < Integer", CompactNodeTitle = "<"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DeprecatedFunction, DeprecationMessage = "Use the new built-in compare blueprint instead.", DisplayName = "Float < Integer", CompactNodeTitle = "<"))
 	static bool LessFloatInteger(const double A, const int32 B);
 
 	/**
 	* Returns true if A is greater than B (A > B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Float > Integer", CompactNodeTitle = ">"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DeprecatedFunction, DeprecationMessage = "Use the new built-in compare blueprint instead.", DisplayName = "Float > Integer", CompactNodeTitle = ">"))
 	static bool GreaterFloatInteger(const double A, const int32 B);
 
 	/**
 	* Returns true if A is less than or equal to B (A <= B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Float <= Integer", CompactNodeTitle = "<="))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DeprecatedFunction, DeprecationMessage = "Use the new built-in compare blueprint instead.", DisplayName = "Float <= Integer", CompactNodeTitle = "<="))
 	static bool LessEqualFloatInteger(const double A, const int32 B);
 
 	/**
 	* Returns true if A is greater than or equal to B (A >= B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Float >= Integer", CompactNodeTitle = ">="))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DeprecatedFunction, DeprecationMessage = "Use the new built-in compare blueprint instead.", DisplayName = "Float >= Integer", CompactNodeTitle = ">="))
 	static bool GreaterEqualFloatInteger(const double A, const int32 B);
 
 
 	/**
 	* Returns true if A is less than B (A < B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Float < Byte", CompactNodeTitle = "<"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DeprecatedFunction, DeprecationMessage = "Use the new built-in compare blueprint instead.", DisplayName = "Float < Byte", CompactNodeTitle = "<"))
 	static bool LessFloatByte(const double A, const uint8 B);
 
 	/**
 	* Returns true if A is greater than B (A > B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Float > Byte", CompactNodeTitle = ">"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DeprecatedFunction, DeprecationMessage = "Use the new built-in compare blueprint instead.", DisplayName = "Float > Byte", CompactNodeTitle = ">"))
 	static bool GreaterFloatByte(const double A, const uint8 B);
 
 	/**
 	* Returns true if A is less than or equal to B (A <= B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Float <= Byte", CompactNodeTitle = "<="))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DeprecatedFunction, DeprecationMessage = "Use the new built-in compare blueprint instead.", DisplayName = "Float <= Byte", CompactNodeTitle = "<="))
 	static bool LessEqualFloatByte(const double A, const uint8 B);
 
 	/**
 	* Returns true if A is greater than or equal to B (A >= B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Float >= Byte", CompactNodeTitle = ">="))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DeprecatedFunction, DeprecationMessage = "Use the new built-in compare blueprint instead.", DisplayName = "Float >= Byte", CompactNodeTitle = ">="))
 	static bool GreaterEqualFloatByte(const double A, const uint8 B);
 
 
 	/**
 	* Returns true if A is less than B (A < B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Byte < Integer", CompactNodeTitle = "<"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DeprecatedFunction, DeprecationMessage = "Use the new built-in compare blueprint instead.", DisplayName = "Byte < Integer", CompactNodeTitle = "<"))
 	static bool LessByteInteger(const uint8 A, const int32 B);
 
 	/**
 	* Returns true if A is greater than B (A > B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Byte > Integer", CompactNodeTitle = ">"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DeprecatedFunction, DeprecationMessage = "Use the new built-in compare blueprint instead.", DisplayName = "Byte > Integer", CompactNodeTitle = ">"))
 	static bool GreaterByteInteger(const uint8 A, const int32 B);
 
 	/**
 	* Returns true if A is less than or equal to B (A <= B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Byte <= Integer", CompactNodeTitle = "<="))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DeprecatedFunction, DeprecationMessage = "Use the new built-in compare blueprint instead.", DisplayName = "Byte <= Integer", CompactNodeTitle = "<="))
 	static bool LessEqualByteInteger(const uint8 A, const int32 B);
 
 	/**
 	* Returns true if A is greater than or equal to B (A >= B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Byte >= Integer", CompactNodeTitle = ">="))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DeprecatedFunction, DeprecationMessage = "Use the new built-in compare blueprint instead.", DisplayName = "Byte >= Integer", CompactNodeTitle = ">="))
 	static bool GreaterEqualByteInteger(const uint8 A, const int32 B);
 
 
 	/**
 	* Returns true if A is less than B (A < B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Byte < Float", CompactNodeTitle = "<"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DeprecatedFunction, DeprecationMessage = "Use the new built-in compare blueprint instead.", DisplayName = "Byte < Float", CompactNodeTitle = "<"))
 	static bool LessByteFloat(const uint8 A, const double B);
 
 	/**
 	* Returns true if A is greater than B (A > B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Byte > Float", CompactNodeTitle = ">"))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DeprecatedFunction, DeprecationMessage = "Use the new built-in compare blueprint instead.", DisplayName = "Byte > Float", CompactNodeTitle = ">"))
 	static bool GreaterByteFloat(const uint8 A, const double B);
 
 	/**
 	* Returns true if A is less than or equal to B (A <= B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Byte <= Float", CompactNodeTitle = "<="))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DeprecatedFunction, DeprecationMessage = "Use the new built-in compare blueprint instead.", DisplayName = "Byte <= Float", CompactNodeTitle = "<="))
 	static bool LessEqualByteFloat(const uint8 A, const double B);
 
 	/**
 	* Returns true if A is greater than or equal to B (A >= B)
 	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DisplayName = "Byte >= Float", CompactNodeTitle = ">="))
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Compare", Meta = (DeprecatedFunction, DeprecationMessage = "Use the new built-in compare blueprint instead.", DisplayName = "Byte >= Float", CompactNodeTitle = ">="))
 	static bool GreaterEqualByteFloat(const uint8 A, const double B);
 
 
@@ -1689,7 +1699,32 @@ public:
 	*  - then, when using the Sort Object Array blueprint, use the Create Event blueprint and set its value as the function created earlier
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Object Array)"))
-	static void SortObjectArrayDirectly(UPARAM(ref) TArray<UObject*>& ObjectArray, FDelegateULowEntryExtendedStandardLibraryCompareObjects Comparator, const bool Reversed);
+	static void SortObjectArrayDirectly(UPARAM(ref) TArray<UObject*>& ObjectArray, FDelegateULowEntryExtendedStandardLibraryCompareObjects Comparator, const bool Reversed = false);
+
+
+	/**
+	* Sorts a copy of the given array.
+	* 
+	* To create the Comparator, do this:
+	*  - create a function that has 2 input parameters (InstancedStruct and InstancedStruct) and 1 output parameter (Boolean)
+	*  - it is important that the parameters have the following names: StructA, StructB and Return
+	*  - in that function, return true if StructA is smaller than StructB, return false otherwise
+	*  - then, when using the Sort Struct Array blueprint, use the Create Event blueprint and set its value as the function created earlier
+	*/
+	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Struct Array) (Copy)"))
+	static TArray<FInstancedStruct> SortStructArray(const TArray<FInstancedStruct>& StructArray, FDelegateULowEntryExtendedStandardLibraryCompareStructs Comparator, const bool Reversed = false);
+
+	/**
+	* Sorts the given array.
+	*
+	* To create the Comparator, do this:
+	*  - create a function that has 2 input parameters (Object and Object) and 1 output parameter (Boolean)
+	*  - it is important that the parameters have the following names: StructA, StructB and Return
+	*  - in that function, return true if StructA is smaller than StructB, return false otherwise
+	*  - then, when using the Sort Struct Array blueprint, use the Create Event blueprint and set its value as the function created earlier
+	*/
+	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Array", Meta = (DisplayName = "Sort (Struct Array)"))
+	static void SortStructArrayDirectly(UPARAM(ref) TArray<FInstancedStruct>& StructArray, FDelegateULowEntryExtendedStandardLibraryCompareStructs Comparator, const bool Reversed = false);
 
 
 	/**
@@ -2530,10 +2565,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Get Window Position (Percentages)"))
 	static void GetWindowPositionInPercentagesCentered(bool& Success, double& X, double& Y);
 
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Get Window Position (Percentages)", DeprecatedFunction, DeprecationMessage = "Use GetWindowPositionInPercentagesCentered instead"))
-	// ReSharper disable once IdentifierTypo
-	static void GetWindowPositiomInPercentagesCentered(bool& Success, double& X, double& Y) { GetWindowPositionInPercentagesCentered(Success, X, Y); }
-
 
 	/**
 	* Sets the window position in screen space.
@@ -2554,10 +2585,6 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Set Window Position (Percentages)"))
 	static void SetWindowPositionInPercentagesCentered(const double X, const double Y);
-
-	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Window", Meta = (DisplayName = "Set Window Position (Percentages)", DeprecatedFunction, DeprecationMessage = "Use SetWindowPositionInPercentagesCentered instead"))
-	// ReSharper disable once IdentifierTypo
-	static void SetWindowPositiomInPercentagesCentered(const double X, const double Y) { SetWindowPositionInPercentagesCentered(X, Y); }
 
 
 	/**
@@ -2671,13 +2698,6 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "Low Entry|Extended Standard Library|Utilities|Other", Meta = (DisplayName = "Get Class With Name", Keywords = "get retrieve create object path find by value"))
 	static void GetClassWithName(const FString& ClassName, UClass*& Class_, bool& Success);
-
-
-	/**
-	* Divides A by B.
-	*/
-	UFUNCTION(BlueprintPure, Category = "Low Entry|Extended Standard Library|Utilities|Math", Meta = (DisplayName = "vector2d / vector2d", Keywords = "divide vector2d", CompactNodeTitle = "/"))
-	static FVector2D Divide_Vector2dVector2d(const FVector2D& A, const FVector2D& B);
 
 
 	/**
