@@ -2,6 +2,7 @@
 
 #include "LowEntryHashingHashcashLibrary.h"
 #include "LowEntryExtendedStandardLibrary.h"
+#include "Misc/EngineVersionComparison.h"
 
 
 const FString ULowEntryHashingHashcashLibrary::DATE_FORMAT_STRING = TEXT("%y%m%d%H%M%S");
@@ -57,7 +58,11 @@ FString ULowEntryHashingHashcashLibrary::hashCustomCreationDate(const FString& r
 
 	while (true)
 	{
+#if UE_VERSION_NEWER_THAN_OR_EQUAL(5, 8, 0)
+		buffer.SetNum(prefixpos, EAllowShrinking::No);
+#else
 		buffer.SetNum(prefixpos, false);
+#endif // UE_VERSION_NEWER_THAN_OR_EQUAL
 
 		TArray<uint8> randomBytes;
 		ULowEntryExtendedStandardLibrary::GenerateRandomBytes(12, randomBytes);

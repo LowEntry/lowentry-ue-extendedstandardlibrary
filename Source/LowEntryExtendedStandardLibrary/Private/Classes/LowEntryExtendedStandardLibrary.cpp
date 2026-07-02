@@ -41,6 +41,7 @@
 #include "GenericTeamAgentInterface.h"
 
 #include "Misc/Base64.h"
+#include "Misc/EngineVersionComparison.h"
 #include "Internationalization/Regex.h"
 
 #include "HAL/PlatformApplicationMisc.h"
@@ -81,7 +82,11 @@ void ULowEntryExtendedStandardLibrary::KismetSystemLibraryPrintString(UObject* W
 				switch (World->GetNetMode())
 				{
 					case NM_Client:
+#if UE_VERSION_NEWER_THAN_OR_EQUAL(5, 8, 0)
+						Prefix = FString::Printf(TEXT("Client %d: "), UE::GetPlayInEditorID() - 1);
+#else
 						Prefix = FString::Printf(TEXT("Client %d: "), GPlayInEditorID - 1);
+#endif // UE_VERSION_NEWER_THAN_OR_EQUAL
 						break;
 					case NM_DedicatedServer:
 					case NM_ListenServer:
